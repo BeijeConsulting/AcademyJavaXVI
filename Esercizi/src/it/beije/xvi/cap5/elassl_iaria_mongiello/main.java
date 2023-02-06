@@ -1,6 +1,6 @@
 package it.beije.xvi.cap5.elassl_iaria_mongiello;
 
-public class main {
+public class progArmi {
 
 	public static void main(String[] args) {
 		Fucile m1 = new Fucile(10);
