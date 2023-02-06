@@ -1,9 +1,9 @@
 package it.beije.xvi.cap5.elassl_iaria_mongiello;
 
-public class Lancia {
+public class Lancia extends Getto {
 	boolean lanciata = false;
 	
-	public void lancia() {
+	public void lancioSingolo() {
 		if( !lanciata ) {
 			System.out.println("Lanciata");
 			lanciata = true;
@@ -17,5 +17,14 @@ public class Lancia {
 		lanciata = false;
 	}
 	
+	public void prendi() {
+		System.out.println("Lancia presa");
+	}
+
+	@Override
+	public void ricarica(int colpi) {
+		ricarica();
+		
+	}
 	
 }

@@ -1,31 +1,39 @@
 package it.beije.xvi.cap5.elassl_iaria_mongiello;
 
-public class Fucile extends Fuoco implements Manuale {
+public class Fucile extends Fuoco implements  Manuale {
 
-	@Override
-	public void ricarica() {
-		// TODO Auto-generated method stub
-		
+	int munizioni;
+	int gittata = 3;
+	
+	public Fucile(int munizioni) {
+		this.munizioni = munizioni;
 	}
-
+	
+	@Override
+	public void ricarica(int proiettili) {
+		System.out.println("Fucile ricaricato");
+		munizioni += proiettili;
+		}
+		
 	@Override
 	public void getGittata() {
-		// TODO Auto-generated method stub
-		
+		System.out.println(gittata);	
 	}
-
 	@Override
-	public void colpoSingolo() {
-		// TODO Auto-generated method stub
-		
+	public void colpoSingolo() {		
+		if(munizioni > 0) {
+			System.out.println("tu");
+			munizioni--;
+		}else {
+			System.out.println("Fucile scarico, devi ricaricare altrimenti muori veloooooooooce");
+		}
 	}
 
 	@Override
 	public void prendi() {
-		// TODO Auto-generated method stub
+		System.out.println("Fucile impugnato");
 		
 	}
-	
-	
+
 	
 }

@@ -1,8 +1,13 @@
 package it.beije.xvi.cap5.elassl_iaria_mongiello;
 
-public class Getto extends Armi implements Ricaricabile, Manuale{
-	
-	
-	
+public abstract class Getto extends Armi implements Ricaricabile, Manuale{
 
+	@Override
+	public void colpoSingolo() {
+		System.out.println("splaff");
+		
+	}
+	
+	public abstract void ricarica(int colpi);
+	
 }
