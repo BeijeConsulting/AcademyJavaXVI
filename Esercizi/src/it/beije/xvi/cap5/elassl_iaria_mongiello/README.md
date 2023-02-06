@@ -7,7 +7,7 @@ ARMI
 - da getto
   - lancia
 
-Interfaccie:
+Interfacce:
  - Ricaricabile
  - LungoRaggio
  - Manuale
