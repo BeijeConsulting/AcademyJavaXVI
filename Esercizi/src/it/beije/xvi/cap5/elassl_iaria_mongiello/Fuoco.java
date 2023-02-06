@@ -11,4 +11,8 @@ public abstract class Fuoco extends Armi implements Ricaricabile, LungoRaggio {
 		this.munizioni = munizioni;
 	}
 	
+	public  void riponi() {
+		System.out.println("Arma riposta e scaricata");
+	}
+	
 }
