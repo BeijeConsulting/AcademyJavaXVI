@@ -5,6 +5,6 @@ public abstract class Armi {
 	
 	public  void riponi() {
 		System.out.println("Arma riposta");
-		//prova
+		//provagfsg
 	}
 }
