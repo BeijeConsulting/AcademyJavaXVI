@@ -267,15 +267,42 @@ public class StringUtils {
 		return s;
 	}
 	
-	
+
 	public static String trim(String s) {
+
+		int beginIndex = 0;
+		int endIndex = s.length();
+		if (s.charAt(0) == ' ') {
+			
+			for (int i = 0; i < s.length(); i++) {
+				
+				if (s.charAt(i) != ' ') {
+					beginIndex = i;
+					break;
+				}
+			}
+		}
 		
-		return s;
+		if (s.charAt(s.length() - 1) == ' ') {
+			
+			for (int i = s.length() - 1; i > 0; i--) {
+				
+				if (s.charAt(i) != ' ') {
+					endIndex = i + 1;
+					break;
+				}
+			}
+		}
+		
+		return StringUtils.substring(s, beginIndex, endIndex);
+
 	}
 	public static void main(String[] args) {
 		
-
-		System.out.println(replace("ciao","ciaosa",""));
+		System.out.print("_");
+		System.out.print(trim("     ci  a b c   ao      "));
+		System.out.println("_");
+		
 	
 		
 
