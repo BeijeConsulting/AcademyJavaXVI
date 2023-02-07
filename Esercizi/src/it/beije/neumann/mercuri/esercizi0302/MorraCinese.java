@@ -1,4 +1,4 @@
-package esercizi0302;
+package it.beije.neumann.mercuri.esercizi0302;
 
 public class MorraCinese {
 

@@ -1,4 +1,4 @@
-package esercizi0202;
+package it.beije.neumann.mercuri.esercizi0202;
 
 import java.util.Scanner;
 
