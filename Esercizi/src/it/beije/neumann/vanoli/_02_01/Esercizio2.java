@@ -1,4 +1,4 @@
-package it.beije.neumann.vanoli.feb01;
+package it.beije.neumann.vanoli._02_01;
 
 public class Esercizio2 {
 	public static void main(String[] args) {
