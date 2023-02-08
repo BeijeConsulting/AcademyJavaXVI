@@ -1,4 +1,4 @@
-package it.beije.neumann.rubrica;
+package it.beije.neumann.vellani.feb8;
 
 public class Contatto {
 
