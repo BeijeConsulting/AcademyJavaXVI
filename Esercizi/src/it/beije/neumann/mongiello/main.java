@@ -8,6 +8,8 @@ public class main {
 		
 		//Esecuzione e test metodi clase StringUtils 
 		String str = new String("prova");
+		
+		
 		try {
 			System.out.print( StringUtils.replace( str, '1', 'd' ));
 		}catch( NoCharException ec ) {

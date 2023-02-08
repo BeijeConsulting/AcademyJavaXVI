@@ -3,7 +3,7 @@ package it.beije.neumann.mongiello;
 public class StringUtils {
 	
 	
-	public static String indexOf( String s, char c ) {
+	public static String indexOf ( String s, char c ) {
 		for( int i = 0; i<s.length(); i++) {
 			if( s.charAt(i) == c ) return String.valueOf(i);
 		}
@@ -151,6 +151,8 @@ public class StringUtils {
 
 	public static boolean startsWith(String s, String prefix) {
 		
+	
+		
 		boolean check = false;
 		
 		for( int i = 0; i < prefix.length(); i++ ) {
@@ -164,8 +166,7 @@ public class StringUtils {
 		
 		return true;
 	}
-	
-	
+		
 	public static boolean endsWith(String s, String prefix) {
 		
 		
@@ -193,7 +194,7 @@ public class StringUtils {
 			throw new NoCharException();
 		}
 		
-		
+
 		for(int i = 0; i< s.length(); i++) {
 			if( s.charAt(i) == oldChar ) {
 				appoggio +=  newChar;
