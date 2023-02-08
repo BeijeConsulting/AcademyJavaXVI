@@ -47,6 +47,10 @@ public class CSVmanager {
 		return contatti;
 	}
 
+		
+	public static void writeRubrica(String pathfile, List<Contatto> contatti) throws FileNotFoundException, IOException {
+		
+	}
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		List<Contatto> contatti = readRubrica("/temp/rubrica.csv");
 		System.out.println(contatti);
