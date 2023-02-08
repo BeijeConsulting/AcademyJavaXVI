@@ -1,5 +1,6 @@
 package it.beije.neumann.mongiello.rubrica;
 
+//classe da implementare
 public class Contatto {
 	private String cognome = new String();
 	private String nome = new String();
