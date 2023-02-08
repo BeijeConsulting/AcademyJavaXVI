@@ -1,35 +1,72 @@
 package it.beije.neumann.mongiello.rubrica;
 
-//classe da implementare
+
 public class Contatto {
-	private String cognome = new String();
-	private String nome = new String();
-	private String numero = new String();
+
+	private String name;
+	private String surname;
+	private String telephone;
+	private String email;
+	private String note;
 	
-	public String getCognome() {
-		return cognome;
-	}
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public Contatto( String name, String surname, String telephone, String email, String note ) {
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
 	}
 	
-	public String getNumero() {
-		return numero;
+	public String toString() {
+
+		StringBuilder builder = new StringBuilder("{")
+				.append(" name: ").append(name)
+				.append(", surname: ").append(surname)
+				.append(", telephone: ").append(telephone)
+				.append(", email: ").append(email)
+				.append(", note: ").append(note)
+				.append("}");
+
+		return builder.toString();
 	}
 	
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 	
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 }
+	
+	
+	
+	
+

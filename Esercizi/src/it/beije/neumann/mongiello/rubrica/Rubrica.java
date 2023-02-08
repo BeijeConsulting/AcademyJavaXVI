@@ -13,79 +13,69 @@ import java.util.Scanner;
 
 
 public class Rubrica {
-	public static void newFile( String path ) {
-		
-		File file = new File("rubrica.csv");
-		if( file.exists()) {
-			System.out.println("File esistente");
-		}else{
-			System.out.println("File creato con successo");
-		}
-	}
 	
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		Scanner s = new Scanner(System.in);
-		
 		try{
-			File file = new File("rubicaA.csv");
-			FileWriter fileWriter = new FileWriter(file, true);
+			File file = new File("C:\\Users\\pietr\\git\\AcademyJavaXVI\\Esercizi\\src\\it\\beije\\neumann\\mongiello\\rubrica .csv");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			if( file.createNewFile() ) {
-				System.out.println("File creato");
-			}else {
-				 System.out.println("Il file esiste gia");
-			}
-			
-			//Contatto contatto = null;
-			
-			System.out.print("Nome: ");
-			String nome = s.nextLine();
-		//	contatto.setNome(nome);
-			fileWriter.write(nome);
-			fileWriter.write(";");
-			System.out.println();
-			
-			
-			System.out.print("Cognome: ");
-			String cognome = s.nextLine();
-		//	contatto.setCognome(cognome);
-			fileWriter.write(cognome);
-			fileWriter.write(";");
-			System.out.println();
-			
-			System.out.print("Numero: ");
-			String numero = s.nextLine();
-		//	contatto.setCognome(cognome);
-			fileWriter.write(numero);
-			fileWriter.write(";");
-			System.out.println();
-			
-			
+			FileWriter fileWriter = new FileWriter( file, true );
 
+			//Lettura da file e memorizzazione oggetto
+			List<Contatto> contatti = new ArrayList<>();
+			Contatto contatto = null;
 			
-			fileWriter.flush();
+				String r = null;
+				String[] fields = null;
+				
+				while( bufferedReader.ready() ) {
+					r = bufferedReader.readLine();
+					fields = r.split(";");
+					contatto = new Contatto( fields[0], fields[1], fields[2], fields[3], fields[4] );
+					contatti.add(contatto);
+				}		
 
-			String r = null;
+				System.out.println("Aggiungi contatti");
+				
+				System.out.print("Nome: ");
+				String name = s.nextLine();
 			
-			while (bufferedReader.ready()) {
-				r = bufferedReader.readLine();
-				System.out.println("### " + r);
-			}
-		
+				System.out.print("Cognome: ");
+				String surname = s.nextLine();
+				
+				System.out.print("Telefono: ");
+				String telephone = s.nextLine();
+				
+				System.out.println("Email: ");
+				String email = s.nextLine();
+				
+				System.out.println("Note: ");
+				String note = s.nextLine();
+				
+				contatti.add(new Contatto( name, surname, telephone, email, note ));
+				
+				fileWriter.write( contatti.get( contatti.size() -1 ).getName() );
+				fileWriter.write(";");
+				
+				fileWriter.write( contatti.get( contatti.size() -1 ).getSurname() );
+				fileWriter.write(";");
+				
+				fileWriter.write( contatti.get( contatti.size() -1 ).getTelephone() );
+				fileWriter.write(";");
+				
+				fileWriter.write( contatti.get( contatti.size() -1 ).getEmail() );
+				fileWriter.write(";");
+				
+				fileWriter.write( contatti.get( contatti.size() -1 ).getNote() );
+				fileWriter.write(";");
+								
+				fileWriter.flush();
 			
-			
-			
-			
-		} catch (IOException ioEx) {		
-			ioEx.printStackTrace();	
+		}catch( IOException ioEx ) {
+			ioEx.printStackTrace();
+			throw ioEx;
 		}
-		
-		
-
-
 	}
 }
