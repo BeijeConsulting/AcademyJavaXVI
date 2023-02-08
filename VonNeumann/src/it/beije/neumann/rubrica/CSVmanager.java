@@ -48,6 +48,9 @@ public class CSVmanager {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
+		File file = new File("/temp/rubrica.csv");
+		if(!file.exists()) System.out.println("Non esiste");
+		//System.out.println("file.exists()? " + file.exists());
 		List<Contatto> contatti = readRubrica("/temp/rubrica.csv");
 		System.out.println(contatti);
 	}
@@ -56,6 +59,8 @@ public class CSVmanager {
 		
 		try {
 			File file = new File("/temp/rubrica.csv");
+		//	C:\Users\pietr\AppData\Local\Temp
+		//	File file = new File("C:\\Users\\pietr\\AppData\\Local\\Temp\\rubrica.csv");
 			
 			System.out.println("file.exists()? " + file.exists());
 			System.out.println("file.isDirectory()? " + file.isDirectory());
