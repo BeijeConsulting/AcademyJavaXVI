@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import it.beije.neumann.mercuri.rubrica.Contatto;
-
 public class RoomFeeler {
 
 	public static int tabCounter = 0;
