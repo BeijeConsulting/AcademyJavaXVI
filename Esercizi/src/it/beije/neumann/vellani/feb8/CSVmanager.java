@@ -1,6 +1,7 @@
 package it.beije.neumann.vellani.feb8;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -46,9 +47,56 @@ public class CSVmanager {
 		
 		return contatti;
 	}
+	
+	public static void writeRubrica(String pathfile, List<Contatto> contatti) throws IOException {
+	    FileWriter fileWriter = new FileWriter(pathfile, false);
+	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+	    try {
+	        for (Contatto c : contatti) {
+	            String row = String.format("\n%s;%s;%s;%s;%s;", 
+	            		c.getSurname(), 
+	            		c.getName(), 
+	            		c.getTelephone(), 
+	            		c.getEmail(), 
+	            		c.getNote());
+
+	            bufferedWriter.write(row);
+	            bufferedWriter.newLine();
+	        }
+	    } catch (IOException ioEx) {
+	        ioEx.printStackTrace();
+	        throw ioEx;
+	    } finally {
+	        bufferedWriter.close();
+	    }
+	}
+	
+	public static void writeRubricaAppend(String pathfile, List<Contatto> contatti) throws IOException {
+	    FileWriter fileWriter = new FileWriter(pathfile, true);
+	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+	    try {
+	        for (Contatto c : contatti) {
+	            String row = String.format("\n%s;%s;%s;%s;%s;", 
+	            		c.getSurname(), 
+	            		c.getName(), 
+	            		c.getTelephone(), 
+	            		c.getEmail(), 
+	            		c.getNote());
+	            bufferedWriter.write(row);
+	            bufferedWriter.newLine();
+	        }
+	    } catch (IOException ioEx) {
+	        ioEx.printStackTrace();
+	        throw ioEx;
+	    } finally {
+	        bufferedWriter.close();
+	    }
+	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		List<Contatto> contatti = readRubrica("/temp/rubrica.csv");
+		List<Contatto> contatti = readRubrica("/rubrica.csv");
+		CSVmanager.writeRubrica("/rubrica.csv", contatti);
+		
 		System.out.println(contatti);
 	}
 	
