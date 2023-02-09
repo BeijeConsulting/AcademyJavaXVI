@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><rubrica>
+	<contatto>
+		<nome>NOME</nome>
+		<cognome>COGNOME</cognome>
+		<telefono>TELEFONO</telefono>
+		<email>EMAIL</email>
+		<note>NOTE</note>
+	</contatto>
+	<contatto>
+		<nome>mario</nome>
+		<cognome>rossi</cognome>
+		<telefono/>
+		<email>mario@rossi.it</email>
+		<note>cugino</note>
+	</contatto>
+	<contatto>
+		<nome>carlo maria</nome>
+		<cognome>rossi</cognome>
+		<telefono>333333334</telefono>
+		<email>carlo@rossi.it</email>
+		<note>vicino di casa</note>
+	</contatto>
+	<contatto>
+		<nome>giovanni</nome>
+		<cognome>rossi</cognome>
+		<telefono>333333335</telefono>
+		<email/>
+		<note>macellaio, chiuso il lunedi'</note>
+	</contatto>
+	<contatto>
+		<nome>luca</nome>
+		<cognome>giallini</cognome>
+		<telefono>333378935</telefono>
+		<email>breadluca@hotmail.com</email>
+		<note>panettiere</note>
+	</contatto>
+<contatto><nome>NOME</nome><cognome>COGNOME</cognome><telefono>TELEFONO</telefono><email>EMAIL</email><note>NOTE</note></contatto><contatto><nome>mario</nome><cognome>rossi</cognome><telefono/><email>mario@rossi.it</email><note>cugino</note></contatto><contatto><nome>carlo maria</nome><cognome>rossi</cognome><telefono>333333334</telefono><email>carlo@rossi.it</email><note>vicino di casa</note></contatto><contatto><nome>giovanni</nome><cognome>rossi</cognome><telefono>333333335</telefono><email/><note>macellaio, chiuso il lunedi'</note></contatto></rubrica>
