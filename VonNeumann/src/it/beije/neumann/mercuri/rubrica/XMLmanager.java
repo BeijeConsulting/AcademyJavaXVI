@@ -96,11 +96,24 @@ public class XMLmanager {
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.newDocument();
+			Document document = null;
 			
-			Element documentElement = document.createElement("contatti");
-			document.appendChild(documentElement);
+			Element documentElement = null;
+			File fileXML = new File(pathFile);
 			
+			if (!fileXML.exists()) {
+				System.out.println("creazione del file e scrittura");
+				document = documentBuilder.newDocument();
+				documentElement = document.createElement("contatti");
+				document.appendChild(documentElement);
+			}
+			else {
+				System.out.println("aggiunta di elementi all'xml");
+				document = documentBuilder.parse(fileXML);
+				documentElement = document.getDocumentElement();
+			}
+
+
 			for(Contatto contatto : contatti) {
 				
 				Element contattoEl = document.createElement("contatto");
@@ -152,11 +165,16 @@ public class XMLmanager {
 			parseConfEx.printStackTrace();
 		
 		} 
-
 		catch (TransformerException transEx) {
 			transEx.printStackTrace();
 	
 		} 
+		 catch (IOException iOEx) {
+			iOEx.printStackTrace();
+		}
+		 catch (SAXException saxEx) {
+			saxEx.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args)  {
