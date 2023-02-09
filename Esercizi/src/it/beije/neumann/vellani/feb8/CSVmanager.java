@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 
 public class CSVmanager {
 	
-	public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
+	public static List<Contatto> readRubrica(String pathfile,  String separator) throws FileNotFoundException, IOException {
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -25,7 +25,7 @@ public class CSVmanager {
 			Contatto contatto = null;
 			while (bufferedReader.ready()) {
 				r = bufferedReader.readLine();
-				fields = r.split(";");
+				fields = r.split(separator);
 				
 				contatto = new Contatto();
 				contatto.setSurname(fields[0]);
@@ -94,7 +94,7 @@ public class CSVmanager {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		List<Contatto> contatti = readRubrica("/rubrica.csv");
+		List<Contatto> contatti = readRubrica("/rubrica.csv", ",");
 		CSVmanager.writeRubrica("/rubrica.csv", contatti);
 		
 		System.out.println(contatti);
