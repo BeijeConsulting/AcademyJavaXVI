@@ -25,11 +25,13 @@ public static List<Contatto> loadRubricaFromCSV(String pathfile, String separato
 			Contatto contatto = null;
 			while( bufferedReader.ready() ) {
 				r = bufferedReader.readLine();
+				if(r.equalsIgnoreCase("COGNOME;NOME;TELEFONO;EMAIL;NOTE")) continue;
 				fields = r.split(separator, -1);
 				contatto = new Contatto( fields[0], fields[1], fields[2], fields[3], fields[4] );
 				contatti.add(contatto);
 			}				
 		} catch (IOException ioEx) {
+			
 			ioEx.printStackTrace();
 			throw ioEx;
 		} finally {
@@ -42,7 +44,7 @@ public static List<Contatto> loadRubricaFromCSV(String pathfile, String separato
 	public static void writeRubricaCSV( List<Contatto> contatti, String pathFile, String separator ) throws IOException {
 		
 		FileWriter fileWriter = new FileWriter( pathFile, true );
-		
+		fileWriter.write("\n");
 		fileWriter.write( contatti.get( contatti.size() -1 ).getName() );
 		fileWriter.write(separator);
 		
@@ -56,7 +58,7 @@ public static List<Contatto> loadRubricaFromCSV(String pathfile, String separato
 		fileWriter.write(separator);
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getNote() );
-		fileWriter.write("\n");
+		
 		
 		fileWriter.flush();
 		
