@@ -44,6 +44,31 @@ public class Contatto {
 		this.note = note;
 	}
 
+	public void setAttributes(String format, String delimiter, String[] attributes) {
+		String keys[]= format.split(delimiter);
+		for(int i=0; i<attributes.length;i++) {
+			switch(keys[i].toLowerCase()) {
+			case "name":
+				setName(attributes[i]);
+				break;
+			case "surname":
+				setSurname(attributes[i]);
+				break;
+			case "telephone":
+				setTelephone(attributes[i]);
+				break;
+			case "email":
+				setEmail(attributes[i]);
+				break;
+			case "note":
+				setNote(attributes[i]);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid CSV format");
+			}
+		}
+	}
+	
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{");
 //		builder.append(" name: ").append(name);
