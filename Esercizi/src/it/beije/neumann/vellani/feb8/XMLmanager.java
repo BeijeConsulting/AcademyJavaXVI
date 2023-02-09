@@ -8,6 +8,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -119,6 +120,41 @@ public class XMLmanager {
 		}
 
 		return contatti;
+	}
+	
+	public void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, TransformerException {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.newDocument();
+
+		Element rootElement = document.createElement("rubrica");
+		document.appendChild(rootElement);
+
+		for (Contatto contatto : contatti) {
+			Element documentElement = document.createElement("contatto");
+			rootElement.appendChild(documentElement);
+
+			document.createElement("nome").appendChild(document.createTextNode(contatto.getName()));
+			documentElement.appendChild(document.createElement("nome"));
+
+			document.createElement("cognome").appendChild(document.createTextNode(contatto.getSurname()));
+			documentElement.appendChild(document.createElement("cognome"));
+
+			document.createElement("telefono").appendChild(document.createTextNode(contatto.getTelephone()));
+			documentElement.appendChild(document.createElement("telefono"));
+
+			document.createElement("email").appendChild(document.createTextNode(contatto.getEmail()));
+			documentElement.appendChild(document.createElement("email"));
+
+			document.createElement("note").appendChild(document.createTextNode(contatto.getNote()));
+			documentElement.appendChild(document.createElement("note"));
+		}
+
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		StreamResult result = new StreamResult(new File(pathFile));
+		transformer.transform(source, result);
 	}
 
 	
