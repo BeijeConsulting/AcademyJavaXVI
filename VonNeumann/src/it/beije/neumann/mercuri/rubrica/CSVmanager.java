@@ -9,13 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class CSVmanager {
 	
-	public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
+	public List<Contatto> loadRubricaFromCSV(String pathfile,String separator) throws FileNotFoundException, IOException {
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -26,7 +24,7 @@ public class CSVmanager {
 			Contatto contatto = null;
 			while (bufferedReader.ready()) {
 				r = bufferedReader.readLine();
-				fields = r.split(";" , -1);
+				fields = r.split(separator , -1);
 				
 				contatto = new Contatto();
 				contatto.setSurname(fields[0]);
@@ -47,7 +45,7 @@ public class CSVmanager {
 		return contatti;
 	}
 	
-	public static void writeRubrica (String pathFile, List<Contatto> list)  {
+	public void writeRubricaCSV (String pathFile, List<Contatto> list,String separator)  {
 					
 		File newFile = new File(pathFile);
 						
@@ -63,11 +61,11 @@ public class CSVmanager {
 				for (Contatto s : list) {
 					
 					sb.setLength(0);
-					sb.append(s.getSurname()).append(";")
-						.append(s.getName()).append(";")
-						.append(s.getTelephone()).append(";")
-						.append(s.getEmail()).append(";")
-						.append(s.getNote()).append(";");
+					sb.append(s.getSurname()).append(separator)
+						.append(s.getName()).append(separator)
+						.append(s.getTelephone()).append(separator)
+						.append(s.getEmail()).append(separator)
+						.append(s.getNote()).append(separator);
 					
 					fileWriter.write(sb.toString());
 					fileWriter.write('\n');
@@ -100,11 +98,11 @@ public class CSVmanager {
 				for (Contatto s : list) {
 					
 					sb.setLength(0);
-					sb.append(s.getSurname()).append(";")
-						.append(s.getName()).append(";")
-						.append(s.getTelephone()).append(";")
-						.append(s.getEmail()).append(";")
-						.append(s.getNote()).append(";");
+					sb.append(s.getSurname()).append(separator)
+						.append(s.getName()).append(separator)
+						.append(s.getTelephone()).append(separator)
+						.append(s.getEmail()).append(separator)
+						.append(s.getNote()).append(separator);
 					
 					writeFile.append(sb.toString() + "\n");
 				}
@@ -121,12 +119,12 @@ public class CSVmanager {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
-		List<Contatto> contatti = readRubrica("/temp/rubricaDaAggiungere.csv");
-
-		CSVmanager.writeRubrica("/temp/rubricaCopiata.csv", contatti);
-		
-		contatti = readRubrica("/temp/rubricaCopiata.csv");
-		System.out.println(contatti);
+//		List<Contatto> contatti = readRubrica("/temp/rubricaDaAggiungere.csv");
+//
+//		CSVmanager.writeRubrica("/temp/rubricaCopiata.csv", contatti);
+//		
+//		contatti = readRubrica("/temp/rubricaCopiata.csv");
+//		System.out.println(contatti);
 	}
 	
 }
