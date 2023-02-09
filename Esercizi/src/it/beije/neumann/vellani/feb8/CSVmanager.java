@@ -14,7 +14,41 @@ import java.util.StringTokenizer;
 
 public class CSVmanager {
 	
-	public static List<Contatto> readRubrica(String pathfile,  String separator) throws FileNotFoundException, IOException {
+	public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
+		FileReader fileReader = new FileReader(pathfile);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		
+		try {
+			String r = null;
+			String[] fields = null;
+			Contatto contatto = null;
+			while (bufferedReader.ready()) {
+				r = bufferedReader.readLine();
+				fields = r.split(";");
+				
+				contatto = new Contatto();
+				contatto.setSurname(fields[0]);
+				contatto.setName(fields[1]);
+				contatto.setTelephone(fields[2]);
+				contatto.setEmail(fields[3]);
+				contatto.setNote(fields[4]);
+				
+				contatti.add(contatto);
+				
+				//System.out.println(contatto);
+			}
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} finally {
+			bufferedReader.close();
+		}
+		
+		return contatti;
+	}
+	
+	public static List<Contatto> loadRubricaFromCSV(String pathfile, String separator) throws FileNotFoundException, IOException {
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -48,17 +82,16 @@ public class CSVmanager {
 		return contatti;
 	}
 	
-	public static void writeRubrica(String pathfile, List<Contatto> contatti) throws IOException {
+	public static void writeRubricaCSV(String pathfile, List<Contatto> contatti, String separator) throws IOException {
 	    FileWriter fileWriter = new FileWriter(pathfile, false);
 	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 	    try {
 	        for (Contatto c : contatti) {
-	            String row = String.format("\n%s;%s;%s;%s;%s;", 
-	            		c.getSurname(), 
-	            		c.getName(), 
-	            		c.getTelephone(), 
-	            		c.getEmail(), 
-	            		c.getNote());
+	            String row = c.getSurname() + separator 
+	            		+ c.getName() + separator 
+	            		+ c.getTelephone() + separator 
+	            		+ c.getEmail() + separator 
+	            		+ c.getNote();
 
 	            bufferedWriter.write(row);
 	            bufferedWriter.newLine();
@@ -71,17 +104,16 @@ public class CSVmanager {
 	    }
 	}
 	
-	public static void writeRubricaAppend(String pathfile, List<Contatto> contatti) throws IOException {
+	public static void writeRubricaAppendCSV(String pathfile, List<Contatto> contatti, String separator) throws IOException {
 	    FileWriter fileWriter = new FileWriter(pathfile, true);
 	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 	    try {
 	        for (Contatto c : contatti) {
-	            String row = String.format("\n%s;%s;%s;%s;%s;", 
-	            		c.getSurname(), 
-	            		c.getName(), 
-	            		c.getTelephone(), 
-	            		c.getEmail(), 
-	            		c.getNote());
+	            String row = c.getSurname() + separator 
+	            		+ c.getName() + separator 
+	            		+ c.getTelephone() + separator 
+	            		+ c.getEmail() + separator 
+	            		+ c.getNote();
 	            bufferedWriter.write(row);
 	            bufferedWriter.newLine();
 	        }
@@ -94,8 +126,7 @@ public class CSVmanager {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		List<Contatto> contatti = readRubrica("/rubrica.csv", ",");
-		CSVmanager.writeRubrica("/rubrica.csv", contatti);
+		List<Contatto> contatti = readRubrica("/rubrica.csv");
 		
 		System.out.println(contatti);
 	}
