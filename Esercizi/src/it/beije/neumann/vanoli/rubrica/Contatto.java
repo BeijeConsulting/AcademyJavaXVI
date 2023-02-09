@@ -1,4 +1,4 @@
-package it.beije.neumann.vanoli._02_08;
+package it.beije.neumann.vanoli.rubrica;
 
 public class Contatto {
 
@@ -7,6 +7,14 @@ public class Contatto {
 	private String telephone;
 	private String email;
 	private String note;
+	
+	public Contatto() {
+		name = "";
+		surname = "";
+		telephone = "";
+		email = "";
+		note = "";
+	}
 	
 	public String getName() {
 		return name;
@@ -44,14 +52,6 @@ public class Contatto {
 	}
 
 	public String toString() {
-//		StringBuilder builder = new StringBuilder("{");
-//		builder.append(" name: ").append(name);
-//		builder.append(", surname: ").append(surname);
-//		builder.append(", telephone: ").append(telephone);
-//		builder.append(", email: ").append(email);
-//		builder.append(", note: ").append(note);
-//		builder.append("}");
-
 		StringBuilder builder = new StringBuilder("{")
 				.append(" name: ").append(name)
 				.append(", surname: ").append(surname)
