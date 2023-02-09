@@ -1,5 +1,7 @@
 package it.beije.neumann.mongiello.rubrica;
 
+import java.util.List;
+import java.util.Scanner;
 
 public class Contatto {
 
@@ -30,6 +32,29 @@ public class Contatto {
 		return builder.toString();
 	}
 	
+	public static List<Contatto> inputRubrica( List<Contatto> contatti ){
+		
+		Scanner s = new Scanner(System.in);
+		
+		System.out.print("Nome: ");
+		String name = s.nextLine();
+	
+		System.out.print("Cognome: ");
+		String surname = s.nextLine();
+		
+		System.out.print("Telefono: ");
+		String telephone = s.nextLine();
+		
+		System.out.println("Email: ");
+		String email = s.nextLine();
+		
+		System.out.println("Note: ");
+		String note = s.nextLine();
+		
+		contatti.add(new Contatto( name, surname, telephone, email, note ));
+		return contatti;
+		
+	}
 	public String getName() {
 		return name;
 	}
