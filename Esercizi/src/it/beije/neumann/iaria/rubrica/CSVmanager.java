@@ -48,13 +48,13 @@ public class CSVmanager {
 		return contatti;
 	}
 
-	//Metodo che chiede all'utente di inserire 4 contatti e li inserisce nella List<Contatto>
+	//Metodo che chiede all'utente di inserire 3 contatti e li inserisce nella List<Contatto>
 	public static List<Contatto> userContacts() {
-		System.out.println("Inserisci 4 contatti:");
+		System.out.println("Inserisci 3 contatti:");
 		Scanner s = new Scanner(System.in);		
 		List<Contatto> contattiDaScanner = new ArrayList<Contatto>();
 		
-		for(int i=1; i<=4; i++) {
+		for(int i=1; i<=3; i++) {
 			Contatto contattoInput = new Contatto();
 			System.out.print("Nome: ");
 			contattoInput.setName(s.nextLine());
@@ -71,7 +71,7 @@ public class CSVmanager {
 			System.out.print("Note: ");
 			contattoInput.setNote(s.nextLine());
 
-			int mancanti = 4-i;
+			int mancanti = 3-i;
 			
 			if(mancanti==0) {
 				System.out.println("Contatti salvati con successo!");
@@ -87,7 +87,7 @@ public class CSVmanager {
 		return contattiDaScanner;		
 	}
 	
-	//Metodo per cercare ed eventualmente sovrascrivere un .csv
+	//Metodo per creare un nuovo csv con dati inseriti dall'utente (userContacts())
 	public static void writeNewRubrica(String pathfile, List<Contatto> contacts) throws FileNotFoundException, IOException{
 		File newRubrica = new File("/Users/gianf/Desktop/newrubrica.csv");
 		FileWriter fileWriter = new FileWriter(newRubrica);
@@ -102,7 +102,7 @@ public class CSVmanager {
 			fileWriter.write(firstLine); //Inserisco la prima riga con split diversi
 			fileWriter.write("\n"); //A capo
 			
-			for (Contatto persona : contacts) {  //Per ogni contatto inserisci...
+			for (Contatto persona : contacts) {
 				fileWriter.write(persona.getName() + "/");
 				fileWriter.write(persona.getSurname() + "/");
 				fileWriter.write(persona.getTelephone() + "/");
@@ -120,13 +120,39 @@ public class CSVmanager {
 		}
 	}
 	
+	//Metodo per sovrascrivere il csv esistente "newrubrica" con dati inseriti dall'utente (userContacts())
+	public static void overloadNewRubrica(String pathfile, List<Contatto> contacts) throws FileNotFoundException, IOException{
+		File newRubrica = new File("/Users/gianf/Desktop/newrubrica.csv");
+		FileWriter fileOverload = new FileWriter("/Users/gianf/Desktop/newrubrica.csv", true);
+		
+		try {
+			
+			for (Contatto persona : contacts) {  //Per ogni contatto inserisci...
+				fileOverload.write(persona.getName() + "/");
+				fileOverload.write(persona.getSurname() + "/");
+				fileOverload.write(persona.getTelephone() + "/");
+				fileOverload.write(persona.getEmail() + "/");
+				fileOverload.write(persona.getNote() + "\n");
+			}
+
+		}catch(FileNotFoundException fnfEx) {
+			fnfEx.printStackTrace();
+		}catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} finally {
+			fileOverload.close(); //Chiudo il file per salvare modifiche
+		}
+	}
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		//List<Contatto> contatti = readRubrica("./src/it/beije/neumann/iaria/rubrica/rubrica.csv");
-		List<Contatto> contattiIvo = readRubrica("/Users/gianf/Desktop/rubrica.csv");
-		//List<Contatto> contattiGian = readRubrica("./src/it/beije/neumann/iaria/rubrica/rubrica.csv");
-		List<Contatto> contattiGian = userContacts();
-		writeNewRubrica("/Users/gianf/Desktop/newrubrica.csv", contattiGian);
+		//List<Contatto> contattiIvo = readRubrica("/Users/gianf/Desktop/rubrica.csv");
 		//System.out.println(contattiIvo);
+		
+		List<Contatto> newContattiGian = userContacts(); //Prima lista
+		writeNewRubrica("/Users/gianf/Desktop/newrubrica.csv", newContattiGian); //Creazione newRubrica
+		List<Contatto> overloadContattiGian = userContacts(); //Nuova lista
+		overloadNewRubrica("/Users/gianf/Desktop/newrubrica.csv", overloadContattiGian); //Overload newRubrica
 		//System.out.println(contattiGian);
 	}
 	
