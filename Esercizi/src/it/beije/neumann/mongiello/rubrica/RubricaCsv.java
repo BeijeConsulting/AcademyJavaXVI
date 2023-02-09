@@ -13,9 +13,8 @@ import java.util.List;
 
 public class RubricaCsv {
 	
-public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
+public static List<Contatto> loadRubricaFromCSV(String pathfile, String separator) throws FileNotFoundException, IOException {
 
-		
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -26,7 +25,7 @@ public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundExc
 			Contatto contatto = null;
 			while( bufferedReader.ready() ) {
 				r = bufferedReader.readLine();
-				fields = r.split(";");
+				fields = r.split(separator, -1);
 				contatto = new Contatto( fields[0], fields[1], fields[2], fields[3], fields[4] );
 				contatti.add(contatto);
 			}				
@@ -40,24 +39,24 @@ public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundExc
 	}
 
 
-	public static void writeRubrica( List<Contatto> contatti, File file ) throws IOException {
+	public static void writeRubricaCSV( List<Contatto> contatti, String pathFile, String separator ) throws IOException {
 		
-		FileWriter fileWriter = new FileWriter( file, true );
+		FileWriter fileWriter = new FileWriter( pathFile, true );
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getName() );
-		fileWriter.write(";");
+		fileWriter.write(separator);
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getSurname() );
-		fileWriter.write(";");
+		fileWriter.write(separator);
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getTelephone() );
-		fileWriter.write(";");
+		fileWriter.write(separator);
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getEmail() );
-		fileWriter.write(";");
+		fileWriter.write(separator);
 		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getNote() );
-		fileWriter.write(";");
+		fileWriter.write("\n");
 		
 		fileWriter.flush();
 		
