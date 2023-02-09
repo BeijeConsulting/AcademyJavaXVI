@@ -114,7 +114,7 @@ public class CSVmanager {
 //			}
 			
 			
-//			File newFile = new File("/temp/neumann.csv");
+//			File newFile = new File("/temp/rubrica.csv");
 //			System.out.println("newFile.exists()? " + newFile.exists());
 //			
 ////			if (!newFile.exists()) {

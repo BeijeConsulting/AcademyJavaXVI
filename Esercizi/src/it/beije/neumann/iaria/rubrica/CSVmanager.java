@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class CSVmanager {
 	
-	//Metodo per leggere dati da csv
+	//Contatti ivo
 	public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -44,17 +45,89 @@ public class CSVmanager {
 			bufferedReader.close();
 		}
 		
-		//Crea file, controlla che esiste ecc.
-		File fileNuovo = new File(""); 
-		System.out.println("file.exists()?  "+fileNuovo.exists());
-		//
-		
 		return contatti;
 	}
 
+	//Metodo che chiede all'utente di inserire 4 contatti e li inserisce nella List<Contatto>
+	public static List<Contatto> userContacts() {
+		System.out.println("Inserisci 4 contatti:");
+		Scanner s = new Scanner(System.in);		
+		List<Contatto> contattiDaScanner = new ArrayList<Contatto>();
+		
+		for(int i=1; i<=4; i++) {
+			Contatto contattoInput = new Contatto();
+			System.out.print("Nome: ");
+			contattoInput.setName(s.nextLine());
+		
+			System.out.print("Cognome: ");
+			contattoInput.setSurname(s.nextLine());
+		
+			System.out.print("Numero di telefono: ");
+			contattoInput.setTelephone(s.nextLine());
+				
+			System.out.print("Email: ");
+			contattoInput.setEmail(s.nextLine());
+		
+			System.out.print("Note: ");
+			contattoInput.setNote(s.nextLine());
+
+			int mancanti = 4-i;
+			
+			if(mancanti==0) {
+				System.out.println("Contatti salvati con successo!");
+				contattiDaScanner.add(contattoInput); //Inserisco valori nella lista contatti
+				break;
+			}
+			System.out.println("Salvato il "+i+"° contatto, ne mancano ancora "+mancanti);
+			
+			contattiDaScanner.add(contattoInput); //Inserisco valori nella lista contatti
+
+		}
+		
+		return contattiDaScanner;		
+	}
+	
+	//Metodo per cercare ed eventualmente sovrascrivere un .csv
+	public static void writeNewRubrica(String pathfile, List<Contatto> contacts) throws FileNotFoundException, IOException{
+		File newRubrica = new File("/Users/gianf/Desktop/newrubrica.csv");
+		FileWriter fileWriter = new FileWriter(newRubrica);
+		
+		try {
+			File oldRubrica = new File("/Users/gianf/Desktop/rubrica.csv");
+			FileReader fileReaderOldRubrica = new FileReader(oldRubrica);
+			BufferedReader bufferedreader = new BufferedReader(fileReaderOldRubrica); //Per leggere file
+			
+			String firstLine = bufferedreader.readLine(); //Considero la prima riga
+			firstLine = firstLine.replace(';', '/');  //Cambio split come richiesto
+			fileWriter.write(firstLine); //Inserisco la prima riga con split diversi
+			fileWriter.write("\n"); //A capo
+			
+			for (Contatto persona : contacts) {  //Per ogni contatto inserisci...
+				fileWriter.write(persona.getName() + "/");
+				fileWriter.write(persona.getSurname() + "/");
+				fileWriter.write(persona.getTelephone() + "/");
+				fileWriter.write(persona.getEmail() + "/");
+				fileWriter.write(persona.getNote() + "\n");
+			}
+
+		}catch(FileNotFoundException fnfEx) {
+			fnfEx.printStackTrace();
+		}catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} finally {
+			fileWriter.close(); //Chiudo il file per salvare modifiche
+		}
+	}
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		List<Contatto> contatti = readRubrica("");
-		System.out.println(contatti);
+		//List<Contatto> contatti = readRubrica("./src/it/beije/neumann/iaria/rubrica/rubrica.csv");
+		List<Contatto> contattiIvo = readRubrica("/Users/gianf/Desktop/rubrica.csv");
+		//List<Contatto> contattiGian = readRubrica("./src/it/beije/neumann/iaria/rubrica/rubrica.csv");
+		List<Contatto> contattiGian = userContacts();
+		writeNewRubrica("/Users/gianf/Desktop/newrubrica.csv", contattiGian);
+		//System.out.println(contattiIvo);
+		//System.out.println(contattiGian);
 	}
 	
 }
