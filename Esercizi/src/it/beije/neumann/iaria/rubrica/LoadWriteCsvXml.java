@@ -20,6 +20,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.xml.sax.SAXException;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -158,26 +159,59 @@ public class LoadWriteCsvXml {
 		
 	}
 	
-	/*public List<Contatto> loadRubricaFromCSV(String pathFile, String separator) throws {
-	List<Contatto> contatti = new ArrayList<Contatto>();
-	return contatti;
-	}*/
+	public List<Contatto> loadRubricaFromCSV(String pathFile, String separator) throws FileNotFoundException, IOException{
+		String[] ordine = {"nome","cognome","telefono","email","note"};
+		
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		FileReader fileReader = new FileReader(pathFile);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		
+		try {
+			String r = null;
+			String[] fields = null;
+			Contatto contatto = null;
+			
+			while (bufferedReader.ready()) {
+				r = bufferedReader.readLine();
+				fields = r.split(separator);
+				
+				contatto = new Contatto();
+				contatto.setName(fields[0]);
+				contatto.setSurname(fields[1]);
+				contatto.setNote(fields[2]);
+				contatto.setTelephone(fields[3]);
+				
+				contatti.add(contatto);
+				
+				//Ogni iterazione stampo i contatti
+				System.out.println(contatto);
+			}
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} finally {
+			bufferedReader.close();
+		}
+		
+		return contatti;
+	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParserConfigurationException, SAXException {
 		LoadWriteCsvXml lwcsvxml = new LoadWriteCsvXml();
 		
-		//CSV
+		//CSV --> Togli commento
 		String pathForCsvFile = "/Users/gianf/Desktop/rubrica.csv";
 		String separator = "-";
 		//List<Contatto> contattiCSV = userContacts();
 		
-		//XML
-		List<Contatto> contattiXML = userContacts();
-		String pathForXmlFile = "/Users/gianf/Desktop/rubrica.xml";
+		//XML --> Togli commento
+		//List<Contatto> contattiXML = userContacts();
+		//String pathForXmlFile = "/Users/gianf/Desktop/rubrica.xml";
 		
 		
 		//lwcsvxml.writeRubricaCSV(contattiCSV, pathForCsvFile, separator);
-		lwcsvxml.writeRubricaXML(contattiXML, pathForXmlFile);
+		//lwcsvxml.writeRubricaXML(contattiXML, pathForXmlFile);
+		lwcsvxml.loadRubricaFromCSV(pathForCsvFile, separator);
 		
 		//System.out.println(contattiCSV);
 		
