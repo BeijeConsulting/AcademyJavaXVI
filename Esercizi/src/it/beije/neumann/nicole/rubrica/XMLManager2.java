@@ -86,7 +86,7 @@ public class XMLManager2
 			contacts.add(contatto);
 		}
 
-		System.out.println(contatti);
+	
 
 	}
 	
