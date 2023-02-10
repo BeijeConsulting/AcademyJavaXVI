@@ -3,7 +3,7 @@
  * public int contaLettera(char c, String str)
  * che conta le occorrenze della lettera c nella stringa str
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 public class ContaLettera {
 	

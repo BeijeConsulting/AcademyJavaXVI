@@ -1,4 +1,4 @@
-package it.beije.neumann.nido.rubricaex;
+package it.beije.neumann.nido.rubrica;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

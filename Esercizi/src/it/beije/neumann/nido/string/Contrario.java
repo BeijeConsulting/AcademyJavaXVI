@@ -3,7 +3,7 @@
  * la stampa al contrario. Per esempio, la stringa
  * “Viva Java!” verrà “!avaJ aviV”
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 public class Contrario {
 

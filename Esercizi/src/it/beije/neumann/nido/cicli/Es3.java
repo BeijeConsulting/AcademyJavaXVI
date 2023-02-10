@@ -1,7 +1,7 @@
 /*
  * Scrivere un programma che stampi le tabellina del numero dato come argomento
  */
-package it.beije.neumann.nido.cicliex;
+package it.beije.neumann.nido.cicli;
 
 public class Es3 {
 

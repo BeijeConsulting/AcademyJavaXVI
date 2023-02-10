@@ -7,7 +7,7 @@
  * #####
  * ######
  */
-package it.beije.neumann.nido.cicliex;
+package it.beije.neumann.nido.cicli;
 
 public class Es5 {
 

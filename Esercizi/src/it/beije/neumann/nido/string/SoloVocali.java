@@ -2,7 +2,7 @@
  * Scrivere un programma SoloVocali che, data una stringa,
  * ne stampa le sole vocali
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 public class SoloVocali {
 

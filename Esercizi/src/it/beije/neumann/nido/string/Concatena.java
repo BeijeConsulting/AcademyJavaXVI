@@ -5,7 +5,7 @@
  * Per esempio, se l’utente inserisce “gatto”,
  * “cane” e “topo” il programma stamperà “gatto*cane*topo”.
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 import java.util.Scanner;
 

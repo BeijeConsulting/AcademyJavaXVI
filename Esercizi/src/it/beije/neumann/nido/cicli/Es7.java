@@ -2,7 +2,7 @@
  * Scrivere un programma che stampi i
  * primi 100 elementi della successione di Fibonacci.
  */
-package it.beije.neumann.nido.cicliex;
+package it.beije.neumann.nido.cicli;
 
 public class Es7 {
 

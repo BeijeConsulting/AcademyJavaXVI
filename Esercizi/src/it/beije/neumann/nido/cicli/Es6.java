@@ -7,7 +7,7 @@
  * 12345      21
  * 123456      1
  */
-package it.beije.neumann.nido.cicliex;
+package it.beije.neumann.nido.cicli;
 
 public class Es6 {
 

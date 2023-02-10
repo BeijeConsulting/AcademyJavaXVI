@@ -18,7 +18,7 @@
  * (senza colonna TELEPHONE) 
 
  */
-package it.beije.neumann.nido.rubricaex.csvxml;
+package it.beije.neumann.nido.rubrica.csvxml;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,7 +45,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import it.beije.neumann.nido.rubricaex.Contatto;
+import it.beije.neumann.nido.rubrica.Contatto;
 
 public class RubricaManager {
 
@@ -263,8 +263,6 @@ public class RubricaManager {
 			}
 		}
 
-		in.close();
-
 		return contacts;
 	}
 
@@ -346,16 +344,13 @@ public class RubricaManager {
 		fromXMLtoCSV(manager); // Okay Append
 
 		// Add contact(s) to XML
-		/*
+		
 		try {
 			manager.writeRubricaXML(manager.addContacts(), XML_SAVE_PATH);
 
 		} catch (TransformerException | ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
-		*/
-		
-		//TODO Controllare perché NoSuchElementException
 	}
 
 }

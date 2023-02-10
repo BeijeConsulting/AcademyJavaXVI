@@ -7,7 +7,7 @@
  * assuma questa come un nome di variabile e stampi
  * per questa variabile il suo metodo “getter”.
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 public class GetSet {
 

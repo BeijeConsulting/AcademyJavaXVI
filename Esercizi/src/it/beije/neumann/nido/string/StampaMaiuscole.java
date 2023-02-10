@@ -3,7 +3,7 @@
  * dato un array di stringhe, ne stampa solo
  * quelle con la prima lettera maiuscola
  */
-package it.beije.neumann.nido.stringex;
+package it.beije.neumann.nido.string;
 
 public class StampaMaiuscole {
 

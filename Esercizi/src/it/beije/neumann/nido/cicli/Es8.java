@@ -10,7 +10,7 @@
  * 1, 1, 2, 3, 5, 8, 13
  * ....
  */
-package it.beije.neumann.nido.cicliex;
+package it.beije.neumann.nido.cicli;
 
 public class Es8 {
 
