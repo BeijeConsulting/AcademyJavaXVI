@@ -2,7 +2,7 @@ package it.beije.neumann.rubrica.nicole;
 /**
  * Scrivo la mia RubricaCSV
  */
-import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class CSVManager
 			
 			writer.append("COGNOME;NOME;TELEFONO;EMAIL;NOTE");
 			writer.write(System.lineSeparator());
-			String [] contacts=null;
+			
 			for(Contatto c : contatti)
 			{
 				String name=c.getName();
