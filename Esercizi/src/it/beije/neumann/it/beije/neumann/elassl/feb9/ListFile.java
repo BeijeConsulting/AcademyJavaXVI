@@ -13,13 +13,11 @@ public class ListFile {
 		StringBuilder out = new StringBuilder();
 		return list(path, "", out);
 	}
+	
     private StringBuilder list(String path, String depth, StringBuilder out) {
-    	
         File dir = new File(path);
         File[] list = dir.listFiles();
-        if (list == null) {
-    		return null;
-        }
+        if (list == null) return null;
         for (File elem : list) {
             if (elem.isDirectory()) {
             	out = list(elem.getAbsolutePath(), depth+"\t", out);

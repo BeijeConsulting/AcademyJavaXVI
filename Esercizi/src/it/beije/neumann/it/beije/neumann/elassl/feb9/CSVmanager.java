@@ -42,7 +42,7 @@ public class CSVmanager {
 	}
 	
 	
-	public List<Contatto> loadRubricaFromCSV(String pathFile, String separator) throws FileNotFoundException, IOException{
+	public static List<Contatto> loadRubricaFromCSV(String pathFile, String separator) throws FileNotFoundException, IOException{
 		
 		FileReader fileReader = new FileReader(pathFile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);

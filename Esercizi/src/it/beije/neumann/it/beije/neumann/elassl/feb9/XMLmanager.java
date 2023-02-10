@@ -47,7 +47,7 @@ public class XMLmanager {
 	
 
 	
-	public List<Contatto> loadRubricaFromXML(String pathFile) throws ParserConfigurationException, IOException, SAXException {
+	public static List<Contatto> loadRubricaFromXML(String pathFile) throws ParserConfigurationException, IOException, SAXException {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(pathFile);
@@ -149,7 +149,7 @@ public class XMLmanager {
 		System.out.println(contatti);
 
 	}
-	public void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+	public static void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 		File file = new File(pathFile);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -158,6 +158,7 @@ public class XMLmanager {
 			List<Contatto> oldContatti = loadRubricaFromXML(pathFile);
 			contatti.addAll(0, oldContatti);
 		}
+		Element rubrica = document.createElement("rubrica");
 		for (Contatto c: contatti) {
 			Element contatto = document.createElement("contatto");
 			Element cognome = document.createElement("cognome");
@@ -176,10 +177,10 @@ public class XMLmanager {
 			contatto.appendChild(telefono);
 			contatto.appendChild(email);
 			contatto.appendChild(note);
-			document.appendChild(contatto);
+			rubrica.appendChild(contatto);
 			System.out.println("Added "+contatto);
 		}
-
+		document.appendChild(rubrica);
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(document);
@@ -191,7 +192,8 @@ public class XMLmanager {
 	}
 	
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
-		
+		List<Contatto> contatti = CSVmanager.loadRubricaFromCSV("/home/mm/git/AcademyJavaXVI/Esercizi/src/it/beije/neumann/it/beije/neumann/elassl/feb8/rubrica.csv", ";");
+		writeRubricaXML(contatti,"/home/mm/git/AcademyJavaXVI/Esercizi/src/it/beije/neumann/it/beije/neumann/elassl/feb10/rubrica.xml");
 		
 	}
 
