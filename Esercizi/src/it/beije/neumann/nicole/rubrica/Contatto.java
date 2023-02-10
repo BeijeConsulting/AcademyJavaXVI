@@ -1,4 +1,4 @@
-package it.beije.neumann.rubrica;
+package it.beije.neumann.nicole.rubrica;
 
 public class Contatto {
 

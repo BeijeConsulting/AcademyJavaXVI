@@ -1,4 +1,4 @@
-package it.beije.neumann.rubrica.nicole;
+package it.beije.neumann.nicole.rubrica;
 /**
  * Aggiungo contatti alla rubrica.csv
  */
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.neumann.rubrica.*;
+
 public class CSVManager 
 {
 	
