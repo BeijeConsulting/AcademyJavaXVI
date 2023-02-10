@@ -1,6 +1,6 @@
 package it.beije.neumann.rubrica.nicole;
 /**
- * Scrivo la mia RubricaCSV
+ * Aggiungo contatti alla rubrica.csv
  */
 
 import java.io.File;
@@ -15,11 +15,13 @@ public class CSVManager
 	
 	public static void writeRubrica(List<Contatto> contatti,String pathFile, String separator) throws IOException
 	{
+		/**
+		 * aggiungo true al costruttore di FileWriter così da non sovrascrivere il file
+		 */
 		
-		FileWriter writer= new FileWriter(pathFile);
+		FileWriter writer= new FileWriter(pathFile,true);
 		try {
 			
-			writer.append("COGNOME;NOME;TELEFONO;EMAIL;NOTE");
 			writer.write(System.lineSeparator());
 			
 			for(Contatto c : contatti)
@@ -78,7 +80,7 @@ public class CSVManager
 			
 			
 			
-			writeRubrica(contatti,"C:\\Users\\nverz\\Music\\esercizio.\\Miarubrica.csv",";");
+			writeRubrica(contatti,"C:\\Users\\nverz\\Music\\esercizio.\\rubrica.csv",";");
 			
 			
 			
