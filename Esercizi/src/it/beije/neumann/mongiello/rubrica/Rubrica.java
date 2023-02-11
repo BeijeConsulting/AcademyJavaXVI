@@ -13,7 +13,6 @@ import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-
 public class Rubrica {
 
 	public static void main( String[] args ) throws FileNotFoundException, IOException, Exception, TransformerException {
@@ -24,26 +23,31 @@ public class Rubrica {
 		File fileCsv = new File(pathFileCsv);
 		File fileXml = new File(pathFileXml);
 		
-		if(!fileCsv.exists()) System.out.println("Non esiste");
+	/*	if(!fileCsv.exists()) {
+			RubricaCsv.creaFile(fileCsv);
+		}
+	*/	
 		
-
 		//memorizza i contatti presenti in un file CSV in una lista
 		List<Contatto> contatti = RubricaCsv.loadRubricaFromCSV(pathFileCsv, ";");
-
+		
 		System.out.println("Aggiungi contatti");
 		//aggiunge ad una lista di contatti i valori presi in input
-		Contatto.inputRubrica(contatti);
-	
-		RubricaCsv.writeRubricaCSV(contatti, pathFileCsv, ";" );
+		//Contatto.inputRubrica(contatti);
 		
-		RubricaXml.writeRubricaXML( contatti, pathFileXml );
+	//	RubricaCsv.writeRubricaCSV(contatti, pathFileCsv, ";" );
+		
+		//RubricaXml.writeRubricaXML( contatti, pathFileXml );
+				
+		//List<Contatto> contattiXml = RubricaXml.loadRubricaFromXML(pathFileXml);
+		Contatto.stampaRubrica(contatti);
 		
 		
-		List<Contatto> contattiXml = RubricaXml.loadRubricaFromXML(pathFileXml);
-			
+	//	RubricaCsv.searchRubrica(  pathFileCsv ,";", "Mongiello" );
 		
+		RubricaCsv.editRubrica( pathFileCsv ,";","COGNOME" , "Mongiello", "Lazza" );
 		
-	
+		//System.out.println(fileCsv.delete());
 	}
 	
 

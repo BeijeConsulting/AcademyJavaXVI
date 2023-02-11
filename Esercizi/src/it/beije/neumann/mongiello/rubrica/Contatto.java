@@ -10,6 +10,7 @@ public class Contatto {
 	private String telephone;
 	private String email;
 	private String note;
+
 	
 	public Contatto( String name, String surname, String telephone, String email, String note ) {
 		this.name = name;
@@ -17,10 +18,27 @@ public class Contatto {
 		this.telephone = telephone;
 		this.email = email;
 		this.note = note;
+	
+	}
+	
+
+
+	public static  void stampaRubrica(List<Contatto> rubrica) {
+		StringBuilder sb = new StringBuilder("");
+		
+		for( Contatto c: rubrica ) {
+
+				sb.append(" name: ").append( c.getName() ).append("\n")
+				.append(" surname: ").append(c.getSurname() ).append("\n")
+				.append(" telephone: ").append( c.getTelephone() ).append("\n")
+				.append(" email: ").append( c.getEmail() ).append("\n")
+				.append(" note: ").append( c.getNote() ).append("\n\n");
+		}
+		
+		System.out.println(sb);
 	}
 	
 	public String toString() {
-
 		StringBuilder builder = new StringBuilder("{")
 				.append(" name: ").append(name)
 				.append(", surname: ").append(surname)
@@ -28,12 +46,12 @@ public class Contatto {
 				.append(", email: ").append(email)
 				.append(", note: ").append(note)
 				.append("}");
-
+	
+		
 		return builder.toString();
 	}
 	
-	public static List<Contatto> inputRubrica( List<Contatto> contatti ){
-		
+	public static List<Contatto> inputRubrica( List<Contatto> contatti ){	
 		Scanner s = new Scanner(System.in);
 		
 		System.out.print("Nome: ");
@@ -52,8 +70,7 @@ public class Contatto {
 		String note = s.nextLine();
 		
 		contatti.add(new Contatto( name, surname, telephone, email, note ));
-		return contatti;
-		
+		return contatti;	
 	}
 	public String getName() {
 		return name;
