@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class LoadWriteCsvXml {
 	
@@ -160,38 +161,110 @@ public class LoadWriteCsvXml {
 	}
 	
 	public List<Contatto> loadRubricaFromCSV(String pathFile, String separator) throws FileNotFoundException, IOException{
-		String[] ordine = {"nome","cognome","telefono","email","note"};
 		
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		FileReader fileReader = new FileReader(pathFile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
 		try {
+			
 			String r = null;
 			String[] fields = null;
 			Contatto contatto = null;
 			
+			//Per ogni riga
 			while (bufferedReader.ready()) {
 				r = bufferedReader.readLine();
 				fields = r.split(separator);
 				
+				//Aggiungi i fields
 				contatto = new Contatto();
 				contatto.setName(fields[0]);
 				contatto.setSurname(fields[1]);
 				contatto.setNote(fields[2]);
 				contatto.setTelephone(fields[3]);
-				
+					
 				contatti.add(contatto);
 				
 				//Ogni iterazione stampo i contatti
 				System.out.println(contatto);
 			}
+			
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
 			throw ioEx;
 		} finally {
 			bufferedReader.close();
 		}
+		
+		return contatti;
+	}
+	
+	//Per poi leggere dati .XML
+	public static List<Element> getChildElements(Element e) {
+		List<Element> elements = new ArrayList<Element>();
+		NodeList childNodes = e.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i ++) {
+			Node node = childNodes.item(i);
+			if (node instanceof Element) {
+				elements.add((Element) node);
+			}
+		}
+		
+		return elements;
+	}
+	
+	public List<Contatto> loadRubricaFromXML(String pathFile) throws ParserConfigurationException, IOException, SAXException{
+
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.parse(pathFile);		
+		Element rootElement = document.getDocumentElement();
+		
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		List<Element> elements = getChildElements(rootElement);
+		
+		Contatto contatto = null;
+		for (Element el : elements) {
+			contatto = new Contatto();
+			
+			List<Element> values = getChildElements(el);
+
+			//Stampo in verticale
+			for (Element v : values) {
+				System.out.print(v.getNodeName() + ": ");
+				String valore = v.getNodeName().toLowerCase(); //Prendo il nome del nodo in minuscolo per confrontarlo
+
+				switch (valore) {
+				case "nome":
+					contatto.setName(v.getTextContent());
+					System.out.println(v.getTextContent());
+					break;
+				case "cognome":
+					contatto.setSurname(v.getTextContent());
+					System.out.println(v.getTextContent());
+					break;
+				case "telefono":
+					contatto.setTelephone(v.getTextContent());
+					System.out.println(v.getTextContent());
+					break;
+				case "email":
+					contatto.setEmail(v.getTextContent());
+					System.out.println(v.getTextContent());
+					break;
+				case "note":
+					contatto.setNote(v.getTextContent());
+					System.out.println(v.getTextContent());
+					break;
+				}
+			}
+			
+			contatti.add(contatto);
+			System.out.println();
+		}
+		
+		//Stampo i contatti in orizzontale
+		System.out.println(contatti);
 		
 		return contatti;
 	}
@@ -206,12 +279,13 @@ public class LoadWriteCsvXml {
 		
 		//XML --> Togli commento
 		//List<Contatto> contattiXML = userContacts();
-		//String pathForXmlFile = "/Users/gianf/Desktop/rubrica.xml";
+		String pathForXmlFile = "/Users/gianf/Desktop/rubrica.xml";
 		
-		
+		//Metodi:
 		//lwcsvxml.writeRubricaCSV(contattiCSV, pathForCsvFile, separator);
 		//lwcsvxml.writeRubricaXML(contattiXML, pathForXmlFile);
-		lwcsvxml.loadRubricaFromCSV(pathForCsvFile, separator);
+		//lwcsvxml.loadRubricaFromCSV(pathForCsvFile, separator);
+		lwcsvxml.loadRubricaFromXML(pathForXmlFile);
 		
 		//System.out.println(contattiCSV);
 		
