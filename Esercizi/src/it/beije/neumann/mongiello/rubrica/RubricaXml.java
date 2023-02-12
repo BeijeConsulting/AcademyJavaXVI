@@ -71,7 +71,7 @@ public class RubricaXml {
 				StreamResult syso = new StreamResult(System.out);
 
 				transformer.transform(source, result);
-				transformer.transform(source, syso);
+			//	transformer.transform(source, syso);
 	}
 
 	public static List<Contatto> loadRubricaFromXML(String pathFile) throws ParserConfigurationException, SAXException, IOException {
@@ -93,7 +93,7 @@ public class RubricaXml {
 			
 			List<Element> values = getChildElements(el);
 			for (Element v : values) {
-				System.out.println("node name: " + v.getNodeName());
+				//System.out.println("node name: " + v.getNodeName());
 				switch (v.getNodeName()) {
 				case "NAME":
 					name = v.getTextContent();

@@ -1,6 +1,7 @@
 package it.beije.neumann.mongiello.rubrica;
 
 import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,32 +17,130 @@ import java.util.List;
 
 public class RubricaCsv {
 	
-	public static void editRubrica(  String pathFile, String separator, String fieldToEdit ,String oldParametro, String newParametro ) throws IOException  {
+	public static void deleteContact( String pathFile, String separator,  String parametro) throws Exception {
 		
+		String pathTempFile = "/temp/temp.csv";
 		try {
-			String pathTempFile = "/temp/temp.csv";
 			
 			File oldFile = new File(pathFile);
-			File newFile = new File(pathTempFile);
-			//File newFile  = File.createTempFile("tmp", ".csv", new File(tempFile));
+			File newFile = new File( pathTempFile );
 			
 			FileReader fileReader = new FileReader(oldFile);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			FileWriter fileWriter = new FileWriter( pathTempFile,true );
 			BufferedWriter bw = new BufferedWriter(fileWriter); 
-
+			boolean salta = false;
 			String r = null;
 			String[] fields = null;
-
 			while( bufferedReader.ready() ) {
 				r = bufferedReader.readLine();
-				fields = r.split(separator,-1);
-				for(String f: fields) {
-					if ( f.equals(oldParametro) ) {
-						fileWriter.write(newParametro + separator);
+				fields = r.split(separator);
+				for( String f: fields ) {
+					if( r.contains(parametro) ){
+						salta = true;
 					}else {
-						fileWriter.write(f+separator);
+						fileWriter.write(f + separator);
+						
+					}
+				}
+				if(!salta) fileWriter.write("\n");
+			}
+			
+			fileWriter.flush();
+			fileWriter.close();
+			
+			fileReader.close();
+			bufferedReader.close();
+			
+			oldFile.delete();
+			
+			File dump = new File(pathFile);
+			newFile.renameTo(dump);
+			
+		}catch( Exception ioEx ) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		}
+	}
+	
+	
+	public static void editRubrica(  String pathFile, String separator, String fieldToEdit ,String primaryKey, String newParametro ) throws IOException  {
+		
+		String rigaIntestazione = null;
+		String[] dynamicField = null;
+		try {
+			String pathTempFile = "/temp/temp.csv";
+			
+			File oldFile = new File(pathFile);
+			File newFile = new File(pathTempFile);
+				
+			FileReader fileReader = new FileReader(oldFile);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			FileWriter fileWriter = new FileWriter( pathTempFile,true );
+			BufferedWriter bw = new BufferedWriter(fileWriter); 
+
+			rigaIntestazione = bufferedReader.readLine();
+			dynamicField = rigaIntestazione.split(separator, -1);
+			int position = 0;
+			
+			for( String f: dynamicField ) {
+				if( fieldToEdit.equals(f) ) {
+					break;
+				}else {
+					position++;
+				}
+			}
+			System.out.println(position);
+			
+			String r = null;
+			String[] fields = null;
+			int countSeparator = 0;
+			
+
+			
+			fileWriter.write(rigaIntestazione + "\n");			
+			while( bufferedReader.ready()){
+				r = bufferedReader.readLine();
+				fields = r.split(separator,-1);
+				
+				for(String f: fields) {
+					//controllo se nella riga c'è il campo da modicare
+					if( r.contains(primaryKey) ) {
+						//analizzo la poszione del campo da modificare
+						if( countSeparator == position ) {
+							//Se è ultimo parametro non stampa la virgola
+							if( countSeparator == fields.length -1 ) {
+								fileWriter.write(newParametro);
+								countSeparator++;
+							//se non è ultimo parametro stampa il separatore	
+							}else {
+								fileWriter.write( newParametro + separator );
+								countSeparator++;
+							}
+						//non analizzo il campo da moficare
+						}else {
+							if( countSeparator == fields.length -1 ) {
+								fileWriter.write(f);
+								countSeparator = 0;
+							}else {
+								fileWriter.write(f+separator);
+								countSeparator++;
+							}
+
+						}
+					//nella riga non c'è il campo da modicare	
+					}else{
+						if( countSeparator == fields.length - 1 ) {
+							fileWriter.write(f);
+							countSeparator = 0;
+						}else {
+							fileWriter.write(f+separator);
+							countSeparator++;
+						}
+						
+						
 					}
 				}
 				fileWriter.write("\n");

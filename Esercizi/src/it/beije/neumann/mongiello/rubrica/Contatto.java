@@ -1,5 +1,6 @@
 package it.beije.neumann.mongiello.rubrica;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,10 +54,21 @@ public class Contatto {
 	
 	public static List<Contatto> inputRubrica( List<Contatto> contatti ){	
 		Scanner s = new Scanner(System.in);
+		boolean isAlpha = true;
+		String name = null;
 		
-		System.out.print("Nome: ");
-		String name = s.nextLine();
-	
+		do {
+			try {
+				System.out.print("Nome: ");
+				name = s.nextLine();
+				isAlpha = Check.isAlpha( name );
+		} catch (IOException e) {
+			e.printStackTrace();
+			isAlpha = false;
+		}
+			
+		}while( !isAlpha );
+		
 		System.out.print("Cognome: ");
 		String surname = s.nextLine();
 		
