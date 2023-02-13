@@ -11,15 +11,18 @@ public class main {
 		
 		try {
 			StringBuilder fileContent = XmlParser.fromFileToString(path);
-			//System.out.println(fileContent);
+			System.out.println(fileContent);
 			List<String> listTag = XmlParser.listTag( path );
-			String rootElement = XmlParser.getRootElement( listTag );
-			System.out.println("Root element: " + rootElement);
-			System.out.println(listTag);
-			
-			
+//			String rootElement = XmlParser.getRootElement( listTag );
+//			System.out.println("Root element: " + rootElement);
+//			System.out.println(listTag);
+			//List<String> listElemnt = XmlParser.getChildElements(path, "contatti");
+			List<String> listNode = XmlParser.getChildNodes( path, "contatto");
+			//System.out.println(listNode);
 			
 		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		

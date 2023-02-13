@@ -77,4 +77,48 @@ public class XmlParser {
 		
 		return rootElement;
 	}
+
+	public static List<String> getChildElements(String path,String parent) throws IOException{
+		
+			
+		
+		return null;
+		
+	}
+
+	
+	public static List<String> getChildNodes(String path, String parent) throws IOException {
+		List<String> listTag = XmlParser.listTag( path );
+		//List<String> listAppoggio = new ArrayList<>();
+		
+		List<String> listChildElement = new ArrayList<>();
+		
+		boolean aggiungo = false;
+		
+		for( int i = 0; i < listTag.size() ; i++){
+			if( listTag.get(i).equalsIgnoreCase(parent) ) {
+				aggiungo = true;
+				i++;
+			}	
+			if(aggiungo) listChildElement.add( listTag.get(i));
+		}
+		
+		
+		System.out.println(listChildElement);	
+		
+		for( int i = 0; i < listChildElement.size() ; i++ ) {
+			if( listChildElement.get(i).indexOf('/') != -1  ){
+				listChildElement.remove(i);
+					i=0;
+			}		
+		}
+		
+	
+		
+		
+		System.out.println(listChildElement);	
+		return listChildElement;
+	}
+	
+	
 }
