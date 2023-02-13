@@ -1,5 +1,7 @@
 package it.beije.neumann.parserxml.elassl_verzaschi;
 
+import java.util.Arrays;
+
 public class Element extends Node {
 	String tagName; 
 	String text;
@@ -23,6 +25,13 @@ public class Element extends Node {
 		return text;
 	}
 	
+	public Element(String tagName, String text, Attribute[] attributes) {
+		super();
+		this.tagName = tagName;
+		this.text = text;
+		this.attributes = attributes;
+	}
+
 	public Attribute [] getAttributes() {
 		return attributes;
 	}
@@ -33,5 +42,10 @@ public class Element extends Node {
 				return attr.getValue();
 		return null;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Element [tagName=" + tagName + ", text=" + text + ", attributes=" + Arrays.toString(attributes) + "]";
+	}
+
 }

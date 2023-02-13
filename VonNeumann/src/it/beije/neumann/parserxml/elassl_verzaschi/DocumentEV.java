@@ -1,6 +1,6 @@
 package it.beije.neumann.parserxml.elassl_verzaschi;
 
-public class DocumentEV extends Node{
+public class DocumentEV{
 	private Element rootElement;
 	public Element getRootElement(){ //torna l'elemento root
 		return rootElement;
