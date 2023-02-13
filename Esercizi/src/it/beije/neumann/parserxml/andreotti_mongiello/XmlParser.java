@@ -105,8 +105,13 @@ public class XmlParser {
 		
 		
 		System.out.println(listChildElement);	
-		
+		//Controllo se il parametro in in ingresso ha figli
+		if( listChildElement.get(0).contains("/")) {
+			return null;
+		}
+			
 		for( int i = 0; i < listChildElement.size() ; i++ ) {
+			
 			if( listChildElement.get(i).indexOf('/') != -1  ){
 				listChildElement.remove(i);
 					i=0;
@@ -120,5 +125,30 @@ public class XmlParser {
 		return listChildElement;
 	}
 	
+//	public static List<String> getChildElements(List<String> elements, String name) {
+//		List<String> childElements = new ArrayList<String>();
+//
+//		outerloop:
+//		for (int i = 0; i < elements.size(); i++) {
+//			if(elements.get(i).equals(name)) {
+//				for(int k = 0; k < elements.size(); k++) {
+//					i++;
+//					if(isEndTag(elements.get(i), name)) {
+//						break outerloop;
+//					}
+//					childElements.add(elements.get(i));
+//				}
+//				
+//			}
+//		}
+//		return childElements;
+//	}
+	
+	public static boolean isEndTag(String tag, String primaryElement) {
+		String[] splitted = tag.split("");
+		splitted[0] = "";
+		tag = String.join("", splitted);
+		return tag.equals(primaryElement);
+	}
 	
 }

@@ -17,8 +17,9 @@ public class main {
 //			System.out.println("Root element: " + rootElement);
 //			System.out.println(listTag);
 			//List<String> listElemnt = XmlParser.getChildElements(path, "contatti");
-			List<String> listNode = XmlParser.getChildNodes( path, "contatto");
-			//System.out.println(listNode);
+		
+			List<String> listNode = XmlParser.getChildNodes( path, "email");
+			System.out.println(listNode);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
