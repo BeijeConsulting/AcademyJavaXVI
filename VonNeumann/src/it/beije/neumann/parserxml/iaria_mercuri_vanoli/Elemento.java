@@ -5,16 +5,22 @@ import java.util.ArrayList;
 public class Elemento {
 	private String tag;
 	private String textContext;
-	private ArrayList<String> attributes;
+	private ArrayList<Attributo> attributes;
 	private ArrayList<Elemento> childElements;
 	private Elemento parent;
 
-	public Elemento(String tag, String textContext, String[] attributes, Elemento parent) {
+	public Elemento(String tag, String textContext, String[] attrStrings, Elemento parent) {
 		this.tag = tag;
 		this.textContext = textContext;
-		//this.attributes = attributes;
 		this.parent = parent;
 		childElements = new ArrayList<Elemento>();
+		//costruzione struttura degli attributi
+		this.attributes = new ArrayList<Attributo>();
+		if (attrStrings != null) {
+			for (int i = 0; i < attrStrings.length; i += 2) {
+				this.attributes.add(new Attributo(attrStrings[i], attrStrings[i + 1]));
+			}
+		}
 	}
 	
 	public String getTag() {
@@ -24,8 +30,17 @@ public class Elemento {
 		return textContext;
 	}
 
-	public ArrayList<String> getAttributes() {
+	public ArrayList<Attributo> getAttributes() {
 		return attributes;
+	}
+	
+	public String getAttribute(String attribute) {
+		for (Attributo a : attributes) {
+			if (a.getName().equals(attribute)) {
+				return a.getValue();
+			}
+		}
+		return "Attributo non trovato!";
 	}
 	
 	public Elemento getParent() {
