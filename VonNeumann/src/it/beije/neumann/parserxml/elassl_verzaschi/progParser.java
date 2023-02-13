@@ -10,7 +10,7 @@ import java.util.List;
 
 public class progParser { 
 	//public static Element readElement()
-	public static Element readName(String str) {
+	public static Element readElement(String str) {
 		Element current = null;
 		String[] split=str.split(">");
 		String first=split[0];
@@ -87,7 +87,7 @@ public class progParser {
 			//System.out.println("Str: "+str);
 			if (str2.length()>3 && !str2.substring(0,4).equals("?xml")) { 
 				//System.out.println(str2);
-				current = readName(str2);
+				current = readElement(str2);
 			}
 			
 			if (current!=null && str2.strip().endsWith("/>") && str2.strip().charAt(0)!='/') { //closed in place
@@ -114,7 +114,7 @@ public class progParser {
 			}
 			isClosed=false;
 		}
-		if (!fifo.isEmpty()) {
+		if (!fifo.isEmpty()) { //if fifo is not empty then the file format is wrong
 			throw new IllegalArgumentException("Invalid XML format"); 
 		}
 		return result;
