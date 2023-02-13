@@ -1,0 +1,34 @@
+
+ProgTest.java
+	rubrica1.csv
+	CSVmanager.java
+	rubrica.csv
+	ScannerExample.java
+	package-info.java
+	Contatto.java
+feb8(dir)
+	StringBuilderUtils.java
+	ArrayListUtils.java
+	ChineseMorra.java
+	Data.java
+	StringUtils.java
+	package-info.java
+feb3(dir)
+	CSVmanager.java
+	ls.txt
+	XMLmanager.java
+	progContatti.java
+	package-info.java
+	ListFile.java
+feb9(dir)
+	progFraudolent.java
+	package-info.java
+feb10(dir)
+	Cicli.java
+	package-info.java
+feb1(dir)
+	Vettori.java
+	YetMoreInitializationOrder.java
+	Stringhe.java
+	package-info.java
+feb2(dir)
