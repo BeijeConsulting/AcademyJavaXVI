@@ -28,6 +28,7 @@ public class Documento {
 		List<String> attributi = null;
 		Elemento currentElement = null;
 		StringBuilder attributeSB = null;
+		String[] attributiEValori = null;
 		
         int content = 0;
         while (content != -1) {
@@ -39,23 +40,18 @@ public class Documento {
         		}
         		attributi = new ArrayList<>();
         		attributeSB = new StringBuilder();
+        		attributiEValori = null;
         		if(content == ' ') {
-	        		while((content = reader.read()) != '>') {
+	        		while(content != '>') {
 	        			attributeSB.append((char)content);
-	        			/*while((content = reader.read()) != '=') {
-	        				attributeSB.append((char)content);
-	        			}
-	        			attributi.add(attributeSB.toString().trim());*/
+	        			content = reader.read();
 	        		}
-	        		String[] attributiEValori = attributeSB.toString().split("\"");
+	        		attributiEValori = attributeSB.toString().split("\"");
 	        		for(int i=0; i<attributiEValori.length; i++) {
-	        			if(i%2==1) {
-	        				attributiEValori[i] = attributiEValori[i].replaceAll(" ", "-").replaceAll("=", "-");
+	        			if(i%2==0) {
+	        				attributiEValori[i] = attributiEValori[i].replace(" ", "").replace("=", "");
 	        			}
-	        			System.out.println("Stringa: "+attributiEValori[i]);
 	        		}
-	        		//for(String a : attributiEValori)
-	        			
         		}
         		textContext = new StringBuilder();
         		while((content = reader.read()) != '<' && content != -1) {
@@ -66,8 +62,8 @@ public class Documento {
         				document.rootElement = currentElement;
         			currentElement = currentElement.getParent();
         		} else {
-        			elementi.add(new Elemento(tag.toString(), textContext.toString(), null, currentElement)); //Lista test momentaneo
-        			Elemento e = new Elemento(tag.toString(), textContext.toString(), null, currentElement);
+        			elementi.add(new Elemento(tag.toString(), textContext.toString(), attributiEValori, currentElement)); //Lista test momentaneo
+        			Elemento e = new Elemento(tag.toString(), textContext.toString(), attributiEValori, currentElement);
         			if(currentElement != null)
         				currentElement.addFiglio(e);
         			currentElement = e;
@@ -89,10 +85,9 @@ public class Documento {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		parse("/temp/test_parser1.xml");
 		
 		Documento document = parse("/temp/test_parser1.xml");
-		//document.getRootElement().stampaAlbero();
+		document.getRootElement().stampaAlbero();
 		//for(Elemento e: document.getRootElement().getChildElements())
 			//System.out.println(e.getChildElements());
 	}
