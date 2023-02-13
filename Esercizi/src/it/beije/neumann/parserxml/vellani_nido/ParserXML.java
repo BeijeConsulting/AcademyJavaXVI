@@ -10,7 +10,8 @@ import java.util.List;
 public class ParserXML {
 
 	private Element rootElement;
-	private List<Element> children;
+	private List<Node> childrenNodes;
+	private List<Element> childrenElements;
 
 	public Element getRootElement() {
 		return rootElement;
@@ -20,12 +21,20 @@ public class ParserXML {
 		this.rootElement = rootElement;
 	}
 
-	public List<Element> getChildren() {
-		return children;
+	public List<Node> getChildrenNodes() {
+		return childrenNodes;
 	}
 
-	public void setChildren(List<Element> children) {
-		this.children = children;
+	public void setChildrenNodes(List<Node> childrenNodes) {
+		this.childrenNodes = childrenNodes;
+	}
+
+	public List<Element> getChildrenElements() {
+		return childrenElements;
+	}
+
+	public void setChildrenElements(List<Element> children) {
+		this.childrenElements = children;
 	}
 
 	private static String readXML(String file) throws FileNotFoundException, IOException {
@@ -52,64 +61,81 @@ public class ParserXML {
 	public static ParserXML parse(String file) throws FileNotFoundException, IOException {
 		ParserXML parser = new ParserXML();
 
-		String fileContent = readXML(file);
+		String xml = readXML(file);
 
-		List<Element> elements = getChildElements(fileContent);
-		parser.setRootElement(elements.get(0));
-		elements.remove(0);
-		parser.setChildren(elements);
+		// List<Element> elements = getChildElements(fileContent);
 
-		return parser;
-	}
-
-	private static List<Element> getChildElements(String xml) {
-		List<Element> childElements = new ArrayList<>();
+		List<Node> nodeList = new ArrayList<>();
+		List<Element> elementList = new ArrayList<>();
 
 		int indexStart = xml.indexOf("<");
 		while (indexStart != -1) {
 			int indexEnd = xml.indexOf(">", indexStart);
 			if (indexEnd != -1) {
+				// System.out.println("indexStart - indexEnd -> " + indexStart + "-" +
+				// indexEnd);
+				// System.out.println("xml[indexStart] - xml[indexEnd] -> " +
+				// xml.charAt(indexStart) + "-" + xml.charAt(indexEnd));
+
 				String name = xml.substring(indexStart + 1, indexEnd);
 
-				if (name.startsWith("/")) {
+				if (name.startsWith("/") || name.startsWith("?xml")) {
 					indexStart = xml.indexOf("<", indexEnd);
 					continue;
 				}
 
 				Element e = new Element();
-				e.setName(xml.substring(indexStart + 1, indexEnd));
+				e.setName(name);
+				indexStart = xml.indexOf("<", indexEnd);
+
+				// Prendere i nodes stava qui
 
 				String tmp = "</" + e.getName() + ">";
 
-				//System.out.println("Temp -> " + tmp);
-
-				if (tmp.startsWith("</?xml")) {
-					indexStart = xml.indexOf("<", indexEnd);
-					continue;
-				}
+				// System.out.println("Temp -> " + tmp);
 
 				int indexMiddle = xml.indexOf(tmp, indexEnd);
 
 				if (indexMiddle != -1) {
 					e.setContent(xml.substring(indexEnd + 1, indexMiddle));
-					indexStart = xml.indexOf("<", indexMiddle);
+					// indexStart = xml.indexOf("<", indexMiddle);
 				} else {
 					break;
 				}
 
-				e.setContent(xml.substring(indexEnd + 1, indexMiddle));
-
 				indexStart = xml.indexOf("<", indexEnd);
-				
-				childElements.add(e);
 
-				//System.out.println(e);
+				// Prendere i nodes
+				// String text = xml.substring(lastCloseTagIndex + 1, indexStart).trim();
+				String text = xml.substring(indexEnd + 1, indexStart);
+				if (text.isBlank() && !text.isEmpty()) {
+					Node n = new Node();
+					n.setName("#text");
+					n.setContent(text);
+					nodeList.add(n);
+				}
+
+				elementList.add(e);
 
 			} else {
 				break;
 			}
 		}
-		return childElements;
+
+		System.out.println("NodeList:\n" + nodeList);
+		System.out.println("ElementList:\n" + elementList);
+
+		/////////
+		parser.setRootElement(elementList.get(0));
+		elementList.remove(0);
+		parser.setChildrenElements(elementList);
+		parser.setChildrenNodes(nodeList);
+
+		return parser;
+	}
+	
+	public static List<Node> getChildNodes(Element el){
+		return null;
 	}
 
 	public static void main(String[] args) {
@@ -119,9 +145,9 @@ public class ParserXML {
 		try {
 			ParserXML pxml = parse(file);
 
-			System.out.println(pxml.getChildren());
-			
-			System.out.println(pxml.getRootElement());
+			// System.out.println(pxml.getChildren());
+
+			// System.out.println(pxml.getRootElement());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,17 +1,17 @@
 package it.beije.neumann.parserxml.vellani_nido;
 
-public class Element extends Node{
-
+public class Node {
+	
 	private String name;
 	private String content;
 	
-	public Element() {
+	public Node() {
 		super();
 	}
-	public Element(String name) {
+	public Node(String name) {
 		this(name,null);
 	}
-	public Element(String name, String content) {
+	public Node(String name, String content) {
 		super();
 		this.name = name;
 		this.content = content;
@@ -30,9 +30,6 @@ public class Element extends Node{
 	}
 	@Override
 	public String toString() {
-		return "Element [name=" + name + ", content=" + content + "]\n";
+		return "Node [name=" + name + ", content=" + content + "]\n";
 	}
-	
-	
-	
 }
