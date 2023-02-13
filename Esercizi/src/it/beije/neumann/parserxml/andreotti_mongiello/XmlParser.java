@@ -133,12 +133,19 @@ public class XmlParser {
 					i=0;
 			}		
 		}
-		
-	
-		
-		
-		
 		return listChilNodes;
+	}
+	
+	
+	public static List<String> getTagName(String name,String path) throws IOException{
+		List<String> listTag = XmlParser.listTag( path );	
+		List<String> tags = new ArrayList<>();		
+		for(int i = 0; i < listTag.size(); i++) {
+			if( listTag.get(i).equalsIgnoreCase(name) ) {
+				tags.add(listTag.get(i));
+			}
+		}
+		return tags;
 	}
 	
 
