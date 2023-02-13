@@ -25,16 +25,28 @@ public class Documento {
 		StringBuilder tag = null;
 		StringBuilder textContext = null;
 		List<Elemento> elementi = new ArrayList<>();
+		List<String> attributi = null;
 		Elemento currentElement = null;
+		StringBuilder attributeSB = null;
 		
         int content = 0;
         while (content != -1) {
         	if(content == '<' && (content = reader.read()) != '?') {
         		tag = new StringBuilder();
         		tag.append((char)content);
-        		while((content = reader.read()) != '>') {
+        		while((content = reader.read()) != '>' && content != ' ') {
         			tag.append((char)content);
         		}
+        		attributi = new ArrayList<>();
+        		attributeSB = new StringBuilder();
+        		while((content = reader.read()) != '>') {
+        			attributeSB.append(content);
+        			/*while((content = reader.read()) != '=') {
+        				attributeSB.append((char)content);
+        			}
+        			attributi.add(attributeSB.toString().trim());*/
+        		}
+        		attributeSB.toString().split("\"");
         		textContext = new StringBuilder();
         		while((content = reader.read()) != '<' && content != -1) {
         			textContext.append((char)content);
