@@ -41,7 +41,7 @@ public class Documento {
         							throw new RuntimeException("Commento non chiuso correttamente");
         						}
         					}
-        					content = reader.read();
+        					continue; //Salto il ">" in modo da andare al prossimo figlio o alla chiusura root
         				}
         			}  else {
     					throw new RuntimeException("Commento non chiuso correttamente");
