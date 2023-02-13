@@ -13,13 +13,15 @@ public class main {
 			StringBuilder fileContent = XmlParser.fromFileToString(path);
 			System.out.println(fileContent);
 			List<String> listTag = XmlParser.listTag( path );
-//			String rootElement = XmlParser.getRootElement( listTag );
+			String rootElement = XmlParser.getRootElement( listTag );
 //			System.out.println("Root element: " + rootElement);
 //			System.out.println(listTag);
 			//List<String> listElemnt = XmlParser.getChildElements(path, "contatti");
 		
-			List<String> listNode = XmlParser.getChildNodes( path, "email");
-			System.out.println(listNode);
+			List<String> listNodes = XmlParser.getChildNodes( path, rootElement);
+			List<String> listElements = XmlParser.getChildElements( path, "contatto");
+			System.out.println(listNodes);
+			System.out.println(listElements);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

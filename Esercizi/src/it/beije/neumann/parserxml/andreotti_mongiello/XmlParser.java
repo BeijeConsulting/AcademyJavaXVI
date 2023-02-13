@@ -14,28 +14,19 @@ public class XmlParser {
 	
 	//metodo che legge da un file tutti i caratteri e ritorna una stringBuilder
 	public static StringBuilder fromFileToString(String path) throws IOException {
-		
 		//variabile sulla quale memorizzare il contenuto del file 
 		StringBuilder contenuto = new StringBuilder();
 		FileReader fileReader = new FileReader(path);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		while( bufferedReader.ready() ) {
+		BufferedReader bufferedReader = new BufferedReader(fileReader);		
+		while( bufferedReader.ready() ) {		
 			contenuto.append(bufferedReader.readLine());
 			contenuto.append("\n");
 		}
-		
 		return contenuto;
 	}
-	
-	
+
 	public static boolean isHeadingTag(String row) {
-//        if( ( (row.charAt(0) == '<') && (row.charAt(1) == '?')) || (row.substring(0, 4).equals("?xml")) )  {
-//            return true;
-//        }else {
-//            return false;
-//        }
-		
+
 		return ((row.charAt(0) == '<') && (row.charAt(1) == '?')) || (row.substring(0, 4).equals("?xml"));
     }
 	
@@ -44,7 +35,7 @@ public class XmlParser {
 		StringBuilder element = new StringBuilder();
 		
 		List<String> listTag = new ArrayList<>();
-		
+	
 		boolean isInsideTag = false;
 		
 		for( int i = 0; i< stringFile.length(); i++ ) {
@@ -78,42 +69,67 @@ public class XmlParser {
 		return rootElement;
 	}
 
-	public static List<String> getChildElements(String path,String parent) throws IOException{
-		
-			
-		
-		return null;
-		
-	}
-
-	
-	public static List<String> getChildNodes(String path, String parent) throws IOException {
+	public static List<String> getChildElements(String path, String parent) throws IOException {
 		List<String> listTag = XmlParser.listTag( path );
 		//List<String> listAppoggio = new ArrayList<>();
-		
+
 		List<String> listChildElement = new ArrayList<>();
-		
+
 		boolean aggiungo = false;
-		
+		String currentTag = "";
+		for( int i = 0; i < listTag.size() ; i++){
+			if( listTag.get(i).equalsIgnoreCase(parent) ) {
+				aggiungo = true;
+				i++;
+			} 
+			if(Test.isEndTag(listTag.get(i), currentTag)) {
+
+				currentTag = "";
+			}
+			if(aggiungo && currentTag.equals("")) { 
+				if(listTag.get(i).charAt(0) != '/') {
+					currentTag = listTag.get(i); 
+				}
+				listChildElement.add( listTag.get(i));
+			}
+		}
+
+
+		//Controllo se il parametro in in ingresso ha figli
+		if( listChildElement.get(0).contains("/")) {
+			return null;
+		}
+
+		for( int i = 0; i < listChildElement.size() ; i++ ) {
+			if( listChildElement.get(i).indexOf('/') != -1  ){
+				listChildElement.remove(i);
+				i=0;
+			}  
+		}
+
+		return listChildElement;
+	}
+
+	public static List<String> getChildNodes(String path, String parent) throws IOException {
+		List<String> listTag = XmlParser.listTag( path );		
+		List<String> listChilNodes = new ArrayList<>();		
+		boolean aggiungo = false;		
 		for( int i = 0; i < listTag.size() ; i++){
 			if( listTag.get(i).equalsIgnoreCase(parent) ) {
 				aggiungo = true;
 				i++;
 			}	
-			if(aggiungo) listChildElement.add( listTag.get(i));
+			if(aggiungo) listChilNodes.add( listTag.get(i));
 		}
 		
-		
-		System.out.println(listChildElement);	
 		//Controllo se il parametro in in ingresso ha figli
-		if( listChildElement.get(0).contains("/")) {
+		if( listChilNodes.get(0).contains("/")) {
 			return null;
 		}
-			
-		for( int i = 0; i < listChildElement.size() ; i++ ) {
-			
-			if( listChildElement.get(i).indexOf('/') != -1  ){
-				listChildElement.remove(i);
+		
+		for( int i = 0; i < listChilNodes.size() ; i++ ) {
+			if( listChilNodes.get(i).indexOf('/') != -1  ){
+				listChilNodes.remove(i);
 					i=0;
 			}		
 		}
@@ -121,28 +137,11 @@ public class XmlParser {
 	
 		
 		
-		System.out.println(listChildElement);	
-		return listChildElement;
+		
+		return listChilNodes;
 	}
 	
-//	public static List<String> getChildElements(List<String> elements, String name) {
-//		List<String> childElements = new ArrayList<String>();
-//
-//		outerloop:
-//		for (int i = 0; i < elements.size(); i++) {
-//			if(elements.get(i).equals(name)) {
-//				for(int k = 0; k < elements.size(); k++) {
-//					i++;
-//					if(isEndTag(elements.get(i), name)) {
-//						break outerloop;
-//					}
-//					childElements.add(elements.get(i));
-//				}
-//				
-//			}
-//		}
-//		return childElements;
-//	}
+
 	
 	public static boolean isEndTag(String tag, String primaryElement) {
 		String[] splitted = tag.split("");
