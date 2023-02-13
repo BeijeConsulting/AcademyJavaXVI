@@ -39,14 +39,24 @@ public class Documento {
         		}
         		attributi = new ArrayList<>();
         		attributeSB = new StringBuilder();
-        		while((content = reader.read()) != '>') {
-        			attributeSB.append(content);
-        			/*while((content = reader.read()) != '=') {
-        				attributeSB.append((char)content);
-        			}
-        			attributi.add(attributeSB.toString().trim());*/
+        		if(content == ' ') {
+	        		while((content = reader.read()) != '>') {
+	        			attributeSB.append((char)content);
+	        			/*while((content = reader.read()) != '=') {
+	        				attributeSB.append((char)content);
+	        			}
+	        			attributi.add(attributeSB.toString().trim());*/
+	        		}
+	        		String[] attributiEValori = attributeSB.toString().split("\"");
+	        		for(int i=0; i<attributiEValori.length; i++) {
+	        			if(i%2==1) {
+	        				attributiEValori[i] = attributiEValori[i].replaceAll(" ", "-").replaceAll("=", "-");
+	        			}
+	        			System.out.println("Stringa: "+attributiEValori[i]);
+	        		}
+	        		//for(String a : attributiEValori)
+	        			
         		}
-        		attributeSB.toString().split("\"");
         		textContext = new StringBuilder();
         		while((content = reader.read()) != '<' && content != -1) {
         			textContext.append((char)content);
@@ -66,11 +76,11 @@ public class Documento {
         		content = reader.read();
         	}
         }
-        System.out.println(document.rootElement);
-        for (Elemento e: elementi) {
-        	if(e.getParent() != null)
-        		System.out.println(e.getTag() + " e' figlio di " + e.getParent().getTag() + " con context: " + e.getTextContext());
-        }
+//        System.out.println(document.rootElement);
+//        for (Elemento e: elementi) {
+//        	if(e.getParent() != null)
+//        		System.out.println(e.getTag() + " e' figlio di " + e.getParent().getTag() + " con context: " + e.getTextContext());
+//        }
         //System.out.println(elementi.toString());
         
 
@@ -82,7 +92,7 @@ public class Documento {
 		parse("/temp/test_parser1.xml");
 		
 		Documento document = parse("/temp/test_parser1.xml");
-		document.getRootElement().stampaAlbero();
+		//document.getRootElement().stampaAlbero();
 		//for(Elemento e: document.getRootElement().getChildElements())
 			//System.out.println(e.getChildElements());
 	}
