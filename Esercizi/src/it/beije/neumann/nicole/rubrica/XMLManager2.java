@@ -55,6 +55,7 @@ public class XMLManager2
 		
 		Element rootElement = document.getDocumentElement();
 		
+		
 		List<Element> elements = getChildElements(rootElement);
 		Contatto contatto = null;
 		for (Element el : elements) {
