@@ -28,6 +28,11 @@ public class Element {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	@Override
+	public String toString() {
+		return "Element [name=" + name + ", content=" + content + "]\n";
+	}
+	
 	
 	
 }
