@@ -53,8 +53,6 @@ public class ParserXML {
 			bufferedReader.close();
 		}
 
-		// System.out.println(sb);
-
 		return sb.toString();
 	}
 
@@ -63,8 +61,6 @@ public class ParserXML {
 
 		String xml = readXML(file);
 
-		// List<Element> elements = getChildElements(fileContent);
-
 		List<Node> nodeList = new ArrayList<>();
 		List<Element> elementList = new ArrayList<>();
 
@@ -72,47 +68,49 @@ public class ParserXML {
 		while (indexStart != -1) {
 			int indexEnd = xml.indexOf(">", indexStart);
 			if (indexEnd != -1) {
-				// System.out.println("indexStart - indexEnd -> " + indexStart + "-" +
-				// indexEnd);
-				// System.out.println("xml[indexStart] - xml[indexEnd] -> " +
-				// xml.charAt(indexStart) + "-" + xml.charAt(indexEnd));
 
 				String name = xml.substring(indexStart + 1, indexEnd);
 
-				if (name.startsWith("/") || name.startsWith("?xml")) {
+				if (name.startsWith("?xml")) {
 					indexStart = xml.indexOf("<", indexEnd);
 					continue;
+				} else if (name.startsWith("/")) {
+					indexStart = xml.indexOf("<", indexEnd);
+
+					if (indexStart != -1) {
+						String text = xml.substring(indexEnd + 1, indexStart);
+						if (text.isBlank() && !text.isEmpty()) {
+							Node n = new Node();
+							n.setName("#text");
+							n.setContent(text);
+							nodeList.add(n);
+						}
+						continue;
+					} else {
+						break;
+					}
 				}
 
 				Element e = new Element();
 				e.setName(name);
 				indexStart = xml.indexOf("<", indexEnd);
 
-				// Prendere i nodes stava qui
-
-				String tmp = "</" + e.getName() + ">";
-
-				// System.out.println("Temp -> " + tmp);
-
-				int indexMiddle = xml.indexOf(tmp, indexEnd);
-
-				if (indexMiddle != -1) {
-					e.setContent(xml.substring(indexEnd + 1, indexMiddle));
-					// indexStart = xml.indexOf("<", indexMiddle);
-				} else {
-					break;
-				}
-
-				indexStart = xml.indexOf("<", indexEnd);
-
-				// Prendere i nodes
-				// String text = xml.substring(lastCloseTagIndex + 1, indexStart).trim();
 				String text = xml.substring(indexEnd + 1, indexStart);
 				if (text.isBlank() && !text.isEmpty()) {
 					Node n = new Node();
 					n.setName("#text");
 					n.setContent(text);
 					nodeList.add(n);
+				}
+
+				String tmp = "</" + e.getName() + ">";
+
+				int indexMiddle = xml.indexOf(tmp, indexEnd);
+
+				if (indexMiddle != -1) {
+					e.setContent(xml.substring(indexEnd + 1, indexMiddle));
+				} else {
+					break;
 				}
 
 				elementList.add(e);
@@ -122,8 +120,8 @@ public class ParserXML {
 			}
 		}
 
-		System.out.println("NodeList:\n" + nodeList);
-		System.out.println("ElementList:\n" + elementList);
+		// System.out.println("NodeList:\n" + nodeList);
+		// System.out.println("ElementList:\n" + elementList);
 
 		/////////
 		parser.setRootElement(elementList.get(0));
@@ -133,8 +131,34 @@ public class ParserXML {
 
 		return parser;
 	}
-	
-	public static List<Node> getChildNodes(Element el){
+
+	// torna i soli elementi figli dell'elemento su cui viene eseguito
+	public static List<Element> getChildElements() {
+		return null;
+	}
+
+	// torna TUTTI gli elementi con quello specifico nome
+	public static List<Element> getElementsByTagName(String tagName) {
+		return null;
+	}
+
+	// torna il nome del tag
+	public static String getTagName() {
+		return null;
+	}
+
+	// torna il contenuto del tag
+	public static String getTextContent() {
+		return null;
+	}
+
+	// torna l'elenco degli attributi dell'elemento
+	public static List<String> getAttributes() {
+		return null;
+	}
+
+	// torna il valore dell'attributo specificato
+	public static String getAttribute(String attribute) {
 		return null;
 	}
 
@@ -145,9 +169,7 @@ public class ParserXML {
 		try {
 			ParserXML pxml = parse(file);
 
-			// System.out.println(pxml.getChildren());
-
-			// System.out.println(pxml.getRootElement());
+			System.out.println(pxml.getRootElement()); // metodo 1
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
