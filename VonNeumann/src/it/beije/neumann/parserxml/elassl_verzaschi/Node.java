@@ -16,5 +16,8 @@ public class Node {
 	public void addChildNode(Node e) {
 		childNodes.add(e);
 	}
-	//toString
+	
+	public String toString() {
+		return "Node [attribute=" + attribute + ", childNodes=" + childNodes + "]";
+	}
 }

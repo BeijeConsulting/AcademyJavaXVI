@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class progParser { // gestisci /> 
@@ -74,7 +75,7 @@ public class progParser { // gestisci />
 		boolean ignore=false;
 		boolean isClosed=false; //true if it's closed in place
 		for(String str : split) {
-			System.out.println(" ");
+			//System.out.println(" ");
 			if (str.length()>2 && str.substring(0,3).equals("!--")) ignore=true;
 			if (str.length()>2 && str.endsWith("-->")) {
 				ignore=false;
@@ -94,21 +95,21 @@ public class progParser { // gestisci />
 				current.setTagName(current.getTagName().replace("/", ""));
 			}
 			
-			if (result.getRootElement()==null && current!=null) { //inizializzo root element
-				System.out.println("#ROOT:"+current);
+			if (result.getRootElement()==null && current!=null) { //initialize root element
+				//System.out.println("#ROOT:"+current);
 				result.setRootElement(current);
 			}
 			if (current!=null){
 				if (fifo.size()==0) fifo.add(current); //add current to empty list
 				else { //aggiorno figlio dell'ultimo elemento in coda e aggiungo current
 					fifo.get(fifo.size()-1).addChildNode(current);
-					System.out.println("#TAG PARENT:"+fifo.get(fifo.size()-1));
+					//System.out.println("#TAG PARENT:"+fifo.get(fifo.size()-1));
 					fifo.add(current);
-					System.out.println("#APERTURA TAG:"+fifo.get(fifo.size()-1));
+					//System.out.println("#APERTURA TAG:"+fifo.get(fifo.size()-1));
 				}
 			}
-			if((result.getRootElement()!=null && current==null) || isClosed && result.getRootElement()!=null) { //chiusura tag
-				System.out.println("#CHIUSURA TAG:"+fifo.get(fifo.size()-1));
+			if((result.getRootElement()!=null && current==null) || isClosed && result.getRootElement()!=null) { //closed tag
+				//System.out.println("#CHIUSURA TAG:"+fifo.get(fifo.size()-1));
 				fifo.remove(fifo.size()-1);
 			}
 			isClosed=false;
@@ -116,24 +117,46 @@ public class progParser { // gestisci />
 		if (!fifo.isEmpty()) {
 			throw new IllegalArgumentException("Invalid XML format"); 
 		}
-			
-		//TODO gestisci coda ancora piena fifo.size()>0 Stampa errore formato xml
 		return result;
 	}
-	
+	public static void expandDocument(DocumentEV document) {
+		List<Element> fifo = new ArrayList<>();
+		fifo.add(document.getRootElement());
+		String depth="";
+		System.out.println("Document structure:");
+		while(!fifo.isEmpty()) {
+			Element current = fifo.remove(fifo.size()-1);
+			if(current==null) {
+				depth = depth.substring(0,depth.length()-2);
+				continue;
+			}
+			System.out.println(depth+current);
+			depth+="  ";
+			List<Element> childrenElements = current.getChildElements();
+			Collections.reverse(childrenElements);
+			if(!(childrenElements.size()>0)) {
+				depth.substring(0,depth.length()-2);
+			}
+			fifo.add(null);
+			for(Element child: childrenElements) {
+				fifo.add(child);
+			}
+		}
+	}
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
-		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser2.xml");
+		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser6.xml");
 		Element root = document.getRootElement();
 		List<Node> childNodes = root.getChildNodes();
-		Element[] childElements = root.getChildElements();
+		List<Element> childElements = root.getChildElements();
 		Element[] contatto = root.getElementsByTagName("contatto");
 		String rootTagName = root.getTagName();
 		String toorText = root.getTextContent();
 		Attribute[] rootAttributes= root.getAttributes();
 		String rootAttribute = root.getAttribute("");
+		expandDocument(document);
 		
 	}
 
