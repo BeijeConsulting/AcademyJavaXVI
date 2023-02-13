@@ -58,6 +58,17 @@ public class Elemento {
 		}
 	}
 
+	public void stampaAlbero() {
+		stampaAlbero("");		
+	}
+	
+	private void stampaAlbero(String indent) {
+		System.out.println(indent + toString());
+		for(Elemento e: getChildElements()) {
+			e.stampaAlbero(indent + "   ");
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "Elemento [tag=" + tag + ", textContext=" + textContext + ", attributes=" + attributes + "]";
