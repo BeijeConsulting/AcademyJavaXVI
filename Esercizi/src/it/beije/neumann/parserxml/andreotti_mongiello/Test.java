@@ -10,33 +10,29 @@ import java.util.List;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-//		String path = "/Users/francescoandreotti/git/AcademyJavaXVI/Esercizi/src/it/beije/neumann/parserxml/andreotti_mongiello/test_parser1.xml";
-//		File file = new File(path);
-//		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//			String xml = "";
-//			String st;
-//			while ((st = br.readLine()) != null) {
-//				xml = xml + st;
-//				System.out.println(st);
-//			}
-//      
-//			getRootElement(xml);
-//			try {
-//				StringBuilder fileContent = XmlParser.fromFileToString(path);
-//				//System.out.println(fileContent);
-//				List<String> listTag = XmlParser.listTag( path );
-//				String rootElement = XmlParser.getRootElement( listTag );
-//				System.out.println("Root element: " + rootElement);
-//				System.out.println(listTag);
-//				getChildElements(listTag,"contatto");
-//				
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		boolean test = isEndTag("contatto", "contatto");
-		System.out.println(test);
+		String path = "/Users/francescoandreotti/git/AcademyJavaXVI/Esercizi/src/it/beije/neumann/parserxml/andreotti_mongiello/test_parser1.xml";
+		File file = new File(path);
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			String xml = "";
+			String st;
+			while ((st = br.readLine()) != null) {
+				xml = xml + st;
+				System.out.println(st);
+			}
+      
+			getRootElement(xml);
+			try {
+				StringBuilder fileContent = XmlParser.fromFileToString(path);
+				List<String> listTag = XmlParser.listTag( path );
+				XmlParser.getRootElement( listTag );
+				getChildElements(listTag,"contatti");
+				
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		isEndTag("contatto", "contatto");
 	}
 	
 	public static String getRootElement(String st) {
@@ -54,21 +50,25 @@ public class Test {
 				}
 			}
 		}
-		System.out.println("Root: " + root);
 		return root;
 	}
 	
 	public static void getChildElements(List<String> elements, String name) {
-//		List<String> childElements = new ArrayList<String>();
+		List<String> childElements = new ArrayList<String>();
 		outerloop:
 		for (int i = 0; i < elements.size(); i++) {
 			if(elements.get(i).equals(name)) {
 				for(int k = 0; k < elements.size(); k++) {
-					
+					i++;
+					if(isEndTag(elements.get(i), name)) {
+						break outerloop;
+					}
+					childElements.add(elements.get(i));
 				}
-				break outerloop;
+				
 			}
 		}
+		System.out.println(childElements);
 	}
 	
 	public static boolean isEndTag(String tag, String primaryElement) {
