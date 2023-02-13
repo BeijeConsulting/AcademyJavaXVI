@@ -1,9 +1,12 @@
 package it.beije.neumann.parserxml.elassl_verzaschi;
 
 public class DocumentEV extends Node{
-	Element root;
+	private Element rootElement;
 	public Element getRootElement(){ //torna l'elemento root
-		return root;
+		return rootElement;
+	}
+	public void setRootElement(Element rootElement) {
+		this.rootElement=rootElement;
 	}
 	
 /*
