@@ -1,12 +1,13 @@
 package it.beije.neumann.parserxml.elassl_verzaschi;
 
-public class DocumentEV {
-	public Element getRootElement(){
-		return null;
-		
+public class DocumentEV extends Node{
+	Element root;
+	public Element getRootElement(){ //torna l'elemento root
+		return root;
 	}
+	
 /*
- * getRootElement() //torna l'elemento root
+ * getRootElement() 
 getChildNodes() //torna tutti i nodi "figli" interni all'elemento su cui viene eseguito
 getChildElements() //torna i soli elementi figli dell'elemento su cui viene eseguito
 getElementsByTagName(String tagName) //torna TUTTI gli elementi con quello specifico nome
