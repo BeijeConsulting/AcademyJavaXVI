@@ -7,11 +7,13 @@ public class Elemento {
 	private String textContext;
 	private ArrayList<String> attributes;
 	private ArrayList<Elemento> childElements;
-	
-	public Elemento(String tag, String textContext, ArrayList<String> attributes) {
+	private Elemento parent;
+
+	public Elemento(String tag, String textContext, ArrayList<String> attributes, Elemento parent) {
 		this.tag = tag;
 		this.textContext = textContext;
 		this.attributes = attributes;
+		this.parent = parent;
 		childElements = new ArrayList<Elemento>();
 	}
 	
@@ -24,6 +26,10 @@ public class Elemento {
 
 	public ArrayList<String> getAttributes() {
 		return attributes;
+	}
+	
+	public Elemento getParent() {
+		return parent;
 	}
 	
 	public void addFiglio(Elemento e) {
