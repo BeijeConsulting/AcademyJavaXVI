@@ -79,7 +79,7 @@ public class ParserXML {
 
 					if (indexStart != -1) {
 						String text = xml.substring(indexEnd + 1, indexStart);
-						if (text.isBlank() && !text.isEmpty()) {
+						if (text.matches("\\s*") && !text.isEmpty()) {
 							Node n = new Node();
 							n.setName("#text");
 							n.setContent(text);
@@ -96,7 +96,7 @@ public class ParserXML {
 				indexStart = xml.indexOf("<", indexEnd);
 
 				String text = xml.substring(indexEnd + 1, indexStart);
-				if (text.isBlank() && !text.isEmpty()) {
+				if (text.matches("\\s*") && !text.isEmpty()) {
 					Node n = new Node();
 					n.setName("#text");
 					n.setContent(text);
