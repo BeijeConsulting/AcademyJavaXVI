@@ -71,8 +71,15 @@ public class progParser {
 		String[] split=s.split("<");
 		List<Element> fifo = new ArrayList<>();
 		Element current=null;
+		boolean ignore=false;
 		for(String str : split) {
-			System.out.println(" ");
+			System.out.println(" "+ignore);
+			if (str.length()>2 && str.substring(0,3).equals("!--")) ignore=true;
+			if (str.length()>2 && str.endsWith("-->")) {
+				ignore=false;
+				continue;
+			}
+			if (ignore) continue;
 			if(str.equals("")) continue;
 			String str2= str.strip();
 			if (str2.length()>3 && !str2.substring(0,4).equals("?xml")) { 
@@ -105,8 +112,16 @@ public class progParser {
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
-		parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser6.xml");
-
+		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser1.xml");
+		Element root = document.getRootElement();
+		Node[] childNodes = root.getChildNodes();
+		Element[] childElements = root.getChildElements();
+		Element[] contatto = root.getElementsByTagName("contatto");
+		String rootTagName = root.getTagName();
+		String toorText = root.getTextContent();
+		Attribute[] rootAttributes= root.getAttributes();
+		String rootAttribute = root.getAttribute("");
+		
 	}
 
 }
