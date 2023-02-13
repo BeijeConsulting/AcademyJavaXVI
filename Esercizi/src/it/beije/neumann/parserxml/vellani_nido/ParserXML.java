@@ -120,6 +120,8 @@ public class ParserXML {
 			ParserXML pxml = parse(file);
 
 			System.out.println(pxml.getChildren());
+			
+			System.out.println(pxml.getRootElement());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
