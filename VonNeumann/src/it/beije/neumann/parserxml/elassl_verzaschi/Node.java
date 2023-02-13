@@ -10,8 +10,8 @@ public class Node {
 	public Node() {
 		childNodes=new ArrayList<>();
 	}
-	public Node[] getChildNodes(){
-		return (Node[]) childNodes.toArray();
+	public List<Node> getChildNodes(){
+		return childNodes;
 	}
 	public void addChildNode(Node e) {
 		childNodes.add(e);

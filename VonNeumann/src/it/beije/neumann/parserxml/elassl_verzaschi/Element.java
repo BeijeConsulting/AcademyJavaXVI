@@ -32,6 +32,10 @@ public class Element extends Node {
 		this.attributes = attributes;
 	}
 
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
 	public Attribute [] getAttributes() {
 		return attributes;
 	}

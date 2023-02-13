@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class progParser {
+public class progParser { // gestisci /> 
 	//public static Element readElement()
 	public static Element readName(String str) {
 		Element current = null;
@@ -15,6 +15,7 @@ public class progParser {
 		String first=split[0];
 		String text=split.length==2?split[1]:"";
 		if (first=="") return null;
+		if (first.charAt(first.length()-1)=='/') System.out.println("Chiusura in place");
 		if(first.charAt(0)=='/') {
 			//System.out.println("	Chiusura "+first.substring(1,first.length()));
 			String tagName= first.split(" ")[0];
@@ -57,7 +58,7 @@ public class progParser {
 		return current;
 		
 	}
-	public static DocumentEV parse(String file)  throws FileNotFoundException, IOException {
+	public static DocumentEV parse(String file)  throws FileNotFoundException, IOException { 
 		DocumentEV result = new DocumentEV();
 		String s="";
 		try(FileReader fileReader = new FileReader(file); BufferedReader bufferedReader = new BufferedReader(fileReader);){
@@ -72,8 +73,9 @@ public class progParser {
 		List<Element> fifo = new ArrayList<>();
 		Element current=null;
 		boolean ignore=false;
+		boolean isClosed=false; //true if it's closed in place
 		for(String str : split) {
-			System.out.println(" "+ignore);
+			System.out.println(" ");
 			if (str.length()>2 && str.substring(0,3).equals("!--")) ignore=true;
 			if (str.length()>2 && str.endsWith("-->")) {
 				ignore=false;
@@ -82,19 +84,22 @@ public class progParser {
 			if (ignore) continue;
 			if(str.equals("")) continue;
 			String str2= str.strip();
+			//System.out.println("Str: "+str);
 			if (str2.length()>3 && !str2.substring(0,4).equals("?xml")) { 
 				//System.out.println(str2);
 				current = readName(str2);
 			}
+			
+			if (current!=null && str2.strip().endsWith("/>") && str2.strip().charAt(0)!='/') { //closed in place
+				isClosed=true;
+				current.setTagName(current.getTagName().replace("/", ""));
+			}
+			
 			if (result.getRootElement()==null && current!=null) { //inizializzo root element
 				System.out.println("#ROOT:"+current);
 				result.setRootElement(current);
 			}
-			if(result.getRootElement()!=null && current==null) { //chiusura tag
-				System.out.println("#CHIUSURA TAG:"+fifo.get(fifo.size()-1));
-				fifo.remove(fifo.size()-1);
-			}
-			if (current!=null ){
+			if (current!=null){
 				if (fifo.size()==0) fifo.add(current); //aggiungo current in coda vuota
 				else { //aggiorno figlio dell'ultimo elemento in coda e aggiungo current
 					fifo.get(fifo.size()-1).addChildNode(current);
@@ -103,18 +108,29 @@ public class progParser {
 					System.out.println("#APERTURA TAG:"+fifo.get(fifo.size()-1));
 				}
 			}
+			if((result.getRootElement()!=null && current==null) || isClosed && result.getRootElement()!=null) { //chiusura tag
+				System.out.println("#CHIUSURA TAG:"+fifo.get(fifo.size()-1));
+				fifo.remove(fifo.size()-1);
+			}
+			isClosed=false;
 			//System.out.println("#Current:"+current);
 		}
-		return null;
+		if (fifo.isEmpty()) {
+			System.out.println("PASS");
+		}
+		else System.out.println("INVALID XML"); //ritorna null
+			
+		//TODO gestisci coda ancora piena fifo.size()>0 Stampa errore formato xml
+		return result;
 	}
 	
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
-		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser1.xml");
+		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser2.xml");
 		Element root = document.getRootElement();
-		Node[] childNodes = root.getChildNodes();
+		List<Node> childNodes = root.getChildNodes();
 		Element[] childElements = root.getChildElements();
 		Element[] contatto = root.getElementsByTagName("contatto");
 		String rootTagName = root.getTagName();
