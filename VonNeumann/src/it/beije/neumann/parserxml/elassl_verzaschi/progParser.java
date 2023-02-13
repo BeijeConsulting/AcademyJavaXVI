@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class progParser { // gestisci /> 
+public class progParser { 
 	//public static Element readElement()
 	public static Element readName(String str) {
 		Element current = null;
@@ -26,7 +26,7 @@ public class progParser { // gestisci />
 			String allAttributes= first.substring(tagName.length());
 			//System.out.println("	tagname: "+tagName);
 			Attribute [] attributes = {};
-			if(allAttributes!="" && allAttributes.split(" ").length>1) { // se ha attributi
+			if(allAttributes!="" && allAttributes.split(" ").length>1) { // check if it has attributes to begin with
 				
 				String [] arrs = allAttributes.split("=\"|\"");
 				attributes= new Attribute[arrs.length/2];
@@ -100,8 +100,8 @@ public class progParser { // gestisci />
 				result.setRootElement(current);
 			}
 			if (current!=null){
-				if (fifo.size()==0) fifo.add(current); //add current to empty list
-				else { //aggiorno figlio dell'ultimo elemento in coda e aggiungo current
+				if (fifo.size()==0) fifo.add(current); //add current element to empty list as it's the root
+				else { //add current to parent element and add current to fifo
 					fifo.get(fifo.size()-1).addChildNode(current);
 					//System.out.println("#TAG PARENT:"+fifo.get(fifo.size()-1));
 					fifo.add(current);
@@ -123,7 +123,7 @@ public class progParser { // gestisci />
 		List<Element> fifo = new ArrayList<>();
 		fifo.add(document.getRootElement());
 		String depth="";
-		System.out.println("Document structure:");
+		System.out.println("\n\nDocument structure:");
 		while(!fifo.isEmpty()) {
 			Element current = fifo.remove(fifo.size()-1);
 			if(current==null) {
@@ -146,16 +146,27 @@ public class progParser { // gestisci />
 	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		DocumentEV document = parse("C:\\Users\\mm\\git\\AcademyJavaXVI\\VonNeumann\\src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser6.xml");
+		//final String dir = System.getProperty("user.dir"); 
+        //System.out.println("current dir = " + dir);
+
+		DocumentEV document = parse("src\\it\\beije\\neumann\\parserxml\\elassl_verzaschi\\test_parser6.xml");
 		Element root = document.getRootElement();
+		String rootTagName = root.getTagName();
+		System.out.println("rootTagName: "+rootTagName);
 		List<Node> childNodes = root.getChildNodes();
 		List<Element> childElements = root.getChildElements();
-		Element[] contatto = root.getElementsByTagName("contatto");
-		String rootTagName = root.getTagName();
-		String toorText = root.getTextContent();
-		Attribute[] rootAttributes= root.getAttributes();
-		String rootAttribute = root.getAttribute("");
+		List<Element> domanda = root.getElementsByTagName("domanda");
+		if (domanda!=null) {
+			System.out.println("Number of 'domanda': "+domanda.size());
+			if(domanda.size()>0) {
+				String text = domanda.get(0).getTextContent();
+				Attribute[] attributes= domanda.get(0).getAttributes();
+				String book = domanda.get(0).getAttribute("book");
+				System.out.println(domanda.get(0));
+				System.out.println("First 'domanda': text="+text+", book="+book);
+				System.out.println("Number of attributes:"+attributes.length);
+			}
+		}
 		expandDocument(document);
 		
 	}

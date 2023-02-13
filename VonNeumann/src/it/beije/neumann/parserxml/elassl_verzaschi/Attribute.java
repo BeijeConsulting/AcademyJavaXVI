@@ -8,7 +8,7 @@ public class Attribute {
 		return key;
 	}
 	public void setKey(String key) {
-		this.key = key;
+		this.key = key.strip();
 	}
 	public String getValue() {
 		return value;
@@ -17,6 +17,6 @@ public class Attribute {
 		this.value = value;
 	}
 	public String toString() {
-		return "key: "+key+" value:"+value; 
+		return "key:"+key+" value:"+value; 
 	}
 }
