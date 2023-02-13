@@ -9,10 +9,10 @@ public class Elemento {
 	private ArrayList<Elemento> childElements;
 	private Elemento parent;
 
-	public Elemento(String tag, String textContext, ArrayList<String> attributes, Elemento parent) {
+	public Elemento(String tag, String textContext, String[] attributes, Elemento parent) {
 		this.tag = tag;
 		this.textContext = textContext;
-		this.attributes = attributes;
+		//this.attributes = attributes;
 		this.parent = parent;
 		childElements = new ArrayList<Elemento>();
 	}
