@@ -15,7 +15,6 @@ public class progParser { // gestisci />
 		String first=split[0];
 		String text=split.length==2?split[1]:"";
 		if (first=="") return null;
-		if (first.charAt(first.length()-1)=='/') System.out.println("Chiusura in place");
 		if(first.charAt(0)=='/') {
 			//System.out.println("	Chiusura "+first.substring(1,first.length()));
 			String tagName= first.split(" ")[0];
@@ -100,7 +99,7 @@ public class progParser { // gestisci />
 				result.setRootElement(current);
 			}
 			if (current!=null){
-				if (fifo.size()==0) fifo.add(current); //aggiungo current in coda vuota
+				if (fifo.size()==0) fifo.add(current); //add current to empty list
 				else { //aggiorno figlio dell'ultimo elemento in coda e aggiungo current
 					fifo.get(fifo.size()-1).addChildNode(current);
 					System.out.println("#TAG PARENT:"+fifo.get(fifo.size()-1));
@@ -113,12 +112,10 @@ public class progParser { // gestisci />
 				fifo.remove(fifo.size()-1);
 			}
 			isClosed=false;
-			//System.out.println("#Current:"+current);
 		}
-		if (fifo.isEmpty()) {
-			System.out.println("PASS");
+		if (!fifo.isEmpty()) {
+			throw new IllegalArgumentException("Invalid XML format"); 
 		}
-		else System.out.println("INVALID XML"); //ritorna null
 			
 		//TODO gestisci coda ancora piena fifo.size()>0 Stampa errore formato xml
 		return result;
