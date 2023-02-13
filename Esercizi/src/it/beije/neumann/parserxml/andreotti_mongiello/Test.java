@@ -25,7 +25,7 @@ public class Test {
 				StringBuilder fileContent = XmlParser.fromFileToString(path);
 				List<String> listTag = XmlParser.listTag( path );
 				XmlParser.getRootElement( listTag );
-				getChildElements(listTag,"contatti");
+				getChildElements(listTag,"contatto");
 				
 				
 			} catch (IOException e) {
@@ -53,7 +53,7 @@ public class Test {
 		return root;
 	}
 	
-	public static void getChildElements(List<String> elements, String name) {
+	public static void getChildNodes(List<String> elements, String name) {
 		List<String> childElements = new ArrayList<String>();
 		outerloop:
 		for (int i = 0; i < elements.size(); i++) {
@@ -71,10 +71,64 @@ public class Test {
 		System.out.println(childElements);
 	}
 	
+	public static void getChildElements(List<String> elements, String parent) {
+		List<String> childElements = new ArrayList<String>();
+		
+		outerloop:
+			for(int i = 0; i < elements.size(); i++) {
+				
+			}
+	}
+	
+	
+	
+	
 	public static boolean isEndTag(String tag, String primaryElement) {
 		String[] splitted = tag.split("");
 		splitted[0] = "";
 		tag = String.join("", splitted);
 		return tag.equals(primaryElement);
+	}
+	
+	public static List<String> getChildNodes(String path, String parent) throws IOException {
+		List<String> listTag = XmlParser.listTag( path );
+		//List<String> listAppoggio = new ArrayList<>();
+		
+		List<String> listChildElement = new ArrayList<>();
+		
+		boolean aggiungo = false;
+		String currentTag = "";
+		for( int i = 0; i < listTag.size() ; i++){
+			if( listTag.get(i).equalsIgnoreCase(parent) ) {
+				aggiungo = true;
+				i++;
+			}	
+			if(Test.isEndTag(listTag.get(i), currentTag)) {
+				
+				currentTag = "";
+			}
+			if(aggiungo && currentTag.equals("")) { 
+				if(listTag.get(i).charAt(0) != '/') {
+					currentTag = listTag.get(i);	
+				}
+				listChildElement.add( listTag.get(i));
+			}
+		}
+		
+		
+		System.out.println(listChildElement);	
+		
+		for( int i = 0; i < listChildElement.size() ; i++ ) {
+			if( listChildElement.get(i).indexOf('/') != -1  ){
+				listChildElement.remove(i);
+					i=0;
+			}		
+		}
+		
+	
+		
+		
+		System.out.println(listChildElement);	
+		return listChildElement;
 	}
 }
