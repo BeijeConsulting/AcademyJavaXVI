@@ -58,6 +58,9 @@ public class Documento {
         			textContext.append((char)content);
         		}
         		if(tag.charAt(0) == '/') {
+        			if(!tag.substring(1).toString().equals(currentElement.getTag())) {
+        				throw new RuntimeException("Tag non chiuso");
+        			}
         			if(currentElement.getParent() == null)
         				document.rootElement = currentElement;
         			currentElement = currentElement.getParent();
@@ -86,10 +89,9 @@ public class Documento {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Documento document = parse("/temp/test_parser1.xml");
+		Documento document = parse("/temp/test_parser2.xml");
 		document.getRootElement().stampaAlbero();
-		//for(Elemento e: document.getRootElement().getChildElements())
-			//System.out.println(e.getChildElements());
+		
 	}
 	
 }
