@@ -33,6 +33,20 @@ public class Documento {
         int content = 0;
         while (content != -1) {
         	if(content == '<' && (content = reader.read()) != '?') {
+        		if(content == '!') {
+        			if((content = reader.read()) == '-') {
+        				if((content = reader.read()) == '-') {
+        					while(!((content = reader.read()) == '-' && (content = reader.read()) == '-' && (content = reader.read()) == '>')) {
+        						if(content == -1) {
+        							throw new RuntimeException("Commento non chiuso correttamente");
+        						}
+        					}
+        					content = reader.read();
+        				}
+        			}  else {
+    					throw new RuntimeException("Commento non chiuso correttamente");
+    				}
+        		}
         		tag = new StringBuilder();
         		tag.append((char)content);
         		while((content = reader.read()) != '>' && content != ' ') {
@@ -59,7 +73,7 @@ public class Documento {
         		}
         		if(tag.charAt(0) == '/') {
         			if(!tag.substring(1).toString().equals(currentElement.getTag())) {
-        				throw new RuntimeException("Tag non chiuso");
+        				throw new RuntimeException("Tag non chiuso correttamente");
         			}
         			if(currentElement.getParent() == null)
         				document.rootElement = currentElement;
@@ -89,7 +103,7 @@ public class Documento {
 	
 	public static void main(String[] args) throws IOException {
 		
-		Documento document = parse("/temp/test_parser2.xml");
+		Documento document = parse("/temp/test_parser4.xml");
 		document.getRootElement().stampaAlbero();
 		
 	}
