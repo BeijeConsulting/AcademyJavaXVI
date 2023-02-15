@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -213,13 +214,63 @@ public class ContattiJDBC {
 		}		
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException {
+	//Metodo che esporta dati db su csv
+	public static void writeRubricaCSV(String pathFile, String separator) throws IOException, ClassNotFoundException, SQLException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		File rubrica = new File(pathFile);
+		boolean exists = rubrica.exists(); //File esiste
+		FileWriter fileWriter = new FileWriter(pathFile, true);
+		int righeInserite = 0;
+		
+		try {
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "beije2023");			
+			statement = connection.createStatement();
+			
+			if(!exists) {//Creo la prima riga con NOME-COGNOME-NOTE-TELEFONO se il file non esiste
+				fileWriter.write("COGNOME" + separator);
+				fileWriter.write("NOME" + separator);
+				fileWriter.write("TELEFONO" + separator);
+				fileWriter.write("EMAIL" + separator);
+				fileWriter.write("NOTE" + "\n");
+			}
+			
+			//Prendo i dati dal db
+			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			while (rs.next()) {
+				righeInserite++;
+				fileWriter.write(rs.getString("cognome") + separator);
+				fileWriter.write(rs.getString("nome") + separator);
+				fileWriter.write(rs.getString("email") + separator);
+				fileWriter.write(rs.getString("telefono") + separator);
+				fileWriter.write(rs.getString("note") + "\n");
+			}
+			System.out.println("Sono state inserite "+righeInserite+" righe");
+
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			fileWriter.close(); //Chiudo il file e salvo le modifiche
+			try {
+				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}	
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException, SQLException {
 		
 		String pathForCSV = "/Users/gianf/Desktop/rubrica.csv";
 		String pathForXml = "/Users/gianf/Desktop/rubrica.xml";
 		String separator = ";";
 		//importaContattiCSV(pathForCSV,separator);
-		importaContattiXML(pathForXml, separator);
+		//importaContattiXML(pathForXml, separator);
+		writeRubricaCSV(pathForCSV,separator);
 		
 		//leggiContatti();
 				
