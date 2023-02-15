@@ -1,7 +1,9 @@
 package it.beije.neumann.rubrica;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,7 +61,8 @@ public class RubricaJDBC {
 				System.out.println("--------");
 				
 
-				importContactsCSV("/tmp/rubrica.csv", connection);
+					//importContactsCSV("/tmp/rubrica.csv", connection);
+				exportContactsCSV("exportRubrica", connection);
 			}
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -95,6 +98,46 @@ public class RubricaJDBC {
 	    
 	    statement.close();
 	    reader.close();
+	}
+	
+	public static void exportContactsCSV(String filePath, Connection conn) {
+		
+		try {
+            String sql = "SELECT * FROM contatti";
+             
+            Statement statement = conn.createStatement();
+             
+            ResultSet result = statement.executeQuery(sql);
+             
+            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath));
+                
+            fileWriter.write("nome,cognome,telefono,email,note");
+             
+            while (result.next()) {
+                String contactName = result.getString("nome");
+                String contactLastName = result.getString("cognome");
+                String contactPhone = result.getString("telefono");
+                String contactEmail = result.getString("email");
+                String contactNote = result.getString("note");
+                
+                 
+                
+                String line = String.format("%s,%s,%s,%s,%s",
+                        contactName, contactLastName, contactPhone, contactEmail, contactNote);
+                 
+                fileWriter.newLine();
+                fileWriter.write(line);            
+            }
+             
+            statement.close();
+            fileWriter.close();
+             
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
 	}
 }
 
