@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import it.beije.neumann.nicole.rubrica.Contatto;
+
 
 public class CSVmanager {
 	
