@@ -36,7 +36,7 @@ public class XMLManager {
 	}
 	
 	public static void addProperty(Document doc, Element elemContact, String tag, String value) {
-		if (value.equals(""))
+		if (value == null || value.equals(""))
 			return;
 		Element property = doc.createElement(tag);
 		property.setTextContent(value);
@@ -59,6 +59,9 @@ public class XMLManager {
 			List<Element> values = getChildElements(el);
 			for (Element v : values) {
 				switch (v.getNodeName()) {
+				case "id":
+					contatto.setId(Integer.parseInt(v.getTextContent()));
+					break;
 				case "nome":
 					contatto.setName(v.getTextContent());
 					break;
@@ -95,6 +98,7 @@ public class XMLManager {
 		document.appendChild(documentElement);
 		for (Contatto c: contatti) {
 			Element e = document.createElement("contatto");
+			addProperty(document, e, "id", String.valueOf(c.getId()));
 			addProperty(document, e, "nome", c.getName());
 			addProperty(document, e, "cognome", c.getSurname());
 			addProperty(document, e, "telefono", c.getTelephone());

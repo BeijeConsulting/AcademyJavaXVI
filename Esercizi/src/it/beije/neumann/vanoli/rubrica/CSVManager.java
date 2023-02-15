@@ -12,13 +12,14 @@ import java.util.List;
 public class CSVManager {
 	
 	public static int[] getOrderOfProperties(String[] fields) {
-		int[] order = {-1, -1, -1, -1, -1};
+		int[] order = {-1, -1, -1, -1, -1, -1};
 		/*significato di ogni posizione dell'array:
 		 * 0 - dove si trova nome all'interno di fields
 		 * 1 - dove si trova cognome all'interno di fields
 		 * 2 - dove si trova telefono all'interno di fields
 		 * 3 - dove si trova email all'interno di fields
 		 * 4 - dove si trova note all'interno di fields
+		 * 5 - dove si trova id all'interno di fields
 		 * 
 		 * per ogni posizione, se il valore è -1 vuol dire che nella riga non è stato trovato il rispettivo campo
 		 */
@@ -39,6 +40,9 @@ public class CSVManager {
 				break;
 			case "note":
 				order[4] = i;
+				break;
+			case "id":
+				order[5] = i;
 				break;
 			}
 		}
@@ -79,6 +83,8 @@ public class CSVManager {
 					contatto.setEmail(fields[orderFields[3]]);
 				if (orderFields[4] != -1)
 					contatto.setNote(fields[orderFields[4]]);
+				if (orderFields[5] != -1)
+					contatto.setId(Integer.parseInt(fields[orderFields[5]]));
 				
 				contatti.add(contatto);
 			}
@@ -97,9 +103,10 @@ public class CSVManager {
 			File newFile = new File(pathFile);
 			
 			FileWriter fileWriter = new FileWriter(newFile, true);
-			fileWriter.write("COGNOME;NOME;TELEFONO;EMAIL;NOTE\n");
+			fileWriter.write("ID;COGNOME;NOME;TELEFONO;EMAIL;NOTE\n");
 			for (Contatto c : contatti) {
 				fileWriter.write(
+						c.getId() + separator +
 						c.getSurname() + separator +
 						c.getName() + separator +
 						c.getTelephone() + separator +
