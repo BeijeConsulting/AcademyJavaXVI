@@ -1,15 +1,12 @@
 package it.beije.neumann.elassl.feb9;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import it.beije.neumann.elassl.feb8.Contatto;
 

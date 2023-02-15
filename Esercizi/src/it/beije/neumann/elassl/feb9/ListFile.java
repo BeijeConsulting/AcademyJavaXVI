@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import it.beije.neumann.elassl.feb8.Contatto;
-
 public class ListFile {
 	
 	public StringBuilder list(String path) {
