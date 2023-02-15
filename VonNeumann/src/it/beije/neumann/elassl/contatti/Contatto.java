@@ -1,8 +1,9 @@
-package it.beije.neumann.elassl.feb8;
+package it.beije.neumann.elassl.contatti;
 
 
 public class Contatto {
 
+	private int id;
 	private String name;
 	private String surname;
 	private String telephone;
@@ -69,6 +70,26 @@ public class Contatto {
 		}
 	}
 	
+	public Contatto(int id, String name, String surname, String telephone, String email, String note) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
+	}
+	public Contatto(String name, String surname, String telephone, String email, String note) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
+	}
+	public Contatto() {
+		super();
+	}
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{");
 //		builder.append(" name: ").append(name);
@@ -87,5 +108,11 @@ public class Contatto {
 				.append("}");
 
 		return builder.toString();
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

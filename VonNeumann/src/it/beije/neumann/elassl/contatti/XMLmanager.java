@@ -1,4 +1,4 @@
-package it.beije.neumann.elassl.feb9;
+package it.beije.neumann.elassl.contatti;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import it.beije.neumann.elassl.feb8.Contatto;
 
 public class XMLmanager {
 	/*

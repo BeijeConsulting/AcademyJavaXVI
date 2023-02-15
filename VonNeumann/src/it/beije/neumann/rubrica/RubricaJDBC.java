@@ -17,7 +17,7 @@ public class RubricaJDBC {
 		ResultSet rs = null;
 				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "password123");
 			//System.out.println(connection.isClosed());
 			
 			statement = connection.createStatement();

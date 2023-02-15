@@ -1,4 +1,4 @@
-package it.beije.neumann.elassl.feb9;
+package it.beije.neumann.elassl.contatti;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.neumann.elassl.feb8.Contatto;
 
 public class CSVmanager {
 	/*
