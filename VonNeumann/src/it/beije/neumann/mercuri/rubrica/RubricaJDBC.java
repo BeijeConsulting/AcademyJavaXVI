@@ -35,11 +35,11 @@ public class RubricaJDBC {
 					
 					Contatto c = new Contatto();
 					c.setId(rs.getInt("id"));
-					c.setSurname(rs.getString("cognome"));
-					c.setName(rs.getString("nome"));
-					c.setTelephone(rs.getString("telefono"));
-					c.setEmail(rs.getString("email"));
-					c.setNote(rs.getString("note"));
+					c.setSurname(rs.getString("cognome") == "null"? null: rs.getString("cognome"));
+					c.setName(rs.getString("nome") == "null"? null: rs.getString("nome"));
+					c.setTelephone(rs.getString("telefono") == "null"? null: rs.getString("telefono"));
+					c.setEmail(rs.getString("email") == "null"? null: rs.getString("email"));
+					c.setNote(rs.getString("note") == "null"? null: rs.getString("note"));
 
 					contatti.add(c);
 				}
