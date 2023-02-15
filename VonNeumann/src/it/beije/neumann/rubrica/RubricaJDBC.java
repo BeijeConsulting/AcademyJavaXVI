@@ -61,7 +61,7 @@ public class RubricaJDBC {
 				System.out.println("--------");
 				
 
-					//importContactsCSV("/tmp/rubrica.csv", connection);
+				importContactsCSV("VonNeumann/src/it/beije/neumann/rubrica/rubrica.csv", connection);
 				exportContactsCSV("exportRubrica", connection);
 			}
 		} catch (SQLException sqlEx) {
