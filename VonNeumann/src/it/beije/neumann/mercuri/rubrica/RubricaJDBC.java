@@ -90,8 +90,8 @@ public class RubricaJDBC {
 				statement.executeUpdate("UPDATE contatti set nome = case when nome in ('null','') then null else nome end, "
 						+ "cognome = case when cognome in ('null','') then null else cognome end, "
 						+ "telefono = case when telefono in ('null','') then null else telefono end, "
-						+ "email = case when email = in ('null','') then null else email end, "
-						+ "note = case when note = in ('null','') then null else note end");
+						+ "email = case when email in ('null','') then null else email end, "
+						+ "note = case when note in ('null','') then null else note end");
 
 				
 				System.out.println("Affected rows: " + rowCount);
