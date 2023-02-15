@@ -129,7 +129,7 @@ public class CSVmanager {
 //			
 //			fileWriter.flush();
 //			fileWriter.close();
-			
+			bufferedReader.close();
 		} catch (FileNotFoundException fnfEx) {
 			fnfEx.printStackTrace();
 		} catch (IOException ioEx) {
