@@ -67,7 +67,7 @@ public class MiscMethods {
 			
 			for (int j = i; j > 0; j= j/10) {
 				switch (j % 16) {
-				case 10: exa += 
+				//case 10: exa += 
 				}
 			}
 			grey = exa + exa + exa;
