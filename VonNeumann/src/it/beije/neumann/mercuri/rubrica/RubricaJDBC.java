@@ -5,13 +5,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RubricaJDBC {
 
-	public static List<Contatto> exportContattiDB (String pathFile){
+	public static List<Contatto> exportContattiDB (){
 		
-		List<Contatto> contatti = null;
+		List<Contatto> contatti = new ArrayList<>();
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,13 +31,17 @@ public class RubricaJDBC {
 				rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
 				while (rs.next()) {
 
-					System.out.println("id : " + rs.getInt("id"));
-					System.out.println("cognome : " + rs.getString("cognome"));
-					System.out.println("nome : " + rs.getString("nome"));
-					System.out.println("email : " + rs.getString("email"));
-					System.out.println("telefono : " + rs.getString("telefono"));
-					System.out.println("note : " + rs.getString("note"));
-					System.out.println("--------");
+					rowCount++;
+					
+					Contatto c = new Contatto();
+					c.setId(rs.getInt("id"));
+					c.setSurname(rs.getString("cognome"));
+					c.setName(rs.getString("nome"));
+					c.setTelephone(rs.getString("telefono"));
+					c.setEmail(rs.getString("email"));
+					c.setNote(rs.getString("note"));
+
+					contatti.add(c);
 				}
 
 				System.out.println("Selected rows: " + rowCount);
@@ -113,6 +118,10 @@ public class RubricaJDBC {
 		List<Contatto> contatti = XMLmanager.loadRubricaFromXML("/temp/rubrica.xml");
 		
 		importContattiToDB(contatti);
+		
+		contatti = exportContattiDB();
+		
+		XMLmanager.writeRubricaXML(contatti, "/temp/rubricaFromDB.xml");
 	}
 
 }
