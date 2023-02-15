@@ -1,5 +1,8 @@
 package it.beije.neumann.rubrica;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +11,7 @@ import java.sql.Statement;
 
 public class RubricaJDBC {
 
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
@@ -17,7 +20,7 @@ public class RubricaJDBC {
 		ResultSet rs = null;
 				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
 			//System.out.println(connection.isClosed());
 			
 			statement = connection.createStatement();
@@ -54,6 +57,9 @@ public class RubricaJDBC {
 				System.out.println("telefono : " + rs.getString("telefono"));
 				System.out.println("note : " + rs.getString("note"));
 				System.out.println("--------");
+				
+
+				importContactsCSV("/tmp/rubrica.csv", connection);
 			}
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -67,5 +73,29 @@ public class RubricaJDBC {
 			}
 		}
 	}
+	
+	public static void importContactsCSV(String filePath, Connection conn) throws SQLException, IOException {
 
+	    Statement statement = conn.createStatement();
+	    
+	    BufferedReader reader = new BufferedReader(new FileReader(filePath));
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	    	
+	        String[] values = line.split(",");
+	        String nome = values[0];
+	        String cognome = values[1];
+	        String telefono = values[2];
+	        String email = values[3];
+	        String note = values[4];
+	        
+	        
+	        statement.executeUpdate("INSERT INTO contacts (nome, cognome, telefono, email, note) VALUES ('" + nome + "', '" + cognome + "'  ,'" + telefono + "', '" + email + "', '"+ note +"')");
+	    }
+	    
+	    statement.close();
+	    reader.close();
+	}
 }
+
+
