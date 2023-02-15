@@ -1,4 +1,4 @@
-package it.beije.neumann.vellani.feb8;
+package it.beije.neumann.rubrica;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,7 +36,6 @@ public class CSVmanager {
 				
 				contatti.add(contatto);
 				
-				//System.out.println(contatto);
 			}
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();

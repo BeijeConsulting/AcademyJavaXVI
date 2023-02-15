@@ -1,4 +1,4 @@
-package it.beije.neumann.vellani.feb8;
+package it.beije.neumann.rubrica;
 
 import java.io.File;
 import java.io.IOException;
