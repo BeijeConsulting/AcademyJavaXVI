@@ -59,11 +59,11 @@ public class XMLManager2
 		Contatto contatto = null;
 		for (Element el : elements) {
 			contatto = new Contatto();
-			System.out.println("eta' : " + el.getAttribute("eta"));
+			//System.out.println("eta' : " + el.getAttribute("eta"));
 			
 			List<Element> values = getChildElements(el);
 			for (Element v : values) {
-				System.out.println("node name: " + v.getNodeName());
+				//System.out.println("node name: " + v.getNodeName());
 				switch (v.getNodeName()) {
 				case "nome":
 					contatto.setName(v.getTextContent());
@@ -196,6 +196,8 @@ public class XMLManager2
 		contatti.add(c1);
 		contatti.add(c2);
 		writeRubricaXML(contatti,"C:\\Users\\nverz\\Music\\esercizio.\\rubrica.xml");
+		
+		System.out.println(c2.getEmail());
 		
 	}
 	

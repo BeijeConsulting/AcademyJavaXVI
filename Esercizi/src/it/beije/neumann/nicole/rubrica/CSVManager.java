@@ -3,11 +3,16 @@ package it.beije.neumann.nicole.rubrica;
  * Aggiungo contatti alla rubrica.csv
  */
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class CSVManager 
@@ -55,6 +60,41 @@ public class CSVManager
 		
 		
 	}
+	
+	public static List<Contatto> readRubrica(String pathfile) throws FileNotFoundException, IOException {
+		FileReader fileReader = new FileReader(pathfile);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		
+		try {
+			String r = null;
+			String[] fields = null;
+			Contatto contatto = null;
+			while (bufferedReader.ready()) {
+				r = bufferedReader.readLine();
+				fields = r.split(";");
+				
+				contatto = new Contatto();
+				contatto.setSurname(fields[0]);
+				contatto.setName(fields[1]);
+				contatto.setTelephone(fields[2]);
+				contatto.setEmail(fields[3]);
+				contatto.setNote(fields[4]);
+				
+				contatti.add(contatto);
+				
+				//System.out.println(contatto);
+			}
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} finally {
+			bufferedReader.close();
+		}
+		
+		return contatti;
+	}
+
 	
 	
 	public static void main(String[] args) 
