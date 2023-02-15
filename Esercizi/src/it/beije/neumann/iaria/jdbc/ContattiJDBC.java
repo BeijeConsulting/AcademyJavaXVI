@@ -1,6 +1,7 @@
 package it.beije.neumann.iaria.jdbc;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +12,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import it.beije.neumann.iaria.rubrica.Contatto;
 
@@ -55,14 +71,13 @@ public class ContattiJDBC {
 	}
 	
 	//Metodo che importa il file csv su db
-	public static void importaContattiCSV(String pathfile) throws FileNotFoundException, IOException, ClassNotFoundException {
+	public static void importaContattiCSV(String pathFile, String separator) throws FileNotFoundException, IOException, ClassNotFoundException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = null;
 		Statement statement = null; 
-		ResultSet rs = null;
 		int righeInserite = 0;
 		
-		FileReader fileReader = new FileReader(pathfile);
+		FileReader fileReader = new FileReader(pathFile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
 		try {
@@ -75,7 +90,7 @@ public class ContattiJDBC {
 			
 			while (bufferedReader.ready()) {
 				r = bufferedReader.readLine();
-				fields = r.split(";");
+				fields = r.split(separator);
 				
 				righeInserite++;
 				contatto = new Contatto();
@@ -120,16 +135,93 @@ public class ContattiJDBC {
 		}
 	}
 
-	//Metodo che importa il file xml su db
-	public static void importaContattiXML(String pathfile) throws FileNotFoundException, IOException, ClassNotFoundException {
-		//
+	//Per poi leggere dati .XML
+	public static List<Element> getChildElements(Element e) {
+		List<Element> elements = new ArrayList<Element>();
+		NodeList childNodes = e.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i ++) {
+			Node node = childNodes.item(i);
+			if (node instanceof Element) {
+				elements.add((Element) node);
+			}
+		}
+		
+		return elements;
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException {
+	//Metodo che importa il file xml su db
+	public static void importaContattiXML(String pathFile, String separator) throws ParserConfigurationException, IOException, SAXException, ClassNotFoundException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = null;
+		Statement statement = null; 
+		int righeInserite = 0;
 		
-		String pathfile = "/Users/gianf/Desktop/rubrica.csv";
-		//importaContattiCSV(pathfile);
-		leggiContatti();
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.parse(pathFile);		
+		Element rootElement = document.getDocumentElement();
+		List<Element> elements = getChildElements(rootElement);
+		
+		
+		try {
+			
+			Contatto contatto = null;
+			
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "beije2023");			
+			statement = connection.createStatement();
+			
+			for (Element el : elements) {
+				righeInserite++;
+				contatto = new Contatto();
+				
+				List<Element> values = getChildElements(el);
+	
+				//Leggo in verticale
+				for (Element v : values) {
+					String valore = v.getNodeName().toLowerCase(); //Prendo il nome del nodo in minuscolo per confrontarlo
+	
+					switch (valore) {
+					case "nome":
+						contatto.setName(v.getTextContent());
+						break;
+					case "cognome":
+						contatto.setSurname(v.getTextContent());
+						break;
+					case "note":
+						contatto.setNote(v.getTextContent());
+						break;
+					case "telefono":
+						contatto.setTelephone(v.getTextContent());
+						break;
+					}
+				}
+				//INSERT
+				statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES ('" + contatto.getName() + "', '" + contatto.getSurname() + "', '" + contatto.getTelephone() + "', '" + contatto.getEmail() + "', '" + contatto.getNote() + "')");
+			}
+			//UPDATE
+			statement.executeUpdate("UPDATE contatti set nome = case when nome in('null','') then null else nome end, cognome = case when cognome in('null','') then null else cognome end, telefono = case when telefono in('null','') then null else telefono end, email = case when email in('null','') then null else email end, note = case when note in('null','') then null else note end");
+			System.out.println("Sono state inserite "+righeInserite+" righe");
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}		
+	}
+	
+	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException {
+		
+		String pathForCSV = "/Users/gianf/Desktop/rubrica.csv";
+		String pathForXml = "/Users/gianf/Desktop/rubrica.xml";
+		String separator = ";";
+		//importaContattiCSV(pathForCSV,separator);
+		importaContattiXML(pathForXml, separator);
+		
+		//leggiContatti();
 				
 
 
