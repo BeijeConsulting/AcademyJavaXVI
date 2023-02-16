@@ -184,8 +184,6 @@ public class RubricaCsv {
 	}
 
 	public static List<Contatto> loadRubricaFromCSV(String pathfile, String separator) throws FileNotFoundException, IOException {
-
-
 		FileReader fileReader = new FileReader(pathfile);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		List<Contatto> contatti = new ArrayList<Contatto>();
@@ -209,7 +207,7 @@ public class RubricaCsv {
 			Contatto contatto = null;
 			int i = 0;
 			while( bufferedReader.ready() ) {
-				 i = 0;
+				i = 0;
 				r = bufferedReader.readLine();	
 				fields = r.split(separator, -1);
 				 for( String f : dynamicFields ) {

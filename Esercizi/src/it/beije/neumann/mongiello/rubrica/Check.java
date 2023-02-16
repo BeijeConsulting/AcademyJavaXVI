@@ -6,7 +6,7 @@ public class Check {
 	
 	public static boolean checkScelta( int scelta ) throws IOException {
 		
-		if( scelta > 0 && scelta <= 6 ) {
+		if( scelta > 0 && scelta <= 10) {
 			return true;
 		}
 		throw new IOException("Scelta non valida") ;
@@ -27,6 +27,12 @@ public class Check {
 		return check;
 	}
 	
-	
+	public static String isNull(String val) {
+	if(val == null) {
+		val = "";
+		return val;
+	}
+	return val;
+}
 	
 }

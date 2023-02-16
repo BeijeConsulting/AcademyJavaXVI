@@ -2,6 +2,7 @@ package it.beije.neumann.mongiello.rubrica;
 
 import java.io.BufferedReader;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -41,6 +42,10 @@ public class Rubrica {
 				System.out.println("4) Elimina contatto");
 				System.out.println("5) Ordina rubrica");
 				System.out.println("6) Cerca contatto");
+				System.out.println("7) Export csv");
+				System.out.println("8) Export xml");
+				System.out.println("9) Import csv");
+				System.out.println("10) Import Xml");
 				scelta = s.nextInt();
 				checkScelta = Check.checkScelta(scelta);
 
@@ -82,7 +87,10 @@ public class Rubrica {
 					contatti = RubricaCsv.loadRubricaFromCSV(pathFileCsv, ";");
 					break;
 				case 5:
-					//ordinamento
+					System.out.println("Vuoi ordinare per Nome o per Cognome ?");
+					String valore = s.next();
+					System.out.println(valore);
+					RubricaJdbc.order(valore);
 					break;
 					
 				case 6:
@@ -91,7 +99,19 @@ public class Rubrica {
 					RubricaJdbc.search( surname );
 					
 					break;
-				}	
+				case 7:
+					RubricaJdbc.exportCsv();
+					break;
+				case 8:
+					RubricaJdbc.exportXml();
+					break;
+				case 9:
+					RubricaJdbc.importCsv();
+					break;
+				case 10:
+					RubricaJdbc.importXml();
+					break;
+			}
 			}catch( IOException ioEx ){
 				checkScelta = true;
 				ioEx.printStackTrace();
