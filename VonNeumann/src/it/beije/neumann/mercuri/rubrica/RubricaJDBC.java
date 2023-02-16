@@ -2,6 +2,7 @@ package it.beije.neumann.mercuri.rubrica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -81,9 +82,18 @@ public class RubricaJDBC {
 				
 				int rowCount = 0;
 				for (Contatto c: contatti) {
-					rowCount += statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email, note)"
-							+ " VALUES ('"+c.getName()+"', '"+c.getSurname()+"', '"+c.getTelephone()+"', '"+c.getEmail()+"', '"+c.getNote()+"')");
-										
+					PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (?,?,?,?,?)");
+					preparedStatement.setString(1, c.getName());
+					preparedStatement.setString(2, c.getSurname());
+					preparedStatement.setString(3, c.getTelephone());
+					preparedStatement.setString(4, c.getEmail());
+					preparedStatement.setString(5, c.getNote());
+					
+					rowCount += preparedStatement.executeUpdate();
+					
+//					rowCount += statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email, note)"
+//							+ " VALUES ('"+c.getName()+"', '"+c.getSurname()+"', '"+c.getTelephone()+"', '"+c.getEmail()+"', '"+c.getNote()+"')");
+//										
 					
 				}
 				
@@ -93,7 +103,6 @@ public class RubricaJDBC {
 						+ "email = case when email in ('null','') then null else email end, "
 						+ "note = case when note in ('null','') then null else note end");
 
-				
 				System.out.println("Affected rows: " + rowCount);
 
 			} catch (SQLException sqlEx) {
@@ -106,7 +115,8 @@ public class RubricaJDBC {
 					e.printStackTrace();
 				}
 			}
-		}	
+		}
+		
 		catch (ClassNotFoundException classEx){
 				
 			classEx.printStackTrace();

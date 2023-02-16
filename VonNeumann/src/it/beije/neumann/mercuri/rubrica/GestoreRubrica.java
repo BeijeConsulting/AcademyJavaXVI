@@ -1,5 +1,19 @@
 package it.beije.neumann.mercuri.rubrica;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+//Implementare un gestore di rubrica a linea di comando, con le seguenti funzionalità:
+//
+//vedi lista contatti (con possibilità di ordinare per nome e cognome a scelta)
+//cerca contatto
+//inserisci nuovo contatto
+//modifica contatto
+//cancella contatto
+//trova contatti duplicati
+//unisci contatti duplicati
+//
+//La rubrica deve essere memorizzata su DB e devo esserci la possibilità di importare ed esportare contatti da/in file XML e CSV
 import java.util.Scanner;
 
 public class GestoreRubrica {
@@ -10,9 +24,50 @@ public class GestoreRubrica {
 	
 	static void modifyContatto() {}
 	
+	
 	static void searchContatto () {}
 	
-	static void viewContatti () {}
+	static void viewContatti (Scanner sc) {
+		
+		System.out.println("vuoi ordinarli per nome o cognome?");
+		Connection connection = ConnectionPool.getConnection();
+		PreparedStatement preparedStatement = null;
+		String orderField = sc.next();
+		ResultSet rs = null;
+		
+		try {
+			preparedStatement = connection.prepareStatement("Select * from Contatti order by ?");
+			preparedStatement.setString(1, orderField);
+			
+			rs = preparedStatement.executeQuery();
+			
+			//order by non funziona con i set giustamente
+			while (rs.next()) {
+
+				System.out.println("Id: " + rs.getInt("id")); 
+				System.out.println("Cognome: " + rs.getString("cognome")); 
+				System.out.println("Nome: " + rs.getString("nome")); 
+				System.out.println("Telefono: " + rs.getString("telefono")); 
+				System.out.println("Email: " + rs.getString("email")); 
+				System.out.println("Note: " + rs.getString("note")); 
+				System.out.println("-------");
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+				
+	}
 	
 	static void searchCopie() {
 		// TODO Auto-generated method stub
@@ -37,6 +92,8 @@ public class GestoreRubrica {
 		
 		System.out.println("digita 'help' per i comandi");
 		
+		ConnectionPool.getInstance();
+
 		Scanner sc = new Scanner(System.in);
 		String azione = null;
 		while (azione != "exit") {
@@ -56,7 +113,7 @@ public class GestoreRubrica {
 			
 			switch (azione) {
 			
-				case "view" : viewContatti(); 
+				case "view" : viewContatti(sc); 
 				break;
 				case "search": searchContatto(); 
 				break;
