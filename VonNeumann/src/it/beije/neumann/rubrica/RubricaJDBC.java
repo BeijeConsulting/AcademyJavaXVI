@@ -2,30 +2,35 @@ package it.beije.neumann.rubrica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class RubricaJDBC {
-
-	public static void main(String[] args) throws ClassNotFoundException {
-		
+	
+	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+	}
+
+	public static void main(String[] args) {
 		
 		Connection connection = null;
 		Statement statement = null; 
 		ResultSet rs = null;
 				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+			connection = getConnection();
 			//System.out.println(connection.isClosed());
 			
 			statement = connection.createStatement();
 			
 			//INSERT
 			//statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email) VALUES ('Bianchi', 'Roberta', '325235252', 'r.bianchi@beije.it')");
-//			String nome = "Marianna";
-//			String cognome = "Viola";
+			String nome = "Marianna";
+			String cognome = "Viola";
 //			statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email) VALUES ('" + nome + "', '" + cognome + "', '325235252', 'r.bianchi@beije.it')");
 			
 			//UPDATE
@@ -39,7 +44,12 @@ public class RubricaJDBC {
 			//SELECT
 //			statement.execute("SELECT id, email, telefono, cognome, nome, note FROM contatti");
 //			ResultSet rs = statement.getResultSet();
-			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+//			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM contatti WHERE cognome = ? AND nome = ?");
+			preparedStatement.setString(1, cognome);
+			preparedStatement.setString(2, nome);
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 //				System.out.println("id : " + rs.getInt(1));
 //				System.out.println("cognome : " + rs.getString(3));
@@ -55,6 +65,8 @@ public class RubricaJDBC {
 				System.out.println("note : " + rs.getString("note"));
 				System.out.println("--------");
 			}
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace();
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		} finally {
@@ -68,4 +80,7 @@ public class RubricaJDBC {
 		}
 	}
 
+	// SELECT * FORM USERS WHERE USERNAME = username AND PASSWORD = password 
+	// SELECT * FORM USERS WHERE USERNAME = '' OR USERNAME LIKE '%%' # AND PASSWORD = password
+	
 }
