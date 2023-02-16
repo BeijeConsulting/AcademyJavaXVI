@@ -39,18 +39,18 @@ public class XMLmanager {
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse("/temp/rubrica.xml");
+		Document document = documentBuilder.parse("/temp/test_parser1.xml");
 		
 		Element rootElement = document.getDocumentElement();
 		
-//		NodeList contatti = rootElement.getElementsByTagName("contatto");
-//		System.out.println("num contatti: " + contatti.getLength());
-//		for (int i = 0; i < contatti.getLength(); i ++) {
-//			Element e = (Element) contatti.item(i);
-//			System.out.println("NodeName: " + e.getNodeName());
-//			System.out.println("num contatti interni: " + e.getElementsByTagName("contatto").getLength());
-//		}
-		
+		NodeList contatti = rootElement.getElementsByTagName("contatto");
+		System.out.println("num contatti: " + contatti.getLength());
+		for (int i = 0; i < contatti.getLength(); i ++) {
+			Element e = (Element) contatti.item(i);
+			System.out.println("NodeName: " + e.getNodeName());
+			System.out.println("num contatti interni: " + e.getElementsByTagName("contatto").getLength());
+		}
+//		
 //		NodeList childNodes = rootElement.getChildNodes();
 //		System.out.println("num childNodes: " + childNodes.getLength());
 //		for (int i = 0; i < childNodes.getLength(); i ++) {
@@ -61,40 +61,40 @@ public class XMLmanager {
 //			}
 //			System.out.println("node: " + node.getNodeName());
 //		}
-		
-		List<Contatto> contatti = new ArrayList<Contatto>();
-		List<Element> elements = getChildElements(rootElement);
-		Contatto contatto = null;
-		for (Element el : elements) {
-			contatto = new Contatto();
-			System.out.println("eta' : " + el.getAttribute("eta"));
-			
-			List<Element> values = getChildElements(el);
-			for (Element v : values) {
-				System.out.println("node name: " + v.getNodeName());
-				switch (v.getNodeName()) {
-				case "nome":
-					contatto.setName(v.getTextContent());
-					break;
-				case "cognome":
-					contatto.setSurname(v.getTextContent());
-					break;
-				case "telefono":
-					contatto.setTelephone(v.getTextContent());
-					break;
-				case "email":
-					contatto.setEmail(v.getTextContent());
-					break;
-				case "note":
-					contatto.setNote(v.getTextContent());
-					break;
-				}
-			}
-			
-			contatti.add(contatto);
-		}
-
-		System.out.println(contatti);
+//		
+//		List<Contatto> contatti = new ArrayList<Contatto>();
+//		List<Element> elements = getChildElements(rootElement);
+//		Contatto contatto = null;
+//		for (Element el : elements) {
+//			contatto = new Contatto();
+//			System.out.println("eta' : " + el.getAttribute("eta"));
+//			
+//			List<Element> values = getChildElements(el);
+//			for (Element v : values) {
+//				System.out.println("node name: " + v.getNodeName());
+//				switch (v.getNodeName()) {
+//				case "nome":
+//					contatto.setName(v.getTextContent());
+//					break;
+//				case "cognome":
+//					contatto.setSurname(v.getTextContent());
+//					break;
+//				case "telefono":
+//					contatto.setTelephone(v.getTextContent());
+//					break;
+//				case "email":
+//					contatto.setEmail(v.getTextContent());
+//					break;
+//				case "note":
+//					contatto.setNote(v.getTextContent());
+//					break;
+//				}
+//			}
+//			
+//	//		contatti.add(contatto);
+//		}
+//
+//		System.out.println(contatti);
 
 	}
 	

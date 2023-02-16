@@ -1,6 +1,7 @@
 package it.beije.neumann.mongiello.rubrica;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.xml.sax.SAXException;
 
 
 public class RubricaXml {
+	
 	
 	public static void writeRubricaXML(List<Contatto> contatti, String pathFile) throws ParserConfigurationException, TransformerException {
 
@@ -89,11 +91,14 @@ public class RubricaXml {
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		List<Element> elements = getChildElements(rootElement);
+		
+		
+		
 		for (Element el : elements) {
 			
 			List<Element> values = getChildElements(el);
 			for (Element v : values) {
-				//System.out.println("node name: " + v.getNodeName());
+				
 				switch (v.getNodeName()) {
 				case "NAME":
 					name = v.getTextContent();
@@ -117,10 +122,106 @@ public class RubricaXml {
 		return contatti;
 		
 }
+	//RubricaXml.editRubrica(pathFileCsv, ";", "EMAIL" ,"moraglia", nuovamail);
+	public static void editRubrica(  String pathFile, String fieldToEdit ,String primaryKey, String newParametro ) throws ParserConfigurationException, SAXException, IOException, TransformerException {
+		
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder	documentBuilder = documentBuilderFactory.newDocumentBuilder();	
+		
+		Document oldDdocument = documentBuilder.parse(pathFile);
+		Document newDocument = documentBuilder.newDocument();	
+			
+		Element rootElement = oldDdocument.getDocumentElement();
+		
+		
+		Element documentElement = newDocument.createElement( rootElement.getNodeName() );
+		newDocument.appendChild(documentElement);
+
+		List<Element> elements = getChildElements(rootElement);
+		boolean isToEdit = false;
+		String par = null;
+		for( Element el : elements ) {
+			Element contatto = newDocument.createElement(el.getNodeName());
+			documentElement.appendChild(contatto);
+			List<Element> values = getChildElements(el);
+			
+			for( Element v: values ) {
+					switch(v.getNodeName()) {	
+					case "NAME":
+						Element nameElement = newDocument.createElement("NAME");
+						nameElement.setTextContent(v.getTextContent());
+						contatto.appendChild(nameElement);
+						break;
+					case "SURNAME":
+						Element surnameElement = newDocument.createElement("SURNAME");
+						surnameElement.setTextContent(v.getTextContent());
+						if( v.getTextContent().equals(primaryKey) ) {
+							isToEdit = true;
+						}
+						contatto.appendChild(surnameElement);
+						break;	
+					case "TELEPHONE":
+						if(isToEdit && fieldToEdit.equals("TELEPHONE")){
+							par = newParametro;
+							isToEdit = false;
+						}else {
+							par = v.getTextContent();
+						}
+						Element telephoneElement = newDocument.createElement("TELEPHONE");
+						telephoneElement.setTextContent(par);
+						contatto.appendChild(telephoneElement);
+						break;	
+					case "EMAIL":
+						if(isToEdit && fieldToEdit.equals("EMAIL")) {
+							par = newParametro;
+							isToEdit = false;
+						}else {
+							par = v.getTextContent();
+						}
+						Element emailElement = newDocument.createElement("EMAIL");
+						emailElement.setTextContent(par);
+						contatto.appendChild(emailElement);
+						break;
+					case "NOTE":
+						if(isToEdit && fieldToEdit.equals("NOTE")) {
+							par = newParametro;
+							isToEdit = false;
+						}else {
+							par = v.getTextContent();
+						}
+						Element noteElement = newDocument.createElement("NOTE");
+						noteElement.setTextContent(par);
+						contatto.appendChild(noteElement);
+						break;
+
+					}
+				
+			}
+		}
+		
+		
+		
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(newDocument);
+		
+		StreamResult result = new StreamResult(new File("/temp/temp.xml"));
+
+		// Output to console for testing
+		StreamResult syso = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+	//	transformer.transform(source, syso);
+		
+
+	}
 	
 	public static List<Element> getChildElements(Element e) {
 		List<Element> elements = new ArrayList<Element>();
 		NodeList childNodes = e.getChildNodes();
+		
+		
 		for (int i = 0; i < childNodes.getLength(); i ++) {
 			Node node = childNodes.item(i);
 			if (node instanceof Element) {

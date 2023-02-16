@@ -13,8 +13,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class RubricaCsv {
 	
 	public static void deleteContact( String pathFile, String separator,  String parametro) throws Exception {
@@ -63,9 +61,10 @@ public class RubricaCsv {
 			throw ioEx;
 		}
 	}
-	
+
 	
 	public static void editRubrica(  String pathFile, String separator, String fieldToEdit ,String primaryKey, String newParametro ) throws IOException  {
+
 		
 		String rigaIntestazione = null;
 		String[] dynamicField = null;
@@ -184,7 +183,7 @@ public class RubricaCsv {
 		
 	}
 
-public static List<Contatto> loadRubricaFromCSV(String pathfile, String separator) throws FileNotFoundException, IOException {
+	public static List<Contatto> loadRubricaFromCSV(String pathfile, String separator) throws FileNotFoundException, IOException {
 
 
 		FileReader fileReader = new FileReader(pathfile);
@@ -249,12 +248,11 @@ public static List<Contatto> loadRubricaFromCSV(String pathfile, String separato
 		return contatti;
 	}
 
-
-
 	public static void writeRubricaCSV( List<Contatto> contatti, String pathFile, String separator ) throws IOException {
 		
 		FileWriter fileWriter = new FileWriter( pathFile,true );
 		fileWriter.write("\n");
+		
 		fileWriter.write( contatti.get( contatti.size() -1 ).getName() );
 		fileWriter.write(separator);
 		
@@ -273,8 +271,6 @@ public static List<Contatto> loadRubricaFromCSV(String pathfile, String separato
 		fileWriter.flush();
 		fileWriter.close();
 	}
-
-
 
 	public static void creaFile( File csv ) throws IOException {
 		FileWriter fw = new FileWriter(csv);

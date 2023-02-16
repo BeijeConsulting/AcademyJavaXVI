@@ -1,6 +1,7 @@
 package it.beije.neumann.rubrica;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ public class RubricaJDBC {
 		ResultSet rs = null;
 				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "root");
 			//System.out.println(connection.isClosed());
 			
 			statement = connection.createStatement();
