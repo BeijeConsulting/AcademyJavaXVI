@@ -65,6 +65,8 @@ public class GestoreRubrica {
 
 	}
 	
+	
+	
 	private static void vediListaContatti() {
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -153,6 +155,55 @@ public class GestoreRubrica {
 	
 	}
 	
+	private static void inserisciNuovoContatto() {
+	    Connection connection = null;
+	    PreparedStatement statement = null;
+
+	    try {
+	        Scanner scanner = new Scanner(System.in); 
+
+	        System.out.print("Inserisci il nome: ");
+	        String nome = scanner.nextLine();
+
+	        System.out.print("Inserisci il cognome: ");
+	        String cognome = scanner.nextLine();
+
+	        System.out.print("Inserisci il numero di telefono: ");
+	        String telefono = scanner.nextLine();
+
+	        System.out.print("Inserisci l'indirizzo email: ");
+	        String email = scanner.nextLine();
+
+	        System.out.print("Inserisci una nota: ");
+	        String note = scanner.nextLine();
+	        
+	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+	        statement = connection.prepareStatement("INSERT INTO contatti (nome, cognome, telefono, email, note) VALUES (?, ?, ?, ?, ?)");
+	        statement.setString(1, nome);
+	        statement.setString(2, cognome);
+	        statement.setString(3, telefono);
+	        statement.setString(4, email);
+	        statement.setString(5, note);
+	        statement.executeUpdate();
+
+	        System.out.println("Contatto aggiunto.");
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (statement != null) {
+	                statement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 	private static void unisciContattiDuplicati() {
 		
 	}
@@ -168,11 +219,6 @@ public class GestoreRubrica {
 	}
 
 	private static void modificaContatto() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void inserisciNuovoContatto() {
 		// TODO Auto-generated method stub
 		
 	}
