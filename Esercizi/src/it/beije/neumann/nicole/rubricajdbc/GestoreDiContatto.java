@@ -109,6 +109,7 @@ public class GestoreDiContatto
 		}
 			
 				
+	
 	public static void cercaContatto() throws SQLException, ClassNotFoundException
 	{
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -142,6 +143,7 @@ public class GestoreDiContatto
 	public static void main (String [] args) throws ClassNotFoundException, SQLException
 	{
 		vediListaContatti();
+		
 	}
 
 }
