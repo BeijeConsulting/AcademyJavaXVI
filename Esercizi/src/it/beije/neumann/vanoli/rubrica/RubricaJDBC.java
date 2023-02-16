@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,9 +14,25 @@ import java.util.List;
 
 public class RubricaJDBC {
 	
+	public static Connection getConnection() {
+		//Lettura file con passwd
+		Connection conn = null;
+		try {
+			FileReader fileReader = new FileReader("/temp/passwordSQL.txt");
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String password = bufferedReader.readLine().trim();
+			bufferedReader.close();
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/rubrica?serverTimezone=CET&useSSL=false", "root", password);
+		}
+		catch (IOException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	
 	public static List<Contatto> LoadRubricaFromDB() throws ClassNotFoundException, IOException {
-		
-		Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		Connection connection = null;
 		Statement statement = null; 
@@ -23,13 +40,8 @@ public class RubricaJDBC {
 		
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
-		FileReader fileReader = new FileReader("/temp/passwordSQL.txt");
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		String password = bufferedReader.readLine().trim();
-		bufferedReader.close();
-				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rubrica?serverTimezone=CET&useSSL=false", "root", password);			
+			connection = getConnection();			
 			statement = connection.createStatement();
 			
 			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
@@ -58,41 +70,25 @@ public class RubricaJDBC {
 	}
 
 	public static void WriteRubricaToDB(List<Contatto> listaContatti) throws ClassNotFoundException, IOException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		Connection connection = null;
-		Statement statement = null; 
-		
-		FileReader fileReader = new FileReader("/temp/passwordSQL.txt");
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		String password = bufferedReader.readLine().trim();
-		bufferedReader.close();
 				
+		Connection connection = null;
+		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rubrica?serverTimezone=CET&useSSL=false", "root", password);
+			connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
 			
-			statement = connection.createStatement();
-			
-			for (Contatto c: listaContatti) {
-				StringBuilder sb = new StringBuilder();
-				sb.append("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES ('");
-				sb.append(c.getName());
-				sb.append("', '");
-				sb.append(c.getSurname());
-				sb.append("', '");
-				sb.append(c.getTelephone());
-				sb.append("', '");
-				sb.append(c.getEmail());
-				sb.append("', '");
-				sb.append(c.getNote());
-				sb.append("')");
-				statement.executeUpdate(sb.toString());
+			for (Contatto c: listaContatti) {				
+				preparedStatement.setString(1, c.getName());
+				preparedStatement.setString(2, c.getSurname());
+				preparedStatement.setString(3, c.getTelephone());
+				preparedStatement.setString(4, c.getEmail());
+				preparedStatement.setString(5, c.getNote());
+				preparedStatement.executeUpdate();				
 			}
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		} finally {
 			try {
-				statement.close();
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -102,68 +98,131 @@ public class RubricaJDBC {
 	
 	//funzioni riga di comando
 	
-	public static List<Contatto> CercaContatto(String nome, String cognome) {
-		List<Contatto> contatti = null;
+	public static List<Contatto> elencoRubrica(String orderBy) {
+		Connection connection = getConnection();
+		ResultSet rs = null;
+		
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		
 		try {
-			contatti = RubricaJDBC.LoadRubricaFromDB();
-		} catch (ClassNotFoundException | IOException e) {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM contatti ORDER BY ? ASC");
+			preparedStatement.setString(1, orderBy);
+			rs = preparedStatement.executeQuery();		
+			while (rs.next()) {
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				System.out.println(c.getId());
+				c.setName(rs.getString("nome"));
+				c.setSurname(rs.getString("cognome"));
+				c.setTelephone(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				contatti.add(c);
+			}
+		} catch(SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		List<Contatto> matchingContatti = new ArrayList<Contatto>();
+		return contatti;		
+	}
+	
+	public static List<Contatto> cercaContatto(String nome, String cognome) {
+		Connection connection = getConnection();
+		ResultSet rs = null;
 		
-		for (Contatto c: contatti) {
-			if (c.getName().equals(nome) && c.getSurname().equals(cognome)) {
-				matchingContatti.add(c);
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM contatti WHERE cognome = ? AND nome = ?");
+			preparedStatement.setString(1, cognome);
+			preparedStatement.setString(2, nome);
+			rs = preparedStatement.executeQuery();		
+			while (rs.next()) {
+				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
+				c.setName(rs.getString("nome"));
+				c.setSurname(rs.getString("cognome"));
+				c.setTelephone(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
+				contatti.add(c);
 			}
-		}		
-		return matchingContatti;		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return contatti;		
 	}
 	
 	public static void inserisciContatto(Contatto c) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		Connection connection = getConnection();
+		ResultSet rs = null;
 		
-		Connection connection = null;
-		Statement statement = null;
-		String password = "";
-		
-		FileReader fileReader;
 		try {
-			fileReader = new FileReader("/temp/passwordSQL.txt");	
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			password = bufferedReader.readLine().trim();
-			bufferedReader.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-				
-		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rubrica?serverTimezone=CET&useSSL=false", "root", password);
-			
-			statement = connection.createStatement();
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES ('");
-			sb.append(c.getName());
-			sb.append("', '");
-			sb.append(c.getSurname());
-			sb.append("', '");
-			sb.append(c.getTelephone());
-			sb.append("', '");
-			sb.append(c.getEmail());
-			sb.append("', '");
-			sb.append(c.getNote());
-			sb.append("')");
-			statement.executeUpdate(sb.toString());			
+			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
+			preparedStatement.setString(1, c.getName());
+			preparedStatement.setString(2, c.getSurname());
+			preparedStatement.setString(3, c.getTelephone());
+			preparedStatement.setString(4, c.getEmail());
+			preparedStatement.setString(5, c.getNote());
+			preparedStatement.executeUpdate();
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		} finally {
 			try {
-				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void editContatto(Contatto c) {
+		Connection connection = getConnection();
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE contatti SET nome = ?, cognome = ?, telefono = ?, email = ?, note = ? WHERE id = ?");
+			preparedStatement.setString(1, c.getName());
+			preparedStatement.setString(2, c.getSurname());
+			preparedStatement.setString(3, c.getTelephone());
+			preparedStatement.setString(4, c.getEmail());
+			preparedStatement.setString(5, c.getNote());
+			preparedStatement.setString(6, String.valueOf(c.getId()));
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void deleteContatto(Contatto c) {
+		Connection connection = getConnection();
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
+			preparedStatement.setString(1, String.valueOf(c.getId()));
+			preparedStatement.executeUpdate();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

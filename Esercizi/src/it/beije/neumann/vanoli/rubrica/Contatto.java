@@ -52,22 +52,12 @@ public class Contatto {
 	}
 
 	public String toString() {
-//		StringBuilder builder = new StringBuilder("{");
-//		builder.append(" name: ").append(name);
-//		builder.append(", surname: ").append(surname);
-//		builder.append(", telephone: ").append(telephone);
-//		builder.append(", email: ").append(email);
-//		builder.append(", note: ").append(note);
-//		builder.append("}");
-
-		StringBuilder builder = new StringBuilder("{")
-				.append(" name: ").append(name)
-				.append(", surname: ").append(surname)
-				.append(", telephone: ").append(telephone)
-				.append(", email: ").append(email)
-				.append(", note: ").append(note)
-				.append("}");
-
+		StringBuilder builder = new StringBuilder()
+				.append("- Nome: ").append(name)
+				.append("\n- Cognome: ").append(surname)
+				.append("\n- Telefono: ").append(telephone)
+				.append("\n- Email: ").append(email)
+				.append("\n- Note: ").append(note);
 		return builder.toString();
 	}
 }
