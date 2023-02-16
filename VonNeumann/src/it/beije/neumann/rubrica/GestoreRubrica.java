@@ -45,6 +45,7 @@ public class GestoreRubrica {
 	                modificaContatto();
 	                break;
 	            case 5:
+	            	vediListaContatti();
 	                cancellaContatto();
 	                break;
 	            case 6:
@@ -209,7 +210,6 @@ public class GestoreRubrica {
 	    }
 	}
 	
-	@SuppressWarnings("resource")
 	private static void modificaContatto() {
 	    Connection connection = null;
 	    PreparedStatement statement = null;
@@ -282,6 +282,42 @@ public class GestoreRubrica {
 	    }
 	}
 	
+	private static void cancellaContatto() {
+	    Connection connection = null;
+	    PreparedStatement statement = null;
+
+	    Scanner scanner = new Scanner(System.in);
+	    System.out.println("Inserisci l'ID del contatto da cancellare: ");
+	    int id = scanner.nextInt();
+
+	    try {
+	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+	        statement = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
+	        statement.setInt(1, id);
+	        int numeroRigheEliminite = statement.executeUpdate();
+
+	        if (numeroRigheEliminite > 0) {
+	            System.out.println("Contatto cancellato.");
+	        } else {
+	            System.out.println("Nessun contatto trovato con ID " + id + ".");
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (statement != null) {
+	                statement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 	private static void unisciContattiDuplicati() {
 		
 	}
@@ -291,10 +327,7 @@ public class GestoreRubrica {
 		
 	}
 
-	private static void cancellaContatto() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 	
