@@ -18,42 +18,92 @@ import java.util.Scanner;
 
 public class GestoreRubrica {
 
-	static void addContatto() {}
+	static void addContatto(Scanner sc) {
+		
+		System.out.println("inserisci nome, cognome, telefono, email e note; scrivere 'stop' se non si vogliono inserire altre info o 'null' per lasciare campi vuoti");
+		String [] fields = {"nome", "cognome", "telefono", "email", "note"};
+		String [] values = new String[5];
+		
+		for (int i = 0; i < fields.length; i++) {
+			
+			String value = sc.next();
+			System.out.println(i);
+			
+			if (value.equals("stop")) break;
+			
+			values[i] = value;
+			
+		}
+		
+		sqlCommand("insert into contatti (nome, cognome, telefono, email, note) values (?,?,?,?,?)", false, values);
+	}
 	
-	static void deleteContatto() {}
+	static void deleteContatto(Scanner sc) {
+		System.out.println("Per quale campo vuoi eliminare il contatto?");
+		String field = sc.next();
+		System.out.println("quale valore?");
+		String value = sc.next();
+		
+		sqlCommand("delete from Contatti where " + field +" = ?",false, value);
+	}
 	
-	static void modifyContatto() {}
-	
-	
-	static void searchContatto () {}
+	static void modifyContatto(Scanner sc) {}
+		
+	static void searchContatto (Scanner sc) {
+		System.out.println("Per quale campo vuoi filtrare il contatto?");
+		String field = sc.next();
+		System.out.println("quale valore?");
+		String value = sc.next();
+		
+		sqlCommand("Select * from Contatti where " + field +" = ?",true, value);
+	}
 	
 	static void viewContatti (Scanner sc) {
 		
 		System.out.println("vuoi ordinarli per nome o cognome?");
+		String orderField = sc.next();
+		
+		sqlCommand("Select * from Contatti order by ?",true, orderField);
+						
+	}
+	
+	static void sqlCommand(String sqlCommand, boolean isSelect, String... parameters) {
+		
 		Connection connection = ConnectionPool.getConnection();
 		PreparedStatement preparedStatement = null;
-		String orderField = sc.next();
+		
 		ResultSet rs = null;
 		
 		try {
-			preparedStatement = connection.prepareStatement("Select * from Contatti order by ?");
-			preparedStatement.setString(1, orderField);
+			preparedStatement = connection.prepareStatement(sqlCommand);
 			
-			rs = preparedStatement.executeQuery();
-			
-			//order by non funziona con i set giustamente
-			while (rs.next()) {
-
-				System.out.println("Id: " + rs.getInt("id")); 
-				System.out.println("Cognome: " + rs.getString("cognome")); 
-				System.out.println("Nome: " + rs.getString("nome")); 
-				System.out.println("Telefono: " + rs.getString("telefono")); 
-				System.out.println("Email: " + rs.getString("email")); 
-				System.out.println("Note: " + rs.getString("note")); 
-				System.out.println("-------");
-
+			for(int i = 0; i < parameters.length; i++) {
+				
+				preparedStatement.setString(i+1, parameters[i]);
+				
 			}
 			
+			System.out.println(preparedStatement.toString());
+			
+			if(isSelect) {
+				rs = preparedStatement.executeQuery();
+				
+				//order by non funziona con i set giustamente
+				while (rs.next()) {
+	
+					System.out.println("Id: " + rs.getInt("id")); 
+					System.out.println("Cognome: " + rs.getString("cognome")); 
+					System.out.println("Nome: " + rs.getString("nome")); 
+					System.out.println("Telefono: " + rs.getString("telefono")); 
+					System.out.println("Email: " + rs.getString("email")); 
+					System.out.println("Note: " + rs.getString("note")); 
+					System.out.println("-------");
+	
+				}
+			}
+			else {
+				preparedStatement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,24 +116,22 @@ public class GestoreRubrica {
 				e.printStackTrace();
 			}
 		}
-				
 	}
-	
-	static void searchCopie() {
+	static void searchCopie(Scanner sc) {
 		// TODO Auto-generated method stub
 		
 	}
-	private static void mergeCopie() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private static void importFile() {
+	private static void mergeCopie(Scanner sc) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	private static void exportDB() {
+	private static void importFile(Scanner sc) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static void exportDB(Scanner sc) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -115,21 +163,21 @@ public class GestoreRubrica {
 			
 				case "view" : viewContatti(sc); 
 				break;
-				case "search": searchContatto(); 
+				case "search": searchContatto(sc); 
 				break;
-				case "delete": deleteContatto(); 
+				case "delete": deleteContatto(sc); 
 				break;
-				case "update": modifyContatto(); 
+				case "update": modifyContatto(sc); 
 				break;
-				case "add": addContatto();
+				case "add": addContatto(sc);
 				break;
-				case "search duplicates": searchCopie();
+				case "search duplicates": searchCopie(sc);
 				break;
-				case "merge duplicates": mergeCopie();
+				case "merge duplicates": mergeCopie(sc);
 				break;
-				case "import": importFile();
+				case "import": importFile(sc);
 				break;
-				case "export": exportDB();
+				case "export": exportDB(sc);
 				break;
 				case "exit": System.out.println("chiusura gestore rubrica..."); return;
 				default: System.out.println("non ho capito, riprova");
