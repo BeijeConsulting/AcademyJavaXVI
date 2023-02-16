@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,23 +31,32 @@ public class DBManager {
 
 	public static int importRubricaToDB(List<Contatto> contacts) {
 		Connection connection = null;
-		Statement statement = null;
+		//Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		int rowsAdd = 0;
 
 		try {
 			connection = DriverManager.getConnection(CONN_STR, USER, PSW);
-			statement = connection.createStatement();
+			//statement = connection.createStatement();
+			preparedStatement = connection.prepareStatement("INSERT INTO contatti(cognome, nome, telefono, email, note) VALUES (?,?,?,?,?)");
 			
 			for(Contatto c : contacts) {
-				String queryInsert = "INSERT INTO contatti(cognome, nome, telefono, email, note) VALUES ('"+checkPeak(c.getSurname())+"', '"+checkPeak(c.getName())+"', '"+c.getTelephone()+"', '"+c.getEmail()+"', '"+checkPeak(c.getNote())+"')";
-				rowsAdd += statement.executeUpdate(queryInsert);
+				//String queryInsert = "INSERT INTO contatti(cognome, nome, telefono, email, note) VALUES ('"+checkPeak(c.getSurname())+"', '"+checkPeak(c.getName())+"', '"+c.getTelephone()+"', '"+c.getEmail()+"', '"+checkPeak(c.getNote())+"')";
+				//rowsAdd += statement.executeUpdate(queryInsert);
+				preparedStatement.setString(1, checkPeak(c.getSurname()));
+				preparedStatement.setString(2, checkPeak(c.getName()));
+				preparedStatement.setString(3, c.getTelephone());
+				preparedStatement.setString(4, c.getEmail());
+				preparedStatement.setString(5, checkPeak(c.getNote()));
+				rowsAdd += preparedStatement.executeUpdate();
 			}
 			
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
 		} finally {
 			try {
-				statement.close();
+				//statement.close();
+				preparedStatement.close();
 				connection.close();
 			} catch (SQLException sqlEx2) {
 				sqlEx2.printStackTrace();
