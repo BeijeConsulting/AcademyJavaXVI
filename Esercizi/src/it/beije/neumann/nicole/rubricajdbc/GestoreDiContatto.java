@@ -2,11 +2,13 @@ package it.beije.neumann.nicole.rubricajdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import it.beije.neumann.nicole.rubrica.*;
 /**
  * Implementare un gestore di rubrica a linea di comando, con le seguenti funzionalità:
 
@@ -31,49 +33,42 @@ public class GestoreDiContatto
 	 * @throws SQLException 
 	 */
 	
+	
+	
+	
+	
+	
+	
+	
 	public static void vediListaContatti() throws ClassNotFoundException, SQLException
 	{
         Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		Connection connection = null;
-		Statement statement = null; 
-		Statement statement1=null;
-		ResultSet rs = null;
-		ResultSet rs1=null;
+		//Statement statement = null; 
+		//Statement statement1=null;
+		ResultSet rs1 = null;
+		ResultSet rs2=null;
 		
 		
 		try {
 			
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=FALSE", "root", "Current-Root-Password");
-			statement = connection.createStatement();
+			//statement = connection.createStatement();
 		
-			statement1=connection.createStatement();
-			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY nome");
-			rs1=statement1.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY cognome");
-			
+			PreparedStatement statement1= connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY nome");
+			PreparedStatement statement2= connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY cognome");
+			//statement1=connection.createStatement();
+			//rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY nome");
+			//rs1=statement1.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti ORDER BY cognome");
+			rs1=statement1.executeQuery();
+			rs2=statement2.executeQuery();
 			System.out.println("avvio scanner...");
 			
 			Scanner s = new Scanner(System.in);
 			String st = s.next();
 		
 			if(st.equalsIgnoreCase("nome"))
-			{
-				while (rs.next()) {
-					
-					System.out.println("id : " + rs.getInt("id"));
-					System.out.println("cognome : " + rs.getString("cognome"));
-					System.out.println("nome : " + rs.getString("nome"));
-					System.out.println("email : " + rs.getString("email"));
-					System.out.println("telefono : " + rs.getString("telefono"));
-					System.out.println("note : " + rs.getString("note"));
-					System.out.println("--------");
-				
-				}
-				s.close();
-			}
-
-			
-			if(st.equalsIgnoreCase("cognome"))
 			{
 				while (rs1.next()) {
 					
@@ -83,6 +78,23 @@ public class GestoreDiContatto
 					System.out.println("email : " + rs1.getString("email"));
 					System.out.println("telefono : " + rs1.getString("telefono"));
 					System.out.println("note : " + rs1.getString("note"));
+					System.out.println("--------");
+				
+				}
+				s.close();
+			}
+
+			
+			if(st.equalsIgnoreCase("cognome"))
+			{
+				while (rs2.next()) {
+					
+					System.out.println("id : " + rs2.getInt("id"));
+					System.out.println("cognome : " + rs2.getString("cognome"));
+					System.out.println("nome : " + rs2.getString("nome"));
+					System.out.println("email : " + rs2.getString("email"));
+					System.out.println("telefono : " + rs2.getString("telefono"));
+					System.out.println("note : " + rs2.getString("note"));
 					System.out.println("--------");
 				
 				}
@@ -98,8 +110,8 @@ public class GestoreDiContatto
 			sql.printStackTrace();
 		}	finally {
 			try {
-				rs.close();
 				rs1.close();
+				rs2.close();
 				
 				connection.close();
 			} catch (SQLException e) {
@@ -115,17 +127,49 @@ public class GestoreDiContatto
         Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		Connection connection = null;
-		Statement statement = null; 
+		//Statement statement = null; 
 		ResultSet rs = null;
 				
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "beije");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=FALSE", "root", "Current-Root-Password");
 			
-			statement = connection.createStatement();
+			PreparedStatement prep= connection.prepareStatement("SELECT id,nome,cognome,telefono,email,note FROM contatti WHERE nome= ? AND cognome=? ");
+			
+			
+			System.out.print("Avvio Scanner... ");
 			Scanner s=new Scanner(System.in);
 			String st=s.next();
+			String nomeContatto = null;
+			String cognomeContatto = null;
+			
+		while(!st.equalsIgnoreCase("exit"))
+		{
+		
+			System.out.print("Inserisci nome contatto: ");
+			nomeContatto=s.next();
+			prep.setString(1, nomeContatto);
 			
 			
+			System.out.println("Inserisci cognome contatto : ");
+			cognomeContatto=s.next();
+			prep.setString(2, cognomeContatto);
+			
+			rs=prep.executeQuery();
+			
+			while (rs.next()) {
+				
+				System.out.println("id : " + rs.getInt("id"));
+				System.out.println("cognome : " + rs.getString("cognome"));
+				System.out.println("nome : " + rs.getString("nome"));
+				System.out.println("email : " + rs.getString("email"));
+				System.out.println("telefono : " + rs.getString("telefono"));
+				System.out.println("note : " + rs.getString("note"));
+				System.out.println("--------");
+			}
+			break;
+			
+		}
+		s.close();
 			
 		}catch(SQLException sql)
 		{
@@ -133,8 +177,85 @@ public class GestoreDiContatto
 		}finally
 		{
 			rs.close();
+			
+			connection.close();
 		}
 			
+		
+	}
+	
+	/**
+	 * metodo che prende l'id del contatto dato a riga di comando e lo elimina dai contatti
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static void cancellaContatto() throws ClassNotFoundException, SQLException
+	{
+		  Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			Connection connection = null;
+			ResultSet rs = null;
+			int rs1=0;
+			try {
+				
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=FALSE", "root", "Current-Root-Password");
+				
+				PreparedStatement statement1= connection.prepareStatement("SELECT id FROM contatti WHERE nome=?  and cognome=? ");
+				
+				
+				
+				//Creo uno Scanner per far inserire da linea di comando il nome e il cognome
+
+				System.out.print("Avvio scanner...");
+				Scanner s=new Scanner(System.in);
+				String nomeContatto=null;
+				String cognomeContatto=null;
+				String st=s.next();
+				int id=0;
+				while(!st.equalsIgnoreCase("exit"))
+				{
+				
+					System.out.print("Inserisci nome contatto: ");
+					nomeContatto=s.next();
+					statement1.setString(1, nomeContatto);
+					
+					
+					System.out.println("Inserisci cognome contatto : ");
+					cognomeContatto=s.next();
+					statement1.setString(2, cognomeContatto);
+					
+					rs=statement1.executeQuery();
+					
+					while(rs.next())
+					{
+						
+						id=rs.getInt("id");
+						System.out.println("Sto eliminando il contatto con id= "+id);
+					}
+					
+					break;
+				}
+				s.close();
+				
+				
+				PreparedStatement statement2= connection.prepareStatement("DELETE FROM contatti WHERE id='"+id+"'");
+				rs1=statement2.executeUpdate();
+				
+				
+			}catch(SQLException sql)
+			{
+				sql.printStackTrace();
+			}finally {
+				rs.close();
+				connection.close();
+			}
+	}
+	
+	
+	public static void trovaContattiDuplicati()
+	{
+		
+		
 		
 	}
 	
@@ -142,8 +263,9 @@ public class GestoreDiContatto
 	
 	public static void main (String [] args) throws ClassNotFoundException, SQLException
 	{
-		vediListaContatti();
-		
+		//vediListaContatti();
+		//cercaContatto();
+		//cancellaContatto();
 	}
 
 }
