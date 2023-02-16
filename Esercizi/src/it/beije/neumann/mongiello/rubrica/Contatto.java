@@ -1,11 +1,14 @@
 package it.beije.neumann.mongiello.rubrica;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Contatto {
-
+	
+	private int id;
+	
 	private String name;
 	private String surname;
 	private String telephone;
@@ -13,7 +16,8 @@ public class Contatto {
 	private String note;
 
 	
-	public Contatto( String name, String surname, String telephone, String email, String note ) {
+	public Contatto( int id, String name, String surname, String telephone, String email, String note ) {
+		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.telephone = telephone;
@@ -22,7 +26,24 @@ public class Contatto {
 	
 	}
 	
+	public Contatto(  String name, String surname, String telephone, String email, String note ) {
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
+	
+	}
+	
+	public int getId() {
+		return id;
+	}
 
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public static  void stampaRubrica(List<Contatto> rubrica) {
 		StringBuilder sb = new StringBuilder("");
