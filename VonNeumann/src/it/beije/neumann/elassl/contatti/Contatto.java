@@ -1,5 +1,6 @@
 package it.beije.neumann.elassl.contatti;
 
+import java.util.Objects;
 
 public class Contatto {
 
@@ -100,6 +101,7 @@ public class Contatto {
 //		builder.append("}");
 
 		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
 				.append(" name: ").append(name)
 				.append(", surname: ").append(surname)
 				.append(", telephone: ").append(telephone)
@@ -115,4 +117,10 @@ public class Contatto {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public boolean equals(Object obj) {
+	     if (this == obj) return true; // if it's the same object return true
+	     if (obj == null || getClass() != obj.getClass()) return false; // if null or different class return false
+	     Contatto other = (Contatto) obj; // casting of contatto
+	     return surname.equals(other.surname) && name.equals(other.name); // true if they have same name and surname
+	   }
 }

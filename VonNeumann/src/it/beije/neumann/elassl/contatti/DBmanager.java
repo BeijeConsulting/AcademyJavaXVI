@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBmanager {
-	
+	static private List<Connection> connPool;
+	static public Connection getConnection() {
+		return null;
+	}
 	static public List<Contatto> getContatti() throws ClassNotFoundException {
 		List<Contatto> contacts= new ArrayList<>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -84,7 +87,7 @@ public class DBmanager {
 	}
 	static public List<Contatto> getDuplicates() throws ClassNotFoundException {
 
-		String Query = "SELECT id, email, telefono, cognome, nome, note FROM contatti";
+		String Query = "SELECT * FROM contatti as c1 WHERE EXISTS (SELECT 1 FROM contatti as c2 WHERE c2.nome = c1.nome AND c2.cognome = c1.cognome AND c2.id <> c1.id);";
 		int res=-1;
 		List<Contatto> contacts= new ArrayList<>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -110,6 +113,24 @@ public class DBmanager {
 		
 		return contacts;
 	}
+	static public void mergeDuplicates() throws ClassNotFoundException{
+		List<Contatto> contacts=getDuplicates();
+		for(Contatto contact1: contacts) {
+			for(Contatto contact2: contacts) {
+				if(contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
+					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
+					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
+					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
+					contact1.setTelephone(telephone);
+					contact1.setEmail(email);
+					contact1.setNote(note);
+					updateContatto(contact1);
+					deleteContatto(contact2);
+					contacts.remove(contact2);
+				}
+			}
+		}
+	}
 	static public int deleteContatto(Contatto contact) throws ClassNotFoundException {
 		String Query = "DELETE FROM contatti WHERE id=?;";
 		int res=-1;
@@ -129,5 +150,5 @@ public class DBmanager {
 	}
 		
 
-	}
 }
+
