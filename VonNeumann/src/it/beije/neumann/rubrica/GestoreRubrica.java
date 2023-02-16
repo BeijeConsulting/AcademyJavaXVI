@@ -32,7 +32,10 @@ public class GestoreRubrica {
 	                vediListaContatti();
 	                break;
 	            case 2:
-	                cercaContatto();
+	            	System.out.println("Inserisci il nome per la ricerca: ");
+	            	String ricerca = scanner.next();
+	            	System.out.println();
+	                cercaContatto(ricerca);
 	                break;
 	            case 3:
 	                inserisciNuovoContatto();
@@ -105,8 +108,52 @@ public class GestoreRubrica {
 		}
 	}
 
+	private static void cercaContatto(String nomeStringa) {
+	    Connection connection = null;
+	    PreparedStatement statement = null;
+	    ResultSet rs = null;
+
+	    try {
+	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+	        statement = connection.prepareStatement("SELECT * FROM contatti WHERE nome LIKE ? ORDER BY cognome");
+	        statement.setString(1, "%" + nomeStringa + "%");
+	        rs = statement.executeQuery();
+
+	        System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
+
+	        while (rs.next()) {
+	            String nome = rs.getString("nome");
+	            String cognome = rs.getString("cognome");
+	            String telefono = rs.getString("telefono");
+	            String email = rs.getString("email");
+	            String note = rs.getString("note");
+
+	            System.out.println("---------------------------------------------------------------------");
+	            System.out.println(nome + " " + cognome + ", " + telefono + ", " + email + ", " + note);
+	            System.out.println("---------------------------------------------------------------------");
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (statement != null) {
+	                statement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+	}
+	
 	private static void unisciContattiDuplicati() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -130,10 +177,6 @@ public class GestoreRubrica {
 		
 	}
 
-	private static void cercaContatto() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }
