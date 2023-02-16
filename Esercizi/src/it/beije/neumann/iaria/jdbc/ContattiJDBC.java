@@ -23,6 +23,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -263,6 +264,83 @@ public class ContattiJDBC {
 		}	
 	}
 	
+	//Metodo che esporta dati db su xml
+	public static void writeRubricaXML(String pathFile) throws ParserConfigurationException, IOException, SAXException, ClassNotFoundException, DOMException, SQLException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int righeInserite = 0;
+		
+		try {
+				
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "beije2023");			
+			statement = connection.createStatement();
+			
+			//Creo file
+			File rubricaXml = new File(pathFile);
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			
+			//Costruiamo una factory per processare il nostro flusso di dati
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = null;
+			
+			//Creo il root che una volta creato il file diventerà rubrica
+			Element root = null;
+			
+			//Se il file esiste, analizza e verifica il root per poi effettuare l'append
+			if(rubricaXml.exists()) {
+				doc = docBuilder.parse(pathFile);
+				root = doc.getDocumentElement();			
+			} else { //Se non esiste crea un nuovo document con il root "Rubrica"
+				doc = docBuilder.newDocument();
+				root = doc.createElement("Rubrica");
+				doc.appendChild(root);
+			}
+			
+			//Prendo i dati dal db
+			rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			while (rs.next()) {
+				righeInserite++;
+				
+				//Per ogni contatto inserisci: Contatto ed i figli nome,cognome ecc. con valori
+				Element contatto = doc.createElement("Contatto");
+				Element cognome = doc.createElement("Cognome");
+				cognome.setTextContent(rs.getString("cognome"));
+				Element nome = doc.createElement("Nome");
+				nome.setTextContent(rs.getString("nome"));
+				Element telefono = doc.createElement("Telefono");
+				telefono.setTextContent(rs.getString("telefono"));
+				Element email = doc.createElement("Email");
+				telefono.setTextContent(rs.getString("email"));
+				Element note = doc.createElement("Note");
+				note.setTextContent(rs.getString("note"));	
+				
+				//Inserisco contatto come figlio di root (Rubrica) e poi aggiungo ai contatti i valori
+				root.appendChild(contatto);
+				contatto.appendChild(cognome);
+				contatto.appendChild(nome);
+				contatto.appendChild(telefono);
+				contatto.appendChild(email);
+				contatto.appendChild(note);
+			}
+			System.out.println("Sono state inserite "+righeInserite+" righe");
+			
+			//Scrivo il contenuto nel file xml
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File(pathFile));
+			transformer.transform(source, result);
+			
+		}catch(TransformerException te) {
+			System.out.println("TransformerException");
+		}catch(ParserConfigurationException pcex) {
+			System.out.println("ParserConfigurationException");
+		}
+		
+	}
+	
 	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException, SQLException {
 		
 		String pathForCSV = "/Users/gianf/Desktop/rubrica.csv";
@@ -270,7 +348,8 @@ public class ContattiJDBC {
 		String separator = ";";
 		//importaContattiCSV(pathForCSV,separator);
 		//importaContattiXML(pathForXml, separator);
-		writeRubricaCSV(pathForCSV,separator);
+		//writeRubricaCSV(pathForCSV,separator);
+		writeRubricaXML(pathForXml);
 		
 		//leggiContatti();
 				
