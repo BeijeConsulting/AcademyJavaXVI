@@ -61,7 +61,8 @@ public class Contatto {
 //		builder.append("}");
 
 		StringBuilder builder = new StringBuilder("{")
-				.append(" name: ").append(name)
+				.append(" id: ").append(id)
+				.append(", name: ").append(name)
 				.append(", surname: ").append(surname)
 				.append(", telephone: ").append(telephone)
 				.append(", email: ").append(email)
