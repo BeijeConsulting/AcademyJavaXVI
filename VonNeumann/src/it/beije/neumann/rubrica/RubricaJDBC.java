@@ -2,6 +2,7 @@ package it.beije.neumann.rubrica;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,9 +12,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 public class RubricaJDBC {
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws ClassNotFoundException, IOException, SAXException, ParserConfigurationException, TransformerException {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
@@ -62,7 +78,9 @@ public class RubricaJDBC {
 				
 
 				importContactsCSV("VonNeumann/src/it/beije/neumann/rubrica/rubrica.csv", connection);
-				exportContactsCSV("exportRubrica", connection);
+				exportContactsCSV("exportRubricaCSV", connection);
+				importContactsXML("VonNeumann/src/it/beije/neumann/rubrica/rubrica.csv", connection);
+				exportContactsXML("exportRubricaXML", connection);
 			}
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -138,6 +156,80 @@ public class RubricaJDBC {
             e.printStackTrace();
         }
 		
+	}
+
+	public static void importContactsXML(String filePath, Connection conn) throws SQLException, IOException, SAXException, ParserConfigurationException {
+
+	    Statement statement = conn.createStatement();
+
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    Document document = builder.parse(new File(filePath));
+
+	    NodeList contacts = document.getElementsByTagName("contatti");
+
+	    for (int i = 0; i < contacts.getLength(); i++) {
+
+	        Element contact = (Element) contacts.item(i);
+
+	        String nome = contact.getElementsByTagName("nome").item(0).getTextContent();
+	        String cognome = contact.getElementsByTagName("cognome").item(0).getTextContent();
+	        String telefono = contact.getElementsByTagName("telefono").item(0).getTextContent();
+	        String email = contact.getElementsByTagName("email").item(0).getTextContent();
+	        String note = contact.getElementsByTagName("note").item(0).getTextContent();
+
+	        statement.executeUpdate("INSERT INTO contacts (nome, cognome, telefono, email, note) VALUES ('" + nome + "', '" + cognome + "'  ,'" + telefono + "', '" + email + "', '"+ note +"')");
+	    }
+
+	    statement.close();
+	}
+	
+	public static void exportContactsXML(String filePath, Connection conn) throws SQLException, IOException, ParserConfigurationException, TransformerException {
+
+	    Statement statement = conn.createStatement();
+	    ResultSet result = statement.executeQuery("SELECT * FROM contatti");
+
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    Document document = builder.newDocument();
+
+	    Element rootElement = document.createElement("contatti");
+	    document.appendChild(rootElement);
+
+	    while (result.next()) {
+
+	        Element contact = document.createElement("contact");
+	        rootElement.appendChild(contact);
+
+	        Element nome = document.createElement("nome");
+	        nome.appendChild(document.createTextNode(result.getString("nome")));
+	        contact.appendChild(nome);
+
+	        Element cognome = document.createElement("cognome");
+	        cognome.appendChild(document.createTextNode(result.getString("cognome")));
+	        contact.appendChild(cognome);
+
+	        Element telefono = document.createElement("telefono");
+	        telefono.appendChild(document.createTextNode(result.getString("telefono")));
+	        contact.appendChild(telefono);
+
+	        Element email = document.createElement("email");
+	        email.appendChild(document.createTextNode(result.getString("email")));
+	        contact.appendChild(email);
+
+	        Element note = document.createElement("note");
+	        note.appendChild(document.createTextNode(result.getString("note")));
+	        contact.appendChild(note);
+	    }
+
+	    statement.close();
+	    result.close();
+
+	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	    Transformer transformer = transformerFactory.newTransformer();
+	    DOMSource source = new DOMSource(document);
+	    StreamResult file = new StreamResult(new File(filePath));
+	    transformer.transform(source, file);
 	}
 }
 
