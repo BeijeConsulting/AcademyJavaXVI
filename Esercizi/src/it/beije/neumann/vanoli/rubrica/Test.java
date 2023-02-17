@@ -13,10 +13,10 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParserConfigurationException, SAXException, TransformerException, ClassNotFoundException {
 		System.out.println("Classe di test");
-		List<Contatto> contatti = CSVManager.loadRubricaFromCSV("/temp/rubrica.csv", ";");
-		//List<Contatto> contatti = XMLManager.loadRubricaFromXML("/temp/rubricona.xml");
-		RubricaJDBC.WriteRubricaToDB(contatti);
-        //CSVManager.writeRubricaCSV(contatti, "/temp/rubricona.csv", ";");
+		//List<Contatto> contatti = CSVManager.loadRubricaFromCSV("/temp/rubrica.csv", ";");
+		List<Contatto> contatti = RubricaHBM.LoadRubricaFromDB();
+		//RubricaHBM.WriteRubricaToDB(contatti);
+        CSVManager.writeRubricaCSV(contatti, "/temp/rubricona.csv", ";");
 		//XMLManager.writeRubricaXML(contatti, "/temp/rubricona.xml");
 	}
 
