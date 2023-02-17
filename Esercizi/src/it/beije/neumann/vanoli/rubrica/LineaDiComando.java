@@ -1,7 +1,6 @@
 package it.beije.neumann.vanoli.rubrica;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -146,7 +145,30 @@ public class LineaDiComando {
 				RubricaJDBC.deleteContatto(toDelete);
 			}
 		}
-		
+		else if (input.equals("5")) {			
+			List<Contatto> risultati = RubricaJDBC.trovaContattiDuplicati();
+			if (risultati.size() == 0) {
+				System.out.println("Non sono stati trovati contatti duplicati");
+			}
+			else {
+				System.out.println("Sono stati trovati i seguenti contatti duplicati:");
+				for (Contatto c: risultati) {
+					System.out.println("- " + c.getName() + " " + c.getSurname() + " (" + c.getId() + ")"); //ricordo che in id c'è la quantità dei duplicati
+				}
+			}
+		}
+		/*
+		else if (input.equals("6")) {			
+			List<Contatto> risultati = RubricaJDBC.unisciContattiDuplicati();
+			if (risultati.size() == 0) {
+				System.out.println("Non è stato possibile unire nessun contatto");
+			}
+			else {
+				System.out.println("Sono stati uniti i seguenti contatti:");
+				stampaListaContatti(risultati);
+			}
+		}
+		*/
 		sc.close();
 		
 	}

@@ -75,6 +75,7 @@ public class RubricaJDBC {
 		
 		try {
 			connection = getConnection();
+			
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
 			
 			for (Contatto c: listaContatti) {				
@@ -99,19 +100,20 @@ public class RubricaJDBC {
 	//funzioni riga di comando
 	
 	public static List<Contatto> elencoRubrica(String orderBy) {
-		Connection connection = getConnection();
+		Connection connection = null;
+		Statement statement = null;
 		ResultSet rs = null;
 		
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM contatti ORDER BY ? ASC");
-			preparedStatement.setString(1, orderBy);
-			rs = preparedStatement.executeQuery();		
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			rs = statement.executeQuery("SELECT * FROM contatti ORDER BY " + orderBy);					
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
-				System.out.println(c.getId());
 				c.setName(rs.getString("nome"));
 				c.setSurname(rs.getString("cognome"));
 				c.setTelephone(rs.getString("telefono"));
@@ -168,7 +170,6 @@ public class RubricaJDBC {
 	
 	public static void inserisciContatto(Contatto c) {
 		Connection connection = getConnection();
-		ResultSet rs = null;
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
@@ -229,5 +230,42 @@ public class RubricaJDBC {
 			}
 		}
 	}
+	
+	public static List<Contatto> trovaContattiDuplicati() {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet rs = null;
+		
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		
+		try {
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			rs = statement.executeQuery("SELECT nome, cognome, COUNT(*) FROM rubrica.contatti GROUP BY nome, cognome HAVING COUNT(*) > 1");					
+			while (rs.next()) {
+				Contatto c = new Contatto();
+				c.setName(rs.getString("nome"));
+				c.setSurname(rs.getString("cognome"));
+				c.setId(Integer.parseInt(rs.getString("COUNT(*)"))); //uso id per memorizzare quanti duplicati ci sono
+				contatti.add(c);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return contatti;		
+	}
+	/*
+	public static List<Contatto> unisciContattiDuplicati() {
+		
+	}
+	*/
 	
 }
