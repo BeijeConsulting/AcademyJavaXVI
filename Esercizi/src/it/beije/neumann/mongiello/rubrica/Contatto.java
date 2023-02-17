@@ -1,20 +1,43 @@
 package it.beije.neumann.mongiello.rubrica;
 
 import java.io.IOException;
-
 import java.util.List;
 import java.util.Scanner;
 
+import javax.persistence.Column;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table (name = "contatti")
 public class Contatto {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
 	
+	@Column(name = "nome")
 	private String name;
+	
+	@Column(name = "cognome")
 	private String surname;
+	
+	@Column(name = "telefono")
 	private String telephone;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "note", columnDefinition="text")
 	private String note;
 
+	public Contatto() {
+		
+	}
 	
 	public Contatto( int id, String name, String surname, String telephone, String email, String note ) {
 		this.id = id;
@@ -45,18 +68,16 @@ public class Contatto {
 		this.id = id;
 	}
 
-	public static  void stampaRubrica(List<Contatto> rubrica) {
+	public static void stampaRubrica(List<Contatto> rubrica) {
 		StringBuilder sb = new StringBuilder("");
-		
 		for( Contatto c: rubrica ) {
-
-				sb.append(" name: ").append( c.getName() ).append("\n")
-				.append(" surname: ").append(c.getSurname() ).append("\n")
-				.append(" telephone: ").append( c.getTelephone() ).append("\n")
+				sb.append("id: ").append(c.getId()+"\n" )
+				.append(" cognome: ").append(c.getSurname() ).append("\n")
+				.append(" nome: ").append( c.getName() ).append("\n")
+				.append(" telefono: ").append( c.getTelephone() ).append("\n")
 				.append(" email: ").append( c.getEmail() ).append("\n")
 				.append(" note: ").append( c.getNote() ).append("\n\n");
 		}
-		
 		System.out.println(sb);
 	}
 	

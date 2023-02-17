@@ -15,10 +15,15 @@ import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-public class Rubrica {
+import org.hibernate.Session;
 
+public class Rubrica {
+	public static Session session = HBMsessionFactory.openSession();
+	private static Scanner s;
+	
 	public static void main( String[] args ) throws FileNotFoundException, IOException, Exception, TransformerException {
-		Scanner s = new Scanner(System.in);
+		
+		s = new Scanner(System.in);
 
 		String pathFileCsv = "/temp/rubrica.csv";
 		String pathFileXml = "/temp/rubrica.xml";
@@ -52,12 +57,14 @@ public class Rubrica {
 
 				switch( scelta ) {
 				case 1:
-					RubricaJdbc.stampaDb();
+					//RubricaJdbc.stampaDb();
+					RubricaHBM.stampaDb();
 					break;
 				case 2:
 					System.out.println("Aggiungi contatto");
 					Contatto.inputRubrica(contatti);
-					RubricaJdbc.writeContatto( contatti.get(contatti.size()-1) );
+					//RubricaJdbc.writeContatto( contatti.get(contatti.size()-1) );
+					RubricaHBM.inserisciContatto( contatti.get(contatti.size()-1));
 					break;
 				case 3:
 					System.out.println("Inserisci il cognome del contatto da modificare");
@@ -74,7 +81,8 @@ public class Rubrica {
 					System.out.println("Inserisci il nuovo valore");
 					String newField = s.next();
 				
-					RubricaJdbc.editDb( id,fieldToEdit,newField );
+					//RubricaJdbc.editDb( id,fieldToEdit,newField );
+					RubricaHBM.editContatto( id,fieldToEdit,newField );
 					break;
 				case 4:
 					System.out.println("Inserisci il cognome del contatto da eliminare");
@@ -83,22 +91,23 @@ public class Rubrica {
 					System.out.println("Quale id vuoi eliminare ? ");
 					id = s.nextInt();
 					
-					RubricaJdbc.deleteContact( id );
-
-					contatti = RubricaCsv.loadRubricaFromCSV(pathFileCsv, ";");
+					//RubricaJdbc.deleteContact( id );
+					RubricaHBM.deleteContact( id );
+					//contatti = RubricaCsv.loadRubricaFromCSV(pathFileCsv, ";");
 					break;
 				case 5:
 					System.out.println("Vuoi ordinare per Nome o per Cognome ?");
 					String valore = s.next();
 					System.out.println(valore);
-					RubricaJdbc.order(valore);
+					RubricaHBM.order(valore);
+					//RubricaJdbc.order(valore);
 					break;
 					
 				case 6:
 					System.out.println("Inserisci il cognome del contatto da cercare");
 					 surname = s.next();
-					RubricaJdbc.search( surname );
-					
+					//RubricaJdbc.search( surname );
+					RubricaHBM.search(surname);
 					break;
 				case 7:
 					RubricaJdbc.exportCsv();
@@ -114,8 +123,8 @@ public class Rubrica {
 					break;
 				case 11:
 					System.out.println("Duplicati");
-					RubricaJdbc.trovaDuplicati();
-
+					//RubricaJdbc.trovaDuplicati();
+					RubricaHBM.duplicate();
 					break;
 					
 			}
