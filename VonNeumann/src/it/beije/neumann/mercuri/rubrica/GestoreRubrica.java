@@ -147,11 +147,11 @@ public class GestoreRubrica {
 
 		Scanner sc = new Scanner(System.in);
 		String azione = null;
-		while (azione != "exit") {
+		while (!azione.equals("exit")){
 					
 			System.out.println("cosa vuoi fare?");
 			
-			if (azione == "help") {
+			if (azione.equals("help")) {
 				System.out.println("view -> visualizza i contatti");
 				System.out.println("add -> aggiunge un contatto");
 				System.out.println("delete -> cancella un contatto");
