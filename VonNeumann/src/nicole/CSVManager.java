@@ -1,4 +1,4 @@
-package it.beije.neumann.nicole.rubrica;
+package nicole;
 /**
  * Aggiungo contatti alla rubrica.csv
  */

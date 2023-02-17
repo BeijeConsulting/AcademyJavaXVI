@@ -1,4 +1,4 @@
-package it.beije.neumann.nicole.rubricajdbc;
+package nicole;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import it.beije.neumann.nicole.rubrica.*;
+
 /**
  * Implementare un gestore di rubrica a linea di comando, con le seguenti funzionalità:
 

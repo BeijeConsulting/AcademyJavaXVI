@@ -1,4 +1,4 @@
-package it.beije.neumann.nicole.rubricajdbc;
+package nicole;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,12 +15,6 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
-/**
- * importo il metodo per inserire i contatti nell'arraylist
- * @author nverz
- *
- */
-import it.beije.neumann.nicole.rubrica.*;
 
 public class ContattiJDBC 
 {
