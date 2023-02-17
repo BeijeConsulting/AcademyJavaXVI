@@ -2,14 +2,38 @@ package it.beije.neumann.nido.gestorerubrica;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rubricacompleta")
 public class Contact {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
+	
+	@Column(name = "surname")
 	private String surname;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "age")
 	private int age;
+	
+	@Column(name = "telephone")
 	private String telephone;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "note", columnDefinition = "text")
 	private String note;
 
 	public int getId() {
@@ -70,7 +94,7 @@ public class Contact {
 
 	public String toString() {
 
-		StringBuilder builder = new StringBuilder("{").append(" Name: ").append(name).append(", Surname: ")
+		StringBuilder builder = new StringBuilder("{").append(" ID: ").append(id).append(", Name: ").append(name).append(", Surname: ")
 				.append(surname).append(", Age: ").append(age).append(", Telephone: ").append(telephone)
 				.append(", Email: ").append(email).append(", Note: ").append(note).append("}");
 

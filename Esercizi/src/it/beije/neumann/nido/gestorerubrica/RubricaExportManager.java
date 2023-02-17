@@ -110,37 +110,4 @@ public class RubricaExportManager {
 		StreamResult result = new StreamResult(new File(pathFile));
 		transformer.transform(source, result);
 	}
-
-//	public int exportToDB(List<Contact> contacts) {
-//		Connection connection = null;
-//		PreparedStatement preparedStatement = null;
-//		int rowsAdd = 0;
-//
-//		try {
-//			connection = DriverManager.getConnection(CONN_STR, USER, PSW);
-//			preparedStatement = connection.prepareStatement("INSERT INTO rubricacompleta(surname, name, age, telephone, email, note) VALUES (?,?,?,?,?,?)");
-//
-//			for (Contact c : contacts) {
-//				preparedStatement.setString(1, FilesUtils.formatPeakDB(c.getSurname()));
-//				preparedStatement.setString(2, FilesUtils.formatPeakDB(c.getName()));
-//				preparedStatement.setInt(3, c.getAge());
-//				preparedStatement.setString(4, c.getTelephone());
-//				preparedStatement.setString(5, c.getEmail());
-//				preparedStatement.setString(6, FilesUtils.formatPeakDB(c.getNote()));
-//				rowsAdd += preparedStatement.executeUpdate();
-//			}
-//
-//		} catch (SQLException sqlEx) {
-//			sqlEx.printStackTrace();
-//		} finally {
-//			try {
-//				preparedStatement.close();
-//				connection.close();
-//			} catch (SQLException sqlEx2) {
-//				sqlEx2.printStackTrace();
-//			}
-//		}
-//
-//		return rowsAdd;
-//	}
 }

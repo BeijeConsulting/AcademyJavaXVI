@@ -107,47 +107,4 @@ public class RubricaImportManager {
 
 	}
 
-//	public List<Contact> importFromDB() {
-//		List<Contact> contacts = new ArrayList<>();
-//
-//		Connection connection = null;
-//		Statement statement = null;
-//		ResultSet rs = null;
-//
-//		try {
-//			connection = DriverManager.getConnection(CONN_STR, USER, PSW);
-//			statement = connection.createStatement();
-//
-//			rs = statement.executeQuery("SELECT * FROM rubricacompleta");
-//
-//			while (rs.next()) {
-//				Contact contact = new Contact();
-//
-//				contact.setId(rs.getInt("id"));
-//				contact.setSurname(rs.getString("surname"));
-//				contact.setName(rs.getString("name"));
-//				contact.setAge(rs.getInt("age"));
-//				contact.setTelephone(rs.getString("telephone"));
-//				contact.setEmail(rs.getString("email"));
-//				contact.setNote(rs.getString("note"));
-//
-//				contacts.add(contact);
-//			}
-//
-//		} catch (SQLException sqlEx) {
-//			sqlEx.printStackTrace();
-//		} finally {
-//			try {
-//				rs.close();
-//				statement.close();
-//				connection.close();
-//			} catch (SQLException sqlEx2) {
-//				sqlEx2.printStackTrace();
-//			}
-//
-//		}
-//
-//		return contacts;
-//
-//	}
 }

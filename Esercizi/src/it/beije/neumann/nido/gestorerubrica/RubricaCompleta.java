@@ -25,12 +25,13 @@ import org.xml.sax.SAXException;
 
 public class RubricaCompleta {
 
-	public static final String CSV = "./src/assignments/rubrica/addressBook.csv";
-	public static final String XML = "./src/assignments/rubrica/addressBook.xml";
+	public static final String CSV = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.csv";
+	public static final String XML = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.xml";
 
 	public static RubricaImportManager importManager = new RubricaImportManager(); // static class? singleton anche?
 	public static RubricaExportManager exportManager = new RubricaExportManager(); // static class? singleton anche?
 	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager(); // stile singleton
+	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager(); // sistemare
 
 	public static void firstMenu() {
 		System.out.println("\t**Gestore rubrica**");
@@ -42,8 +43,8 @@ public class RubricaCompleta {
 		System.out.println("\t**Operazioni possibili**");
 		System.out.println("-1.Mostra di nuovo il menu"); // OK
 		System.out.println("1.Mostra l'elenco dei contatti"); // OK
-		System.out.println("2.Cerca un contatto"); // da sistemare su DB
-		System.out.println("3.Aggiungi un nuovo contatto"); // da sistemare su DB
+		System.out.println("2.Cerca un contatto"); // OK
+		System.out.println("3.Aggiungi un nuovo contatto"); // OK
 		System.out.println("4.Modifica un contatto esistente");
 		System.out.println("5.Cancella un contatto");
 		System.out.println("6.Trova duplicati");
@@ -55,7 +56,7 @@ public class RubricaCompleta {
 		System.out.println("0.ESCI\n"); // OK
 	}
 
-	public static void subMenuOp1() {
+	public static void op1() {
 		Scanner in = new Scanner(System.in);
 
 		String orderBy = null;
@@ -85,29 +86,19 @@ public class RubricaCompleta {
 			onWhat = "name";
 			break;
 
-		case "decrescente":
+		case "cognome":
 			onWhat = "surname";
 			break;
 
 		}
 
-		System.out.println("Ordine " + orderBy + " per " + onWhat);
-		dbManager.showRubrica(orderBy, onWhat); // meglio static?
+		// dbManager.showRubrica(orderBy, onWhat); // meglio static?
+		hbManager.openSession();
+		hbManager.showRubrica(orderBy, onWhat);
+		hbManager.closeSession();
 	}
 
-	public static void subMenuOp8_9() {
-		System.out.println("*.Importa rubrica");
-		System.out.println("8.Da CSV");
-		System.out.println("9.Da XML");
-	}
-
-	public static void subMenuOp10_11() {
-		System.out.println("*.Esporta rubrica");
-		System.out.println("10.Su CSV");
-		System.out.println("11.Su XML");
-	}
-
-	public static List<Contact> searchContact(List<Contact> rubrica) {
+	public static void op2() {
 		List<Contact> contactsFound = new ArrayList<>();
 
 		Scanner in = new Scanner(System.in);
@@ -119,80 +110,63 @@ public class RubricaCompleta {
 		System.out.print("\t-Nome: ");
 		String name = in.nextLine().trim();
 
-		for (Contact c : rubrica) {
-			if (!surname.isEmpty() && !name.isEmpty()) {
-				if (c.getName().equalsIgnoreCase(name) && c.getSurname().equalsIgnoreCase(surname)) {
-					contactsFound.add(c);
-				}
-			} else if (!surname.isEmpty()) {
-				if (c.getSurname().equalsIgnoreCase(surname)) {
-					contactsFound.add(c);
-				}
-			} else if (!name.isEmpty()) {
-				if (c.getName().equalsIgnoreCase(name)) {
-					contactsFound.add(c);
-				}
-			}
-		}
+		// contactsFound = dbManager.searchContact(name, surname);
+		hbManager.openSession();
+		contactsFound = hbManager.searchContact(name, surname);
+		hbManager.closeSession();
 
 		if (contactsFound.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
+		} else {
+			System.out.println(contactsFound);
 		}
 
-		return contactsFound;
 	}
 
-	public static List<Contact> addContact() {
+	public static void op3() {
 		Scanner in = new Scanner(System.in);
-		List<Contact> contacts = new ArrayList<>();
-		String continueAdd = null;
-		boolean add = true;
+		Contact contact = new Contact();
 
-		while (add) {
+		System.out.print("Inserisci un nuovo contatto:\n");
 
-			System.out.print("Vuoi inserire un contatto? (s/n) -> ");
-			continueAdd = in.nextLine();
+		System.out.print("\t-Cognome: ");
+		contact.setSurname(in.nextLine());
 
-			if (continueAdd.equals("s")) {
-				Contact contact = new Contact();
+		System.out.print("\t-Nome: ");
+		contact.setName(in.nextLine());
 
-				System.out.print("Inserisci un nuovo contatto:\n");
+		System.out.print("\t-Eta': ");
+		contact.setAge(Integer.parseInt(in.nextLine()));
 
-				System.out.print("\t-Cognome: ");
-				contact.setSurname(in.nextLine());
+		System.out.print("\t-Telefono: ");
+		contact.setTelephone(in.nextLine());
 
-				System.out.print("\t-Nome: ");
-				contact.setName(in.nextLine());
+		System.out.print("\t-E-Mail: ");
+		contact.setEmail(in.nextLine());
 
-				System.out.print("\t-Eta': ");
-				contact.setAge(Integer.parseInt(in.nextLine()));
-
-				System.out.print("\t-Telefono: ");
-				contact.setTelephone(in.nextLine());
-
-				System.out.print("\t-E-Mail: ");
-				contact.setEmail(in.nextLine());
-
-				System.out.print("\t-Note sul contatto: ");
-				contact.setNote(in.nextLine());
-				System.out.println();
-
-				contacts.add(contact);
-
-				System.out.println(contact);
-
-				System.out.println("**Inserimento riuscito!**");
-			} else {
-				add = false;
-				System.out.println("**I contatti sono pronti per il salvataggio in rubrica!**");
-			}
-		}
-
-		return contacts;
+		System.out.print("\t-Note sul contatto: ");
+		contact.setNote(in.nextLine());
+		
+		System.out.println();
+		
+//		dbManager.addContact(contact);
+		
+		hbManager.openSession();
+		hbManager.addContact(contact);
+		hbManager.closeSession();
+		
+		System.out.println("Contatto aggiunto!");
 	}
 
 	public static void op4() {
-		System.out.println("*Operazione 4*\n");
+//		Scanner in = new Scanner(System.in);
+//
+//		System.out.print("Inserisci i dati del contatto da cercare:\n");
+//		System.out.print("\t-Cognome: ");
+//		String surname = in.nextLine().trim();
+//
+//		System.out.print("\t-Nome: ");
+//		String name = in.nextLine().trim();
 	}
 
 	public static void op5() {
@@ -205,6 +179,18 @@ public class RubricaCompleta {
 
 	public static void op7() {
 		System.out.println("*Operazione 7*\n");
+	}
+
+	public static void subMenuOp8_9() {
+		System.out.println("*.Importa rubrica");
+		System.out.println("8.Da CSV");
+		System.out.println("9.Da XML");
+	}
+
+	public static void subMenuOp10_11() {
+		System.out.println("*.Esporta rubrica");
+		System.out.println("10.Su CSV");
+		System.out.println("11.Su XML");
 	}
 
 	public static void main(String[] args) {
@@ -231,14 +217,15 @@ public class RubricaCompleta {
 				break;
 
 			case 1:
-				subMenuOp1();
+				op1();
 				break;
 
 			case 2:
+				op2();
 				break;
 
 			case 3:
-				toAdd = addContact();
+				op3();
 				break;
 
 			case 4:
