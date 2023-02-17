@@ -6,6 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import it.beije.neumann.nicole.rubrica.*;
@@ -252,11 +257,20 @@ public class GestoreDiContatto
 	}
 	
 	
-	public static void trovaContattiDuplicati()
+	public static void trovaContattiDuplicati() throws ClassNotFoundException, SQLException
 	{
-		
-		
-		
+		List<Contatto> contatti= ContattiJDBC.importContactsFromDB();
+		List<Contatto> duplicati=new ArrayList<>();
+		List<Contatto> modificato=new ArrayList<>();
+		for(Contatto c : contatti)
+		{
+			modificato.remove(c);
+			if(modificato.contains(c)) duplicati.add(c);
+		}
+	
+		System.out.println(duplicati);
+	
+	
 	}
 	
 	
@@ -266,6 +280,8 @@ public class GestoreDiContatto
 		//vediListaContatti();
 		//cercaContatto();
 		//cancellaContatto();
+		
+		trovaContattiDuplicati();
 	}
 
 }

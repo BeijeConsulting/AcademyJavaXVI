@@ -92,7 +92,7 @@ public class ContattiJDBC
 			for (Contatto c : contatti)
 			{
 				
-				statement.executeUpdate("INSERT INTO contatti(nome, cognome, telefono, email) VALUES ('" + c.getSurname() + "', '" + c.getName() + "', '"+c.getTelephone()+"', '"+ c.getEmail()+"')");
+				statement.executeUpdate("INSERT INTO contatti(cognome, nome, telefono, email) VALUES ('" + c.getSurname() + "', '" + c.getName() + "', '"+c.getTelephone()+"', '"+ c.getEmail()+"')");
 			
 			
 			}
@@ -110,19 +110,19 @@ public class ContattiJDBC
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
-	public static void importContactsFromDB() throws ClassNotFoundException, SQLException
+	public static List<Contatto> importContactsFromDB() throws ClassNotFoundException, SQLException
 	{
 	
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection = null;
 	    ResultSet rs = null;
-			
+		List<Contatto> contatti=null;	
 		try {
 		
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=FALSE", "root", "Current-Root-Password");
 		
 			PreparedStatement statement1=connection.prepareStatement("SELECT * FROM contatti");
-			List<Contatto> contatti=new ArrayList<>();
+			contatti=new ArrayList<>();
 			
 			rs=statement1.executeQuery();
 			while (rs.next()) {
@@ -139,7 +139,8 @@ public class ContattiJDBC
 				
 				
 			}
-			System.out.println(contatti);
+			//System.out.println(contatti);
+		
 		
 		
 		}catch(SQLException sqlEx) {
@@ -150,7 +151,7 @@ public class ContattiJDBC
 			connection.close();
 		}
 		
-		
+		return contatti;
 		
 	}
 	
@@ -162,9 +163,10 @@ public class ContattiJDBC
 	
 	public static void main(String [] args) throws ClassNotFoundException, SAXException, IOException, TransformerException, ParserConfigurationException, SQLException
 	{
-		//insertContactsFromXML("C:\\Users\\nverz\\Music\\esercizio.\\rubrica.xml");
+		insertContactsFromXML("C:\\Users\\nverz\\Music\\esercizio.\\rubrica.xml");
 		//insertContactsFromCSV("C:\\Users\\nverz\\Music\\esercizio.\\rubrica.csv");
-		importContactsFromDB();
+		
+		//System.out.println(importContactsFromDB());
 	}
 
 }
