@@ -19,7 +19,7 @@ public class progContatti {
 			System.out.println(" 3 > Edit Contact");
 			System.out.println(" 4 > Delete Contact");
 			System.out.println(" 5 > Find Duplicate Contacts");
-			System.out.println(" 6 > Remove Duplicate Contacts");
+			System.out.println(" 6 > Merge Duplicate Contacts");
 			input = s.nextLine();
 			if(input.equalsIgnoreCase("exit")) break;
 			
@@ -48,6 +48,21 @@ public class progContatti {
 				DBmanager.writeContatto(contact);
 				break;
 			case "3":
+				System.out.println("\n\nInsert id:\n");
+				String editName=s.nextLine();
+				System.out.println("\n\nInsert name:\n");
+				int editId=Integer.parseInt(s.nextLine());
+				System.out.println("\n\nInsert surname:\n");
+				String editSurname=s.nextLine();
+				System.out.println("\n\nInsert email:\n");
+				String editEmail=s.nextLine();
+				System.out.println("\n\nInsert telephone:\n");
+				String editTelephone=s.nextLine();
+				System.out.println("\n\nInsert notes:\n");
+				String editNotes=s.nextLine();
+				
+				Contatto editContact = new Contatto(editId, editName, editSurname, editTelephone, editEmail, editNotes);
+				DBmanager.updateContatto(editContact);
 				break;
 			case "4":
 				contacts = DBmanager.getContatti();
@@ -67,6 +82,7 @@ public class progContatti {
 					System.out.println("\n\nContact deleted Succesfully!\n");
 				}
 				System.out.println("\nPress any key to continue...\n");
+				s.nextLine();
 				break;
 			case "5":
 				contacts = DBmanager.getDuplicates();

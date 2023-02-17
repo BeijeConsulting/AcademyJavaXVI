@@ -10,15 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBmanager {
-	static private List<Connection> connPool;
+
+	static final int MAX_CONNECTIONS = 20;
+	static private List<Connection> idleConnections;
+	static private List<Connection> activeConnections;
 	static public Connection getConnection() {
-		return null;
+		Connection c= null;
+		if (idleConnections.isEmpty()) {
+			throw new RuntimeException("The object in the pool has reached the maximum value");
+		}
+		else {
+			c = idleConnections.remove(idleConnections.size()-1);
+		}
+		return c;
+	}
+	static public void returnConnection() {
 	}
 	static public List<Contatto> getContatti() throws ClassNotFoundException {
 		List<Contatto> contacts= new ArrayList<>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
-		try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "password123");
+		try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false&allowPublicKeyRetrieval=true", "root", "password123");
 			Statement statement = connection.createStatement();
 			){
 			ResultSet rs = statement.executeQuery("SELECT id, email, telefono, cognome, nome, note FROM contatti");
@@ -78,6 +90,7 @@ public class DBmanager {
 				stmt.setString(3,contact.getTelephone());
 				stmt.setString(4,contact.getEmail());
 				stmt.setString(5,contact.getNote());
+				stmt.setInt(6,contact.getId());
 				res=stmt.executeUpdate();    
 			}
 			catch (SQLException sqlEx) {
@@ -117,7 +130,7 @@ public class DBmanager {
 		List<Contatto> contacts=getDuplicates();
 		for(Contatto contact1: contacts) {
 			for(Contatto contact2: contacts) {
-				if(contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
+				if(contact1.getId()!=-1 && contact2.getId()!=-1 && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
 					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
 					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
 					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
@@ -126,8 +139,8 @@ public class DBmanager {
 					contact1.setNote(note);
 					updateContatto(contact1);
 					deleteContatto(contact2);
-					contacts.remove(contact2);
-				}
+					contact2.setId(-1);
+				}	
 			}
 		}
 	}
