@@ -46,6 +46,7 @@ public class Rubrica {
 				System.out.println("8) Export xml");
 				System.out.println("9) Import csv");
 				System.out.println("10) Import Xml");
+				System.out.println("11) Trova duplicati");
 				scelta = s.nextInt();
 				checkScelta = Check.checkScelta(scelta);
 
@@ -111,6 +112,12 @@ public class Rubrica {
 				case 10:
 					RubricaJdbc.importXml();
 					break;
+				case 11:
+					System.out.println("Duplicati");
+					RubricaJdbc.trovaDuplicati();
+
+					break;
+					
 			}
 			}catch( IOException ioEx ){
 				checkScelta = true;

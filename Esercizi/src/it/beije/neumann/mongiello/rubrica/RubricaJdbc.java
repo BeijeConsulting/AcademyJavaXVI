@@ -276,7 +276,6 @@ public class RubricaJdbc  {
 			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM contatti WHERE id =?");
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
-			
 
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -391,53 +390,53 @@ public class RubricaJdbc  {
 		
 		Element documentElement = document.createElement("rubrica");
 		document.appendChild(documentElement);
-		
+
 		try {
 			connection = connectionDb();
 			PreparedStatement preparedStatement = connection.prepareStatement("Select * FROM contatti");
 			rs = preparedStatement.executeQuery();
-			
+
 			while(rs.next()) {
 				Element contatto = document.createElement("contatto");
 				documentElement.appendChild(contatto);
-				
+
 				Element id = document.createElement("id");
 				id.setTextContent(rs.getString("id") );
 				contatto.appendChild(id);
-				
+
 				Element surname = document.createElement("cognome");
 				surname.setTextContent(Check.isNull(rs.getString("cognome")) );
 				contatto.appendChild(surname);
-				
+
 				Element name = document.createElement("nome");
 				name.setTextContent(Check.isNull(rs.getString("nome")) );
 				contatto.appendChild(name);
-				
+
 				Element telephone = document.createElement("telefono");
 				telephone.setTextContent(Check.isNull(rs.getString("telefono")) );
 				contatto.appendChild(telephone);
-				
+
 				Element email = document.createElement("email");
 				email.setTextContent(Check.isNull(rs.getString("email")) );
 				contatto.appendChild(email);
-				
+
 				Element note = document.createElement("note");
 				note.setTextContent(Check.isNull(rs.getString("cognome")));
 				contatto.appendChild(note);
 			}
-			
+
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(document);
-			
+
 			StreamResult result = new StreamResult(new File("/temp/export.xml"));
 
 			// Output to console for testing
 			StreamResult syso = new StreamResult(System.out);
 
 			transformer.transform(source, result);
-		//	transformer.transform(source, syso);
-		
+			//	transformer.transform(source, syso);
+
 
 		} catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
@@ -460,12 +459,12 @@ public class RubricaJdbc  {
 		File file = new File("/temp/export.csv");
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-			try {
+		try {
 			connection = connectionDb();
 			String r = null;
 			String rigaIntestazione = null;
 			String[] fields = null;
-			
+
 			String[] dynamicFields = null;
 			String surname = null;
 			String name = null;
@@ -475,28 +474,28 @@ public class RubricaJdbc  {
 			while( bufferedReader.ready() ) {
 				r = bufferedReader.readLine();
 				if(r.equalsIgnoreCase("id"+separator +"cognome"+separator +"nome"+separator+"telefono"+separator +"email"+separator+"note")) continue;
-				
+
 				fields = r.split(separator, -1);
 				PreparedStatement preparedStatement = null;
 				if(fields[0] == "") {
 					preparedStatement = connection.prepareStatement("INSERT INTO contatti( cognome, nome, telefono, email, note) VALUES (?,?,?,?,?)");
-					
+
 					preparedStatement.setString(1,fields[1]);
 					preparedStatement.setString(2,fields[2]);
 					preparedStatement.setString(3,fields[3]);
 					preparedStatement.setString(4,fields[4]);
 					preparedStatement.setString(5,fields[5]);
 				}else {
-						 preparedStatement = connection.prepareStatement("INSERT INTO contatti(id, cognome, nome, telefono, email, note) VALUES (?,?,?,?,?,?)");
-						preparedStatement.setString(1,fields[0]);
-						preparedStatement.setString(2,fields[1]);
-						preparedStatement.setString(3,fields[2]);
-						preparedStatement.setString(4,fields[3]);
-						preparedStatement.setString(5,fields[4]);
-						preparedStatement.setString(6,fields[5]);
-					}
-					preparedStatement.executeUpdate();
-				
+					preparedStatement = connection.prepareStatement("INSERT INTO contatti(id, cognome, nome, telefono, email, note) VALUES (?,?,?,?,?,?)");
+					preparedStatement.setString(1,fields[0]);
+					preparedStatement.setString(2,fields[1]);
+					preparedStatement.setString(3,fields[2]);
+					preparedStatement.setString(4,fields[3]);
+					preparedStatement.setString(5,fields[4]);
+					preparedStatement.setString(6,fields[5]);
+				}
+				preparedStatement.executeUpdate();
+
 			}
 
 		} finally {
@@ -505,103 +504,122 @@ public class RubricaJdbc  {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
+
 
 		}
 	}
 
 
 	public static void importXml() throws SQLException, SAXException, IOException, ParserConfigurationException, ClassNotFoundException {
-		
+
 		Connection connection = null;
 		ResultSet rs = null;
-		
+
 		File file = new File("/temp/export.xml");
-		
+
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(file);
-		
+
 		Element rootElement = document.getDocumentElement();		
 		List<Element> elements = RubricaXml.getChildElements(rootElement);
-		
+
 		String id = null;
 		String name = null;
 		String surname = null;
 		String telephone = null;
 		String email = null;
 		String note = null;
-		
-		
+
+
 		try {
 			connection = connectionDb();
 			PreparedStatement preparedStatement = null;
-		for (Element el : elements) {
-			List<Element> values = RubricaXml.getChildElements(el);
-			for (Element v : values) {
-				switch (v.getNodeName()) {
-				case "id":
-					id = v.getTextContent();
-					break;
-				case "cognome":
-					surname = v.getTextContent();
-					break;
-				case "nome":
-					name = v.getTextContent();
-					break;
-				case "telefono":
-					telephone = v.getTextContent();
-					break;
-				case "email":
-					email = v.getTextContent();
-					break;
-				case "note":
-					note = v.getTextContent();
-					break;
+			for (Element el : elements) {
+				List<Element> values = RubricaXml.getChildElements(el);
+				for (Element v : values) {
+					switch (v.getNodeName()) {
+					case "id":
+						id = v.getTextContent();
+						break;
+					case "cognome":
+						surname = v.getTextContent();
+						break;
+					case "nome":
+						name = v.getTextContent();
+						break;
+					case "telefono":
+						telephone = v.getTextContent();
+						break;
+					case "email":
+						email = v.getTextContent();
+						break;
+					case "note":
+						note = v.getTextContent();
+						break;
+					}
 				}
-//				if(id == "") {
-//					preparedStatement = connection.prepareStatement("INSERT INTO contatti( cognome, nome, telefono, email, note) VALUES (?,?,?,?,?)");
-//					
-//					preparedStatement.setString(1,surname);
-//					preparedStatement.setString(2,name);
-//					preparedStatement.setString(3,telephone);
-//					preparedStatement.setString(4,email);
-//					preparedStatement.setString(5,note);
-//				}else {
-//						 preparedStatement = connection.prepareStatement("INSERT INTO contatti(id, cognome, nome, telefono, email, note) VALUES (?,?,?,?,?,?)");
-//						preparedStatement.setString(1,id);
-//						preparedStatement.setString(2,surname);
-//						preparedStatement.setString(3,name);
-//						preparedStatement.setString(4,telephone);
-//						preparedStatement.setString(5,email);
-//						preparedStatement.setString(6,note);
-//					}
-//					preparedStatement.executeUpdate();
-			
+				preparedStatement = connection.prepareStatement("INSERT INTO contatti( cognome, nome, telefono, email, note) VALUES (?,?,?,?,?)");
+				preparedStatement.setString(1,surname);
+				preparedStatement.setString(2,name);
+				preparedStatement.setString(3,telephone);
+				preparedStatement.setString(4,email);
+				preparedStatement.setString(5,note);
+				preparedStatement.executeUpdate();
 			}
-			preparedStatement = connection.prepareStatement("INSERT INTO contatti( cognome, nome, telefono, email, note) VALUES (?,?,?,?,?)");
-			preparedStatement.setString(1,surname);
-			preparedStatement.setString(2,name);
-			preparedStatement.setString(3,telephone);
-			preparedStatement.setString(4,email);
-			preparedStatement.setString(5,note);
-			preparedStatement.executeUpdate();
-		}
-		
-	} finally {
-		try {
-			connection.close();	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
+		} finally {
+			try {
+				connection.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
 
+		}
 	}
+
+	public static void trovaDuplicati( ) throws ClassNotFoundException {
+	
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try {
+			connection = connectionDb();
+			
+			preparedStatement = connection.prepareStatement("select c.* from contatti c,(Select nome, cognome from contatti group by nome, cognome having count(*) > 1) a where c.nome = a.nome and c.cognome = a.cognome");
+			
+			
+			rs=preparedStatement.executeQuery();
+			while( rs.next() ) {
+				System.out.println("id : " + rs.getInt("id"));
+				System.out.println("cognome : " + rs.getString("cognome"));
+				System.out.println("nome : " + rs.getString("nome"));
+				System.out.println("email : " + rs.getString("email"));
+				System.out.println("telefono : " + rs.getString("telefono"));
+				System.out.println("note : " + rs.getString("note"));
+				System.out.println("--------");
+			}
+			
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				connection.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+
+		}
+	}
+	
+	
+	
+	
+	
+	
 }
-}
-
-
-
 
 
 
