@@ -270,6 +270,10 @@ public class GestoreDiContatto
 	
 		System.out.println(duplicati);
 	
+		/**
+		 *aggiungi un duplicato nel database e controlla se funziona, dopo di che dalla lista dublicati elimini i duplicati e
+		 *restituisci la lista al db oppure individui l'id di uno dei due duplicati e lo elimini tramite query.
+		 */
 	
 	}
 	
