@@ -1,4 +1,4 @@
-package it.beije.neumann.nido.rubricadb;
+package it.beije.neumann.nido.rubrica;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import it.beije.neumann.nido.rubrica.CSVManager;
-import it.beije.neumann.nido.rubrica.Contatto;
 
 public class DBManager {
 

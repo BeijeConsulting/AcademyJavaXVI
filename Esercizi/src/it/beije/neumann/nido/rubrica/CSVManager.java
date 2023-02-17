@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class CSVManager {
 
-	public static final String PATH_READ = "./src/it/beije/neumann/nido/rubricaex/rubrica.csv";
-	public static final String PATH_WRITE = "./src/it/beije/neumann/nido/rubricaex/rubricaRewrited.csv";
+	public static final String PATH_READ = "./src/it/beije/neumann/nido/rubrica/rubrica.csv";
+	public static final String PATH_WRITE = "./src/it/beije/neumann/nido/rubrica/rubricaRewrited.csv";
 
 	public static List<Contatto> readRubrica(String pathfile, String splitter, boolean newRub) throws FileNotFoundException, IOException {
 		FileReader fileReader = new FileReader(pathfile);

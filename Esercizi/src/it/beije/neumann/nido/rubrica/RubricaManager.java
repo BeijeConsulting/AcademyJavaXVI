@@ -18,7 +18,7 @@
  * (senza colonna TELEPHONE) 
 
  */
-package it.beije.neumann.nido.rubrica.csvxml;
+package it.beije.neumann.nido.rubrica;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,14 +45,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import it.beije.neumann.nido.rubrica.Contatto;
-
 public class RubricaManager {
 
-	public static final String CSV_LOAD_PATH = "./src/it/beije/neumann/nido/rubricaex/csvxml/rubrica.csv";
-	public static final String CSV_SAVE_PATH = "./src/it/beije/neumann/nido/rubricaex/csvxml/rubricaToCSV.csv";
-	public static final String XML_LOAD_PATH = "./src/it/beije/neumann/nido/rubricaex/csvxml/rubrica.xml";
-	public static final String XML_SAVE_PATH = "./src/it/beije/neumann/nido/rubricaex/csvxml/rubricaToXML.xml";
+	public static final String CSV_LOAD_PATH = "./src/it/beije/neumann/nido/rubrica/rubrica.csv";
+	public static final String CSV_SAVE_PATH = "./src/it/beije/neumann/nido/rubrica/rubricaToCSV.csv";
+	public static final String XML_LOAD_PATH = "./src/it/beije/neumann/nido/rubrica/rubrica.xml";
+	public static final String XML_SAVE_PATH = "./src/it/beije/neumann/nido/rubrica/rubricaToXML.xml";
 
 	public List<Contatto> loadRubricaFromCSV(String pathFile, String separator)
 			throws FileNotFoundException, IOException {
