@@ -26,7 +26,7 @@ public class GestoreRubrica {
 		
 		for (int i = 0; i < fields.length; i++) {
 			
-			String value = sc.next();
+			String value = sc.nextLine();
 			System.out.println(i);
 			
 			if (value.equals("stop")) break;
@@ -40,33 +40,54 @@ public class GestoreRubrica {
 	
 	static void deleteContatto(Scanner sc) {
 		System.out.println("Per quale campo vuoi eliminare il contatto?");
-		String field = sc.next();
+		String field = sc.nextLine();
 		System.out.println("quale valore?");
-		String value = sc.next();
+		String value = sc.nextLine();
 		
-		sqlCommand("delete from Contatti where " + field +" = ?",false, value);
+		sqlCommand("delete from Contatti where " + field + " = ?",false, value);
 	}
 	
 	static void modifyContatto(Scanner sc) {}
 		
 	static void searchContatto (Scanner sc) {
 		System.out.println("Per quale campo vuoi filtrare il contatto?");
-		String field = sc.next();
+		String field = sc.nextLine();
 		System.out.println("quale valore?");
-		String value = sc.next();
+		String value = sc.nextLine();
 		
-		sqlCommand("Select * from Contatti where " + field +" = ?",true, value);
+		sqlCommand("Select * from Contatti where " + field + " = ?",true, value);
 	}
 	
 	static void viewContatti (Scanner sc) {
 		
 		System.out.println("vuoi ordinarli per nome o cognome?");
-		String orderField = sc.next();
+		String orderField = sc.nextLine();
 		
-		sqlCommand("Select * from Contatti order by ?",true, orderField);
+		sqlCommand("Select * from Contatti order by " + orderField ,true );
 						
 	}
 	
+	static void searchCopie(Scanner sc) {
+		
+		sqlCommand("select c.* from contatti c,"
+				+ " (Select nome, cognome from contatti group by nome, cognome having count(*) > 1)  a "
+				+ " where c.nome = a.nome and c.cognome = a.cognome", true);
+	}
+	private static void mergeCopie(Scanner sc) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static void importFile(Scanner sc) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private static void exportDB(Scanner sc) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	static void sqlCommand(String sqlCommand, boolean isSelect, String... parameters) {
 		
 		Connection connection = ConnectionPool.getConnection();
@@ -117,24 +138,6 @@ public class GestoreRubrica {
 			}
 		}
 	}
-	static void searchCopie(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
-	private static void mergeCopie(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private static void importFile(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private static void exportDB(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	static void menuRubrica () {
 		
@@ -157,7 +160,7 @@ public class GestoreRubrica {
 //				System.out.println("view -> visualizza i contatti");
 			}
 			
-			azione = sc.next();
+			azione = sc.nextLine();
 			
 			switch (azione) {
 			
@@ -171,7 +174,7 @@ public class GestoreRubrica {
 				break;
 				case "add": addContatto(sc);
 				break;
-				case "search duplicates": searchCopie(sc);
+				case "view duplicates": searchCopie(sc);
 				break;
 				case "merge duplicates": mergeCopie(sc);
 				break;
