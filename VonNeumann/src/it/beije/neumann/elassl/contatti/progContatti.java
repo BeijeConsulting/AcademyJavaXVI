@@ -7,6 +7,7 @@ public class progContatti {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO rubrica manager da tastiera
+		ContactManager db = new DBhybernate();//DBmanager();
 		int menu=-1;
 		Scanner s = new Scanner(System.in);
 		String input = "";
@@ -25,7 +26,7 @@ public class progContatti {
 			
 			switch(input) {
 			case "1":
-				contacts = DBmanager.getContatti();
+				contacts = db.getContatti();
 				System.out.println("\n\nContact List:\n");
 				for(Contatto c: contacts)
 					System.out.println(c);
@@ -45,7 +46,7 @@ public class progContatti {
 				String notes=s.nextLine();
 				
 				Contatto contact = new Contatto(name, surname, telephone, email, notes);
-				DBmanager.writeContatto(contact);
+				db.writeContatto(contact);
 				break;
 			case "3":
 				System.out.println("\n\nInsert id:\n");
@@ -62,10 +63,10 @@ public class progContatti {
 				String editNotes=s.nextLine();
 				
 				Contatto editContact = new Contatto(editId, editName, editSurname, editTelephone, editEmail, editNotes);
-				DBmanager.updateContatto(editContact);
+				db.updateContatto(editContact);
 				break;
 			case "4":
-				contacts = DBmanager.getContatti();
+				contacts = db.getContatti();
 				Contatto toRemove = null;
 				System.out.println("\n\nContact List:\n");
 				for(Contatto c: contacts)
@@ -78,14 +79,14 @@ public class progContatti {
 					System.out.println("\n\nError, Id not Found\n");
 				}
 				else {
-					DBmanager.deleteContatto(toRemove);
+					db.deleteContatto(toRemove);
 					System.out.println("\n\nContact deleted Succesfully!\n");
 				}
 				System.out.println("\nPress any key to continue...\n");
 				s.nextLine();
 				break;
 			case "5":
-				contacts = DBmanager.getDuplicates();
+				contacts = db.getDuplicates();
 				System.out.println("\n\nContact List:\n");
 				for(Contatto c: contacts)
 					System.out.println(c);
@@ -94,7 +95,7 @@ public class progContatti {
 				
 				break;
 			case "6":
-				DBmanager.mergeDuplicates();
+				db.mergeDuplicates();
 				System.out.println("\nDuplicate contacts merged succesfully!\n");
 				System.out.println("\nPress any key to continue...\n");
 				break;

@@ -9,12 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBmanager {
-
-	static final int MAX_CONNECTIONS = 20;
-	static private List<Connection> idleConnections;
-	static private List<Connection> activeConnections;
-	static public Connection getConnection() {
+public class DBmanager implements ContactManager{
+	/*static public Connection getConnection() {
 		Connection c= null;
 		if (idleConnections.isEmpty()) {
 			throw new RuntimeException("The object in the pool has reached the maximum value");
@@ -23,10 +19,8 @@ public class DBmanager {
 			c = idleConnections.remove(idleConnections.size()-1);
 		}
 		return c;
-	}
-	static public void returnConnection() {
-	}
-	static public List<Contatto> getContatti() throws ClassNotFoundException {
+	}*/
+	public List<Contatto> getContatti() throws ClassNotFoundException {
 		List<Contatto> contacts= new ArrayList<>();
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
@@ -58,7 +52,7 @@ public class DBmanager {
 		return contacts;
 	}
 	
-	static public int writeContatto(Contatto contatto) throws ClassNotFoundException {
+	public int writeContatto(Contatto contatto) throws ClassNotFoundException {
 		int res=-1;
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "password123");
@@ -78,7 +72,7 @@ public class DBmanager {
 		return res;
 	}
 	
-	static public int updateContatto(Contatto contact) throws ClassNotFoundException {
+	public int updateContatto(Contatto contact) throws ClassNotFoundException {
 		int res=-1;
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "password123");
@@ -98,7 +92,7 @@ public class DBmanager {
 			}
 		return res;
 	}
-	static public List<Contatto> getDuplicates() throws ClassNotFoundException {
+	public List<Contatto> getDuplicates() throws ClassNotFoundException {
 
 		String Query = "SELECT * FROM contatti as c1 WHERE EXISTS (SELECT 1 FROM contatti as c2 WHERE c2.nome = c1.nome AND c2.cognome = c1.cognome AND c2.id <> c1.id);";
 		int res=-1;
@@ -126,7 +120,7 @@ public class DBmanager {
 		
 		return contacts;
 	}
-	static public void mergeDuplicates() throws ClassNotFoundException{
+	public void mergeDuplicates() throws ClassNotFoundException{
 		List<Contatto> contacts=getDuplicates();
 		for(Contatto contact1: contacts) {
 			for(Contatto contact2: contacts) {
@@ -144,7 +138,7 @@ public class DBmanager {
 			}
 		}
 	}
-	static public int deleteContatto(Contatto contact) throws ClassNotFoundException {
+	public int deleteContatto(Contatto contact) throws ClassNotFoundException {
 		String Query = "DELETE FROM contatti WHERE id=?;";
 		int res=-1;
 		

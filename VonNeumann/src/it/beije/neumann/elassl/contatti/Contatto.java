@@ -1,14 +1,29 @@
 package it.beije.neumann.elassl.contatti;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "contatti")
 public class Contatto {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
+	@Column(name = "nome")
 	private String name;
+	@Column(name = "cognome")
 	private String surname;
+	@Column(name = "telefono")
 	private String telephone;
-	private String email;
+	private String email;s
+	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
 	public String getName() {
