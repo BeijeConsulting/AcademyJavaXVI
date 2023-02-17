@@ -2,45 +2,54 @@ package it.beije.neumann.iaria.gestore_rubrica;
 
 public class Contatto {
 
-	private String Nome;
-	private String Cognome;
-	private String Note;
-	private String Telefono;
+	private String name;
+	private String surname;
+	private String telephone;
+	private String email;
+	private String note;
 	
-	public String getNome() {
-		return Nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String Nome) {
-		this.Nome = Nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public String getCognome() {
-		return Cognome;
+	public String getSurname() {
+		return surname;
 	}
-	public void setCognome(String Cognome) {
-		this.Cognome = Cognome;
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public String getNote() {
-		return Note;
+		return note;
 	}
-	public void setNote(String Note) {
-		this.Note = Note;
-	}
-	
-	public String getTelefono() {
-		return Telefono;
-	}
-	public void setTelefono(String Telefono) {
-		this.Telefono = Telefono;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
-				.append(" Nome: ").append(Nome)
-				.append(", Cognome: ").append(Cognome)
-				.append(", Note: ").append(Note)
-				.append(", Telefono: ").append(Telefono)
+				.append(" name: ").append(name)
+				.append(", surname: ").append(surname)
+				.append(", telephone: ").append(telephone)
+				.append(", email: ").append(email)
+				.append(", note: ").append(note)
 				.append("}");
 
 		return builder.toString();
