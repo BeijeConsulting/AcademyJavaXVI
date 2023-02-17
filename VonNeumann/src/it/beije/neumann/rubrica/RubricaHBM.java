@@ -12,10 +12,14 @@ public class RubricaHBM {
 
 	public static void main(String[] args) {
 		
-		Configuration configuration = new Configuration().configure();
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
+//		Configuration configuration = new Configuration().configure()
+//				.addAnnotatedClass(Contatto.class);
+//				//.addAnnotatedClass(AltraClasse.class)
+//		SessionFactory sessionFactory = configuration.buildSessionFactory();
+//		
+//		Session session = sessionFactory.openSession();
 		
-		Session session = sessionFactory.openSession();
+		Session session = HBMsessionFactory.openSession();
 		
 //		Transaction transaction = session.getTransaction();
 //		transaction.begin();
@@ -47,7 +51,7 @@ public class RubricaHBM {
 		
 
 		//UPDATE
-		contatto = contatti.get(contatti.size()-1);
+//		contatto = contatti.get(contatti.size()-1);
 		//contatto.setId(9);
 //		contatto.setName("Nicole");
 //		contatto.setSurname("Viola");
@@ -58,7 +62,7 @@ public class RubricaHBM {
 //		System.out.println("contatto POST : " + contatto);
 
 		//DELETE
-		session.delete(contatto);
+//		session.delete(contatto);
 		
 		//if (true) throw new RuntimeException();
 

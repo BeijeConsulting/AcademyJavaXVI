@@ -1,12 +1,35 @@
 package it.beije.neumann.rubrica;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "contatti")
 public class Contatto {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
+	
+	@Column(name = "nome")
 	private String name;
+	
+	@Column(name = "cognome")
 	private String surname;
+	
+	@Column(name = "telefono")
 	private String telephone;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
 	public int getId() {
