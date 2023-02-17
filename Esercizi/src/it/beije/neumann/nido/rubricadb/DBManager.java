@@ -16,7 +16,7 @@ import it.beije.neumann.nido.rubrica.Contatto;
 
 public class DBManager {
 
-	public static final String CONN_STR = "jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false";
+	public static final String CONN_STR = "jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false"; //allowPublicKeyRetrieval=true
 	public static final String USER = "root";
 	public static final String PSW = "Mary23BeijeSQL";
 
