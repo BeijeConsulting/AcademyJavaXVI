@@ -80,10 +80,5 @@ public class RubricaJDBC {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-	// SELECT * FORM USERS WHERE USERNAME = username AND PASSWORD = password 
-	// SELECT * FORM USERS WHERE USERNAME = '' OR USERNAME LIKE '%%' # AND PASSWORD = password
->>>>>>> refs/remotes/origin/main
-	
+
 }
