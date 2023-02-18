@@ -2,11 +2,19 @@ package it.beije.neumann.iaria.gestore_rubrica;
 
 public class Contatto {
 
+	private int id;
 	private String name;
 	private String surname;
 	private String telephone;
 	private String email;
 	private String note;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
@@ -45,6 +53,7 @@ public class Contatto {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
 				.append(" name: ").append(name)
 				.append(", surname: ").append(surname)
 				.append(", telephone: ").append(telephone)

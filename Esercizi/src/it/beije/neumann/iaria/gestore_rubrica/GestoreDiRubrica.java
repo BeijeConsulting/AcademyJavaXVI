@@ -66,10 +66,9 @@ public class GestoreDiRubrica {
 	}
 	
 	//Metodo che cerca contatto corrispondente
-	public String cercaContatto() throws ClassNotFoundException, SQLException {
+	public void cercaContatto() throws ClassNotFoundException, SQLException {
 		
 		String stringaContatto = "Esito: ";
-		String contattoTrovato = "";
 		int riga = 0;
 		int count = 0;
 		boolean confronto;
@@ -77,7 +76,6 @@ public class GestoreDiRubrica {
 		Connection connection = null;
 		Statement statement = null; 
 		ResultSet rs = null;
-		ResultSet rs2 = null;
 		
 		System.out.println("Inserisci i dati da cercare:");
 		Scanner s = new Scanner(System.in);	
@@ -85,6 +83,7 @@ public class GestoreDiRubrica {
 		String nomeScanner = s.nextLine();
 		System.out.println("Cognome:");
 		String cognomeScanner = s.nextLine();
+		System.out.println();
 		
 		try {
 			connection = getConnection();
@@ -98,42 +97,40 @@ public class GestoreDiRubrica {
 				//Confronta i fields
 				if(!nomeScanner.isEmpty() && !cognomeScanner.isEmpty()) { //Se il nome ed il cognome non sono nulli
 					if(nomeScanner.contains(rs.getString("nome")) && cognomeScanner.contains(rs.getString("cognome"))) { //E contiene corrispondente del db
-						PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * FROM contatti WHERE nome = ? AND cognome = ?");
-						rs2 = preparedStatement.executeQuery();
-						while (rs.next()) {
-							System.out.println("id : " + rs2.getInt("id"));
-							System.out.println("cognome : " + rs2.getString("cognome"));
-							System.out.println("nome : " + rs2.getString("nome"));
-							System.out.println("email : " + rs2.getString("email"));
-							System.out.println("telefono : " + rs2.getString("telefono"));
-							System.out.println("note : " + rs2.getString("note"));
-							System.out.println("------------------");
-						}
-					} else {
-						System.out.println(count);
-						count = 0; //Altrimenti count=0, è inutile verificare gli altri
+						count++;
+						System.out.println("Contatto trovato alla riga "+riga+":\n"
+								+ "id : " + rs.getInt("id")+"\n"
+								+ "cognome : " + rs.getString("cognome")+"\n"
+								+ "nome : " + rs.getString("nome")+"\n"
+								+ "email : " + rs.getString("email")+"\n"
+								+ "telefono : " + rs.getString("telefono")+"\n"
+								+ "note : " + rs.getString("note")+"\n"
+								+ "------------------");
 					}
 				} else if(nomeScanner.isEmpty() || cognomeScanner.isEmpty()){
-					count++; //Aumento il conteggio anche se UNA stringa è vuota (la considero come corrispondenza da non cercare)
+					if(nomeScanner.contains(rs.getString("nome")) || cognomeScanner.contains(rs.getString("cognome"))) { //E contiene corrispondente del db
+						count++;
+						System.out.println("Contatto trovato alla riga "+riga+":\n"
+								+ "id : " + rs.getInt("id")+"\n"
+								+ "cognome : " + rs.getString("cognome")+"\n"
+								+ "nome : " + rs.getString("nome")+"\n"
+								+ "email : " + rs.getString("email")+"\n"
+								+ "telefono : " + rs.getString("telefono")+"\n"
+								+ "note : " + rs.getString("note")+"\n"
+								+ "------------------");
+					}
 				} else if(nomeScanner.isEmpty() && cognomeScanner.isEmpty()) {
 					System.out.println("Non puoi lasciare entrambi i campi vuoti!");
 					break;
 				}
-				
-				//Ad ogni iterazione vedo se c'è corrispondenza (cioè count = 2) altrimenti reset di count
-				if(count>1) {
-					contattoTrovato = "Contatto trovato alla riga "+riga;
-				} else {
-					count = 0;		
-				}
-							
-				/*Se alla fine del ciclo, la Stringa "contattoTrovato" è vuota, vuol dire che non c'è stata corrispondenza
-				quindi stampa "Nessuna corrispondenza trovata"*/
-				if(contattoTrovato.isEmpty()) {
-					contattoTrovato = "Nessuna corrispondenza trovata";
-				}
-				
 			}
+			
+			/*Se alla fine del ciclo, count è 0, vuol dire che non c'è stata corrispondenza
+			quindi stampa "Nessuna corrispondenza trovata"*/
+			if(count==0) {
+				System.out.println("Nessuna corrispondenza trovata");
+			}
+			
 		} catch (ClassNotFoundException cnfEx) {
 			cnfEx.printStackTrace(); 
 		} catch (SQLException sqlEx) {
@@ -141,14 +138,12 @@ public class GestoreDiRubrica {
 		} finally {
 			try {
 				rs.close();
-				rs2.close();
 				statement.close();
 				connection.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return contattoTrovato;
 	}
 	
 	//Metodo che chiede all'utente i dati per creare un nuovo contatto e lo inserisce nel db
@@ -212,66 +207,265 @@ public class GestoreDiRubrica {
 	}
 	
 	//Metodo che modifica un contatto
-	public void modificaContatto(String pathFile, String separator) throws FileNotFoundException, IOException, ClassNotFoundException{
-//		List<Contatto> contatti = new ArrayList<Contatto>();
-//		FileReader fileReader = new FileReader(pathFile);
-//		BufferedReader bufferedReader = new BufferedReader(fileReader);
-//		
-//		int numeroRigaWhile = 0;
-//		vediListaContatti();
-//		System.out.println("Inserisci il numero corrispondente alla riga da modificare: ");
-//		Scanner s = new Scanner(System.in);
-//		int numeroRigaScanner = s.nextInt();
-//		System.out.println();
-//		
-//		try {
-//			
-//			String r = null;
-//			String[] fields = null;
-//			Contatto contatto = null;
-//			
-//			//Lista con solo il nuovo contatto da inserire
-//			List<Contatto> contattiCSV = creaNuovoContatto();
-//			System.out.println();
-//			
-//			//Per ogni riga leggi e inserisci i dati nella lista
-//			while (bufferedReader.ready()) {
-//				r = bufferedReader.readLine();
-//				fields = r.split(separator);
-//				contatto = new Contatto();
-//				
-//				if(numeroRigaWhile == numeroRigaScanner) {
-//					for (Contatto persona : contattiCSV) {
-//						contatto.setNome(persona.getNome());
-//						contatto.setCognome(persona.getCognome());
-//						contatto.setNote(persona.getNote());
-//						contatto.setTelefono(persona.getTelefono());
-//					}
-//				} else {
-//					//Aggiungi i fields
-//					contatto.setNome(fields[0]);
-//					contatto.setCognome(fields[1]);
-//					contatto.setNote(fields[2]);
-//					contatto.setTelefono(fields[3]);
-//				}
-//	            contatti.add(contatto);
-//	            numeroRigaWhile++;
-//			} 
-//			//Fine lettura
-//			//Una volta aggiornati i dati li riscriviamo sul file
-//			sovrascriviContatti(contatti,pathFile,separator);
-//			System.out.println("Contatti dopo l'aggiornamento: ");
-//			vediListaContatti();
-//			System.out.println();
-//			
-//		} catch (IOException ioEx) {
-//			ioEx.printStackTrace();
-//			throw ioEx;
-//		} finally {
-//			bufferedReader.close();
-//		}
-//		
-//		return contatti;
+	public void modificaContatto() throws ClassNotFoundException, SQLException {
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int row;
+		
+		System.out.println("Contatti: ");
+		vediListaContatti();
+		System.out.println("Inserisci l'id della riga da modificare: ");
+		Scanner s = new Scanner(System.in);
+		int numeroIdScanner = s.nextInt();
+		System.out.println();
+		
+		//Faccio inserire all'utente i dati da sostituire
+		System.out.println("id: ");
+		s = new Scanner(System.in);
+		String id = s.nextLine();
+		System.out.println("Nome: ");
+		s = new Scanner(System.in);
+		String nome = s.nextLine();
+		System.out.println("Cognome: ");
+		s = new Scanner(System.in);
+		String cognome = s.nextLine();
+		System.out.println("Email: ");
+		s = new Scanner(System.in);
+		String email = s.nextLine();
+		System.out.println("Telefono: ");
+		s = new Scanner(System.in);
+		String telefono = s.nextLine();
+		System.out.println("Note: ");
+		s = new Scanner(System.in);
+		String note = s.nextLine();
+		System.out.println();
+	
+		try {
+			
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE contatti SET id = ?, email = ?, telefono = ?, cognome = ?, nome = ?, note = ? WHERE id = ?");
+				
+				//Inserisco i dati dell'utente alla query
+				preparedStatement2.setString(1, id);
+				preparedStatement2.setString(2, email);
+				preparedStatement2.setString(3, telefono);
+				preparedStatement2.setString(4, cognome);
+				preparedStatement2.setString(5, nome);
+				preparedStatement2.setString(6, note);
+				preparedStatement2.setInt(7, numeroIdScanner);
+				
+				row = preparedStatement2.executeUpdate();
+			}
+			
+			//UPDATE IN CASO DI VALORI VUOTI
+			PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE contatti set nome = case when nome in('null','') then null else nome end, cognome = case when cognome in('null','') then null else cognome end, telefono = case when telefono in('null','') then null else telefono end, email = case when email in('null','') then null else email end, note = case when note in('null','') then null else note end");
+			row = preparedStatement3.executeUpdate();
+		
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				rs.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//Metodo che elimina un contatto
+	public void eliminaContatto() throws ClassNotFoundException, SQLException{
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int row;
+	
+		System.out.println("Contatti: ");
+		vediListaContatti();
+		System.out.println("Inserisci l'id della riga da eliminare: ");
+		Scanner s = new Scanner(System.in);
+		int numeroIdScanner = s.nextInt();
+		System.out.println();
+		
+		try {
+			
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				
+				PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
+				preparedStatement2.setInt(1, numeroIdScanner);				
+				row = preparedStatement2.executeUpdate();
+				
+			}
+			
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				rs.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//Metodo che trova duplicati
+	public void trovaDuplicati() throws ClassNotFoundException, SQLException{
+		List<Contatto> contatti = new ArrayList<>();
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		int rigaLetta = 0;
+		int rigaLetta2 = 0;
+		int duplicatiTrovati = 0;
+		
+		try {
+			
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			Contatto contatto = null;
+			String distingui = "";
+			int count = 0;
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				contatto = new Contatto();
+				contatto.setId(rs.getInt("id"));
+				contatto.setEmail(rs.getString("email"));
+				contatto.setTelephone(rs.getString("telefono"));
+				contatto.setSurname(rs.getString("cognome"));
+				contatto.setName(rs.getString("nome"));
+				contatto.setNote(rs.getString("note"));
+				contatti.add(contatto);
+			}
+			
+			PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT cognome, nome FROM contatti");
+			rs2 = preparedStatement2.executeQuery();
+			while(rs2.next()) {
+				rigaLetta++;
+				for(Contatto contattiLetti : contatti) {
+					rigaLetta2++;
+					if(rigaLetta != rigaLetta2) {
+						if(contattiLetti.getSurname().contains(rs2.getString("cognome")) && contattiLetti.getName().contains(rs2.getString("nome"))) {
+							duplicatiTrovati++;
+							System.out.println(contattiLetti.getName()+" "+contattiLetti.getSurname()+" ha un duplicato alla riga: "+rigaLetta2);
+						}
+					}
+				}
+				System.out.println();
+				rigaLetta2 = 0; 
+				if(duplicatiTrovati != 0) {
+					duplicatiTrovati = 0;
+				}
+			}
+
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				rs.close();
+				rs2.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//Metodo che unisce duplicati
+	public void unisciDuplicati() throws ClassNotFoundException, SQLException{
+		
+		List<Contatto> contatti = new ArrayList<>();
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int row;
+		boolean haDuplicato = false;
+	
+		System.out.println("Contatti: ");
+		vediListaContatti();
+		System.out.println("Inserisci l'id del duplicato da unire: ");
+		Scanner s = new Scanner(System.in);
+		int numeroIdScanner = s.nextInt();
+		System.out.println();
+		
+		try {
+			
+			connection = getConnection();
+			statement = connection.createStatement();
+			Contatto contatto = null;
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				
+				contatto = new Contatto();
+				contatto.setId(rs.getInt("id"));
+				contatto.setEmail(rs.getString("email"));
+				contatto.setTelephone(rs.getString("telefono"));
+				contatto.setSurname(rs.getString("cognome"));
+				contatto.setName(rs.getString("nome"));
+				contatto.setNote(rs.getString("note"));
+				contatti.add(contatto);
+			}
+			
+			for(Contatto c : contatti) {
+				if(contatto.getId() == numeroIdScanner) {
+					for(Contatto c2 : contatti) {
+						if(contatto.getName().contains(c2.getName())) {
+							haDuplicato = true;
+							PreparedStatement preparedStatement2 = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
+							preparedStatement2.setInt(1, numeroIdScanner);				
+							row = preparedStatement2.executeUpdate();
+							System.out.println("Duplicati uniti correttamente!");
+							break;
+						}	
+					} 
+				}
+			}
+			
+			if(haDuplicato == false) {
+				System.out.println("L'utente non ha duplicati");
+			}
+			
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				rs.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	//Metodo per scrivere un nuovo contatto (append)
@@ -315,197 +509,9 @@ public class GestoreDiRubrica {
 			throw ioEx;
 		} finally {
 			fileWriter.close(); //Chiudo il file per salvare modifiche
-		}
-	}
-	
-
-	//Metodo che elimina un contatto
-	public void eliminaContatto(String pathFile, String separator) throws FileNotFoundException, IOException, ClassNotFoundException{
-//		List<Contatto> contatti = new ArrayList<Contatto>();
-//		FileReader fileReader = new FileReader(pathFile);
-//		BufferedReader bufferedReader = new BufferedReader(fileReader);
-//		
-//		int numeroRigaWhile = 0;
-//		vediListaContatti();
-//		System.out.println("Inserisci il numero corrispondente alla riga da eliminare: ");
-//		Scanner s = new Scanner(System.in);
-//		int numeroRigaScanner = s.nextInt();
-//		System.out.println();
-//		
-//		try {
-//			
-//			String r = null;
-//			String[] fields = null;
-//			Contatto contatto = null;
-//			
-//			//Per ogni riga leggi e inserisci i dati nella lista
-//			while (bufferedReader.ready()) {
-//				r = bufferedReader.readLine();
-//				fields = r.split(separator);
-//				contatto = new Contatto();
-//				
-//				if(numeroRigaWhile == numeroRigaScanner) {
-//					numeroRigaWhile++; //Se ci troviamo nella riga da eliminare, saltiamo all'iterazione successiva
-//				} else {
-//					//Aggiungi i fields
-//					contatto.setNome(fields[0]);
-//					contatto.setCognome(fields[1]);
-//					contatto.setNote(fields[2]);
-//					contatto.setTelefono(fields[3]);
-//					contatti.add(contatto);
-//					numeroRigaWhile++;
-//				}
-//			} 
-//			//Fine lettura
-//			//Una volta aggiornati i dati li riscriviamo sul file
-//			sovrascriviContatti(contatti,pathFile,separator);
-//			System.out.println();
-//			System.out.println("Contatti dopo l'aggiornamento: ");
-//			vediListaContatti();
-//			System.out.println();
-//			
-//		} catch (IOException ioEx) {
-//			ioEx.printStackTrace();
-//			throw ioEx;
-//		} finally {
-//			bufferedReader.close();
-//		}
-//		
-//		return contatti;
-	}
-	
-	//Metodo che trova duplicati
-	public void trovaDuplicati(String pathFile, String separator) throws FileNotFoundException, IOException{
-		/*List<Contatto> contatti = new ArrayList<Contatto>();
-		List<Contatto> contattiTrovati = new ArrayList<Contatto>();
-		ArrayList<Integer> deleteDuplicati = new ArrayList<Integer>();
-		FileReader fileReader = new FileReader(pathFile);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		int rigaLetta = 0;
-		int contattoLetto = 0;
-		
-		System.out.println("Contatti: ");
-		/List<Contatto> contattiLetti = vediListaContatti(pathFile,separator);
-		System.out.println();
-		
-		try {
-			
-			String r = null;
-			String[] fields = null;
-			Contatto contatto = null;
-			
-			//Per ogni riga
-			while (bufferedReader.ready()) {
-				r = bufferedReader.readLine();
-				fields = r.split(separator);
-				rigaLetta++;
-				
-				if(rigaLetta != 1) {
-					//Aggiungi i fields
-					contatto = new Contatto();
-					contatto.setNome(fields[0]);
-					contatto.setCognome(fields[1]);
-					contatto.setNote(fields[2]);
-					contatto.setTelefono(fields[3]);
-					for(Contatto contattiL : contattiLetti) {
-						contattoLetto++;
-						if(contattoLetto != rigaLetta - 1 && contattiL != null) { //Per non rileggere la stessa riga di contatto con contattiL
-							if(contatto.getNome().contains(contattiL.getNome()) && contatto.getCognome().contains(contattiL.getCognome())) {
-								contattiTrovati.add(contattiL); //Se trova contatti simili, crea una nuova lista solo con i contatti simili
-								System.out.println(rigaLetta-1 + " nome letto: "+contattoLetto);
-								contattiLetti.set(rigaLetta-1,null); //-2 perchè inizia da Giovanni che è indice 0
-							}
-						}
-					} if(!contattiTrovati.isEmpty()) { //A questo punto se la lista di contatti simili non è vuota, stampali
-						System.out.println("Trovati duplicati della riga: "+(rigaLetta-1)+":\n"
-								 	+"Nome: "+contatto.getNome()
-									+", Cognome: "+contatto.getCognome()
-									+", Note: "+contatto.getNote()
-									+", Telefono: "+contatto.getTelefono()); //-1 perché inizia da NOME-COGNOME... che è indice 0
-						for(Contatto contattiT : contattiTrovati) {
-							System.out.println("Nome: "+contattiT.getNome()
-									+ ", Cognome: "+contattiT.getCognome()
-									+ ", Note: "+contattiT.getNote()
-									+ ", Telefono: "+contattiT.getTelefono()
-									);
-						}
-					}
-					
-					contattiTrovati.clear();
-					contattoLetto = 0;
-				}
-				
-			}
-			
-		} catch (IOException ioEx) {
-			ioEx.printStackTrace();
-			throw ioEx;
-		} finally {
-			bufferedReader.close();
 		}*/
 	}
 	
-	//Metodo che unisce duplicati
-		public void unisciDuplicati(String pathFile, String separator) throws FileNotFoundException, IOException{
-			/*List<Contatto> contatti = new ArrayList<Contatto>();
-			FileReader fileReader = new FileReader(pathFile);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			int rigaLetta = 0;
-			int contattoLetto = 0;
-			
-			System.out.println("Contatti: ");
-			List<Contatto> contattiLetti = vediListaContatti(pathFile,separator);
-			System.out.println();
-			
-			try {
-				
-				String r = null;
-				String[] fields = null;
-				Contatto contatto = null;
-				
-				//Per ogni riga
-				while (bufferedReader.ready()) {
-					r = bufferedReader.readLine();
-					fields = r.split(separator);
-					rigaLetta++;
-					
-					if(rigaLetta != 1) {
-						//Aggiungi i fields
-						contatto = new Contatto();
-						contatto.setNome(fields[0]);
-						contatto.setCognome(fields[1]);
-						contatto.setNote(fields[2]);
-						contatto.setTelefono(fields[3]);
-						for(Contatto contattiL : contattiLetti) {
-							contattoLetto++;
-							if(contattoLetto != rigaLetta - 1 && contattiL != null) { //Per non rileggere la stessa riga di contatto con contattiL
-								if(contatto.getNome().contains(contattiL.getNome()) && contatto.getCognome().contains(contattiL.getCognome())) {
-									System.out.println("Trovati duplicati alla riga: "+(rigaLetta-1)+" e "+contattoLetto+", i dati sono:\n "  //-1 perché inizia da NOME-COGNOME... che è indice 0
-											+ "Nome: "+contatto.getNome()
-											+", Cognome: "+contatto.getCognome()
-											+", Note: "+contatto.getNote()
-											+", Telefono: "+contatto.getTelefono()+"\n "
-											+ "Nome: "+contattiL.getNome()
-											+ ", Cognome: "+contattiL.getCognome()
-											+ ", Note: "+contattiL.getNote()
-											+ ", Telefono: "+contattiL.getTelefono()
-											);
-									contattiLetti.set(rigaLetta-2,null); //-2 perchè inizia da Giovanni che è indice 0
-								}
-							}
-						}
-						contattoLetto = 0;
-					}
-					
-				}
-				
-			} catch (IOException ioEx) {
-				ioEx.printStackTrace();
-				throw ioEx;
-			} finally {
-				bufferedReader.close();
-			}*/
-		}
 	
 	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException, SQLException {
 		String pathForCSV = "/Users/gianf/Desktop/contatti.csv";
@@ -532,31 +538,34 @@ public class GestoreDiRubrica {
 					gestoreRubrica.main(args); //Richiama il programma così si può continuare ad usare, dato che l'utente non ha ancora fatto l'exit
 					break;
 				case 2:
-					String risultato = gestoreRubrica.cercaContatto();
-					System.out.println(risultato);
+					gestoreRubrica.cercaContatto();
 					System.out.println();
 					gestoreRubrica.main(args);
 					break;
 				case 3:
 					gestoreRubrica.creaNuovoContatto();
 					System.out.println();
+					gestoreRubrica.vediListaContatti();
 					gestoreRubrica.main(args);
 					break;
 				case 4:
-					//gestoreRubrica.modificaContatto();
+					gestoreRubrica.modificaContatto();
+					System.out.println("Lista aggiornata");
+					gestoreRubrica.vediListaContatti();
 					gestoreRubrica.main(args); //Richiama il programma così si può continuare ad usare, dato che l'utente non ha ancora fatto l'exit
 					break;
 				case 5:
-					//gestoreRubrica.eliminaContatto();
+					gestoreRubrica.eliminaContatto();
+					System.out.println("Lista aggiornata");
+					gestoreRubrica.vediListaContatti();
 					gestoreRubrica.main(args);
 					break;
 				case 6:
-					//gestoreRubrica.trovaDuplicati();
-					System.out.println();
+					gestoreRubrica.trovaDuplicati();
 					gestoreRubrica.main(args);
 					break;
 				case 7:
-					//gestoreRubrica.unisciDuplicati();
+					gestoreRubrica.unisciDuplicati();
 					System.out.println();
 					gestoreRubrica.main(args);
 					break;
