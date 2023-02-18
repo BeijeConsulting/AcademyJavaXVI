@@ -16,9 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 
 public class GestoreDiRubrica {
 	
@@ -468,50 +481,325 @@ public class GestoreDiRubrica {
 		}
 	}
 	
-	//Metodo per scrivere un nuovo contatto (append)
-	public void scriviContatto(List<Contatto> contatti, String pathFile, String separator) throws FileNotFoundException, IOException{
-	/*	File rubrica = new File(pathFile);
+	//Metodo che esporta dati db su csv
+	public void writeRubricaCSV(String pathFile, String separator) throws IOException, ClassNotFoundException, SQLException{
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		
+		File rubrica = new File(pathFile);
+		boolean exists = rubrica.exists(); //File esiste
 		FileWriter fileWriter = new FileWriter(pathFile, true);
+		int righeInserite = 0;
 		
 		try {
 			
-			for (Contatto persona : contatti) {
-				fileWriter.write(persona.getNome() + separator);
-				fileWriter.write(persona.getCognome() + separator);
-				fileWriter.write(persona.getNote() + separator);
-				fileWriter.write(persona.getTelefono() + "\n");
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			if(!exists) {//Creo la prima riga con NOME-COGNOME-NOTE-TELEFONO se il file non esiste
+				fileWriter.write("ID" + separator);
+				fileWriter.write("COGNOME" + separator);
+				fileWriter.write("NOME" + separator);
+				fileWriter.write("TELEFONO" + separator);
+				fileWriter.write("EMAIL" + separator);
+				fileWriter.write("NOTE" + "\n");
 			}
+			
+			//Prendo i dati dal db
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, cognome, nome, telefono, email, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				righeInserite++;
+				fileWriter.write(rs.getInt("id") + separator);
+				fileWriter.write(rs.getString("cognome") + separator);
+				fileWriter.write(rs.getString("nome") + separator);	
+				fileWriter.write(rs.getString("telefono") + separator);
+				fileWriter.write(rs.getString("email") + separator);
+				fileWriter.write(rs.getString("note") + "\n");
+			}
+			System.out.println("Sono state inserite "+righeInserite+" righe");
 
-		} catch (IOException ioEx) {
-			ioEx.printStackTrace();
-			throw ioEx;
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
 		} finally {
-			fileWriter.close(); //Chiudo il file per salvare modifiche
+			fileWriter.close(); //Chiudo il file e salvo le modifiche
+			try {
+				statement.close();
+				rs.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	//Metodo per sovrascrivere il file (nel caso di modifica o rimozione di un contatto)
-	public void sovrascriviContatti(List<Contatto> contatti, String pathFile, String separator) throws FileNotFoundException, IOException{
-		File rubrica = new File(pathFile);
-		FileWriter fileWriter = new FileWriter(pathFile);
+	//Metodo che importa il file csv su db
+	public void importaContattiCSV(String pathFile, String separator) throws FileNotFoundException, IOException, ClassNotFoundException {
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int righeInserite = 0;
+		
+		FileReader fileReader = new FileReader(pathFile);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
 		try {
+			String r = null;
+			String[] fields = null;
+			Contatto contatto = null;
 			
-			for (Contatto persona : contatti) {
-				fileWriter.write(persona.getNome() + separator);
-				fileWriter.write(persona.getCognome() + separator);
-				fileWriter.write(persona.getNote() + separator);
-				fileWriter.write(persona.getTelefono() + "\n");
-			}
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			while (bufferedReader.ready()) {
+				r = bufferedReader.readLine();
+				fields = r.split(separator);
+				
+				righeInserite++;
+				contatto = new Contatto();
+				
+				contatto.setSurname(fields[1]);
+				contatto.setName(fields[2]);
+				contatto.setTelephone(fields[3]);
+				contatto.setEmail(fields[4]);
+				contatto.setNote(fields[5]);
+				
+				//Se si trova alla seconda riga (quindi salto NOME;COGNOME;TELEFONO;EMAIL;NOTE)
+				if(righeInserite > 1) {
+					
+					//INSERT
+					PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(cognome, nome, telefono, email, note) VALUES (?, ?, ?, ?, ?)");
+					preparedStatement.setString(1, contatto.getSurname());
+					preparedStatement.setString(2, contatto.getName());
+					preparedStatement.setString(3, contatto.getTelephone());
+					preparedStatement.setString(4, contatto.getEmail());
+					preparedStatement.setString(5, contatto.getNote());
+					int row = preparedStatement.executeUpdate();
 
+				}
+				
+				PreparedStatement preparedStatement2 = connection.prepareStatement("UPDATE contatti set nome = case when nome in('null','') then null else nome end, cognome = case when cognome in('null','') then null else cognome end, telefono = case when telefono in('null','') then null else telefono end, email = case when email in('null','') then null else email end, note = case when note in('null','') then null else note end");
+				int row2 = preparedStatement2.executeUpdate();
+
+			}
+			
+			//Salto NOME;COGNOME;TELEFONO;EMAIL;NOTE togliendo 1 da righeInserite che contiene il numero di cicli effettuati
+			System.out.println("Sono state inserite "+ (righeInserite-1) +" righe");
+			System.out.println();
+		
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
 			throw ioEx;
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
 		} finally {
-			fileWriter.close(); //Chiudo il file per salvare modifiche
-		}*/
+			bufferedReader.close();
+			try {
+				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
+	//Metodo che esporta dati db su xml
+	public void writeRubricaXML(String pathFile) throws ParserConfigurationException, IOException, SAXException, ClassNotFoundException, DOMException, SQLException{
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int righeInserite = 0;
+		
+		try {
+				
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			//Creo file
+			File rubricaXml = new File(pathFile);
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			
+			//Costruiamo una factory per processare il nostro flusso di dati
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = null;
+			
+			//Creo il root che una volta creato il file diventerà rubrica
+			Element root = null;
+			
+			//Se il file esiste, analizza e verifica il root per poi effettuare l'append
+			if(rubricaXml.exists()) {
+				doc = docBuilder.parse(pathFile);
+				root = doc.getDocumentElement();			
+			} else { //Se non esiste crea un nuovo document con il root "Rubrica"
+				doc = docBuilder.newDocument();
+				root = doc.createElement("Rubrica");
+				doc.appendChild(root);
+			}
+			
+			//Prendo i dati dal db
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, email, telefono, cognome, nome, note FROM contatti");
+			rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				righeInserite++;
+				
+				//Per ogni contatto inserisci: Contatto ed i figli nome,cognome ecc. con valori
+				Element contatto = doc.createElement("Contatto");
+				Element id = doc.createElement("ID");
+				id.setTextContent(rs.getString("id"));
+				Element cognome = doc.createElement("Cognome");
+				cognome.setTextContent(rs.getString("cognome"));
+				Element nome = doc.createElement("Nome");
+				nome.setTextContent(rs.getString("nome"));
+				Element telefono = doc.createElement("Telefono");
+				telefono.setTextContent(rs.getString("telefono"));
+				Element email = doc.createElement("Email");
+				telefono.setTextContent(rs.getString("email"));
+				Element note = doc.createElement("Note");
+				note.setTextContent(rs.getString("note"));	
+				
+				//Inserisco contatto come figlio di root (Rubrica) e poi aggiungo ai contatti i valori
+				root.appendChild(contatto);
+				contatto.appendChild(id);
+				contatto.appendChild(cognome);
+				contatto.appendChild(nome);
+				contatto.appendChild(telefono);
+				contatto.appendChild(email);
+				contatto.appendChild(note);
+			}
+			System.out.println("Sono state inserite "+righeInserite+" righe");
+			System.out.println();
+			
+			//Scrivo il contenuto nel file xml
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File(pathFile));
+			transformer.transform(source, result);
+			
+		}catch(TransformerException te) {
+			System.out.println("TransformerException");
+		}catch(ParserConfigurationException pcex) {
+			System.out.println("ParserConfigurationException");
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (IOException ioEx) {
+			ioEx.printStackTrace();
+			throw ioEx;
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				connection.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//Per leggere dati .XML
+	public static List<Element> getChildElements(Element e) {
+		List<Element> elements = new ArrayList<Element>();
+		NodeList childNodes = e.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i ++) {
+			Node node = childNodes.item(i);
+			if (node instanceof Element) {
+				elements.add((Element) node);
+			}
+		}
+		
+		return elements;
+	}
+	
+	//Metodo che importa il file xml su db
+	public void importaContattiXML(String pathFile) throws ParserConfigurationException, IOException, SAXException, ClassNotFoundException{
+		
+		Connection connection = null;
+		Statement statement = null; 
+		ResultSet rs = null;
+		int righeInserite = 0;
+		
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.parse(pathFile);		
+		Element rootElement = document.getDocumentElement();
+		List<Element> elements = getChildElements(rootElement);
+		
+		
+		try {
+			
+			Contatto contatto = null;
+			
+			connection = getConnection();
+			statement = connection.createStatement();
+			
+			for (Element el : elements) {
+				righeInserite++;
+				contatto = new Contatto();
+				
+				List<Element> values = getChildElements(el);
+	
+				//Leggo in verticale
+				for (Element v : values) {
+					String valore = v.getNodeName().toLowerCase(); //Prendo il nome del nodo in minuscolo per confrontarlo
+	
+					switch (valore) {
+					case "cognome":
+						contatto.setSurname(v.getTextContent());
+						break;
+					case "nome":
+						contatto.setName(v.getTextContent());
+						break;
+					case "telefono":
+						contatto.setTelephone(v.getTextContent());
+						break;
+					case "email":
+						contatto.setEmail(v.getTextContent());
+						break;
+					case "note":
+						contatto.setNote(v.getTextContent());
+						break;
+					}
+				}
+				
+				//INSERT
+				PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(cognome, nome, telefono, email, note) VALUES (?, ?, ?, ?, ?)");
+				preparedStatement.setString(1, contatto.getSurname());
+				preparedStatement.setString(2, contatto.getName());
+				preparedStatement.setString(3, contatto.getTelephone());
+				preparedStatement.setString(4, contatto.getEmail());
+				preparedStatement.setString(5, contatto.getNote());
+				int row = preparedStatement.executeUpdate();
+		
+			}
+			
+			//UPDATE
+			statement.executeUpdate("UPDATE contatti set nome = case when nome in('null','') then null else nome end, cognome = case when cognome in('null','') then null else cognome end, telefono = case when telefono in('null','') then null else telefono end, email = case when email in('null','') then null else email end, note = case when note in('null','') then null else note end");
+			System.out.println("Sono state inserite "+righeInserite+" righe");
+			System.out.println();
+		
+		} catch (ClassNotFoundException cnfEx) {
+			cnfEx.printStackTrace(); 
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				statement.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, IOException, ParserConfigurationException, SAXException, SQLException {
 		String pathForCSV = "/Users/gianf/Desktop/contatti.csv";
@@ -521,14 +809,26 @@ public class GestoreDiRubrica {
 		GestoreDiRubrica gestoreRubrica = new GestoreDiRubrica();
 		
 		System.out.println("Azioni che è possibile svolgere:");
-		System.out.println("- Inserisci 1 per vedere la lista contatti \n- Inserisci 2 per cercare il contatto \n- Inserisci 3 per inserire un nuovo contatto \n- Inserisci 4 per modificare un contatto \n- Inserisci 5 per cancellare un contatto \n- Inserisci 6 per cercare un duplicato \n- Inserisci 7 per unire un duplicato \n- Inserisci 8 per uscire");
+		System.out.println("- Inserisci 1 per vedere la lista contatti \n"
+				+ "- Inserisci 2 per cercare il contatto \n"
+				+ "- Inserisci 3 per inserire un nuovo contatto \n"
+				+ "- Inserisci 4 per modificare un contatto \n"
+				+ "- Inserisci 5 per cancellare un contatto \n"
+				+ "- Inserisci 6 per cercare un duplicato \n"
+				+ "- Inserisci 7 per unire un duplicato \n"
+				+ "- Inserisci 8 per esportare i dati del db su CSV \n"
+				+ "- Inserisci 9 per importare i dati del CSV sul db \n"
+				+ "- Inserisci 10 per esportare i dati del db su XML \n"
+				+ "- Inserisci 11 per importare i dati dell'XML sul db \n"
+				+ "- Inserisci 12 per terminare il programma");
 		System.out.println("Inserisci il numero corrispondente per avviare l'azione desiderata:");
 		Scanner s = new Scanner(System.in);
 		scelta = s.nextInt(); //Prendo il valore inserito dall'utente
 		System.out.println();
 		
-		if(scelta <= 0 || scelta > 8) {
+		if(scelta <= 0 || scelta > 12) {
 			System.out.println("Scelta non presente");
+			System.out.println();
 			gestoreRubrica.main(args); //Se non è presente rilancia il programma
 		} else {
 			switch(scelta) {
@@ -570,6 +870,22 @@ public class GestoreDiRubrica {
 					gestoreRubrica.main(args);
 					break;
 				case 8:
+					gestoreRubrica.writeRubricaCSV(pathForCSV,separator);
+					gestoreRubrica.main(args);
+					break;
+				case 9:
+					gestoreRubrica.importaContattiCSV(pathForCSV,separator);
+					gestoreRubrica.main(args);
+					break;
+				case 10:
+					gestoreRubrica.writeRubricaXML(pathForXml);
+					gestoreRubrica.main(args);
+					break;
+				case 11:
+					gestoreRubrica.importaContattiXML(pathForXml);
+					gestoreRubrica.main(args);
+					break;
+				case 12:
 					System.out.println("Programma terminato");
 					break; //Ferma il programma per l'exit
 					
