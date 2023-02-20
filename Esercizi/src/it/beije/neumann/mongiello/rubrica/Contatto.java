@@ -62,10 +62,6 @@ public class Contatto {
 		return id;
 	}
 
-
-
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
