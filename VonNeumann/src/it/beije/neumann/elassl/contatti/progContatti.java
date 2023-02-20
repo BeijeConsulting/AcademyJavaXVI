@@ -1,7 +1,13 @@
 package it.beije.neumann.elassl.contatti;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import it.beije.neumann.rubrica.Contatto;
 
@@ -19,6 +25,7 @@ public class progContatti {
 		String input = "";
 		System.out.println("\nWelcome to my CLI Contact Manager!\n");
 		while(!input.equalsIgnoreCase("exit")) {
+			String pathFile;
 			List<Contatto> contacts;
 			System.out.println(" Esc > Exit");
 			System.out.println(" 1 > Visualize Contacts");
@@ -27,6 +34,10 @@ public class progContatti {
 			System.out.println(" 4 > Delete Contact");
 			System.out.println(" 5 > Find Duplicate Contacts");
 			System.out.println(" 6 > Merge Duplicate Contacts");
+			System.out.println(" 7 > Export to CSV");
+			System.out.println(" 8 > Import from CSV");
+			System.out.println(" 9 > Export to XML");
+			System.out.println(" 10 > Import from XML");
 			input = s.nextLine();
 			if(input.equalsIgnoreCase("exit")) break;
 			
@@ -108,6 +119,72 @@ public class progContatti {
 				db.mergeDuplicates();
 				System.out.println("\nDuplicate contacts merged succesfully!\n");
 				System.out.println("\nPress any key to continue...\n");
+				break;
+			case "7":
+				System.out.println("\n\nInsert the desired filepath:\n");
+				pathFile=s.nextLine(); 
+				try {
+					CSVmanager.writeRubricaCSV(db.getContatti(), pathFile, ";");
+					System.out.println("\nExported to CSV succesfully!\n");
+					System.out.println("\nPress any key to continue...\n");
+					s.nextLine();
+				} catch (IOException e) {
+					System.out.println("\nError, invalid filepath!\n");
+					e.printStackTrace();
+				}
+				break;
+			case "8":
+				System.out.println("\n\nInsert the filepath:\n");
+				pathFile=s.nextLine(); 
+				try {
+					contacts = CSVmanager.loadRubricaFromCSV(pathFile, ";");
+					for (Contatto c: contacts) 
+						db.writeContatto(c);
+					System.out.println("\nImported from CSV succesfully!\n");
+					System.out.println("\nPress any key to continue...\n");
+					s.nextLine();
+				} catch (IOException e) {
+					System.out.println("\nError, invalid filepath!\n");
+					e.printStackTrace();
+				}
+				break;
+			case "9":
+				System.out.println("\n\nInsert the desired filepath:\n");
+				pathFile=s.nextLine(); 
+				try {
+					XMLmanager.writeRubricaXML(db.getContatti(), pathFile);
+					System.out.println("\nExported to XML succesfully!\n");
+					System.out.println("\nPress any key to continue...\n");
+					s.nextLine();
+				} catch (IOException e) {
+					System.out.println("\nError, invalid filepath!\n");
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				} catch (SAXException e) {
+					e.printStackTrace();
+				} catch (TransformerException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "10":
+				System.out.println("\n\nInsert the filepath:\n");
+				pathFile=s.nextLine(); 
+				try {
+					contacts = XMLmanager.loadRubricaFromXML(pathFile);
+					for (Contatto c: contacts) 
+						db.writeContatto(c);
+					System.out.println("\nImported from XML succesfully!\n");
+					System.out.println("\nPress any key to continue...\n");
+					s.nextLine();
+				} catch (IOException e) {
+					System.out.println("\nError, invalid filepath!\n");
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				} catch (SAXException e) {
+					e.printStackTrace();
+				}
 				break;
 			default:
 				System.out.println("\nError, choose a valid option:");
