@@ -1,4 +1,4 @@
-package it.beije.neumann.rubrica.gestore_rubrica_hbm;
+package it.beije.neumann.rubrica.iaria_gestore_rubrica_hbm;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
