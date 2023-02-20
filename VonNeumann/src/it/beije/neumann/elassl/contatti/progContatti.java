@@ -49,10 +49,14 @@ public class progContatti {
 				db.writeContatto(contact);
 				break;
 			case "3":
-				System.out.println("\n\nInsert id:\n");
-				String editName=s.nextLine();
-				System.out.println("\n\nInsert name:\n");
+				contacts = db.getContatti();
+				System.out.println("\n\nContact List:\n");
+				for(Contatto c: contacts)
+					System.out.println(c);
+				System.out.println("\n\nInsert id of the contact you want to edit:\n");
 				int editId=Integer.parseInt(s.nextLine());
+				System.out.println("\n\nInsert name:\n");
+				String editName=s.nextLine();
 				System.out.println("\n\nInsert surname:\n");
 				String editSurname=s.nextLine();
 				System.out.println("\n\nInsert email:\n");

@@ -1,5 +1,6 @@
 package it.beije.neumann.elassl.contatti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,8 +9,10 @@ import org.hibernate.query.Query;
 
 
 public class DBhybernate implements ContactManager {
-
-	@Override
+	
+	DBhybernate(){
+		Session session = HBMsessionFactory.openSession();
+	}
 	public List<Contatto> getContatti() throws ClassNotFoundException {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -29,31 +32,30 @@ public class DBhybernate implements ContactManager {
 	}
 
 	@Override
-	public int updateContatto(Contatto c) throws ClassNotFoundException {
+	public int updateContatto(Contatto toUpdate) throws ClassNotFoundException {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		Contatto toEdit = null;
-		List<Contatto> contatti = this.getContatti();
-		for(Contatto contatto: contatti) {
-			if(contatto.getId()==c.getId()) {
-				toEdit = contatto;
-				toEdit.setName(c.getName());
-				toEdit.setSurname(c.getSurname());
-				toEdit.setEmail(c.getEmail());
-				toEdit.setTelephone(c.getTelephone());
-				toEdit.setNote(c.getNote());
-				break;
-			}
-		}
-		if(toEdit!=null)
-			session.save(toEdit);
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE c.id = :updateID");
+		query.setParameter("updateID",toUpdate.getId());
+		List<Contatto> contatti = query.getResultList();
 		transaction.commit();
+		for (Contatto c: contatti) {
+			transaction = session.beginTransaction();
+			c.setName(toUpdate.getName());
+			c.setSurname(toUpdate.getSurname());
+			c.setEmail(toUpdate.getEmail());
+			c.setTelephone(toUpdate.getTelephone());
+			c.setNote(toUpdate.getNote());
+			session.save(c);
+			transaction.commit();
+			System.out.println("Updated: "+contatti.get(0));
+		}
 		return 0;
 	}
 
 	@Override
 	public List<Contatto> getDuplicates() throws ClassNotFoundException {
-		String textQuery = "SELECT * FROM contatti as c1 WHERE EXISTS (SELECT 1 FROM contatti as c2 WHERE c2.nome = c1.nome AND c2.cognome = c1.cognome AND c2.id <> c1.id);";
+		String textQuery = "SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT 1 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)";
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Query<Contatto> query = session.createQuery(textQuery);
@@ -64,19 +66,35 @@ public class DBhybernate implements ContactManager {
 
 	@Override
 	public void mergeDuplicates() throws ClassNotFoundException {
-		List<Contatto> contacts=getDuplicates();
+
+		String textQuery = "SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT 1 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)";
+		Session session = HBMsessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Query<Contatto> query = session.createQuery(textQuery);
+		List<Contatto> contacts = query.getResultList();
+		transaction.commit();
+		
+		List<Contatto> deleted = new ArrayList<>();
 		for(Contatto contact1: contacts) {
 			for(Contatto contact2: contacts) {
-				if(contact1.getId()!=-1 && contact2.getId()!=-1 && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
+				if(!deleted.contains(contact1) && !deleted.contains(contact2) && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
 					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
 					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
 					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
+					transaction = session.beginTransaction();
 					contact1.setTelephone(telephone);
 					contact1.setEmail(email);
 					contact1.setNote(note);
-					updateContatto(contact1);
-					deleteContatto(contact2);
-					contact2.setId(-1);
+					//updateContatto(contact1);
+					//deleteContatto(contact2);
+					session.delete(contact2);
+					transaction.commit();
+
+					deleted.add(contact2);
+					transaction = session.beginTransaction();
+					session.save(contact1);
+					//System.out.println("deleted: "+ contact2);
+					transaction.commit();
 				}	
 			}
 		}

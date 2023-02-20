@@ -22,7 +22,7 @@ public class Contatto {
 	private String surname;
 	@Column(name = "telefono")
 	private String telephone;
-	private String email;s
+	private String email;
 	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
