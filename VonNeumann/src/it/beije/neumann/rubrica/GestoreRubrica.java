@@ -6,6 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -75,7 +82,7 @@ public class GestoreRubrica {
 	
 	
 	
-//	private static void vediListaContatti() {
+//	private static void vediListaContatti() { //JDBC
 //		Connection connection = null;
 //		PreparedStatement statement = null;
 //		ResultSet rs = null;
@@ -119,84 +126,122 @@ public class GestoreRubrica {
 //		}
 //	}
 	
+//	private static void vediListaContatti() { Hibernate
+//	    SessionFactory sessionFactory = null;
+//	    Session session = null;
+//	    try {
+//	        sessionFactory = new Configuration()
+//	            .configure()
+//	            .buildSessionFactory();
+//	        session = sessionFactory.openSession();
+//	        Transaction transaction = session.beginTransaction();
+//
+//	        List<Contatto> contatti = session.createQuery("FROM Contatto ORDER BY nome, cognome", Contatto.class).list();
+//
+//	        System.out.println("Elenco contatti:");
+//	        for (Contatto contatto : contatti) {
+//	            System.out.println("---------------------------------------------------------------------");
+//	            System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
+//	            System.out.println("---------------------------------------------------------------------");
+//	        }
+//
+//	        transaction.commit();
+//	    } catch (HibernateException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        if (session != null) {
+//	            session.close();
+//	        }
+//	        if (sessionFactory != null) {
+//	            sessionFactory.close();
+//	        }
+//	    }
+//	}
+	
 	private static void vediListaContatti() {
-	    SessionFactory sessionFactory = null;
-	    Session session = null;
-	    try {
-	        sessionFactory = new Configuration()
-	            .configure()
-	            .buildSessionFactory();
-	        session = sessionFactory.openSession();
-	        Transaction transaction = session.beginTransaction();
 
-	        List<Contatto> contatti = session.createQuery("FROM Contatto ORDER BY nome, cognome", Contatto.class).list();
+		EntityManager entityManager = RubricaEntityManager.getEntityManager();
 
-	        System.out.println("Elenco contatti:");
-	        for (Contatto contatto : contatti) {
-	            System.out.println("---------------------------------------------------------------------");
-	            System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
-	            System.out.println("---------------------------------------------------------------------");
-	        }
+        Query query = entityManager.createQuery("SELECT c FROM Contatto c ORDER BY c.name, c.surname");
+        List contatti = query.getResultList();
 
-	        transaction.commit();
-	    } catch (HibernateException e) {
-	        e.printStackTrace();
-	    } finally {
-	        if (session != null) {
-	            session.close();
-	        }
-	        if (sessionFactory != null) {
-	            sessionFactory.close();
-	        }
-	    }
+        System.out.println("Elenco contatti:");
+        for (Object c : contatti) {
+            if (c instanceof Contatto) {
+                Contatto contatto = (Contatto) c;
+                System.out.println("---------------------------------------------------------------------");
+                System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
+                System.out.println("---------------------------------------------------------------------");
+            }
+        }
+
+        entityManager.close();
 	}
-	
 
+//	private static void cercaContatto(String nomeStringa) { JDBC
+//	    Connection connection = null;
+//	    PreparedStatement statement = null;
+//	    ResultSet rs = null;
+//
+//	    try {
+//	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+//	        statement = connection.prepareStatement("SELECT * FROM contatti WHERE nome LIKE ? ORDER BY cognome");
+//	        statement.setString(1, "%" + nomeStringa + "%");
+//	        rs = statement.executeQuery();
+//
+//	        System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
+//
+//	        while (rs.next()) {
+//	        	int id = rs.getInt("id");
+//	            String nome = rs.getString("nome");
+//	            String cognome = rs.getString("cognome");
+//	            String telefono = rs.getString("telefono");
+//	            String email = rs.getString("email");
+//	            String note = rs.getString("note");
+//
+//	            System.out.println("---------------------------------------------------------------------");
+//	            System.out.println(id + " " + nome + " " + cognome + ", " + telefono + ", " + email + ", " + note);
+//	            System.out.println("---------------------------------------------------------------------");
+//	        }
+//
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            if (rs != null) {
+//	                rs.close();
+//	            }
+//	            if (statement != null) {
+//	                statement.close();
+//	            }
+//	            if (connection != null) {
+//	                connection.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	
+//	}
+	
 	private static void cercaContatto(String nomeStringa) {
-	    Connection connection = null;
-	    PreparedStatement statement = null;
-	    ResultSet rs = null;
+	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
 
-	    try {
-	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
-	        statement = connection.prepareStatement("SELECT * FROM contatti WHERE nome LIKE ? ORDER BY cognome");
-	        statement.setString(1, "%" + nomeStringa + "%");
-	        rs = statement.executeQuery();
+	    List<Contatto> contatti = entityManager.createQuery("SELECT c FROM Contatto c WHERE c.name LIKE :nomeStringa ORDER BY c.surname", Contatto.class)
+	            .setParameter("nomeStringa", "%" + nomeStringa + "%")
+	            .getResultList();
 
-	        System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
-
-	        while (rs.next()) {
-	        	int id = rs.getInt("id");
-	            String nome = rs.getString("nome");
-	            String cognome = rs.getString("cognome");
-	            String telefono = rs.getString("telefono");
-	            String email = rs.getString("email");
-	            String note = rs.getString("note");
-
-	            System.out.println("---------------------------------------------------------------------");
-	            System.out.println(id + " " + nome + " " + cognome + ", " + telefono + ", " + email + ", " + note);
-	            System.out.println("---------------------------------------------------------------------");
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (rs != null) {
-	                rs.close();
-	            }
-	            if (statement != null) {
-	                statement.close();
-	            }
-	            if (connection != null) {
-	                connection.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	    System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
+	    for (Contatto c : contatti) {
+	        System.out.println("---------------------------------------------------------------------");
+	        System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + ", " + c.getTelephone() + ", " + c.getEmail() + ", " + c.getNote());
+	        System.out.println("---------------------------------------------------------------------");
 	    }
-	
+
+	    entityManager.close();
 	}
+
+
 	
 	private static void inserisciNuovoContatto() {
 	    Connection connection = null;
