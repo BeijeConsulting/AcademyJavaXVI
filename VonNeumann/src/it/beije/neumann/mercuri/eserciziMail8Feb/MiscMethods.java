@@ -100,10 +100,51 @@ public class MiscMethods {
 		return greys;
 
 	}
+	
+//	tale funzione dovrebbe restituire true per i seguenti valori:
+//		({})
+//		[[]()]
+//		[{()}]
+//		({d})
+//		[[s]d()]
+//		[{(s)}kl]
+	
+//		e false per questi altri:
+
+//		{(})
+//		([]
+//		[])
+	
+	public static boolean groupCheck(String s) {
+		
+		int counter = 0;
+		for (int i = 0; i < s.length(); i++) {
+			
+			System.out.print(s.charAt(i) + " ");
+			System.out.println((int)s.charAt(i));
+			
+			if (s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{') {
+				
+				counter++;
+				
+				if (s.charAt(i + 1) != s.charAt(i) + 2 && s.charAt(i + 1) != s.charAt(i) + 1 && (s.charAt(i + 1) == ')' || s.charAt(i + 1) == ']' || s.charAt(i + 1) == '}')) {
+					
+					return false;
+				}
+			}
+			else if (s.charAt(i) == ')' || s.charAt(i) == ']' || s.charAt(i) == '}') counter --;
+							
+			
+		}
+		if (counter == 0)
+			return true;
+		else 
+			return false;
+	}
 			
 	public static void main(String[] args) {
 		
-		shadesOfGrey(143);
+		System.out.println(groupCheck("[])"));
 	}
 
 }
