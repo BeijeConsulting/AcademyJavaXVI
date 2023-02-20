@@ -85,8 +85,8 @@ public class RubricaHBM {
 	
 	public static List<Contatto> trovaContattiDuplicati() {
 		Session session = HBMsessionFactory.openSession();
-		Query<Contatto> query = session.createQuery("SELECT nome, cognome, COUNT(*) FROM rubrica.contatti GROUP BY nome, cognome HAVING COUNT(*) > 1");
-		List<Contatto> contatti = query.getResultList();	
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto AS c GROUP BY nome, cognome HAVING COUNT(*) > 1");
+		List<Contatto> contatti = query.getResultList();		
 		return contatti;		
 	}
 	/*
