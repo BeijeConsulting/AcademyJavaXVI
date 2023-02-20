@@ -264,7 +264,7 @@ public class GestoreDiContatto
 	
 	public static void trovaContattiDuplicati() throws ClassNotFoundException, SQLException
 	{
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		//Class.forName("com.mysql.cj.jdbc.Driver");
 		//Connection connection=null;
 		
 		//PreparedStatement statement =null;
@@ -325,18 +325,21 @@ public class GestoreDiContatto
 	
 	public static void unisciContattiDuplicati() throws SQLException, ClassNotFoundException
 	{
-		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection connection=null;
-		
-		PreparedStatement statement =null;
+		PreparedStatement statement=null;
+		int rows=0;
 		
 		try {
 	
+			connection=getConnection();
+			
+			
+			
 		List<Contatto> contatti= ContattiJDBC.importContactsFromDB();
 	    List<Contatto> duplicati=new ArrayList<>();
 	    List<Integer> idDuplicati=new ArrayList<>();
 		int conta=1;
-		int rows=0;
+		
 		
 		for(Contatto c : contatti)
 		{
@@ -347,6 +350,7 @@ public class GestoreDiContatto
 					if(c.getSurname().equals(contatti.get(i).getSurname())) {
 						duplicati.add(contatti.get(i));
 						duplicati.add(c);
+						idDuplicati.add(c.getId());
 					}
 				}
 				
@@ -355,7 +359,64 @@ public class GestoreDiContatto
 		}
 	
 		System.out.println(duplicati);
+		System.out.println(idDuplicati);
 	
+		
+		//ora estraggo id piu grande e aggiorno con i campi
+		int conta1=1;
+		for(Contatto c : duplicati)
+		{
+			for(int i=conta1; i<duplicati.size();i++)
+			{
+				if(c.getName().equals(duplicati.get(i).getName())) 
+				{
+					//due numeri di telefono non c'entrano
+					//if(!(c.getTelephone().equals(duplicati.get(i).getTelephone()))) {
+					//String tell=c.getTelephone();
+					//if(tell.equals("null") || tell.equals(null)) tell="";
+					//if(tell2.equals("null") || tell2.equals(null)) tell2="";
+					//String tell2=duplicati.get(i).getTelephone();
+						//UPDATE
+						//statement=connection.prepareStatement("UPDATE contatti set telefono= '"+tell+","+tell2+"' WHERE id= '"+c.getId()+"'");
+					    //rows=statement.executeUpdate();
+						
+					
+					//}
+					
+					if(!(c.getEmail().equals(duplicati.get(i).getEmail()))) {
+						String email=c.getEmail();
+						String email2=duplicati.get(i).getEmail();
+						if(email.equals("null") || email.equals(null)) email="";
+						if(email2.equals("null") || email2.equals(null)) email2="";
+						statement=connection.prepareStatement("UPDATE contatti set email= '"+email+","+email2+"' WHERE id= '"+c.getId()+"'");
+						rows=statement.executeUpdate();
+					}
+						
+					if(!(c.getNote().equals(duplicati.get(i).getNote()))) {
+						String note=c.getNote();
+						String note2=duplicati.get(i).getNote();
+						if(note.equals("null") || note.equals(null)) note="";
+						if(note2.equals("null") || note2.equals(null)) note2="";
+						statement=connection.prepareStatement("UPDATE contatti set note= '"+note+","+note2+"' WHERE id= '"+c.getId()+"'");
+						rows=statement.executeUpdate();
+					}
+						
+				
+				}
+				conta1++;
+			}
+			
+		}
+		
+		
+		
+		
+		
+
+		for(int i=0;i<idDuplicati.size();i++) {
+		statement=connection.prepareStatement("DELETE FROM contatti WHERE id= '"+idDuplicati.get(i)+"'");
+		rows=statement.executeUpdate();
+		}
 		
 		
 		
@@ -365,6 +426,7 @@ public class GestoreDiContatto
 		}finally
 		{
 			connection.close();
+			
 		}
 	}
 	
