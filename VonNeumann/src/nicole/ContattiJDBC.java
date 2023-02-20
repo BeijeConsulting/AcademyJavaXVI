@@ -123,7 +123,9 @@ public class ContattiJDBC
 				
 				Contatto c= new Contatto();
 				
-				c.setName(rs.getString("nome"));
+				c.setId(rs.getInt("id"));
+						
+			    c.setName(rs.getString("nome"));
 				c.setSurname(rs.getString("cognome"));
 				c.setEmail(rs.getString("email"));
 				c.setTelephone(rs.getString("telefono"));

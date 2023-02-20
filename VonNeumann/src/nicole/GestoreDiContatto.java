@@ -38,6 +38,11 @@ public class GestoreDiContatto
 	 * @throws SQLException 
 	 */
 	
+	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET", "root", "Current-Root-Password");
+	}
 	
 	
 	
@@ -259,25 +264,109 @@ public class GestoreDiContatto
 	
 	public static void trovaContattiDuplicati() throws ClassNotFoundException, SQLException
 	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		//Connection connection=null;
+		
+		//PreparedStatement statement =null;
+		
+	
 		List<Contatto> contatti= ContattiJDBC.importContactsFromDB();
-		List<Contatto> duplicati=new ArrayList<>();
-		List<Contatto> modificato=new ArrayList<>();
+	    List<Contatto> duplicati=new ArrayList<>();
+	    //List<Integer> idDuplicati=new ArrayList<>();
+		int conta=1;
+		//int rows=0;
+		
 		for(Contatto c : contatti)
 		{
-			modificato.remove(c);
-			if(modificato.contains(c)) duplicati.add(c);
+			for(int i=conta; i<contatti.size();i++)
+			{
+				if(c.getName().equals(contatti.get(i).getName()))
+				{
+					if(c.getSurname().equals(contatti.get(i).getSurname())) duplicati.add(contatti.get(i));
+				}
+				
+			}
+			conta++;
 		}
 	
 		System.out.println(duplicati);
 	
-		/**
-		 *aggiungi un duplicato nel database e controlla se funziona, dopo di che dalla lista dublicati elimini i duplicati e
-		 *restituisci la lista al db oppure individui l'id di uno dei due duplicati e lo elimini tramite query.
-		 */
+		
+//		if(!(duplicati.isEmpty())) {
+//		
+//			for(Contatto c : duplicati)
+//		{
+//			idDuplicati.add(c.getId());
+//		}
+		
+//		System.out.println(idDuplicati);
 	
+//		connection= getConnection();
+		
+		
+		
+		
+		//Query per eliminare i duplicati da DB tramite id
+		
+			//for(int i=0;i<idDuplicati.size();i++) {
+			//statement=connection.prepareStatement("DELETE FROM contatti WHERE id= '"+idDuplicati.get(i)+"'");
+			//rows=statement.executeUpdate();
+			//}
 	}
 	
+		
+			
+		
+		
+		
+		
+		
 	
+	
+	public static void unisciContattiDuplicati() throws SQLException, ClassNotFoundException
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection=null;
+		
+		PreparedStatement statement =null;
+		
+		try {
+	
+		List<Contatto> contatti= ContattiJDBC.importContactsFromDB();
+	    List<Contatto> duplicati=new ArrayList<>();
+	    List<Integer> idDuplicati=new ArrayList<>();
+		int conta=1;
+		int rows=0;
+		
+		for(Contatto c : contatti)
+		{
+			for(int i=conta; i<contatti.size();i++)
+			{
+				if(c.getName().equals(contatti.get(i).getName()))
+				{
+					if(c.getSurname().equals(contatti.get(i).getSurname())) {
+						duplicati.add(contatti.get(i));
+						duplicati.add(c);
+					}
+				}
+				
+			}
+			conta++;
+		}
+	
+		System.out.println(duplicati);
+	
+		
+		
+		
+		}catch(SQLException sql)
+		{
+			sql.printStackTrace();
+		}finally
+		{
+			connection.close();
+		}
+	}
 	
 	public static void main (String [] args) throws ClassNotFoundException, SQLException
 	{
@@ -285,7 +374,9 @@ public class GestoreDiContatto
 		//cercaContatto();
 		//cancellaContatto();
 		
-		trovaContattiDuplicati();
+		
+		unisciContattiDuplicati();
+		//trovaContattiDuplicati();
 	}
 
 }

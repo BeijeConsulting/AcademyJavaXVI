@@ -7,6 +7,9 @@ public class Contatto {
 	private String telephone;
 	private String email;
 	private String note;
+	private int id;
+	
+	
 	
 	public String getName() {
 		return name;
@@ -42,7 +45,16 @@ public class Contatto {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
+	public int getId()
+	{
+		return id;
+	}
 
+	public void setId(int id)
+	{
+		this.id=id;
+	}
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{");
 //		builder.append(" name: ").append(name);
