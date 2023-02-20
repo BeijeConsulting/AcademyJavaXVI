@@ -170,20 +170,70 @@ public class RubricaDBManager {
 		}
 	}
 
+	public static void editContact(Contact contact) {
+		String queryUpdate = "UPDATE rubricacompleta SET name=?, surname=?, age=?, telephone=?, email=?, note=? WHERE id=?";
+
+		PreparedStatement prepStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connection = openConnection();
+			prepStatement = connection.prepareStatement(queryUpdate);
+
+			prepStatement.setString(1, contact.getName());
+			prepStatement.setString(2, contact.getSurname());
+			prepStatement.setInt(3, contact.getAge());
+			prepStatement.setString(4, contact.getTelephone());
+			prepStatement.setString(5, contact.getEmail());
+			prepStatement.setString(6, contact.getNote());
+			
+			prepStatement.setInt(7, contact.getId());
+
+			prepStatement.executeUpdate();
+
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				prepStatement.close();
+				closeConnection();
+			} catch (SQLException sqlEx2) {
+				sqlEx2.printStackTrace();
+			}
+		}
+	}
+	
 	/*
-	 * System.out.println("4.Modifica un contatto esistente");
 	 * System.out.println("5.Cancella un contatto");
 	 * System.out.println("6.Trova duplicati");
 	 * System.out.println("7.Unisci duplicati");
 	 */
 
-	public static void editContact(String name, String surname) {
-		String queryUpdate = "UPDATE contatti SET note = 'siamo Bianchi' WHERE cognome = 'Bianchi'";
-		// Se ci sono più corrispondenze, vai su id
-		System.out.println("editContact() on its way for implementation");
-	}
-
-	public static void deleteContact() {
+	public static void deleteContact(Contact contact) {
+//		String deleteQuery = "DELETE FROM rubricacompleta WHERE id=?";
+//		
+//		PreparedStatement prepStatement = null;
+//		ResultSet rs = null;
+//
+//		try {
+//			connection = openConnection();
+//			prepStatement = connection.prepareStatement(deleteQuery);
+//			
+//			prepStatement.setInt(1, contact.getId());
+//
+//			prepStatement.executeUpdate();
+//
+//		} catch (SQLException sqlEx) {
+//			sqlEx.printStackTrace();
+//		} finally {
+//			try {
+//				prepStatement.close();
+//				closeConnection();
+//			} catch (SQLException sqlEx2) {
+//				sqlEx2.printStackTrace();
+//			}
+//		}
+		
 		System.out.println("deleteContact() on its way for implementation");
 	}
 

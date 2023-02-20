@@ -23,36 +23,38 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
+/* TODO
+ * - Import/Export manager come singleton? static class?
+ * - Valutare gestione connessione al dbManager
+ * - Richiamare su menu funzioni import/export
+ */
+
+
 public class RubricaCompleta {
 
 	public static final String CSV = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.csv";
 	public static final String XML = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.xml";
 
-	public static RubricaImportManager importManager = new RubricaImportManager(); // static class? singleton anche?
-	public static RubricaExportManager exportManager = new RubricaExportManager(); // static class? singleton anche?
-	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager(); // stile singleton
-	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager(); // sistemare
-
-	public static void firstMenu() {
-		System.out.println("\t**Gestore rubrica**");
-		System.out.println("*Per iniziare, verrà caricata la rubrica.*");
-		System.out.println("-------------------------------------------------------------\n");
-	}
+	public static RubricaImportManager importManager = new RubricaImportManager(); 
+	public static RubricaExportManager exportManager = new RubricaExportManager();
+	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager();
+//	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager();
 
 	public static void printMenu() {
+		System.out.println("\t**Gestore rubrica**");
 		System.out.println("\t**Operazioni possibili**");
 		System.out.println("-1.Mostra di nuovo il menu"); // OK
 		System.out.println("1.Mostra l'elenco dei contatti"); // OK
 		System.out.println("2.Cerca un contatto"); // OK
 		System.out.println("3.Aggiungi un nuovo contatto"); // OK
-		System.out.println("4.Modifica un contatto esistente");
+		System.out.println("4.Modifica un contatto esistente"); // OK
 		System.out.println("5.Cancella un contatto");
 		System.out.println("6.Trova duplicati");
 		System.out.println("7.Unisci duplicati");
-		System.out.println("8.Importa rubrica da CSV"); // funzione OK, da chiamare su menu
-		System.out.println("9.Importa rubrica da XML"); // funzione OK, da chiamare su menu
-		System.out.println("10.Esporta rubrica su CSV"); // funzione OK, da chiamare su menu
-		System.out.println("11.Esporta rubrica su XML"); // funzione OK, da chiamare su menu
+		System.out.println("8.Importa rubrica da CSV"); 
+		System.out.println("9.Importa rubrica da XML");
+		System.out.println("10.Esporta rubrica su CSV");
+		System.out.println("11.Esporta rubrica su XML");
 		System.out.println("0.ESCI\n"); // OK
 	}
 
@@ -92,10 +94,8 @@ public class RubricaCompleta {
 
 		}
 
-		// dbManager.showRubrica(orderBy, onWhat); // meglio static?
-		hbManager.openSession();
-		hbManager.showRubrica(orderBy, onWhat);
-		hbManager.closeSession();
+		dbManager.showRubrica(orderBy, onWhat); // meglio static?
+//		hbManager.showRubrica(orderBy, onWhat);
 	}
 
 	public static void op2() {
@@ -110,10 +110,8 @@ public class RubricaCompleta {
 		System.out.print("\t-Nome: ");
 		String name = in.nextLine().trim();
 
-		// contactsFound = dbManager.searchContact(name, surname);
-		hbManager.openSession();
-		contactsFound = hbManager.searchContact(name, surname);
-		hbManager.closeSession();
+		contactsFound = dbManager.searchContact(name, surname);
+//		contactsFound = hbManager.searchContact(name, surname);
 
 		if (contactsFound.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -146,31 +144,117 @@ public class RubricaCompleta {
 
 		System.out.print("\t-Note sul contatto: ");
 		contact.setNote(in.nextLine());
-		
+
 		System.out.println();
-		
-//		dbManager.addContact(contact);
-		
-		hbManager.openSession();
-		hbManager.addContact(contact);
-		hbManager.closeSession();
-		
+
+		dbManager.addContact(contact);
+//		hbManager.addContact(contact);
+
 		System.out.println("Contatto aggiunto!");
 	}
 
 	public static void op4() {
-//		Scanner in = new Scanner(System.in);
-//
-//		System.out.print("Inserisci i dati del contatto da cercare:\n");
-//		System.out.print("\t-Cognome: ");
-//		String surname = in.nextLine().trim();
-//
-//		System.out.print("\t-Nome: ");
-//		String name = in.nextLine().trim();
+		List<Contact> found = new ArrayList<>();
+
+		Scanner in = new Scanner(System.in);
+
+		System.out.print("Inserisci i dati del contatto da modificare:\n");
+		System.out.print("\t-Cognome: ");
+		String surname = in.nextLine().trim();
+
+		System.out.print("\t-Nome: ");
+		String name = in.nextLine().trim();
+
+		Contact newC = new Contact();
+
+		found = dbManager.searchContact(name, surname);
+//		found = hbManager.searchContact(name, surname);
+
+		if (found.size() == 0) {
+			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
+		} else {
+			if (found.size() == 1) {
+				System.out.println("Trovato: " + found);
+				newC = found.get(0);
+			} else {
+				System.out.println("C'è più di un contatto corrispondente:");
+				System.out.println(found);
+
+				System.out.print("Inserisci l'ID del contatto da modificare: ");
+				int id = Integer.parseInt(in.nextLine());
+
+				for (Contact con : found) {
+					if (con.getId() == id) {
+						newC = con;
+					}
+				}
+			}
+
+			System.out.print("\nInserisci i valori: ");
+
+			System.out.print("\n\t-Cognome: ");
+			newC.setSurname(in.nextLine());
+
+			System.out.print("\t-Nome: ");
+			newC.setName(in.nextLine());
+
+			System.out.print("\t-Eta': ");
+			newC.setAge(Integer.parseInt(in.nextLine()));
+
+			System.out.print("\t-Telefono: ");
+			newC.setTelephone(in.nextLine());
+
+			System.out.print("\t-E-Mail: ");
+			newC.setEmail(in.nextLine());
+
+			System.out.print("\t-Note sul contatto: ");
+			newC.setNote(in.nextLine());
+
+			dbManager.editContact(newC);
+//			hbManager.editContact(newC);
+		}
+
 	}
 
 	public static void op5() {
-		System.out.println("*Operazione 5*\n");
+		List<Contact> found = new ArrayList<>();
+
+		Scanner in = new Scanner(System.in);
+
+		System.out.print("Inserisci i dati del contatto da eliminare:\n");
+		System.out.print("\t-Cognome: ");
+		String surname = in.nextLine().trim();
+
+		System.out.print("\t-Nome: ");
+		String name = in.nextLine().trim();
+
+		Contact newC = new Contact();
+
+		found = dbManager.searchContact(name, surname);
+//		found = hbManager.searchContact(name, surname);
+
+		if (found.size() == 0) {
+			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
+		} else {
+			if (found.size() == 1) {
+				System.out.println("Trovato: " + found);
+				newC = found.get(0);
+			} else {
+				System.out.println("C'è più di un contatto corrispondente:");
+				System.out.println(found);
+
+				System.out.print("Inserisci l'ID del contatto da eliminare: ");
+				int id = Integer.parseInt(in.nextLine());
+
+				for (Contact con : found) {
+					if (con.getId() == id) {
+						newC = con;
+					}
+				}
+			}
+
+			dbManager.deleteContact(newC);
+		}
 	}
 
 	public static void op6() {
@@ -197,9 +281,7 @@ public class RubricaCompleta {
 		Scanner in = new Scanner(System.in);
 		String choose = null;
 		boolean inMenu = true;
-
-		firstMenu();
-		List<Contact> toAdd = null;
+//		hbManager.openSession();
 
 		printMenu();
 
@@ -214,6 +296,7 @@ public class RubricaCompleta {
 				break;
 			case 0:
 				inMenu = false;
+//				hbManager.closeSession();
 				break;
 
 			case 1:
