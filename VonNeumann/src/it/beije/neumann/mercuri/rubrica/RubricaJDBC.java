@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.beije.neumann.rubrica.Contatto;
+
 public class RubricaJDBC {
 
 	public static List<Contatto> exportContattiDB (){

@@ -11,6 +11,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.beije.neumann.rubrica.Contatto;
+
 public class CSVmanager {
 	
 	public static List<Contatto> loadRubricaDinamicaFromCSV(String pathfile,String separator) throws FileNotFoundException, IOException {
