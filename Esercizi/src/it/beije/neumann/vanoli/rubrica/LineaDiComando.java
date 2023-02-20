@@ -30,10 +30,10 @@ public class LineaDiComando {
 			System.out.println("Come vuoi ordinare i contatti? Nome/Cognome/No");
 			input = sc.nextLine().trim();
 			if (input.equalsIgnoreCase("Nome") || input.equalsIgnoreCase("Cognome")) {
-				stampaListaContatti(RubricaHBM.elencoRubrica(input.toLowerCase()));
+				stampaListaContatti(RubricaJPA.elencoRubrica(input.toLowerCase()));
 			}
 			else {
-				stampaListaContatti(RubricaHBM.LoadRubricaFromDB());
+				stampaListaContatti(RubricaJPA.LoadRubricaFromDB());
 			}
 		}
 		else if (input.equals("1")) {
@@ -41,7 +41,7 @@ public class LineaDiComando {
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da cercare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> c = RubricaHBM.cercaContatto(nome, cognome);
+			List<Contatto> c = RubricaJPA.cercaContatto(nome, cognome);
 			System.out.println("Sono stati trovati " + c.size() + " contatti:");
 			stampaListaContatti(c);			
 		}
@@ -57,14 +57,14 @@ public class LineaDiComando {
 			newContatto.setEmail(sc.nextLine().trim());
 			System.out.println("Note:");
 			newContatto.setNote(sc.nextLine().trim());
-			RubricaHBM.inserisciContatto(newContatto);
+			RubricaJPA.inserisciContatto(newContatto);
 		}
 		else if (input.equals("3")) {
 			System.out.println("Nome del contatto da modificare: ");
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da modificare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> risultati = RubricaHBM.cercaContatto(nome, cognome);
+			List<Contatto> risultati = RubricaJPA.cercaContatto(nome, cognome);
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti");
 			}
@@ -111,10 +111,10 @@ public class LineaDiComando {
 				System.out.println("Vuoi modificare le note? Y/N");
 				input = sc.nextLine().trim();
 				if (input.equalsIgnoreCase("Y")) {
-					System.out.println("Digita le nouve note");
+					System.out.println("Digita le nuove note");
 					toEdit.setNote(sc.nextLine().trim());
 				}
-				RubricaHBM.editContatto(toEdit);
+				RubricaJPA.editContatto(toEdit);
 			}
 		}
 		else if (input.equals("4")) {
@@ -122,7 +122,7 @@ public class LineaDiComando {
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da eliminare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> risultati = RubricaHBM.cercaContatto(nome, cognome);
+			List<Contatto> risultati = RubricaJPA.cercaContatto(nome, cognome);
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti");
 			}
@@ -142,24 +142,22 @@ public class LineaDiComando {
 					}
 					toDelete = risultati.get(sceltaInd - 1);
 				}
-				RubricaHBM.deleteContatto(toDelete);
+				RubricaJPA.deleteContatto(toDelete);
 			}
 		}
 		else if (input.equals("5")) {			
-			List<Contatto> risultati = RubricaHBM.trovaContattiDuplicati();
+			List<Contatto> risultati = RubricaJPA.trovaContattiDuplicati();
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti duplicati");
 			}
 			else {
 				System.out.println("Sono stati trovati i seguenti contatti duplicati:");
-				for (Contatto c: risultati) {
-					System.out.println("- " + c.getName() + " " + c.getSurname() + " (" + c.getId() + ")"); //ricordo che in id c'è la quantità dei duplicati
-				}
+				stampaListaContatti(risultati);
 			}
 		}
 		/*
 		else if (input.equals("6")) {			
-			List<Contatto> risultati = RubricaHBM.unisciContattiDuplicati();
+			List<Contatto> risultati = RubricaJPA.unisciContattiDuplicati();
 			if (risultati.size() == 0) {
 				System.out.println("Non è stato possibile unire nessun contatto");
 			}

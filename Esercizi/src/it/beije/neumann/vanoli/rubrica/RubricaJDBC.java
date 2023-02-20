@@ -242,14 +242,17 @@ public class RubricaJDBC {
 			connection = getConnection();
 			statement = connection.createStatement();
 			
-			rs = statement.executeQuery("SELECT nome, cognome, COUNT(*) FROM rubrica.contatti GROUP BY nome, cognome HAVING COUNT(*) > 1");					
+			rs = statement.executeQuery("SELECT * FROM rubrica.contatti INNER JOIN (SELECT nome, cognome FROM rubrica.contatti GROUP BY nome, cognome HAVING COUNT(*) > 1) dupes ON rubrica.contatti.nome = dupes.nome AND rubrica.contatti.cognome = dupes.cognome");					
 			while (rs.next()) {
 				Contatto c = new Contatto();
+				c.setId(rs.getInt("id"));
 				c.setName(rs.getString("nome"));
 				c.setSurname(rs.getString("cognome"));
-				c.setId(Integer.parseInt(rs.getString("COUNT(*)"))); //uso id per memorizzare quanti duplicati ci sono
+				c.setTelephone(rs.getString("telefono"));
+				c.setEmail(rs.getString("email"));
+				c.setNote(rs.getString("note"));
 				contatti.add(c);
-			}
+			}			
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
