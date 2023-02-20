@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -243,54 +244,101 @@ public class GestoreRubrica {
 
 
 	
+//	private static void inserisciNuovoContatto() { JDBC
+//	    Connection connection = null;
+//	    PreparedStatement statement = null;
+//
+//	    try {
+//	        Scanner scanner = new Scanner(System.in); 
+//
+//	        System.out.print("Inserisci il nome: ");
+//	        String nome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il cognome: ");
+//	        String cognome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il numero di telefono: ");
+//	        String telefono = scanner.nextLine();
+//
+//	        System.out.print("Inserisci l'indirizzo email: ");
+//	        String email = scanner.nextLine();
+//
+//	        System.out.print("Inserisci una nota: ");
+//	        String note = scanner.nextLine();
+//	        scanner.close();
+//	        
+//	        
+//	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+//	        statement = connection.prepareStatement("INSERT INTO contatti (nome, cognome, telefono, email, note) VALUES (?, ?, ?, ?, ?)");
+//	        statement.setString(1, nome);
+//	        statement.setString(2, cognome);
+//	        statement.setString(3, telefono);
+//	        statement.setString(4, email);
+//	        statement.setString(5, note);
+//	        statement.executeUpdate();
+//
+//	        System.out.println("Contatto aggiunto.");
+//
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            if (statement != null) {
+//	                statement.close();
+//	            }
+//	            if (connection != null) {
+//	                connection.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	}
+	
 	private static void inserisciNuovoContatto() {
-	    Connection connection = null;
-	    PreparedStatement statement = null;
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.print("Inserisci il nome: ");
+	    String nome = scanner.nextLine();
+
+	    System.out.print("Inserisci il cognome: ");
+	    String cognome = scanner.nextLine();
+
+	    System.out.print("Inserisci il numero di telefono: ");
+	    String telefono = scanner.nextLine();
+
+	    System.out.print("Inserisci l'indirizzo email: ");
+	    String email = scanner.nextLine();
+
+	    System.out.print("Inserisci una nota: ");
+	    String note = scanner.nextLine();
+	    scanner.close();
+
+	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
+	    EntityTransaction transaction = entityManager.getTransaction();
 
 	    try {
-	        Scanner scanner = new Scanner(System.in); 
+	        transaction.begin();
 
-	        System.out.print("Inserisci il nome: ");
-	        String nome = scanner.nextLine();
+	        Contatto contatto = new Contatto();
+	        contatto.setName(nome);
+	        contatto.setSurname(cognome);
+	        contatto.setTelephone(telefono);
+	        contatto.setEmail(email);
+	        contatto.setNote(note);
 
-	        System.out.print("Inserisci il cognome: ");
-	        String cognome = scanner.nextLine();
-
-	        System.out.print("Inserisci il numero di telefono: ");
-	        String telefono = scanner.nextLine();
-
-	        System.out.print("Inserisci l'indirizzo email: ");
-	        String email = scanner.nextLine();
-
-	        System.out.print("Inserisci una nota: ");
-	        String note = scanner.nextLine();
-	        scanner.close();
-	        
-	        
-	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
-	        statement = connection.prepareStatement("INSERT INTO contatti (nome, cognome, telefono, email, note) VALUES (?, ?, ?, ?, ?)");
-	        statement.setString(1, nome);
-	        statement.setString(2, cognome);
-	        statement.setString(3, telefono);
-	        statement.setString(4, email);
-	        statement.setString(5, note);
-	        statement.executeUpdate();
+	        entityManager.persist(contatto);
+	        transaction.commit();
 
 	        System.out.println("Contatto aggiunto.");
 
-	    } catch (SQLException e) {
+	    } catch (Exception e) {
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
 	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (statement != null) {
-	                statement.close();
-	            }
-	            if (connection != null) {
-	                connection.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        entityManager.close();
 	    }
 	}
 	
