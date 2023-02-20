@@ -6,6 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 public class GestoreRubrica {
 	
@@ -69,49 +75,82 @@ public class GestoreRubrica {
 	
 	
 	
+//	private static void vediListaContatti() {
+//		Connection connection = null;
+//		PreparedStatement statement = null;
+//		ResultSet rs = null;
+//
+//		try {
+//		    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+//		    statement = connection.prepareStatement("SELECT * FROM contatti ORDER BY nome, cognome");
+//		    rs = statement.executeQuery();
+//
+//		    System.out.println("Elenco contatti:");
+//
+//		    while (rs.next()) {
+//		    	int id = rs.getInt("Id");
+//		        String nome = rs.getString("nome");
+//		        String cognome = rs.getString("cognome");
+//		        String telefono = rs.getString("telefono");
+//		        String email = rs.getString("email");
+//		        String note = rs.getString("note");
+//
+//		        System.out.println("---------------------------------------------------------------------");
+//		        System.out.println(id + " " + nome + " " + cognome + ", " + telefono + ", " + email + ", " + note);
+//		        System.out.println("---------------------------------------------------------------------");
+//		    }
+//
+//		} catch (SQLException e) {
+//		    e.printStackTrace();
+//		} finally {
+//		    try {
+//		        if (rs != null) {
+//		            rs.close();
+//		        }
+//		        if (statement != null) {
+//		            statement.close();
+//		        }
+//		        if (connection != null) {
+//		            connection.close();
+//		        }
+//		    } catch (SQLException e) {
+//		        e.printStackTrace();
+//		    }
+//		}
+//	}
+	
 	private static void vediListaContatti() {
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet rs = null;
+	    SessionFactory sessionFactory = null;
+	    Session session = null;
+	    try {
+	        sessionFactory = new Configuration()
+	            .configure()
+	            .buildSessionFactory();
+	        session = sessionFactory.openSession();
+	        Transaction transaction = session.beginTransaction();
 
-		try {
-		    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
-		    statement = connection.prepareStatement("SELECT * FROM contatti ORDER BY nome, cognome");
-		    rs = statement.executeQuery();
+	        List<Contatto> contatti = session.createQuery("FROM Contatto ORDER BY nome, cognome", Contatto.class).list();
 
-		    System.out.println("Elenco contatti:");
+	        System.out.println("Elenco contatti:");
+	        for (Contatto contatto : contatti) {
+	            System.out.println("---------------------------------------------------------------------");
+	            System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
+	            System.out.println("---------------------------------------------------------------------");
+	        }
 
-		    while (rs.next()) {
-		    	int id = rs.getInt("Id");
-		        String nome = rs.getString("nome");
-		        String cognome = rs.getString("cognome");
-		        String telefono = rs.getString("telefono");
-		        String email = rs.getString("email");
-		        String note = rs.getString("note");
-
-		        System.out.println("---------------------------------------------------------------------");
-		        System.out.println(id + " " + nome + " " + cognome + ", " + telefono + ", " + email + ", " + note);
-		        System.out.println("---------------------------------------------------------------------");
-		    }
-
-		} catch (SQLException e) {
-		    e.printStackTrace();
-		} finally {
-		    try {
-		        if (rs != null) {
-		            rs.close();
-		        }
-		        if (statement != null) {
-		            statement.close();
-		        }
-		        if (connection != null) {
-		            connection.close();
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		}
+	        transaction.commit();
+	    } catch (HibernateException e) {
+	        e.printStackTrace();
+	    } finally {
+	        if (session != null) {
+	            session.close();
+	        }
+	        if (sessionFactory != null) {
+	            sessionFactory.close();
+	        }
+	    }
 	}
+	
 
 	private static void cercaContatto(String nomeStringa) {
 	    Connection connection = null;
