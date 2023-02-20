@@ -52,6 +52,7 @@ public class CSVmanager {
 			Contatto contatto = null;
 			while (bufferedReader.ready()) {
 				r = bufferedReader.readLine();
+				if(r==null || r.length()==0) continue;
 				fields = r.split(separator);
 				
 				contatto = new Contatto();
@@ -59,7 +60,7 @@ public class CSVmanager {
 				contatto.setName(fields[1]);
 				contatto.setTelephone(fields[2]);
 				contatto.setEmail(fields[3]);
-				contatto.setNote(fields[4]);
+				contatto.setNote(fields.length>4 ? fields[4]:null);
 				
 				contatti.add(contatto);
 				
