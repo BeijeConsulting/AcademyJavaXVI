@@ -11,34 +11,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "contatti")
 public class Contatto {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
 	@Column(name = "nome")
 	private String name;
-	
 	@Column(name = "cognome")
 	private String surname;
-	
 	@Column(name = "telefono")
 	private String telephone;
-	
-	@Column(name = "email")
 	private String email;
-	
 	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -74,6 +60,51 @@ public class Contatto {
 		this.note = note;
 	}
 
+	public void setAttributes(String format, String delimiter, String[] attributes) {
+		String keys[]= format.split(delimiter);
+		for(int i=0; i<attributes.length;i++) {
+			switch(keys[i].toLowerCase()) {
+			case "name":
+				setName(attributes[i]);
+				break;
+			case "surname":
+				setSurname(attributes[i]);
+				break;
+			case "telephone":
+				setTelephone(attributes[i]);
+				break;
+			case "email":
+				setEmail(attributes[i]);
+				break;
+			case "note":
+				setNote(attributes[i]);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid CSV format");
+			}
+		}
+	}
+	
+	public Contatto(int id, String name, String surname, String telephone, String email, String note) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
+	}
+	public Contatto(String name, String surname, String telephone, String email, String note) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.telephone = telephone;
+		this.email = email;
+		this.note = note;
+	}
+	public Contatto() {
+		super();
+	}
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{");
 //		builder.append(" name: ").append(name);
@@ -85,7 +116,7 @@ public class Contatto {
 
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
-				.append(", name: ").append(name)
+				.append(" name: ").append(name)
 				.append(", surname: ").append(surname)
 				.append(", telephone: ").append(telephone)
 				.append(", email: ").append(email)
@@ -94,4 +125,16 @@ public class Contatto {
 
 		return builder.toString();
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public boolean equals(Object obj) {
+	     if (this == obj) return true; // if it's the same object return true
+	     if (obj == null || getClass() != obj.getClass()) return false; // if null or different class return false
+	     Contatto other = (Contatto) obj; // casting of contatto
+	     return surname.equals(other.surname) && name.equals(other.name); // true if they have same name and surname
+	   }
 }

@@ -3,11 +3,17 @@ package it.beije.neumann.elassl.contatti;
 import java.util.List;
 import java.util.Scanner;
 
+import it.beije.neumann.rubrica.Contatto;
+
 public class progContatti {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO rubrica manager da tastiera
-		ContactManager db = new DBhybernate();//DBmanager();
+		//ContactManager db = new DBmanager();// JDBC
+		//ContactManager db = new DBhybernate();//HBM
+		EMfactory.openEntityManager();
+		ContactManager db = new DBjpa();
+		
 		int menu=-1;
 		Scanner s = new Scanner(System.in);
 		String input = "";

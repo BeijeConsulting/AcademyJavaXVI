@@ -16,7 +16,7 @@ public class HBMsessionFactory {
 			System.out.println("creo SessionFactory...");
 			
 			Configuration configuration = new Configuration().configure()
-					.addAnnotatedClass(Contatto.class);
+					.addAnnotatedClass(Speranza.class);
 
 			sessionFactory = configuration.buildSessionFactory();
 		}

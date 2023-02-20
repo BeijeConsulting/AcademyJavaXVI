@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import it.beije.neumann.rubrica.Contatto;
+
 
 public class DBhybernate implements ContactManager {
 	
@@ -50,6 +52,7 @@ public class DBhybernate implements ContactManager {
 			transaction.commit();
 			System.out.println("Updated: "+contatti.get(0));
 		}
+		session.close();
 		return 0;
 	}
 
@@ -61,6 +64,7 @@ public class DBhybernate implements ContactManager {
 		Query<Contatto> query = session.createQuery(textQuery);
 		List<Contatto> contatti = query.getResultList();
 		transaction.commit();
+		session.close();
 		return contatti;
 	}
 
@@ -98,6 +102,7 @@ public class DBhybernate implements ContactManager {
 				}	
 			}
 		}
+		session.close();
 	}
 
 	@Override
@@ -116,6 +121,7 @@ public class DBhybernate implements ContactManager {
 		if(toDelete!=null)
 			session.delete(toDelete);
 		transaction.commit();
+		session.close();
 		return 0;
 	}
 

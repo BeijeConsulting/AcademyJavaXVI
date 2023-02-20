@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import it.beije.neumann.rubrica.Contatto;
+
 
 public class HBMsessionFactory {
 

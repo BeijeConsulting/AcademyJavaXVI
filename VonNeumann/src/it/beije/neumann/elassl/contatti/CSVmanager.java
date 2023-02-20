@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.beije.neumann.rubrica.Contatto;
+
 
 public class CSVmanager {
 	/*
