@@ -25,20 +25,20 @@ import org.xml.sax.SAXException;
 
 /* TODO
  * - Import/Export manager come singleton? static class?
- * - Valutare gestione connessione al dbManager
  * - Richiamare su menu funzioni import/export
+ * - Sistemare la ricerca duplicati di HB
  */
-
 
 public class RubricaCompleta {
 
 	public static final String CSV = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.csv";
 	public static final String XML = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.xml";
 
-	public static RubricaImportManager importManager = new RubricaImportManager(); 
+	public static RubricaImportManager importManager = new RubricaImportManager();
 	public static RubricaExportManager exportManager = new RubricaExportManager();
-	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager();
+//	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager();
 //	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager();
+	public static RubricaJPAManager jpaManager = RubricaJPAManager.getJPAManager();
 
 	public static void printMenu() {
 		System.out.println("\t**Gestore rubrica**");
@@ -51,7 +51,7 @@ public class RubricaCompleta {
 		System.out.println("5.Cancella un contatto");
 		System.out.println("6.Trova duplicati");
 		System.out.println("7.Unisci duplicati");
-		System.out.println("8.Importa rubrica da CSV"); 
+		System.out.println("8.Importa rubrica da CSV");
 		System.out.println("9.Importa rubrica da XML");
 		System.out.println("10.Esporta rubrica su CSV");
 		System.out.println("11.Esporta rubrica su XML");
@@ -94,8 +94,9 @@ public class RubricaCompleta {
 
 		}
 
-		dbManager.showRubrica(orderBy, onWhat); // meglio static?
+//		dbManager.showRubrica(orderBy, onWhat); // meglio static?
 //		hbManager.showRubrica(orderBy, onWhat);
+		jpaManager.showRubrica(orderBy, onWhat);
 	}
 
 	public static void op2() {
@@ -110,8 +111,9 @@ public class RubricaCompleta {
 		System.out.print("\t-Nome: ");
 		String name = in.nextLine().trim();
 
-		contactsFound = dbManager.searchContact(name, surname);
+//		contactsFound = dbManager.searchContact(name, surname);
 //		contactsFound = hbManager.searchContact(name, surname);
+		contactsFound = jpaManager.searchContact(name, surname);
 
 		if (contactsFound.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -147,8 +149,9 @@ public class RubricaCompleta {
 
 		System.out.println();
 
-		dbManager.addContact(contact);
+//		dbManager.addContact(contact);
 //		hbManager.addContact(contact);
+		jpaManager.addContact(contact);
 
 		System.out.println("Contatto aggiunto!");
 	}
@@ -167,8 +170,9 @@ public class RubricaCompleta {
 
 		Contact newC = new Contact();
 
-		found = dbManager.searchContact(name, surname);
+//		found = dbManager.searchContact(name, surname);
 //		found = hbManager.searchContact(name, surname);
+		found = jpaManager.searchContact(name, surname);
 
 		if (found.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -210,8 +214,9 @@ public class RubricaCompleta {
 			System.out.print("\t-Note sul contatto: ");
 			newC.setNote(in.nextLine());
 
-			dbManager.editContact(newC);
+//			dbManager.editContact(newC);
 //			hbManager.editContact(newC);
+			jpaManager.editContact(newC);
 		}
 
 	}
@@ -230,8 +235,9 @@ public class RubricaCompleta {
 
 		Contact newC = new Contact();
 
-		found = dbManager.searchContact(name, surname);
+//		found = dbManager.searchContact(name, surname);
 //		found = hbManager.searchContact(name, surname);
+		found = jpaManager.searchContact(name, surname);
 
 		if (found.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -253,12 +259,32 @@ public class RubricaCompleta {
 				}
 			}
 
-			dbManager.deleteContact(newC);
+//			dbManager.deleteContact(newC);
+//			hbManager.deleteContact(newC);
+			jpaManager.deleteContact(newC);
 		}
 	}
 
 	public static void op6() {
-		System.out.println("*Operazione 6*\n");
+//		List<Contact> duplicates = dbManager.searchDuplicate();
+//		List<Contact> duplicates = hbManager.searchDuplicate();
+		List<Contact> duplicates = jpaManager.searchDuplicate();
+
+		if (duplicates.size() > 0) {
+			for (Contact d : duplicates) {
+				System.out
+						.println("Duplicati per [" + d.getName() + " " + d.getSurname() + "] -> " + duplicates.size());
+//				List<Contact> search = dbManager.searchContact(d.getName(), d.getSurname());
+//				List<Contact> search = hbManager.searchContact(d.getName(), d.getSurname());
+				List<Contact> search = jpaManager.searchContact(d.getName(), d.getSurname());
+				for (Contact c : search) {
+					System.out.println(c);
+				}
+				System.out.println();
+			}
+		} else {
+			System.out.println("Non sono stati trovati duplicati.");
+		}
 	}
 
 	public static void op7() {
@@ -281,7 +307,6 @@ public class RubricaCompleta {
 		Scanner in = new Scanner(System.in);
 		String choose = null;
 		boolean inMenu = true;
-//		hbManager.openSession();
 
 		printMenu();
 
@@ -296,7 +321,6 @@ public class RubricaCompleta {
 				break;
 			case 0:
 				inMenu = false;
-//				hbManager.closeSession();
 				break;
 
 			case 1:
@@ -324,13 +348,16 @@ public class RubricaCompleta {
 				break;
 
 			case 7:
-				op7();
+				//op7();
+				System.out.println("Operation 7 not available now");
 				break;
 
 			case 8:
+				System.out.println("Operation 8 not available now");
 				break;
 
 			case 9:
+				System.out.println("Operation 9 not available now");
 				break;
 
 			case 10:

@@ -62,7 +62,7 @@ public class RubricaDBManager {
 				contact.setEmail(rs.getString("email"));
 				contact.setNote(rs.getString("note"));
 
-				System.out.println(contact);
+				System.out.println(contact + "\n");
 
 			}
 
@@ -143,7 +143,6 @@ public class RubricaDBManager {
 		String queryInsert = "INSERT INTO rubricacompleta(surname, name, age, telephone, email, note) VALUES (?,?,?,?,?,?)";
 
 		PreparedStatement prepStatement = null;
-		ResultSet rs = null;
 
 		try {
 			connection = openConnection();
@@ -186,7 +185,7 @@ public class RubricaDBManager {
 			prepStatement.setString(4, contact.getTelephone());
 			prepStatement.setString(5, contact.getEmail());
 			prepStatement.setString(6, contact.getNote());
-			
+
 			prepStatement.setInt(7, contact.getId());
 
 			prepStatement.executeUpdate();
@@ -202,45 +201,74 @@ public class RubricaDBManager {
 			}
 		}
 	}
-	
-	/*
-	 * System.out.println("5.Cancella un contatto");
-	 * System.out.println("6.Trova duplicati");
-	 * System.out.println("7.Unisci duplicati");
-	 */
 
 	public static void deleteContact(Contact contact) {
-//		String deleteQuery = "DELETE FROM rubricacompleta WHERE id=?";
-//		
-//		PreparedStatement prepStatement = null;
-//		ResultSet rs = null;
-//
-//		try {
-//			connection = openConnection();
-//			prepStatement = connection.prepareStatement(deleteQuery);
-//			
-//			prepStatement.setInt(1, contact.getId());
-//
-//			prepStatement.executeUpdate();
-//
-//		} catch (SQLException sqlEx) {
-//			sqlEx.printStackTrace();
-//		} finally {
-//			try {
-//				prepStatement.close();
-//				closeConnection();
-//			} catch (SQLException sqlEx2) {
-//				sqlEx2.printStackTrace();
-//			}
-//		}
-		
-		System.out.println("deleteContact() on its way for implementation");
+		String deleteQuery = "DELETE FROM rubricacompleta WHERE id=?";
+
+		PreparedStatement prepStatement = null;
+
+		try {
+			connection = openConnection();
+			prepStatement = connection.prepareStatement(deleteQuery);
+
+			prepStatement.setInt(1, contact.getId());
+
+			prepStatement.executeUpdate();
+
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				prepStatement.close();
+				closeConnection();
+			} catch (SQLException sqlEx2) {
+				sqlEx2.printStackTrace();
+			}
+		}
 	}
 
-	public static void searchDuplicate() {
+	public static List<Contact> searchDuplicate() {
 		System.out.println("searchDuplicate() on its way for implementation");
+		List<Contact> duplicates = new ArrayList<>();
+		
+		String getDuplicateQuery = "SELECT surname, name FROM rubricacompleta GROUP BY surname, name HAVING COUNT(*)>1";
+
+		PreparedStatement prepStatement = null;
+		ResultSet rs = null;
+
+		try {
+			connection = openConnection();
+			prepStatement = connection.prepareStatement(getDuplicateQuery);
+			
+			rs = prepStatement.executeQuery();
+
+			while (rs.next()) {
+				Contact dup = new Contact();
+				
+				dup.setSurname(rs.getString("surname"));
+				dup.setName(rs.getString("name"));
+				
+				duplicates.add(dup);
+			}
+
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				prepStatement.close();
+				closeConnection();
+			} catch (SQLException sqlEx2) {
+				sqlEx2.printStackTrace();
+			}
+		}
+		
+		return duplicates;
 	}
 
+	/*
+	 * System.out.println("7.Unisci duplicati");
+	 */
 	public static void mergeDuplicate() {
 		System.out.println("mergeDuplicate() on its way for implementation");
 	}
