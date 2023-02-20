@@ -65,13 +65,36 @@ public class MiscMethods {
 
 		for (int i = 0; i < num; i++) {
 			
-			for (int j = i; j > 0; j= j/10) {
-				switch (j % 16) {
-				//case 10: exa += 
+			exa = "";
+			int n = 0;
+			
+			for (int j = i; j > 0; j = j/16) {
+				
+				n++;
+				int digit = j % (int) Math.pow(16, n);
+				
+				switch (digit) {
+					case 10: exa += "a";
+					break;
+					case 11: exa += "b";
+					break;
+					case 12: exa += "c";
+					break;
+					case 13: exa += "d";
+					break;
+					case 14: exa += "e";
+					break;
+					case 15: exa += "f";
+					break;
+					default: exa = digit + exa ;
 				}
 			}
+			
+			if (i < 16 && exa.length() == 1) exa = "0" + exa;
+				
 			grey = exa + exa + exa;
-			System.out.println(grey);
+			
+				System.out.println(grey);
 		}
 		
 		return greys;
@@ -80,7 +103,7 @@ public class MiscMethods {
 			
 	public static void main(String[] args) {
 		
-		shadesOfGrey(19);
+		shadesOfGrey(143);
 	}
 
 }
