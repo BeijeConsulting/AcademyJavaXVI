@@ -342,23 +342,89 @@ public class GestoreRubrica {
 	    }
 	}
 	
+//	private static void modificaContatto() {
+//	    Connection connection = null;
+//	    PreparedStatement statement = null;
+//	    ResultSet rs = null;
+//	    Scanner scanner = new Scanner(System.in);
+//
+//	    try {
+//	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+//
+//	        System.out.print("ID del contatto da modificare: ");
+//	        int id = scanner.nextInt();
+//
+//	        statement = connection.prepareStatement("SELECT * FROM contatti WHERE id = ?");
+//	        statement.setInt(1, id);
+//	        rs = statement.executeQuery();
+//
+//	        if (!rs.next()) {
+//	            System.out.println("Il contatto con ID " + id + " non esiste.");
+//	            return;
+//	        }
+//
+//	        scanner.nextLine();
+//	        System.out.print("Inserisci il nuovo nome: ");
+//	        String nome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il nuovo cognome: ");
+//	        String cognome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il nuovo numero di telefono: ");
+//	        String telefono = scanner.nextLine();
+//
+//	        System.out.print("Inserisci la nuova email: ");
+//	        String email = scanner.nextLine();
+//
+//	        System.out.print("Inserisci la nuova nota: ");
+//	        String nota = scanner.nextLine();
+//
+//	        statement = connection.prepareStatement("UPDATE contatti SET nome = ?, cognome = ?, telefono = ?, email = ?, note = ? WHERE id = ?");
+//	        statement.setString(1, nome);
+//	        statement.setString(2, cognome);
+//	        statement.setString(3, telefono);
+//	        statement.setString(4, email);
+//	        statement.setString(5, nota);
+//	        statement.setInt(6, id);
+//
+//	        int result = statement.executeUpdate();
+//
+//	        if (result > 0) {
+//	            System.out.println("Il contatto con ID " + id + " è stato modificato.");
+//	        } else {
+//	            System.out.println("Errore." + id);
+//	        }
+//
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            if (rs != null) {
+//	                rs.close();
+//	            }
+//	            if (statement != null) {
+//	                statement.close();
+//	            }
+//	            if (connection != null) {
+//	                connection.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	}
+	
 	private static void modificaContatto() {
-	    Connection connection = null;
-	    PreparedStatement statement = null;
-	    ResultSet rs = null;
 	    Scanner scanner = new Scanner(System.in);
+	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
 
 	    try {
-	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
-
 	        System.out.print("ID del contatto da modificare: ");
 	        int id = scanner.nextInt();
 
-	        statement = connection.prepareStatement("SELECT * FROM contatti WHERE id = ?");
-	        statement.setInt(1, id);
-	        rs = statement.executeQuery();
+	        Contatto contatto = entityManager.find(Contatto.class, id);
 
-	        if (!rs.next()) {
+	        if (contatto == null) {
 	            System.out.println("Il contatto con ID " + id + " non esiste.");
 	            return;
 	        }
@@ -379,38 +445,23 @@ public class GestoreRubrica {
 	        System.out.print("Inserisci la nuova nota: ");
 	        String nota = scanner.nextLine();
 
-	        statement = connection.prepareStatement("UPDATE contatti SET nome = ?, cognome = ?, telefono = ?, email = ?, note = ? WHERE id = ?");
-	        statement.setString(1, nome);
-	        statement.setString(2, cognome);
-	        statement.setString(3, telefono);
-	        statement.setString(4, email);
-	        statement.setString(5, nota);
-	        statement.setInt(6, id);
+	        entityManager.getTransaction().begin();
 
-	        int result = statement.executeUpdate();
+	        contatto.setName(nome);
+	        contatto.setName(cognome);
+	        contatto.setTelephone(telefono);
+	        contatto.setEmail(email);
+	        contatto.setNote(nota);
 
-	        if (result > 0) {
-	            System.out.println("Il contatto con ID " + id + " è stato modificato.");
-	        } else {
-	            System.out.println("Errore." + id);
-	        }
+	        entityManager.getTransaction().commit();
 
-	    } catch (SQLException e) {
+	        System.out.println("Il contatto con ID " + id + " è stato modificato.");
+
+	    } catch (Exception e) {
+	        entityManager.getTransaction().rollback();
 	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (rs != null) {
-	                rs.close();
-	            }
-	            if (statement != null) {
-	                statement.close();
-	            }
-	            if (connection != null) {
-	                connection.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        entityManager.close();
 	    }
 	}
 	
