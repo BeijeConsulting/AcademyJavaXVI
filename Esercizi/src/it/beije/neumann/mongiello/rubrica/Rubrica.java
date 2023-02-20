@@ -22,7 +22,7 @@ public class Rubrica {
 	private static Scanner s;
 	
 	public static void main( String[] args ) throws FileNotFoundException, IOException, Exception, TransformerException {
-		
+		RubricaHBM hbm = new RubricaHBM();
 		s = new Scanner(System.in);
 
 		String pathFileCsv = "/temp/rubrica.csv";
@@ -58,13 +58,13 @@ public class Rubrica {
 				switch( scelta ) {
 				case 1:
 					//RubricaJdbc.stampaDb();
-					RubricaHBM.stampaDb();
+					hbm.stampaDb();
 					break;
 				case 2:
 					System.out.println("Aggiungi contatto");
 					Contatto.inputRubrica(contatti);
 					//RubricaJdbc.writeContatto( contatti.get(contatti.size()-1) );
-					RubricaHBM.inserisciContatto( contatti.get(contatti.size()-1));
+					hbm.inserisciContatto( contatti.get(contatti.size()-1));
 					break;
 				case 3:
 					System.out.println("Inserisci il cognome del contatto da modificare");
@@ -82,7 +82,7 @@ public class Rubrica {
 					String newField = s.next();
 				
 					//RubricaJdbc.editDb( id,fieldToEdit,newField );
-					RubricaHBM.editContatto( id,fieldToEdit,newField );
+					hbm.editContatto( id,fieldToEdit,newField );
 					break;
 				case 4:
 					System.out.println("Inserisci il cognome del contatto da eliminare");
@@ -92,31 +92,33 @@ public class Rubrica {
 					id = s.nextInt();
 					
 					//RubricaJdbc.deleteContact( id );
-					RubricaHBM.deleteContact( id );
+					hbm.deleteContact( id );
 					//contatti = RubricaCsv.loadRubricaFromCSV(pathFileCsv, ";");
 					break;
 				case 5:
 					System.out.println("Vuoi ordinare per Nome o per Cognome ?");
 					String valore = s.next();
 					System.out.println(valore);
-					RubricaHBM.order(valore);
+					hbm.order(valore);
 					//RubricaJdbc.order(valore);
 					break;
 					
 				case 6:
 					System.out.println("Inserisci il cognome del contatto da cercare");
-					 surname = s.next();
-					//RubricaJdbc.search( surname );
-					RubricaHBM.search(surname);
+					surname = s.next();
+					RubricaJdbc.search( surname );
 					break;
 				case 7:
-					RubricaJdbc.exportCsv();
+					//RubricaJdbc.exportCsv();
+					hbm.exportCsv();
 					break;
 				case 8:
-					RubricaJdbc.exportXml();
+					//RubricaJdbc.exportXml();
+					hbm.exportXml();
 					break;
 				case 9:
-					RubricaJdbc.importCsv();
+					hbm.importCsv();
+					//RubricaJdbc.importCsv();
 					break;
 				case 10:
 					RubricaJdbc.importXml();
@@ -124,7 +126,8 @@ public class Rubrica {
 				case 11:
 					System.out.println("Duplicati");
 					//RubricaJdbc.trovaDuplicati();
-					RubricaHBM.duplicate();
+					hbm.duplicate();
+	//				RubricaHBM.duplicate();
 					break;
 					
 			}

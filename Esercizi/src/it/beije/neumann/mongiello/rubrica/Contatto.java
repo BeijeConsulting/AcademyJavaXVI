@@ -64,6 +64,8 @@ public class Contatto {
 
 
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
