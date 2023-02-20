@@ -26,7 +26,7 @@ public class RubricaHBM {
 		Transaction transaction = session.beginTransaction();
 				
 		//INSERT
-		Speranza contatto = new Speranza();
+		Contatto contatto = new Contatto();
 //		contatto.setId(9);
 //		contatto.setName("Francesco");
 //		contatto.setSurname("Rossi");
@@ -37,8 +37,8 @@ public class RubricaHBM {
 //		System.out.println("contatto POST : " + contatto);
 
 		//SELECT
-		Query<Speranza> query = session.createQuery("SELECT c FROM Contatto as c");// WHERE surname = 'Rossi'");//HQL
-		List<Speranza> contatti = query.getResultList();
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");// WHERE surname = 'Rossi'");//HQL
+		List<Contatto> contatti = query.getResultList();
 //		for (Contatto c : contatti) {
 //			System.out.println(c);
 //		}

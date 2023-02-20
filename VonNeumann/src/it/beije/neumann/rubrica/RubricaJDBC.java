@@ -23,6 +23,7 @@ public class RubricaJDBC {
 				
 		try {
 			connection = getConnection();
+			//System.out.println(connection.isClosed());
 			
 			statement = connection.createStatement();
 			

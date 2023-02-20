@@ -19,7 +19,7 @@ public class RubricaJPA {
 		transaction.begin();
 		
 		//INSERT
-		Speranza contatto = new Speranza();
+		Contatto contatto = new Contatto();
 //		contatto.setId(9);
 //		contatto.setName("Paride");
 //		contatto.setSurname("Gialli");
@@ -37,7 +37,7 @@ public class RubricaJPA {
 ////		}
 //		System.out.println(contatti);
 		
-		contatto = entityManager.find(Speranza.class, 1);
+		contatto = entityManager.find(Contatto.class, 1);
 		System.out.println(contatto);
 
 		//UPDATE

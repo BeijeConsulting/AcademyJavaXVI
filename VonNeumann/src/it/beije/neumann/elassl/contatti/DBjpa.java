@@ -1,10 +1,14 @@
 package it.beije.neumann.elassl.contatti;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import it.beije.neumann.rubrica.Contatto;
 
@@ -13,39 +17,101 @@ public class DBjpa implements ContactManager {
 	@Override
 	public List<Contatto> getContatti() throws ClassNotFoundException {
 		EntityManager entityManager = EMfactory.openEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
 		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
 		List<Contatto> contatti = query.getResultList();
+		entityManager.close();
 		return contatti;
 	}
 
 	@Override
 	public int writeContatto(Contatto contatto) throws ClassNotFoundException {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		entityManager.persist(contatto);
+		transaction.commit();
+		entityManager.close();
 		return 0;
 	}
 
 	@Override
 	public int updateContatto(Contatto contact) throws ClassNotFoundException {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		Contatto c = entityManager.find(Contatto.class, contact.getId());
+		c.setName(contact.getName());
+		c.setSurname(contact.getSurname());
+		c.setEmail(contact.getEmail());
+		c.setTelephone(contact.getTelephone());
+		c.setNote(contact.getNote());
+		entityManager.persist(c);
+		transaction.commit();
+		entityManager.close();
 		return 0;
 	}
 
 	@Override
 	public List<Contatto> getDuplicates() throws ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		String textQuery = "SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT 1 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)";
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		Query query = entityManager.createQuery(textQuery);
+		List<Contatto> contatti = query.getResultList();
+		transaction.commit();
+		entityManager.close();
+		return contatti;
 	}
 
 	@Override
 	public void mergeDuplicates() throws ClassNotFoundException {
-		// TODO Auto-generated method stub
+		String textQuery = "SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT 1 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)";
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		Query query = entityManager.createQuery(textQuery);
+		List<Contatto> contacts = query.getResultList();
+		transaction.commit();
 		
+		List<Contatto> deleted = new ArrayList<>();
+		for(Contatto contact1: contacts) {
+			for(Contatto contact2: contacts) {
+				if(!deleted.contains(contact1) && !deleted.contains(contact2) && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
+					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
+					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
+					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
+					transaction = entityManager.getTransaction();
+					transaction.begin();
+					contact1.setTelephone(telephone);
+					contact1.setEmail(email);
+					contact1.setNote(note);
+					//updateContatto(contact1);
+					//deleteContatto(contact2);
+					entityManager.remove(contact2);
+					transaction.commit();
+
+					deleted.add(contact2);
+					transaction = entityManager.getTransaction();
+					transaction.begin();
+					entityManager.persist(contact1);
+					//System.out.println("deleted: "+ contact2);
+					transaction.commit();
+				}	
+			}
+		}
+		entityManager.close();
 	}
 
 	@Override
 	public int deleteContatto(Contatto contact) throws ClassNotFoundException {
-		// TODO Auto-generated method stub
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		Contatto c = entityManager.find(Contatto.class, contact.getId());
+		entityManager.remove(c);
+		transaction.commit();
+		entityManager.close();
 		return 0;
 	}
 

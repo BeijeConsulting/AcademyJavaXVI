@@ -30,6 +30,7 @@ public class DBhybernate implements ContactManager {
 		Transaction transaction = session.beginTransaction();
 		session.save(contatto);
 		transaction.commit();
+		session.close();
 		return 0;
 	}
 
