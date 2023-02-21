@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import nicole.Contatto;
+
 public class RubricaJPA {
 
 	public static void main(String[] args) {

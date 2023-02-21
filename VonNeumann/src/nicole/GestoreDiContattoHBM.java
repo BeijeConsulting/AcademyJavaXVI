@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import it.beije.neumann.rubrica.Contatto;
 import it.beije.neumann.rubrica.HBMsessionFactory;
 
 public class GestoreDiContattoHBM 
@@ -207,8 +206,10 @@ public class GestoreDiContattoHBM
 		//cercaContatto("Mario","Rossi");
 		//inserisciNuovoContatto("James","Bond","007123456","bond@gmail.com","Spia");
 		//cancellaContatto("James","Bond");
-		//trovaDuplicati();
-		unisciDuplicati();
+		trovaDuplicati();
+		//unisciDuplicati();
+		
+		
 	}
 
 }

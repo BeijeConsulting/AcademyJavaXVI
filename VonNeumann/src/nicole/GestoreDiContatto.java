@@ -216,7 +216,7 @@ public class GestoreDiContatto
 				
 				//Creo uno Scanner per far inserire da linea di comando il nome e il cognome
 
-				System.out.print("Avvio scanner...");
+				System.out.print("Operazione selezionata, inserire 'ok' ");
 				Scanner s=new Scanner(System.in);
 				String nomeContatto=null;
 				String cognomeContatto=null;
@@ -437,8 +437,24 @@ public class GestoreDiContatto
 		//cancellaContatto();
 		
 		
-		unisciContattiDuplicati();
+		//unisciContattiDuplicati();
 		//trovaContattiDuplicati();
+		System.out.println("Benvenuto in rubrica, scegliere l'operazione: "+"/n"+"1)lista contatti"+"/n"+"2) cerca contatto"+"/n"+"3)cancella contatto"+"/n"
+		+"4)trova contatti duplicati"+"/n"+"5)unisci contatti duplicati");
+		Scanner s=new Scanner(System.in);
+		String st=s.next();
+		switch(st)
+		{
+		case ("lista contatti") : vediListaContatti(); break;
+		case("cerca contatto"): cercaContatto();break;
+		case("cancella contatto"): cancellaContatto();break;
+		case("trova contatti duplicati"): trovaContattiDuplicati(); break;
+		case("unisci contatti duplicati"): unisciContattiDuplicati();break;
+		}
+		
+		s.close();
+		System.out.println("Sto uscendo dalla rubrica...");
+		
 	}
 
 }

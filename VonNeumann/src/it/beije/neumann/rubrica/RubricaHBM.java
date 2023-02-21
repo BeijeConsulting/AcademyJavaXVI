@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import nicole.Contatto;
+
 public class RubricaHBM {
 
 	public static void main(String[] args) {
