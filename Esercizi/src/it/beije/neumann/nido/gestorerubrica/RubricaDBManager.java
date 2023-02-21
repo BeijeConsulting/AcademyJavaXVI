@@ -231,8 +231,9 @@ public class RubricaDBManager implements RubricaQLManager {
 		System.out.println("searchDuplicate() on its way for implementation");
 		List<Contact> duplicates = new ArrayList<>();
 
-		String getDuplicateQuery = "SELECT surname, name FROM rubricacompleta GROUP BY surname, name HAVING COUNT(*)>1";
-
+		String innerQuery = "SELECT surname, name FROM rubricacompleta GROUP BY surname, name HAVING COUNT(*)>1";
+		String getDuplicateQuery = "SELECT * FROM rubricacompleta AS rc JOIN ("+innerQuery+") AS rd ON rc.name=rd.name AND rc.surname=rd.surname ORDER BY rc.surname ASC";
+		
 		PreparedStatement prepStatement = null;
 		ResultSet rs = null;
 
@@ -245,8 +246,13 @@ public class RubricaDBManager implements RubricaQLManager {
 			while (rs.next()) {
 				Contact dup = new Contact();
 
+				dup.setId(rs.getInt("id"));
 				dup.setSurname(rs.getString("surname"));
 				dup.setName(rs.getString("name"));
+				dup.setAge(rs.getInt("age"));
+				dup.setTelephone(rs.getString("telephone"));
+				dup.setEmail(rs.getString("email"));
+				dup.setNote(rs.getString("note"));
 
 				duplicates.add(dup);
 			}

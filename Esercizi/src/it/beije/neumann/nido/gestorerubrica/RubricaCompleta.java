@@ -257,15 +257,7 @@ public class RubricaCompleta {
 
 		if (duplicates.size() > 0) {
 			for (Contact d : duplicates) {
-				System.out
-						.println("Duplicati per [" + d.getName() + " " + d.getSurname() + "] -> " + duplicates.size());
-
-				List<Contact> search = dataManager.searchContact(d.getName(), d.getSurname());
-				
-				for (Contact c : search) {
-					System.out.println(c);
-				}
-				System.out.println();
+				System.out.println(d);
 			}
 		} else {
 			System.out.println("Non sono stati trovati duplicati.");
@@ -292,6 +284,8 @@ public class RubricaCompleta {
 		Scanner in = new Scanner(System.in);
 		String choose = null;
 		boolean inMenu = true;
+		
+		RubricaQLManager manager = jpaManager;
 
 		printMenu();
 
@@ -309,52 +303,31 @@ public class RubricaCompleta {
 				break;
 
 			case 1:
-//				op1(dbManager);
-//				op1(hbManager);
-//				op1(jpaManager);
-				op1(criteriaManager);
+				op1(manager);
 				break;
 
 			case 2:
-//				op2(dbManager);
-//				op2(hbManager);
-//				op2(jpaManager);
-				op2(criteriaManager);
+				op2(manager);
 				break;
 
 			case 3:
-//				op3(dbManager);
-//				op3(hbManager);
-//				op3(jpaManager);
-				op3(criteriaManager);
+				op3(manager);
 				break;
 
 			case 4:
-//				op4(dbManager);
-//				op4(hbManager);
-//				op4(jpaManager);
-				op4(criteriaManager);
+				op4(manager);
 				break;
 
 			case 5:
-//				op5(dbManager);
-//				op5(hbManager);
-//				op5(jpaManager);
-				op5(criteriaManager);
+				op5(manager);
 				break;
 
 			case 6:
-//				op6(dbManager);
-//				op6(hbManager);
-//				op6(jpaManager);
-				op6(criteriaManager);
+				op6(manager);
 				break;
 
 			case 7:
-//				op7(dbManager);
-//				op7(hbManager);
-//				op7(jpaManager);
-//				op7(criteriaManager);
+//				op7(manager);
 				System.out.println("Operation 7 not available now");
 				break;
 

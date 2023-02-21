@@ -126,12 +126,16 @@ public class RubricaJPAManager implements RubricaQLManager { // Sistemare
 		launchEntityManager();
 		transaction.begin();
 
-		System.out.println("searchDuplicate() on its way for implementation");
+		String innerQuery = "SELECT d FROM Contact AS d WHERE d.name = c.name AND d.surname = c.surname AND d.id <> c.id";
+		String selectHQL = "SELECT c FROM Contact AS c WHERE EXISTS (" + innerQuery + ") ORDER BY c.surname ASC";
+		
+		Query query = entityManager.createQuery(selectHQL);
+		List<Contact> duplicates = query.getResultList();
 
 		transaction.commit();
 		closeEntityManager();
 
-		return null;
+		return duplicates;
 	}
 
 	public void mergeDuplicate() {

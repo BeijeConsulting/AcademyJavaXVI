@@ -1,11 +1,9 @@
 package it.beije.neumann.nido.gestorerubrica;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 public class RubricaHBManager implements RubricaQLManager {
@@ -140,24 +138,18 @@ public class RubricaHBManager implements RubricaQLManager {
 	 */
 
 	public List<Contact> searchDuplicate() {
-//		openSession();
-////		transaction = session.beginTransaction();
-//
-		List<Contact> found = new ArrayList<>();
-//
-//		String selectHQL = "SELECT c.surname, c.name FROM Contact AS c GROUP BY c.surname, c.name HAVING COUNT(*)>1";
-//
-////		Query<Contact> query = session.createQuery(selectHQL);
-////		found = query.getResultList();
-//		Query<String> query = session.createQuery(selectHQL);
-//		List<String> columns = (List<String>) query.getResultList();
-//
-////		transaction.commit();
-//		closeSession();
-//		
-//		System.out.println(columns);
+		openSession();
+		transaction = session.beginTransaction();
 
-		System.out.println("searchDuplicate() on its way for implementation");
+		String innerQuery = "SELECT d FROM Contact AS d WHERE d.name = c.name AND d.surname = c.surname AND d.id <> c.id";
+		String selectHQL = "SELECT c FROM Contact AS c WHERE EXISTS (" + innerQuery + ") ORDER BY c.surname ASC";
+
+		Query<Contact> query = session.createQuery(selectHQL);
+		List<Contact> found = query.getResultList();
+
+		transaction.commit();
+		closeSession();
+
 		return found;
 	}
 
