@@ -104,5 +104,18 @@ public class DBjpacriteria extends DBjpa {
 		));
 	 */
 	
-	
+	public List<Contatto> getContatto(Contatto contact){
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Contatto.class); 
+		Root<Contatto> c1 = criteriaQuery.from(Contatto.class);
+		criteriaQuery.select(c1).where(criteriaBuilder.equal(c1.get("name"), contact.getName()), criteriaBuilder.equal(c1.get("surname"), contact.getSurname()));
+		transaction.begin();
+		Query query = entityManager.createQuery(criteriaQuery);
+		List<Contatto> contatti = query.getResultList();
+		transaction.commit();
+		entityManager.close();
+		return contatti;
+	}
 }

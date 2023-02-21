@@ -10,5 +10,7 @@ public interface ContactManager {
 	public int updateContatto(Contatto contact) throws ClassNotFoundException;
 	public List<Contatto> getDuplicates() throws ClassNotFoundException;
 	public void mergeDuplicates() throws ClassNotFoundException;
-	public int deleteContatto(Contatto contact) throws ClassNotFoundException;
+	public int deleteContatto(Contatto contact) throws ClassNotFoundException;	
+	public List<Contatto> getContatto(Contatto contact);
+
 }

@@ -157,6 +157,12 @@ public class DBmanager implements ContactManager{
 			}
 		return res;
 	}
+
+	@Override
+	public List<Contatto> getContatto(Contatto contact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 
 }

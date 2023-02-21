@@ -29,6 +29,7 @@ public class progContatti {
 			String pathFile;
 			List<Contatto> contacts;
 			System.out.println(" Esc > Exit");
+			System.out.println(" 0 > Search Contact");
 			System.out.println(" 1 > Visualize Contacts");
 			System.out.println(" 2 > Insert Contact");
 			System.out.println(" 3 > Edit Contact");
@@ -43,6 +44,20 @@ public class progContatti {
 			if(input.equalsIgnoreCase("exit")) break;
 			
 			switch(input) {
+			case "0":
+				System.out.println("\n\nInsert name:\n");
+				String name=s.nextLine();
+				System.out.println("\n\nInsert surname:\n");
+				String surname=s.nextLine();
+				Contatto contact = new Contatto(name, surname, null, null, null);
+				contacts = db.getContatto(contact);
+				System.out.println("\nContacts found:\n");
+				for(Contatto c: contacts)
+					System.out.println(c);
+				System.out.println("\nPress any key to continue...\n");
+				s.nextLine();
+				
+				break;
 			case "1":
 				contacts = db.getContatti();
 				System.out.println("\n\nContact List:\n");
@@ -53,9 +68,9 @@ public class progContatti {
 				break;
 			case "2":
 				System.out.println("\n\nInsert name:\n");
-				String name=s.nextLine();
+				String name1=s.nextLine();
 				System.out.println("\n\nInsert surname:\n");
-				String surname=s.nextLine();
+				String surname1=s.nextLine();
 				System.out.println("\n\nInsert email:\n");
 				String email=s.nextLine();
 				System.out.println("\n\nInsert telephone:\n");
@@ -63,8 +78,8 @@ public class progContatti {
 				System.out.println("\n\nInsert notes:\n");
 				String notes=s.nextLine();
 				
-				Contatto contact = new Contatto(name, surname, telephone, email, notes);
-				db.writeContatto(contact);
+				Contatto contact1 = new Contatto(name1, surname1, telephone, email, notes);
+				db.writeContatto(contact1);
 				break;
 			case "3":
 				contacts = db.getContatti();

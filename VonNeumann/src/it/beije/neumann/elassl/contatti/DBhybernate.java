@@ -125,5 +125,10 @@ public class DBhybernate implements ContactManager {
 		session.close();
 		return 0;
 	}
+	@Override
+	public List<Contatto> getContatto(Contatto contact) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

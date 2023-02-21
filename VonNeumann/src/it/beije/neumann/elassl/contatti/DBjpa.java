@@ -104,4 +104,13 @@ public class DBjpa implements ContactManager {
 		return 0;
 	}
 
+	@Override
+	public List<Contatto> getContatto(Contatto contact) {
+		EntityManager entityManager = EMfactory.openEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		List<Contatto> contatti = entityManager.createQuery("SELECT c FROM Contatto as c where c.name = :name and c.surname = :surname")
+				.setParameter("name", contact.getName()).setParameter("surname", contact.getSurname()).getResultList();
+		return contatti;
+	}
+
 }
