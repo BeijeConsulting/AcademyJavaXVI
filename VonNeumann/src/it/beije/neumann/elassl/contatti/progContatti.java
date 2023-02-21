@@ -1,5 +1,6 @@
 package it.beije.neumann.elassl.contatti;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -15,10 +16,10 @@ public class progContatti {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO rubrica manager da tastiera
-		//ContactManager db = new DBmanager();// JDBC
-		//ContactManager db = new DBhybernate();//HBM
-		EMfactory.openEntityManager();
-		ContactManager db = new DBjpa();
+		//ContactManager db = new DBmanager();// JDBC implementation
+		//ContactManager db = new DBhybernate();// HBM implementation
+		//ContactManager db = new DBjpa();// JPA implementation
+		ContactManager db = new DBjpacriteria();// JPA with criteria queries implementation
 		
 		int menu=-1;
 		Scanner s = new Scanner(System.in);
@@ -130,6 +131,8 @@ public class progContatti {
 					s.nextLine();
 				} catch (IOException e) {
 					System.out.println("\nError, invalid filepath!\n");
+					try {System.out.println("\nCurrent relative path:\n"+new File(".").getCanonicalPath());
+					} catch (IOException e1) {}
 					e.printStackTrace();
 				}
 				break;
@@ -145,6 +148,8 @@ public class progContatti {
 					s.nextLine();
 				} catch (IOException e) {
 					System.out.println("\nError, invalid filepath!\n");
+					try {System.out.println("\nCurrent relative path:\n"+new File(".").getCanonicalPath());
+					} catch (IOException e1) {}
 					e.printStackTrace();
 				}
 				break;
@@ -158,6 +163,8 @@ public class progContatti {
 					s.nextLine();
 				} catch (IOException e) {
 					System.out.println("\nError, invalid filepath!\n");
+					try {System.out.println("\nCurrent relative path:\n"+new File(".").getCanonicalPath());
+					} catch (IOException e1) {}
 					e.printStackTrace();
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
@@ -179,6 +186,8 @@ public class progContatti {
 					s.nextLine();
 				} catch (IOException e) {
 					System.out.println("\nError, invalid filepath!\n");
+					try {System.out.println("\nCurrent relative path:\n"+new File(".").getCanonicalPath());
+					} catch (IOException e1) {}
 					e.printStackTrace();
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();

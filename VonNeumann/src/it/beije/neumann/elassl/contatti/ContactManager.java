@@ -6,7 +6,7 @@ import it.beije.neumann.rubrica.Contatto;
 
 public interface ContactManager {
 	public List<Contatto> getContatti() throws ClassNotFoundException;
-	public int writeContatto(Contatto contatto) throws ClassNotFoundException;
+	public int writeContatto(Contatto contact) throws ClassNotFoundException;
 	public int updateContatto(Contatto contact) throws ClassNotFoundException;
 	public List<Contatto> getDuplicates() throws ClassNotFoundException;
 	public void mergeDuplicates() throws ClassNotFoundException;

@@ -13,6 +13,11 @@ import org.hibernate.Transaction;
 import it.beije.neumann.rubrica.Contatto;
 
 public class DBjpa implements ContactManager {
+	
+	DBjpa(){
+		EntityManager entityManager = EMfactory.openEntityManager();
+		entityManager.close();
+	}
 
 	@Override
 	public List<Contatto> getContatti() throws ClassNotFoundException {
@@ -66,41 +71,25 @@ public class DBjpa implements ContactManager {
 
 	@Override
 	public void mergeDuplicates() throws ClassNotFoundException {
-		String textQuery = "SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT 1 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)";
-		EntityManager entityManager = EMfactory.openEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
-		Query query = entityManager.createQuery(textQuery);
-		List<Contatto> contacts = query.getResultList();
-		transaction.commit();
 		
+		List<Contatto> duplicateContacts = getDuplicates();
 		List<Contatto> deleted = new ArrayList<>();
-		for(Contatto contact1: contacts) {
-			for(Contatto contact2: contacts) {
+		
+		for(Contatto contact1: duplicateContacts) {
+			for(Contatto contact2: duplicateContacts) {
 				if(!deleted.contains(contact1) && !deleted.contains(contact2) && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
 					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
 					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
 					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
-					transaction = entityManager.getTransaction();
-					transaction.begin();
 					contact1.setTelephone(telephone);
 					contact1.setEmail(email);
 					contact1.setNote(note);
-					//updateContatto(contact1);
-					//deleteContatto(contact2);
-					entityManager.remove(contact2);
-					transaction.commit();
-
+					deleteContatto(contact2);
 					deleted.add(contact2);
-					transaction = entityManager.getTransaction();
-					transaction.begin();
-					entityManager.persist(contact1);
-					//System.out.println("deleted: "+ contact2);
-					transaction.commit();
+					updateContatto(contact1);
 				}	
 			}
 		}
-		entityManager.close();
 	}
 
 	@Override

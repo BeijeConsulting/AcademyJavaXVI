@@ -1,6 +1,7 @@
 package it.beije.neumann.elassl.contatti;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -32,6 +33,7 @@ public class CSVmanager {
 			fileWriter.write(s);
 		}
 		catch (FileNotFoundException fnfEx) {
+			System.out.println(new File(".").getCanonicalPath());
 			fnfEx.printStackTrace();
 		} 
 		catch (IOException ioEx) {
