@@ -2,6 +2,7 @@ package it.beije.neumann.vanoli.rubrica;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -89,10 +90,46 @@ public class RubricaHBM implements RubricaInterface {
 		List<Contatto> contatti = query.getResultList();		
 		return contatti;		
 	}
-	/*
-	public List<Contatto> unisciContattiDuplicati() {
-		
+	
+	public void unisciContattiDuplicati() {
+		List<Contatto> dupes = trovaContattiDuplicati();
+		List<Contatto> toEdit = new ArrayList<Contatto>();
+		for (Contatto dup: dupes) {
+			//Controlliamo se abbbiamo già inserito il contatto nella lista toEdit, se si' ci salviamo il contatto altrimenti resta null
+			Contatto trovatoEdit = null;
+			for (Contatto c: toEdit) {
+				if (c.getNome().equals(dup.getNome()) && c.getNome().equals(dup.getNome())) {
+					trovatoEdit = c;
+					break;
+				}
+			}
+			if (trovatoEdit == null) {
+				//se non l'abbiamo trovato, lo aggiungiamo semplicemente nella lista
+				toEdit.add(dup);
+			}
+			else {
+				//altrimenti, lo uniamo con quello che abbiamo trovatoEdit e facciamo una delete
+				trovatoEdit.setEmail(unisciStringhe(trovatoEdit.getEmail(), dup.getEmail()));
+				trovatoEdit.setTelefono(unisciStringhe(trovatoEdit.getTelefono(), dup.getTelefono()));
+				trovatoEdit.setNote(unisciStringhe(trovatoEdit.getNote(), dup.getNote()));
+				deleteContatto(dup);
+			}
+		}
+		//adesso andiamo semplicemente a modificare i contatti che abbiamo in toEdit
+		for (Contatto c: toEdit) {
+			editContatto(c);
+		}
 	}
-	*/
+	
+	private String unisciStringhe(String s1, String s2) {
+		if (s1.equals(""))
+			return s2;
+		else if (s2.equals(""))
+			return s1;
+		else if (s1.equals(s2))
+			return s1;
+		else
+			return s1 + "; " + s2;
+	}
 	
 }

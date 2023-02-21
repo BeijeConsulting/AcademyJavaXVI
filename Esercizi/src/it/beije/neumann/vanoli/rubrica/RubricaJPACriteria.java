@@ -1,13 +1,18 @@
 package it.beije.neumann.vanoli.rubrica;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -78,45 +83,95 @@ public class RubricaJPACriteria implements RubricaInterface{
 	
 	public void editContatto(Contatto newC) {
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaUpdate<Contatto> criteriaUpdate = cb.createCriteriaUpdate(Contatto.class);
+		Root<Contatto> root = criteriaUpdate.from(Contatto.class);
+		criteriaUpdate.set("nome", newC.getNome());
+		criteriaUpdate.set("cognome", newC.getCognome());
+		criteriaUpdate.set("telefono", newC.getTelefono());
+		criteriaUpdate.set("email", newC.getEmail());
+		criteriaUpdate.set("note", newC.getNote());
+		criteriaUpdate.where(cb.equal(root.get("id"), newC.getId()));
+
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c WHERE id = :param1");
-		query.setParameter("param1", newC.getId());
-		List<Contatto> contatti = query.getResultList();
-		if (contatti.size() != 1) {
-			throw new RuntimeException("Il DB si è rotto...");
-		}
-		Contatto oldC = contatti.get(0);
-		oldC.setNome(newC.getNome());
-		oldC.setCognome(newC.getCognome());
-		oldC.setTelefono(newC.getTelefono());
-		oldC.setEmail(newC.getEmail());
-		oldC.setNote(newC.getNote());
-		entityManager.persist(oldC);
-		transaction.commit();
+		entityManager.createQuery(criteriaUpdate).executeUpdate();
+		transaction.commit();		
 		entityManager.close();
 	}
 	
 	public void deleteContatto(Contatto c) {
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaDelete<Contatto> criteriaDelete = cb.createCriteriaDelete(Contatto.class);
+		Root<Contatto> root = criteriaDelete.from(Contatto.class);
+		criteriaDelete.where(cb.equal(root.get("id"), c.getId()));
+
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c WHERE id = :param1");
-		query.setParameter("param1", c.getId());
-		List<Contatto> contatti = query.getResultList();
-		if (contatti.size() != 1) {
-			throw new RuntimeException("Il DB si è rotto...");
-		}
-		entityManager.remove(contatti.get(0));
+		entityManager.createQuery(criteriaDelete).executeUpdate();
 		transaction.commit();
 		entityManager.close();
 	}
 	
 	public List<Contatto> trovaContattiDuplicati() {
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		Query query = entityManager.createQuery("SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT c2 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)");
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);		
+		Root<Contatto> root = cr.from(Contatto.class);
+		
+		Subquery<Contatto> subcr = cr.subquery(Contatto.class);
+		Root<Contatto> subroot = subcr.from(Contatto.class);
+		subcr.select(subroot).where(cb.and(cb.equal(root.get("nome"), subroot.get("nome")),
+										   cb.equal(root.get("cognome"), subroot.get("cognome")),
+										   cb.notEqual(root.get("id"), subroot.get("id"))));
+		
+		cr.select(root).where(cb.exists(subcr));
+		
+		Query query = entityManager.createQuery(cr);
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
 		return contatti;
+	}
+
+	public void unisciContattiDuplicati() {
+		List<Contatto> dupes = trovaContattiDuplicati();
+		List<Contatto> toEdit = new ArrayList<Contatto>();
+		for (Contatto dup: dupes) {
+			//Controlliamo se abbbiamo già inserito il contatto nella lista toEdit, se si' ci salviamo il contatto altrimenti resta null
+			Contatto trovatoEdit = null;
+			for (Contatto c: toEdit) {
+				if (c.getNome().equals(dup.getNome()) && c.getNome().equals(dup.getNome())) {
+					trovatoEdit = c;
+					break;
+				}
+			}
+			if (trovatoEdit == null) {
+				//se non l'abbiamo trovato, lo aggiungiamo semplicemente nella lista
+				toEdit.add(dup);
+			}
+			else {
+				//altrimenti, lo uniamo con quello che abbiamo trovatoEdit e facciamo una delete
+				trovatoEdit.setEmail(unisciStringhe(trovatoEdit.getEmail(), dup.getEmail()));
+				trovatoEdit.setTelefono(unisciStringhe(trovatoEdit.getTelefono(), dup.getTelefono()));
+				trovatoEdit.setNote(unisciStringhe(trovatoEdit.getNote(), dup.getNote()));
+				deleteContatto(dup);
+			}
+		}
+		//adesso andiamo semplicemente a modificare i contatti che abbiamo in toEdit
+		for (Contatto c: toEdit) {
+			editContatto(c);
+		}
+	}
+	
+	private String unisciStringhe(String s1, String s2) {
+		if (s1.equals(""))
+			return s2;
+		else if (s2.equals(""))
+			return s1;
+		else if (s1.equals(s2))
+			return s1;
+		else
+			return s1 + "; " + s2;
 	}
 }

@@ -11,5 +11,5 @@ public interface RubricaInterface {
 	void editContatto(Contatto c);
 	void deleteContatto(Contatto c);
 	List<Contatto> trovaContattiDuplicati();
-	//List<Contatto> unisciContattiDuplicati();
+	void unisciContattiDuplicati();
 }
