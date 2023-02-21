@@ -15,6 +15,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import java.util.List;
@@ -526,7 +527,58 @@ public class GestoreRubrica {
 //	    }
 //	}
 	
-	private static void modificaContatto() {
+//	private static void modificaContatto() { //JPA
+//	    Scanner scanner = new Scanner(System.in);
+//	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
+//
+//	    try {
+//	        System.out.print("ID del contatto da modificare: ");
+//	        int id = scanner.nextInt();
+//
+//	        Contatto contatto = entityManager.find(Contatto.class, id);
+//
+//	        if (contatto == null) {
+//	            System.out.println("Il contatto con ID " + id + " non esiste.");
+//	            return;
+//	        }
+//
+//	        scanner.nextLine();
+//	        System.out.print("Inserisci il nuovo nome: ");
+//	        String nome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il nuovo cognome: ");
+//	        String cognome = scanner.nextLine();
+//
+//	        System.out.print("Inserisci il nuovo numero di telefono: ");
+//	        String telefono = scanner.nextLine();
+//
+//	        System.out.print("Inserisci la nuova email: ");
+//	        String email = scanner.nextLine();
+//
+//	        System.out.print("Inserisci la nuova nota: ");
+//	        String nota = scanner.nextLine();
+//
+//	        entityManager.getTransaction().begin();
+//
+//	        contatto.setName(nome);
+//	        contatto.setName(cognome);
+//	        contatto.setTelephone(telefono);
+//	        contatto.setEmail(email);
+//	        contatto.setNote(nota);
+//
+//	        entityManager.getTransaction().commit();
+//
+//	        System.out.println("Il contatto con ID " + id + " è stato modificato.");
+//
+//	    } catch (Exception e) {
+//	        entityManager.getTransaction().rollback();
+//	        e.printStackTrace();
+//	    } finally {
+//	        entityManager.close();
+//	    }
+//	}
+	
+	private static void modificaContatto() { //Criteria API
 	    Scanner scanner = new Scanner(System.in);
 	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
 
@@ -534,41 +586,35 @@ public class GestoreRubrica {
 	        System.out.print("ID del contatto da modificare: ");
 	        int id = scanner.nextInt();
 
-	        Contatto contatto = entityManager.find(Contatto.class, id);
+	        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+	        CriteriaUpdate<Contatto> update = cb.createCriteriaUpdate(Contatto.class);
+	        Root<Contatto> contatto = update.from(Contatto.class);
 
-	        if (contatto == null) {
-	            System.out.println("Il contatto con ID " + id + " non esiste.");
-	            return;
-	        }
-
-	        scanner.nextLine();
+	        
 	        System.out.print("Inserisci il nuovo nome: ");
-	        String nome = scanner.nextLine();
+	        update.set("name", scanner.nextLine());
 
 	        System.out.print("Inserisci il nuovo cognome: ");
-	        String cognome = scanner.nextLine();
+	        update.set("surname", scanner.nextLine());
 
 	        System.out.print("Inserisci il nuovo numero di telefono: ");
-	        String telefono = scanner.nextLine();
+	        update.set("telephone", scanner.nextLine());
 
 	        System.out.print("Inserisci la nuova email: ");
-	        String email = scanner.nextLine();
+	        update.set("email", scanner.nextLine());
 
 	        System.out.print("Inserisci la nuova nota: ");
-	        String nota = scanner.nextLine();
+	        update.set("note", scanner.nextLine());
 
+	        update.where(cb.equal(contatto.get("id"), id));
+	        
 	        entityManager.getTransaction().begin();
-
-	        contatto.setName(nome);
-	        contatto.setName(cognome);
-	        contatto.setTelephone(telefono);
-	        contatto.setEmail(email);
-	        contatto.setNote(nota);
-
+	        entityManager.createQuery(update).executeUpdate();
 	        entityManager.getTransaction().commit();
 
 	        System.out.println("Il contatto con ID " + id + " è stato modificato.");
-
+	        scanner.close();
+	        
 	    } catch (Exception e) {
 	        entityManager.getTransaction().rollback();
 	        e.printStackTrace();
