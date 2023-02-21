@@ -42,10 +42,9 @@ public class RubricaImportManager {
 
 				contact.setSurname(fields[0]);
 				contact.setName(fields[1]);
-				contact.setAge(Integer.parseInt(fields[2]));
-				contact.setTelephone(fields[3]);
-				contact.setEmail(fields[4]);
-				contact.setNote(fields[5]);
+				contact.setTelephone(fields[2]);
+				contact.setEmail(fields[3]);
+				contact.setNote(fields[4]);
 
 				contacts.add(contact);
 			}
@@ -88,9 +87,6 @@ public class RubricaImportManager {
 					break;
 				case "name":
 					contact.setName(tag.getTextContent());
-					break;
-				case "age":
-					contact.setAge(Integer.parseInt(tag.getTextContent()));
 					break;
 				case "telephone":
 					contact.setTelephone(tag.getTextContent());

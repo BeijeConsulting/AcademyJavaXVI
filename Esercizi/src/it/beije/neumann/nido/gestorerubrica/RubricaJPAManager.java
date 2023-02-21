@@ -90,7 +90,6 @@ public class RubricaJPAManager implements RubricaQLManager { // Sistemare
 
 		toEdit.setName(contact.getName());
 		toEdit.setSurname(contact.getSurname());
-		toEdit.setAge(contact.getAge());
 		toEdit.setEmail(contact.getEmail());
 		toEdit.setTelephone(contact.getTelephone());
 		toEdit.setNote(contact.getNote());
@@ -110,7 +109,6 @@ public class RubricaJPAManager implements RubricaQLManager { // Sistemare
 
 		toDelete.setName(contact.getName());
 		toDelete.setSurname(contact.getSurname());
-		toDelete.setAge(contact.getAge());
 		toDelete.setEmail(contact.getEmail());
 		toDelete.setTelephone(contact.getTelephone());
 		toDelete.setNote(contact.getNote());
@@ -127,8 +125,9 @@ public class RubricaJPAManager implements RubricaQLManager { // Sistemare
 		transaction.begin();
 
 		String innerQuery = "SELECT d FROM Contact AS d WHERE d.name = c.name AND d.surname = c.surname AND d.id <> c.id";
-		String selectHQL = "SELECT c FROM Contact AS c WHERE EXISTS (" + innerQuery + ") ORDER BY c.surname ASC";
-		
+		String selectHQL = "SELECT c FROM Contact AS c WHERE EXISTS (" + innerQuery
+				+ ") ORDER BY c.surname ASC, c.id ASC";
+
 		Query query = entityManager.createQuery(selectHQL);
 		List<Contact> duplicates = query.getResultList();
 
@@ -138,14 +137,29 @@ public class RubricaJPAManager implements RubricaQLManager { // Sistemare
 		return duplicates;
 	}
 
-	public void mergeDuplicate() {
-		launchEntityManager();
-		transaction.begin();
+	public void mergeDuplicate(Contact base, Contact dup) {
+		String newVal = null;
 
-		System.out.println("mergeDuplicate() on its way for implementation");
+		// Telephone
+		if (!base.getTelephone().contains(dup.getTelephone())) {
+			newVal = FilesUtils.formatNewField(base.getTelephone(), dup.getTelephone());
+			base.setTelephone(newVal);
+		}
 
-		transaction.commit();
-		closeEntityManager();
+		// Email
+		if (!base.getEmail().contains(dup.getEmail())) {
+			newVal = FilesUtils.formatNewField(base.getEmail(), dup.getEmail());
+			base.setEmail(newVal);
+		}
+
+		// Note
+		if (!base.getNote().contains(dup.getNote())) {
+			newVal = FilesUtils.formatNewField(base.getNote(), dup.getNote());
+			base.setNote(newVal);
+		}
+
+		this.deleteContact(dup);
+		this.editContact(base);
 
 	}
 

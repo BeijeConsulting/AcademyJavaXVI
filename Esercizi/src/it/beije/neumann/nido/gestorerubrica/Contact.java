@@ -14,25 +14,22 @@ import javax.persistence.Table;
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "surname")
 	private String surname;
-	
+
 	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "age")
-	private int age;
-	
+
 	@Column(name = "telephone")
 	private String telephone;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "note", columnDefinition = "text")
 	private String note;
 
@@ -58,14 +55,6 @@ public class Contact {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public String getTelephone() {
@@ -94,16 +83,16 @@ public class Contact {
 
 	public String toString() {
 
-		StringBuilder builder = new StringBuilder("{").append(" ID: ").append(id).append(", Name: ").append(name).append(", Surname: ")
-				.append(surname).append(", Age: ").append(age).append(", Telephone: ").append(telephone)
-				.append(", Email: ").append(email).append(", Note: ").append(note).append("}");
+		StringBuilder builder = new StringBuilder("{").append(" ID: ").append(id).append(", Name: ").append(name)
+				.append(", Surname: ").append(surname).append(", Telephone: ").append(telephone).append(", Email: ")
+				.append(email).append(", Note: ").append(note).append("}");
 
 		return builder.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(age, email, id, name, note, surname, telephone);
+		return Objects.hash(email, id, name, note, surname, telephone);
 	}
 
 	@Override

@@ -35,5 +35,19 @@ public class FilesUtils {
 	public static String formatPeakDB(String str) {
 		return str.replace("'", "''");
 	}
+	
+	public static String formatNewField(String oldValue, String addValue) {
+		StringBuilder worker = new StringBuilder();
+		String newValue = null;
+		
+		worker.append(oldValue).append(" - ").append(addValue);
+		newValue = worker.toString();
+		
+		if (newValue.contains("- -")) {
+			newValue = newValue.replace("- -", "-");
+		}
+		
+		return newValue.trim();
+	}
 
 }

@@ -46,7 +46,6 @@ public class RubricaExportManager {
 			for (Contact contact : contacts) {
 				fW.write(contact.getSurname() + separator);
 				fW.write(contact.getName() + separator);
-				fW.write(contact.getAge() + separator);
 				fW.write(contact.getTelephone() + separator);
 				fW.write(contact.getEmail() + separator);
 				fW.write(contact.getNote() + "\n");
@@ -85,9 +84,6 @@ public class RubricaExportManager {
 
 			Element name = xmlDoc.createElement("name");
 			name.setTextContent(c.getName());
-
-			Element age = xmlDoc.createElement("age");
-			age.setTextContent(String.valueOf(c.getAge()));
 
 			Element telephone = xmlDoc.createElement("telephone");
 			telephone.setTextContent(c.getTelephone());

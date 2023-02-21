@@ -9,8 +9,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 public class RubricaJPACriteriaManager implements RubricaQLManager { // Sistemare
 
@@ -129,7 +131,6 @@ public class RubricaJPACriteriaManager implements RubricaQLManager { // Sistemar
 
 		criteriaUpdate.set("surname", contact.getSurname());
 		criteriaUpdate.set("name", contact.getName());
-		criteriaUpdate.set("age", contact.getAge());
 		criteriaUpdate.set("telephone", contact.getTelephone());
 		criteriaUpdate.set("email", contact.getEmail());
 		criteriaUpdate.set("note", contact.getNote());
@@ -170,24 +171,57 @@ public class RubricaJPACriteriaManager implements RubricaQLManager { // Sistemar
 
 		fetchCriteriaBuilder();
 
-		System.out.println("searchDuplicate() on its way for implementation");
+		CriteriaQuery<Contact> criteriaQuery = criteriaBuilder.createQuery(Contact.class);
+		Subquery<Contact> subQuery = criteriaQuery.subquery(Contact.class);
+
+		Root<Contact> c1 = criteriaQuery.from(Contact.class);
+		Root<Contact> c2 = subQuery.from(Contact.class);
+
+		Predicate sameName = criteriaBuilder.equal(c1.get("name"), c2.get("name"));
+		Predicate sameSurname = criteriaBuilder.equal(c1.get("surname"), c2.get("surname"));
+		Predicate differentId = criteriaBuilder.notEqual(c1.get("id"), c2.get("id"));
+
+		Order ascBySurname = criteriaBuilder.asc(c1.get("surname"));
+		Order ascById = criteriaBuilder.asc(c1.get("id"));
+
+		subQuery.select(c2);
+		subQuery.where(criteriaBuilder.and(sameName, sameSurname, differentId));
+
+		criteriaQuery.select(c1);
+		criteriaQuery.where(criteriaBuilder.exists(subQuery)).orderBy(ascBySurname, ascById);
+
+		Query query = entityManager.createQuery(criteriaQuery);
+		List<Contact> duplicates = query.getResultList();
 
 		transaction.commit();
 		closeEntityManager();
 
-		return null;
+		return duplicates;
 	}
 
-	public void mergeDuplicate() {
-		launchEntityManager();
-		transaction.begin();
+	public void mergeDuplicate(Contact base, Contact dup) {
+		String newVal = null;
 
-		fetchCriteriaBuilder();
+		// Telephone
+		if (!base.getTelephone().contains(dup.getTelephone())) {
+			newVal = FilesUtils.formatNewField(base.getTelephone(), dup.getTelephone());
+			base.setTelephone(newVal);
+		}
 
-		System.out.println("mergeDuplicate() on its way for implementation");
+		// Email
+		if (!base.getEmail().contains(dup.getEmail())) {
+			newVal = FilesUtils.formatNewField(base.getEmail(), dup.getEmail());
+			base.setEmail(newVal);
+		}
 
-		transaction.commit();
-		closeEntityManager();
+		// Note
+		if (!base.getNote().contains(dup.getNote())) {
+			newVal = FilesUtils.formatNewField(base.getNote(), dup.getNote());
+			base.setNote(newVal);
+		}
+
+		this.deleteContact(dup);
+		this.editContact(base);
 
 	}
 

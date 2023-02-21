@@ -13,20 +13,13 @@
  */
 package it.beije.neumann.nido.gestorerubrica;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.xml.sax.SAXException;
-
 /* TODO
  * - Import/Export manager come singleton? static class?
  * - Richiamare su menu funzioni import/export
- * - Sistemare la ricerca duplicati di HB
  */
 
 public class RubricaCompleta {
@@ -44,11 +37,11 @@ public class RubricaCompleta {
 	public static void printMenu() {
 		System.out.println("\t**Gestore rubrica**");
 		System.out.println("\t**Operazioni possibili**");
-		System.out.println("-1.Mostra di nuovo il menu"); // OK
-		System.out.println("1.Mostra l'elenco dei contatti"); // OK
-		System.out.println("2.Cerca un contatto"); // OK
-		System.out.println("3.Aggiungi un nuovo contatto"); // OK
-		System.out.println("4.Modifica un contatto esistente"); // OK
+		System.out.println("-1.Mostra di nuovo il menu");
+		System.out.println("1.Mostra l'elenco dei contatti");
+		System.out.println("2.Cerca un contatto");
+		System.out.println("3.Aggiungi un nuovo contatto");
+		System.out.println("4.Modifica un contatto esistente");
 		System.out.println("5.Cancella un contatto");
 		System.out.println("6.Trova duplicati");
 		System.out.println("7.Unisci duplicati");
@@ -56,7 +49,7 @@ public class RubricaCompleta {
 		System.out.println("9.Importa rubrica da XML");
 		System.out.println("10.Esporta rubrica su CSV");
 		System.out.println("11.Esporta rubrica su XML");
-		System.out.println("0.ESCI\n"); // OK
+		System.out.println("0.ESCI\n");
 	}
 
 	public static void op1(RubricaQLManager dataManager) {
@@ -132,9 +125,6 @@ public class RubricaCompleta {
 		System.out.print("\t-Nome: ");
 		contact.setName(in.nextLine());
 
-		System.out.print("\t-Eta': ");
-		contact.setAge(Integer.parseInt(in.nextLine()));
-
 		System.out.print("\t-Telefono: ");
 		contact.setTelephone(in.nextLine());
 
@@ -194,9 +184,6 @@ public class RubricaCompleta {
 
 			System.out.print("\t-Nome: ");
 			newC.setName(in.nextLine());
-
-			System.out.print("\t-Eta': ");
-			newC.setAge(Integer.parseInt(in.nextLine()));
 
 			System.out.print("\t-Telefono: ");
 			newC.setTelephone(in.nextLine());
@@ -265,7 +252,28 @@ public class RubricaCompleta {
 	}
 
 	public static void op7(RubricaQLManager dataManager) {
-		System.out.println("*Operazione 7*\n");
+		List<Contact> duplicates = dataManager.searchDuplicate();
+
+		Contact base = null;
+
+		if (!duplicates.isEmpty()) {
+
+			for (Contact dup : duplicates) {
+				if (dup.equals(base) && dup.getId() != base.getId()) {
+
+					dataManager.mergeDuplicate(base, dup);
+
+				} else {
+					base = dup;
+				}
+
+			}
+
+			System.out.println("Contatti duplicati uniti correttamente!");
+		} else {
+			System.out.println("Nessun contatto da unificare");
+		}
+
 	}
 
 	public static void subMenuOp8_9() {
@@ -284,8 +292,8 @@ public class RubricaCompleta {
 		Scanner in = new Scanner(System.in);
 		String choose = null;
 		boolean inMenu = true;
-		
-		RubricaQLManager manager = jpaManager;
+
+		RubricaQLManager manager = dbManager;
 
 		printMenu();
 
@@ -327,12 +335,20 @@ public class RubricaCompleta {
 				break;
 
 			case 7:
-//				op7(manager);
-				System.out.println("Operation 7 not available now");
+				op7(manager);
 				break;
 
 			case 8:
-				System.out.println("Operation 8 not available now");
+				System.out.print("Da dove vuoi importare la rubrica? ");
+				String file = in.nextLine();
+				switch (file) {
+				case "CSV":
+					break;
+				case "XML":
+					break;
+				default:
+					System.out.println("Non riconosco questo tipo di sorgente!");
+				}
 				break;
 
 			case 9:

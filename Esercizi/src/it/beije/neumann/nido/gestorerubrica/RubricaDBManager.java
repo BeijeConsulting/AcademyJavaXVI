@@ -57,7 +57,6 @@ public class RubricaDBManager implements RubricaQLManager {
 				contact.setId(rs.getInt("id"));
 				contact.setSurname(rs.getString("surname"));
 				contact.setName(rs.getString("name"));
-				contact.setAge(rs.getInt("age"));
 				contact.setTelephone(rs.getString("telephone"));
 				contact.setEmail(rs.getString("email"));
 				contact.setNote(rs.getString("note"));
@@ -115,7 +114,6 @@ public class RubricaDBManager implements RubricaQLManager {
 				contact.setId(rs.getInt("id"));
 				contact.setSurname(rs.getString("surname"));
 				contact.setName(rs.getString("name"));
-				contact.setAge(rs.getInt("age"));
 				contact.setTelephone(rs.getString("telephone"));
 				contact.setEmail(rs.getString("email"));
 				contact.setNote(rs.getString("note"));
@@ -140,7 +138,7 @@ public class RubricaDBManager implements RubricaQLManager {
 	}
 
 	public void addContact(Contact contact) {
-		String queryInsert = "INSERT INTO rubricacompleta(surname, name, age, telephone, email, note) VALUES (?,?,?,?,?,?)";
+		String queryInsert = "INSERT INTO rubricacompleta(surname, name, telephone, email, note) VALUES (?,?,?,?,?)";
 
 		PreparedStatement prepStatement = null;
 
@@ -150,10 +148,9 @@ public class RubricaDBManager implements RubricaQLManager {
 
 			prepStatement.setString(1, FilesUtils.formatPeakDB(contact.getSurname()));
 			prepStatement.setString(2, FilesUtils.formatPeakDB(contact.getName()));
-			prepStatement.setInt(3, contact.getAge());
-			prepStatement.setString(4, contact.getTelephone());
-			prepStatement.setString(5, contact.getEmail());
-			prepStatement.setString(6, FilesUtils.formatPeakDB(contact.getNote()));
+			prepStatement.setString(3, contact.getTelephone());
+			prepStatement.setString(4, contact.getEmail());
+			prepStatement.setString(5, FilesUtils.formatPeakDB(contact.getNote()));
 
 			prepStatement.executeUpdate();
 
@@ -170,7 +167,7 @@ public class RubricaDBManager implements RubricaQLManager {
 	}
 
 	public void editContact(Contact contact) {
-		String queryUpdate = "UPDATE rubricacompleta SET name=?, surname=?, age=?, telephone=?, email=?, note=? WHERE id=?";
+		String queryUpdate = "UPDATE rubricacompleta SET name=?, surname=?, telephone=?, email=?, note=? WHERE id=?";
 
 		PreparedStatement prepStatement = null;
 		ResultSet rs = null;
@@ -181,12 +178,11 @@ public class RubricaDBManager implements RubricaQLManager {
 
 			prepStatement.setString(1, contact.getName());
 			prepStatement.setString(2, contact.getSurname());
-			prepStatement.setInt(3, contact.getAge());
-			prepStatement.setString(4, contact.getTelephone());
-			prepStatement.setString(5, contact.getEmail());
-			prepStatement.setString(6, contact.getNote());
+			prepStatement.setString(3, contact.getTelephone());
+			prepStatement.setString(4, contact.getEmail());
+			prepStatement.setString(5, contact.getNote());
 
-			prepStatement.setInt(7, contact.getId());
+			prepStatement.setInt(6, contact.getId());
 
 			prepStatement.executeUpdate();
 
@@ -228,12 +224,12 @@ public class RubricaDBManager implements RubricaQLManager {
 	}
 
 	public List<Contact> searchDuplicate() {
-		System.out.println("searchDuplicate() on its way for implementation");
 		List<Contact> duplicates = new ArrayList<>();
 
 		String innerQuery = "SELECT surname, name FROM rubricacompleta GROUP BY surname, name HAVING COUNT(*)>1";
-		String getDuplicateQuery = "SELECT * FROM rubricacompleta AS rc JOIN ("+innerQuery+") AS rd ON rc.name=rd.name AND rc.surname=rd.surname ORDER BY rc.surname ASC";
-		
+		String getDuplicateQuery = "SELECT * FROM rubricacompleta AS rc JOIN (" + innerQuery
+				+ ") AS rd ON rc.name=rd.name AND rc.surname=rd.surname ORDER BY rc.surname ASC, rc.id ASC";
+
 		PreparedStatement prepStatement = null;
 		ResultSet rs = null;
 
@@ -249,7 +245,6 @@ public class RubricaDBManager implements RubricaQLManager {
 				dup.setId(rs.getInt("id"));
 				dup.setSurname(rs.getString("surname"));
 				dup.setName(rs.getString("name"));
-				dup.setAge(rs.getInt("age"));
 				dup.setTelephone(rs.getString("telephone"));
 				dup.setEmail(rs.getString("email"));
 				dup.setNote(rs.getString("note"));
@@ -272,11 +267,29 @@ public class RubricaDBManager implements RubricaQLManager {
 		return duplicates;
 	}
 
-	/*
-	 * System.out.println("7.Unisci duplicati");
-	 */
-	public void mergeDuplicate() {
-		System.out.println("mergeDuplicate() on its way for implementation");
-	}
+	public void mergeDuplicate(Contact base, Contact dup) {
+		String newVal = null;
 
+		// Telephone
+		if (!base.getTelephone().contains(dup.getTelephone())) {
+			newVal = FilesUtils.formatNewField(base.getTelephone(), dup.getTelephone());
+			base.setTelephone(newVal);
+		}
+
+		// Email
+		if (!base.getEmail().contains(dup.getEmail())) {
+			newVal = FilesUtils.formatNewField(base.getEmail(), dup.getEmail());
+			base.setEmail(newVal);
+		}
+
+		// Note
+		if (!base.getNote().contains(dup.getNote())) {
+			newVal = FilesUtils.formatNewField(base.getNote(), dup.getNote());
+			base.setNote(newVal);
+		}
+
+		this.deleteContact(dup);
+		this.editContact(base);
+
+	}
 }

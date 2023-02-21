@@ -16,5 +16,5 @@ public interface RubricaQLManager {
 
 	public abstract List<Contact> searchDuplicate();
 
-	public abstract void mergeDuplicate();
+	public abstract void mergeDuplicate(Contact base, Contact dup);
 }
