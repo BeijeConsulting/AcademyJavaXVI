@@ -1,5 +1,7 @@
 package it.beije.neumann.mercuri.eserciziMail8Feb;
 
+import java.util.Iterator;
+
 public class MiscMethods {
 
 	
@@ -101,20 +103,6 @@ public class MiscMethods {
 
 	}
 	
-//	tale funzione dovrebbe restituire true per i seguenti valori:
-//		({})
-//		[[]()]
-//		[{()}]
-//		({d})
-//		[[s]d()]
-//		[{(s)}kl]
-	
-//		e false per questi altri:
-
-//		{(})
-//		([]
-//		[])
-	
 	public static boolean groupCheck(String s) {
 		
 		int counter = 0;
@@ -142,9 +130,69 @@ public class MiscMethods {
 			return false;
 	}
 			
+//	Lo scopo di questo esercizio è convertire una stringa in una nuova stringa, dove ogni carattere della nuova stringa è ‘(‘ se il carattere corrispondente nella 
+//	stringa originale è unico, altrimenti vale ‘)’. Ignorare le maiuscole/minuscole per decidere se un carattere è duplicato o meno.Per esempio:”din” => “(((“”recede” => “()()()”
+//	“Success” => “)())())”
+//	“(( @” => “))((“
+	
+	public static String convertToBraces(String s) {
+		
+		StringBuilder sb = new StringBuilder();
+		char brace = 0;
+		s = s.toLowerCase();
+		
+		for (int i = 0; i < s.length(); i++) {
+			
+			char letter = s.charAt(i);
+			
+			brace = '(';
+			
+			for (int j = 0; j < s.length(); j++) {
+				
+				if (j == i) continue;
+				
+				if (letter == s.charAt(j)) {
+					brace = ')';
+					break;
+				}
+								
+			}
+			
+			sb.append(brace);
+		}
+		return sb.toString();
+	}
+	
+//	Scrivere la funzione “persistenza”, che prende un parametro intero positivo e ritorna la sua “persistenza moltiplicativa”, 
+//	che è il numero di volte per cui bisogna moltiplicare le cifre fra loro fino ad avere un unico carattere.Per esempio:persistence(39) == 3  perché 3*9 = 27, 2*7 = 14, 1*4=4
+//	 e 4 è diuna cifra solapersistence(999) == 4  perché 9*9*9 = 729, 7*2*9 = 126,
+//	 1*2*6 = 12, e 1*2 = 2
+//	persistence(4) == 0  perché 4 è già una cifra singola
+	
+	public static int persistence (int number) {
+		
+		int product = number;
+		int loop = 0;
+		
+		while (product > 9) {
+			
+			product = 1;
+			while (number != 0) {
+				
+				product *= number % 10;
+				number /= 10;
+			}
+
+			number = product;
+			
+			loop++;
+		} 
+		
+		return loop;
+	}
 	public static void main(String[] args) {
 		
-		System.out.println(groupCheck("[])"));
+		System.out.println(persistence(23));
 	}
 
 }
