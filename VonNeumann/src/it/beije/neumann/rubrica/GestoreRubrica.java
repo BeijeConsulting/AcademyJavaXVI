@@ -255,17 +255,41 @@ public class GestoreRubrica {
 //	
 //	}
 	
-	private static void cercaContatto(String nomeStringa) {
-	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
-
-	    List<Contatto> contatti = entityManager.createQuery("SELECT c FROM Contatto c WHERE c.name LIKE :nomeStringa ORDER BY c.surname", Contatto.class)
-	            .setParameter("nomeStringa", "%" + nomeStringa + "%")
-	            .getResultList();
+//	private static void cercaContatto(String nomeStringa) { JPA
+//	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
+//
+//	    List<Contatto> contatti = entityManager.createQuery("SELECT c FROM Contatto c WHERE c.name LIKE :nomeStringa ORDER BY c.surname", Contatto.class)
+//	            .setParameter("nomeStringa", "%" + nomeStringa + "%")
+//	            .getResultList();
+//
+//	    System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
+//	    for (Contatto c : contatti) {
+//	        System.out.println("---------------------------------------------------------------------");
+//	        System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + ", " + c.getTelephone() + ", " + c.getEmail() + ", " + c.getNote());
+//	        System.out.println("---------------------------------------------------------------------");
+//	    }
+//
+//	    entityManager.close();
+//	}
+	
+	private static void cercaContatto(String nomeStringa) { // Criteria API
+		EntityManager entityManager = RubricaEntityManager.getEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+		
+		Root<Contatto> contatto = criteriaQuery.from(Contatto.class);
+		criteriaQuery.where(criteriaBuilder.like(contatto.get("name"), "%" + nomeStringa + "%"));
+		
+		criteriaQuery.select(contatto);
+        Query query = entityManager.createQuery(criteriaQuery);
+        List contatti = query.getResultList();
 
 	    System.out.println("Risultati della ricerca per nome \"" + nomeStringa + "\":");
-	    for (Contatto c : contatti) {
+	    for (Object c : contatti) {
+	    	Contatto contact = (Contatto) c;
 	        System.out.println("---------------------------------------------------------------------");
-	        System.out.println(c.getId() + " " + c.getName() + " " + c.getSurname() + ", " + c.getTelephone() + ", " + c.getEmail() + ", " + c.getNote());
+	        System.out.println( contact.getId() + " " + contact.getName() + " " + contact.getSurname() + ", " + contact.getTelephone() + ", " + contact.getEmail() + ", " + contact.getNote());
 	        System.out.println("---------------------------------------------------------------------");
 	    }
 
@@ -325,7 +349,54 @@ public class GestoreRubrica {
 //	    }
 //	}
 	
-	private static void inserisciNuovoContatto() {
+//	private static void inserisciNuovoContatto() { JPA
+//	    Scanner scanner = new Scanner(System.in);
+//
+//	    System.out.print("Inserisci il nome: ");
+//	    String nome = scanner.nextLine();
+//
+//	    System.out.print("Inserisci il cognome: ");
+//	    String cognome = scanner.nextLine();
+//
+//	    System.out.print("Inserisci il numero di telefono: ");
+//	    String telefono = scanner.nextLine();
+//
+//	    System.out.print("Inserisci l'indirizzo email: ");
+//	    String email = scanner.nextLine();
+//
+//	    System.out.print("Inserisci una nota: ");
+//	    String note = scanner.nextLine();
+//	    scanner.close();
+//
+//	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
+//	    EntityTransaction transaction = entityManager.getTransaction();
+//
+//	    try {
+//	        transaction.begin();
+//
+//	        Contatto contatto = new Contatto();
+//	        contatto.setName(nome);
+//	        contatto.setSurname(cognome);
+//	        contatto.setTelephone(telefono);
+//	        contatto.setEmail(email);
+//	        contatto.setNote(note);
+//
+//	        entityManager.persist(contatto);
+//	        transaction.commit();
+//
+//	        System.out.println("Contatto aggiunto.");
+//
+//	    } catch (Exception e) {
+//	        if (transaction != null) {
+//	            transaction.rollback();
+//	        }
+//	        e.printStackTrace();
+//	    } finally {
+//	        entityManager.close();
+//	    }
+//	}
+	
+	private static void inserisciNuovoContatto() { // Criteria API
 	    Scanner scanner = new Scanner(System.in);
 
 	    System.out.print("Inserisci il nome: ");
@@ -349,18 +420,29 @@ public class GestoreRubrica {
 
 	    try {
 	        transaction.begin();
+	        
+	        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+	        CriteriaQuery<Contatto> cq = cb.createQuery(Contatto.class);
+	        Root<Contatto> contatto = cq.from(Contatto.class);
 
-	        Contatto contatto = new Contatto();
-	        contatto.setName(nome);
-	        contatto.setSurname(cognome);
-	        contatto.setTelephone(telefono);
-	        contatto.setEmail(email);
-	        contatto.setNote(note);
+	        Contatto contact = new Contatto();
+	        contact.setName(nome);
+	        contact.setSurname(cognome);
+	        contact.setTelephone(telefono);
+	        contact.setEmail(email);
+	        contact.setNote(note);
 
-	        entityManager.persist(contatto);
+	        entityManager.persist(contact);
+	        
+	        
+	        cq.select(contatto);
+	        cq.where(cb.equal(contatto.get("id"), contact.getId()));
+	        Query query = entityManager.createQuery(cq);
+	        Contatto contattoAggiunto = (Contatto) query.getSingleResult();
+	        
 	        transaction.commit();
 
-	        System.out.println("Contatto aggiunto.");
+	        System.out.println("Contatto aggiunto: " + contattoAggiunto);
 
 	    } catch (Exception e) {
 	        if (transaction != null) {
