@@ -1,5 +1,8 @@
 package it.beije.neumann.mercuri.rubrica;
 
+
+
+	
 import java.util.List;
 //Implementare un gestore di rubrica a linea di comando, con le seguenti funzionalità:
 //
@@ -17,9 +20,14 @@ import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
+
 import it.beije.neumann.rubrica.Contatto;
 
-public class RubricaJPA {
+public class RubricaJPACriteria {
 
 	static void addContatto(Scanner sc) {
 		
@@ -58,7 +66,18 @@ public class RubricaJPA {
 		System.out.println("quale valore?");
 		String value = sc.nextLine();
 		
-		sqlCommand("Select c from Contatto as c where " + field + " = ?1","select", value);
+		//sqlCommand("Select c from Contatto as c where " + field + " = ?1","select", value);
+		
+		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> c = q.from(Contatto.class);
+		q.select(c);
+		q.where(cb.equal(c.get(field), value));
+		Query query = entityManager.createQuery(q);
+		System.out.println(query.getResultList());
+		entityManager.close();
 	}
 	
 	static void viewContatti (Scanner sc) {
@@ -66,36 +85,39 @@ public class RubricaJPA {
 		System.out.println("vuoi ordinarli per nome o cognome?");
 		String orderField = sc.nextLine();
 		
-		sqlCommand("SELECT c FROM Contatto as c order by " + orderField ,"select" );
-						
+		//sqlCommand("SELECT c FROM Contatto as c order by " + orderField ,"select" );
+		
+		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> c = q.from(Contatto.class);
+		q.select(c);
+		q.orderBy(cb.asc(c.get(orderField)));
+		Query query = entityManager.createQuery(q);
+		System.out.println(query.getResultList());
+		entityManager.close();
 	}
 	
 	static void searchCopie(Scanner sc) {
 		
+			//da evitare con criteria e jpql -> usare nativeQuery
 		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		
-		EntityTransaction transaction = entityManager.getTransaction();
-		
-		transaction.begin();
-		
-		Class<?> className = null;
-		String classPath = "it.beije.neumann.rubrica.Contatto";
-		try {
-			className = Class.forName(classPath);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		}
-
-		Query query = entityManager.createNativeQuery("select c.* from contatti as c,"
-				+ " (Select nome, cognome from contatti group by nome, cognome having count(*) > 1)  a "
-				+ " where c.nome = a.nome and c.cognome = a.cognome",className);
-	
+		CriteriaQuery<Contatto> q = cb.createQuery(Contatto.class);
+		Root<Contatto> c = q.from(Contatto.class);
+		Root<Contatto> p = q.from(Contatto.class);
+		//q.multiselect(c,p);
+		q.select(c);
+		q.where(cb.equal(c.get("surname"),p.get("surname")),cb.notEqual(c.get("id"), p.get("id")),cb.equal(c.get("name"),p.get("name")));
+		Query query = entityManager.createQuery(q);
 		System.out.println(query.getResultList());
-//		sqlCommand("select c.* from contatti c,"
-//				+ " (Select nome, cognome from contatti group by nome, cognome having count(*) > 1)  a "
-//				+ " where c.nome = a.nome and c.cognome = a.cognome", true);
+		entityManager.close();
+		
+		
 	}
+	
 	private static void mergeCopie(Scanner sc) {
 		// TODO Auto-generated method stub
 		
@@ -113,50 +135,7 @@ public class RubricaJPA {
 
 	static void sqlCommand(String sqlCommand, String typeCommand, String... parameters) {
 		
-		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
-		
-		EntityTransaction transaction = entityManager.getTransaction();
-		
-		transaction.begin();
-		
-		Query query = entityManager.createQuery(sqlCommand);		
-		
-	
-		if(typeCommand.equals("select")) {
-			
-			for(int i = 0; i < parameters.length; i++) 	
-				query.setParameter(i+1, parameters[i]);
-			
-			List<Contatto> contattiJPA = query.getResultList();
-			System.out.println(contattiJPA);
-		}
-		else if (typeCommand.equals("delete")) {
-			
-			for(int i = 0; i < parameters.length; i++) 		
-				query.setParameter(i+1, parameters[i]);
-			
-			List<Contatto> contattiJPA = query.getResultList();
-			
-			for(Contatto c: contattiJPA)
-				entityManager.remove(c);
-			
-		}else if (typeCommand.equals("insert")) {
-			
-			Contatto c = new Contatto();
-			
-			c.setName(parameters[0]);
-			c.setSurname(parameters[1]);
-			c.setTelephone(parameters[2]);
-			c.setEmail(parameters[3]);
-			c.setNote(parameters[4]);
-			
-			entityManager.persist(c);
-			
-		}
 
-		transaction.commit();
-
-		entityManager.close();
 	}
 
 	static void menuRubrica () {
@@ -211,5 +190,7 @@ public class RubricaJPA {
 	
 		menuRubrica();
 	}
+
+	
 
 }
