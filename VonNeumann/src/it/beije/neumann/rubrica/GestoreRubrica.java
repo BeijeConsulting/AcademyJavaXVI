@@ -13,6 +13,9 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -159,19 +162,46 @@ public class GestoreRubrica {
 //	    }
 //	}
 	
-	private static void vediListaContatti() {
+//	private static void vediListaContatti() { JPA
+//
+//		EntityManager entityManager = RubricaEntityManager.getEntityManager();
+//
+//        Query query = entityManager.createQuery("SELECT c FROM Contatto c ORDER BY c.name, c.surname");
+//        List contatti = query.getResultList();
+//
+//        System.out.println("Elenco contatti:");
+//        for (Object c : contatti) {
+//            if (c instanceof Contatto) {
+//                Contatto contatto = (Contatto) c;
+//                System.out.println("---------------------------------------------------------------------");
+//                System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
+//                System.out.println("---------------------------------------------------------------------");
+//            }
+//        }
+//
+//        entityManager.close();
+//	}
+	
+	private static void vediListaContatti() { //Criteria API JPA
 
 		EntityManager entityManager = RubricaEntityManager.getEntityManager();
 
-        Query query = entityManager.createQuery("SELECT c FROM Contatto c ORDER BY c.name, c.surname");
-        List contatti = query.getResultList();
+//        Query query = entityManager.createQuery("SELECT c FROM Contatto c ORDER BY c.name, c.surname");
+//        List contatti = query.getResultList();
 
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> criteriaQuery = criteriaBuilder.createQuery(Contatto.class);
+		Root<Contatto> contatto = criteriaQuery.from(Contatto.class);
+		criteriaQuery.select(contatto);
+        Query query = entityManager.createQuery(criteriaQuery);
+        List contatti = query.getResultList();
+		
         System.out.println("Elenco contatti:");
         for (Object c : contatti) {
             if (c instanceof Contatto) {
-                Contatto contatto = (Contatto) c;
+                Contatto contact = (Contatto) c;
                 System.out.println("---------------------------------------------------------------------");
-                System.out.println(contatto.getId() + " " + contatto.getName() + " " + contatto.getSurname() + ", " + contatto.getTelephone() + ", " + contatto.getEmail() + ", " + contatto.getNote());
+                System.out.println(contact.getId() + " " + contact.getName() + " " + contact.getSurname() + ", " + contact.getTelephone() + ", " + contact.getEmail() + ", " + contact.getNote());
                 System.out.println("---------------------------------------------------------------------");
             }
         }
@@ -342,7 +372,7 @@ public class GestoreRubrica {
 	    }
 	}
 	
-//	private static void modificaContatto() {
+//	private static void modificaContatto() { JDBC
 //	    Connection connection = null;
 //	    PreparedStatement statement = null;
 //	    ResultSet rs = null;
