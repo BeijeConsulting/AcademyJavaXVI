@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
@@ -623,39 +624,76 @@ public class GestoreRubrica {
 	    }
 	}
 	
+//	private static void cancellaContatto() { 
+//	    Connection connection = null;
+//	    PreparedStatement statement = null;
+//
+//	    Scanner scanner = new Scanner(System.in);
+//	    System.out.println("Inserisci l'ID del contatto da cancellare: ");
+//	    int id = scanner.nextInt();
+//
+//	    try {
+//	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
+//	        statement = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
+//	        statement.setInt(1, id);
+//	        int numeroRigheEliminite = statement.executeUpdate();
+//
+//	        if (numeroRigheEliminite > 0) {
+//	            System.out.println("Contatto cancellato.");
+//	        } else {
+//	            System.out.println("Nessun contatto trovato con ID " + id + ".");
+//	        }
+//
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            if (statement != null) {
+//	                statement.close();
+//	            }
+//	            if (connection != null) {
+//	                connection.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	}
+	
 	private static void cancellaContatto() {
-	    Connection connection = null;
-	    PreparedStatement statement = null;
-
+		
 	    Scanner scanner = new Scanner(System.in);
-	    System.out.println("Inserisci l'ID del contatto da cancellare: ");
+	    System.out.print("Inserisci l'ID del contatto da cancellare: ");
 	    int id = scanner.nextInt();
+	    scanner.close();
+
+	    EntityManager entityManager = RubricaEntityManager.getEntityManager();
+	    EntityTransaction transaction = entityManager.getTransaction();
 
 	    try {
-	        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false", "root", "root");
-	        statement = connection.prepareStatement("DELETE FROM contatti WHERE id = ?");
-	        statement.setInt(1, id);
-	        int numeroRigheEliminite = statement.executeUpdate();
+	    
+	    	transaction.begin();
 
-	        if (numeroRigheEliminite > 0) {
-	            System.out.println("Contatto cancellato.");
+	        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+	        CriteriaDelete<Contatto> delete = cb.createCriteriaDelete(Contatto.class);
+	        Root<Contatto> contatto = delete.from(Contatto.class);
+	        delete.where(cb.equal(contatto.get("id"), id));
+	        int numeroRigheEliminate = entityManager.createQuery(delete).executeUpdate();
+
+	        if (numeroRigheEliminate > 0) {
+	            System.out.println("Contatto eliminato.");
 	        } else {
 	            System.out.println("Nessun contatto trovato con ID " + id + ".");
 	        }
 
-	    } catch (SQLException e) {
+	        transaction.commit();
+	    } catch (Exception e) {
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
 	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (statement != null) {
-	                statement.close();
-	            }
-	            if (connection != null) {
-	                connection.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+	        entityManager.close();
 	    }
 	}
 	
