@@ -25,6 +25,9 @@ import org.xml.sax.SAXException;
 
 public class RubricaExportManager {
 
+	private final String CSV = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.csv";
+	private final String XML = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.xml";
+
 	public void exportToCSV(String pathFile, String header, String separator, List<Contact> contacts)
 			throws IOException {
 		File file = new File(pathFile);

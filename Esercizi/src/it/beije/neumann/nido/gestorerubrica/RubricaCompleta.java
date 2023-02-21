@@ -36,9 +36,10 @@ public class RubricaCompleta {
 
 	public static RubricaImportManager importManager = new RubricaImportManager();
 	public static RubricaExportManager exportManager = new RubricaExportManager();
-//	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager();
-//	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager();
+	public static RubricaDBManager dbManager = RubricaDBManager.getDBManager();
+	public static RubricaHBManager hbManager = RubricaHBManager.getHBManager();
 	public static RubricaJPAManager jpaManager = RubricaJPAManager.getJPAManager();
+	public static RubricaJPACriteriaManager criteriaManager = RubricaJPACriteriaManager.getJPACriteriaManager();
 
 	public static void printMenu() {
 		System.out.println("\t**Gestore rubrica**");
@@ -58,7 +59,7 @@ public class RubricaCompleta {
 		System.out.println("0.ESCI\n"); // OK
 	}
 
-	public static void op1() {
+	public static void op1(RubricaQLManager dataManager) {
 		Scanner in = new Scanner(System.in);
 
 		String orderBy = null;
@@ -94,12 +95,10 @@ public class RubricaCompleta {
 
 		}
 
-//		dbManager.showRubrica(orderBy, onWhat); // meglio static?
-//		hbManager.showRubrica(orderBy, onWhat);
-		jpaManager.showRubrica(orderBy, onWhat);
+		dataManager.showRubrica(orderBy, onWhat);
 	}
 
-	public static void op2() {
+	public static void op2(RubricaQLManager dataManager) {
 		List<Contact> contactsFound = new ArrayList<>();
 
 		Scanner in = new Scanner(System.in);
@@ -111,9 +110,7 @@ public class RubricaCompleta {
 		System.out.print("\t-Nome: ");
 		String name = in.nextLine().trim();
 
-//		contactsFound = dbManager.searchContact(name, surname);
-//		contactsFound = hbManager.searchContact(name, surname);
-		contactsFound = jpaManager.searchContact(name, surname);
+		contactsFound = dataManager.searchContact(name, surname);
 
 		if (contactsFound.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -123,7 +120,7 @@ public class RubricaCompleta {
 
 	}
 
-	public static void op3() {
+	public static void op3(RubricaQLManager dataManager) {
 		Scanner in = new Scanner(System.in);
 		Contact contact = new Contact();
 
@@ -149,14 +146,12 @@ public class RubricaCompleta {
 
 		System.out.println();
 
-//		dbManager.addContact(contact);
-//		hbManager.addContact(contact);
-		jpaManager.addContact(contact);
+		dataManager.addContact(contact);
 
 		System.out.println("Contatto aggiunto!");
 	}
 
-	public static void op4() {
+	public static void op4(RubricaQLManager dataManager) {
 		List<Contact> found = new ArrayList<>();
 
 		Scanner in = new Scanner(System.in);
@@ -170,9 +165,7 @@ public class RubricaCompleta {
 
 		Contact newC = new Contact();
 
-//		found = dbManager.searchContact(name, surname);
-//		found = hbManager.searchContact(name, surname);
-		found = jpaManager.searchContact(name, surname);
+		found = dataManager.searchContact(name, surname);
 
 		if (found.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -214,14 +207,12 @@ public class RubricaCompleta {
 			System.out.print("\t-Note sul contatto: ");
 			newC.setNote(in.nextLine());
 
-//			dbManager.editContact(newC);
-//			hbManager.editContact(newC);
-			jpaManager.editContact(newC);
+			dataManager.editContact(newC);
 		}
 
 	}
 
-	public static void op5() {
+	public static void op5(RubricaQLManager dataManager) {
 		List<Contact> found = new ArrayList<>();
 
 		Scanner in = new Scanner(System.in);
@@ -235,9 +226,7 @@ public class RubricaCompleta {
 
 		Contact newC = new Contact();
 
-//		found = dbManager.searchContact(name, surname);
-//		found = hbManager.searchContact(name, surname);
-		found = jpaManager.searchContact(name, surname);
+		found = dataManager.searchContact(name, surname);
 
 		if (found.size() == 0) {
 			System.out.println("Mi dispiace, non è stato trovato alcun [" + name + " " + surname + "]");
@@ -259,24 +248,20 @@ public class RubricaCompleta {
 				}
 			}
 
-//			dbManager.deleteContact(newC);
-//			hbManager.deleteContact(newC);
-			jpaManager.deleteContact(newC);
+			dataManager.deleteContact(newC);
 		}
 	}
 
-	public static void op6() {
-//		List<Contact> duplicates = dbManager.searchDuplicate();
-//		List<Contact> duplicates = hbManager.searchDuplicate();
-		List<Contact> duplicates = jpaManager.searchDuplicate();
+	public static void op6(RubricaQLManager dataManager) {
+		List<Contact> duplicates = dataManager.searchDuplicate();
 
 		if (duplicates.size() > 0) {
 			for (Contact d : duplicates) {
 				System.out
 						.println("Duplicati per [" + d.getName() + " " + d.getSurname() + "] -> " + duplicates.size());
-//				List<Contact> search = dbManager.searchContact(d.getName(), d.getSurname());
-//				List<Contact> search = hbManager.searchContact(d.getName(), d.getSurname());
-				List<Contact> search = jpaManager.searchContact(d.getName(), d.getSurname());
+
+				List<Contact> search = dataManager.searchContact(d.getName(), d.getSurname());
+				
 				for (Contact c : search) {
 					System.out.println(c);
 				}
@@ -287,7 +272,7 @@ public class RubricaCompleta {
 		}
 	}
 
-	public static void op7() {
+	public static void op7(RubricaQLManager dataManager) {
 		System.out.println("*Operazione 7*\n");
 	}
 
@@ -324,31 +309,52 @@ public class RubricaCompleta {
 				break;
 
 			case 1:
-				op1();
+//				op1(dbManager);
+//				op1(hbManager);
+//				op1(jpaManager);
+				op1(criteriaManager);
 				break;
 
 			case 2:
-				op2();
+//				op2(dbManager);
+//				op2(hbManager);
+//				op2(jpaManager);
+				op2(criteriaManager);
 				break;
 
 			case 3:
-				op3();
+//				op3(dbManager);
+//				op3(hbManager);
+//				op3(jpaManager);
+				op3(criteriaManager);
 				break;
 
 			case 4:
-				op4();
+//				op4(dbManager);
+//				op4(hbManager);
+//				op4(jpaManager);
+				op4(criteriaManager);
 				break;
 
 			case 5:
-				op5();
+//				op5(dbManager);
+//				op5(hbManager);
+//				op5(jpaManager);
+				op5(criteriaManager);
 				break;
 
 			case 6:
-				op6();
+//				op6(dbManager);
+//				op6(hbManager);
+//				op6(jpaManager);
+				op6(criteriaManager);
 				break;
 
 			case 7:
-				//op7();
+//				op7(dbManager);
+//				op7(hbManager);
+//				op7(jpaManager);
+//				op7(criteriaManager);
 				System.out.println("Operation 7 not available now");
 				break;
 

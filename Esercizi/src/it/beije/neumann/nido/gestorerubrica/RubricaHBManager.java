@@ -8,11 +8,11 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-public class RubricaHBManager {
+public class RubricaHBManager implements RubricaQLManager {
 
 	private static RubricaHBManager hbManager;
-	private static Session session;
-	private static Transaction transaction;
+	private Session session;
+	private Transaction transaction;
 
 	private RubricaHBManager() {
 	}
@@ -25,15 +25,15 @@ public class RubricaHBManager {
 		return hbManager;
 	}
 
-	private static void openSession() {
+	private void openSession() {
 		session = HBMsessionFactory.openSession();
 	}
 
-	private static void closeSession() {
+	private void closeSession() {
 		session.close();
 	}
 
-	public static void showRubrica(String orderBy, String onWhat) {
+	public void showRubrica(String orderBy, String onWhat) {
 		openSession();
 		// transaction = session.beginTransaction();
 
@@ -49,7 +49,7 @@ public class RubricaHBManager {
 		closeSession();
 	}
 
-	public static List<Contact> searchContact(String name, String surname) {
+	public List<Contact> searchContact(String name, String surname) {
 		openSession();
 //		transaction = session.beginTransaction();
 
@@ -72,7 +72,7 @@ public class RubricaHBManager {
 		return found;
 	}
 
-	public static void addContact(Contact contact) {
+	public void addContact(Contact contact) {
 		openSession();
 //		transaction = session.beginTransaction();
 		session.save(contact);
@@ -81,7 +81,7 @@ public class RubricaHBManager {
 		closeSession();
 	}
 
-	public static void editContact(Contact contact) {
+	public void editContact(Contact contact) {
 		openSession();
 		transaction = session.beginTransaction();
 
@@ -107,7 +107,7 @@ public class RubricaHBManager {
 		System.out.println("Modifiche effettuate!");
 	}
 
-	public static void deleteContact(Contact contact) {
+	public void deleteContact(Contact contact) {
 		openSession();
 		transaction = session.beginTransaction();
 
@@ -138,8 +138,8 @@ public class RubricaHBManager {
 	 * System.out.println("6.Trova duplicati");
 	 * System.out.println("7.Unisci duplicati");
 	 */
-	
-	public static List<Contact> searchDuplicate() {
+
+	public List<Contact> searchDuplicate() {
 //		openSession();
 ////		transaction = session.beginTransaction();
 //
@@ -161,7 +161,7 @@ public class RubricaHBManager {
 		return found;
 	}
 
-	public static void mergeDuplicate() {
+	public void mergeDuplicate() {
 		openSession();
 		transaction = session.beginTransaction();
 		transaction.commit();

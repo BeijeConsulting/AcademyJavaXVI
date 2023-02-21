@@ -21,6 +21,9 @@ import org.xml.sax.SAXException;
 
 public class RubricaImportManager {
 
+	private final String CSV = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.csv";
+	private final String XML = "./src/it/beije/neumann/nido/gestorerubrica/addressBook.xml";
+
 	public List<Contact> importFromCSV(String filePath, String separator) throws IOException {
 		List<Contact> contacts = new ArrayList<>();
 

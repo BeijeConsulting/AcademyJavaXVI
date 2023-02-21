@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RubricaDBManager {
+public class RubricaDBManager implements RubricaQLManager {
 
 	private static RubricaDBManager rubricaDBManager;
 
-	private static Connection connection = null;
+	private Connection connection = null;
 
-	private static final String URL = "jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false";
-	private static final String USER = "root";
-	private static final String PSW = "Mary23BeijeSQL";
+	private final String URL = "jdbc:mysql://localhost:3306/neumann?serverTimezone=CET&useSSL=false";
+	private final String USER = "root";
+	private final String PSW = "Mary23BeijeSQL";
 
 	private RubricaDBManager() {
 	}
@@ -29,15 +29,15 @@ public class RubricaDBManager {
 		return rubricaDBManager;
 	}
 
-	private static Connection openConnection() throws SQLException {
+	private Connection openConnection() throws SQLException {
 		return DriverManager.getConnection(URL, USER, PSW);
 	}
 
-	private static void closeConnection() throws SQLException {
+	private void closeConnection() throws SQLException {
 		connection.close();
 	}
 
-	public static void showRubrica(String orderBy, String onWhat) {
+	public void showRubrica(String orderBy, String onWhat) {
 		PreparedStatement prepStatement = null;
 		ResultSet rs = null;
 
@@ -80,7 +80,7 @@ public class RubricaDBManager {
 		}
 	}
 
-	public static List<Contact> searchContact(String name, String surname) {
+	public List<Contact> searchContact(String name, String surname) {
 
 		List<Contact> contactsFound = new ArrayList<>();
 
@@ -139,7 +139,7 @@ public class RubricaDBManager {
 		return contactsFound;
 	}
 
-	public static void addContact(Contact contact) {
+	public void addContact(Contact contact) {
 		String queryInsert = "INSERT INTO rubricacompleta(surname, name, age, telephone, email, note) VALUES (?,?,?,?,?,?)";
 
 		PreparedStatement prepStatement = null;
@@ -169,7 +169,7 @@ public class RubricaDBManager {
 		}
 	}
 
-	public static void editContact(Contact contact) {
+	public void editContact(Contact contact) {
 		String queryUpdate = "UPDATE rubricacompleta SET name=?, surname=?, age=?, telephone=?, email=?, note=? WHERE id=?";
 
 		PreparedStatement prepStatement = null;
@@ -202,7 +202,7 @@ public class RubricaDBManager {
 		}
 	}
 
-	public static void deleteContact(Contact contact) {
+	public void deleteContact(Contact contact) {
 		String deleteQuery = "DELETE FROM rubricacompleta WHERE id=?";
 
 		PreparedStatement prepStatement = null;
@@ -227,10 +227,10 @@ public class RubricaDBManager {
 		}
 	}
 
-	public static List<Contact> searchDuplicate() {
+	public List<Contact> searchDuplicate() {
 		System.out.println("searchDuplicate() on its way for implementation");
 		List<Contact> duplicates = new ArrayList<>();
-		
+
 		String getDuplicateQuery = "SELECT surname, name FROM rubricacompleta GROUP BY surname, name HAVING COUNT(*)>1";
 
 		PreparedStatement prepStatement = null;
@@ -239,15 +239,15 @@ public class RubricaDBManager {
 		try {
 			connection = openConnection();
 			prepStatement = connection.prepareStatement(getDuplicateQuery);
-			
+
 			rs = prepStatement.executeQuery();
 
 			while (rs.next()) {
 				Contact dup = new Contact();
-				
+
 				dup.setSurname(rs.getString("surname"));
 				dup.setName(rs.getString("name"));
-				
+
 				duplicates.add(dup);
 			}
 
@@ -262,14 +262,14 @@ public class RubricaDBManager {
 				sqlEx2.printStackTrace();
 			}
 		}
-		
+
 		return duplicates;
 	}
 
 	/*
 	 * System.out.println("7.Unisci duplicati");
 	 */
-	public static void mergeDuplicate() {
+	public void mergeDuplicate() {
 		System.out.println("mergeDuplicate() on its way for implementation");
 	}
 
