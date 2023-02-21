@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RubricaJDBC {
+public class RubricaJDBC implements RubricaInterface{
 	
 	public static Connection getConnection() {
 		//Lettura file con passwd
@@ -32,7 +32,7 @@ public class RubricaJDBC {
 		return conn;
 	}
 	
-	public static List<Contatto> LoadRubricaFromDB() throws ClassNotFoundException, IOException {
+	public List<Contatto> LoadRubricaFromDB() {
 		
 		Connection connection = null;
 		Statement statement = null; 
@@ -48,10 +48,10 @@ public class RubricaJDBC {
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
-				c.setSurname(rs.getString("cognome"));
-				c.setName(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setNome(rs.getString("nome"));
 				c.setEmail(rs.getString("email"));
-				c.setTelephone(rs.getString("telefono"));
+				c.setTelefono(rs.getString("telefono"));
 				c.setNote(rs.getString("note"));
 				contatti.add(c);
 			}
@@ -69,7 +69,7 @@ public class RubricaJDBC {
 		return contatti;
 	}
 
-	public static void WriteRubricaToDB(List<Contatto> listaContatti) throws ClassNotFoundException, IOException {
+	public void WriteRubricaToDB(List<Contatto> listaContatti) {
 				
 		Connection connection = null;
 		
@@ -79,9 +79,9 @@ public class RubricaJDBC {
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
 			
 			for (Contatto c: listaContatti) {				
-				preparedStatement.setString(1, c.getName());
-				preparedStatement.setString(2, c.getSurname());
-				preparedStatement.setString(3, c.getTelephone());
+				preparedStatement.setString(1, c.getNome());
+				preparedStatement.setString(2, c.getCognome());
+				preparedStatement.setString(3, c.getTelefono());
 				preparedStatement.setString(4, c.getEmail());
 				preparedStatement.setString(5, c.getNote());
 				preparedStatement.executeUpdate();				
@@ -99,7 +99,7 @@ public class RubricaJDBC {
 	
 	//funzioni riga di comando
 	
-	public static List<Contatto> elencoRubrica(String orderBy) {
+	public List<Contatto> elencoRubrica(String orderBy) {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;
@@ -114,9 +114,9 @@ public class RubricaJDBC {
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
-				c.setName(rs.getString("nome"));
-				c.setSurname(rs.getString("cognome"));
-				c.setTelephone(rs.getString("telefono"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
 				c.setEmail(rs.getString("email"));
 				c.setNote(rs.getString("note"));
 				contatti.add(c);
@@ -134,7 +134,7 @@ public class RubricaJDBC {
 		return contatti;		
 	}
 	
-	public static List<Contatto> cercaContatto(String nome, String cognome) {
+	public List<Contatto> cercaContatto(String nome, String cognome) {
 		Connection connection = getConnection();
 		ResultSet rs = null;
 		
@@ -148,9 +148,9 @@ public class RubricaJDBC {
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
-				c.setName(rs.getString("nome"));
-				c.setSurname(rs.getString("cognome"));
-				c.setTelephone(rs.getString("telefono"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
 				c.setEmail(rs.getString("email"));
 				c.setNote(rs.getString("note"));
 				contatti.add(c);
@@ -168,14 +168,14 @@ public class RubricaJDBC {
 		return contatti;		
 	}
 	
-	public static void inserisciContatto(Contatto c) {
+	public void inserisciContatto(Contatto c) {
 		Connection connection = getConnection();
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO contatti(nome, cognome, telefono, email, note) VALUES (? , ? , ? , ? , ?)");
-			preparedStatement.setString(1, c.getName());
-			preparedStatement.setString(2, c.getSurname());
-			preparedStatement.setString(3, c.getTelephone());
+			preparedStatement.setString(1, c.getNome());
+			preparedStatement.setString(2, c.getCognome());
+			preparedStatement.setString(3, c.getTelefono());
 			preparedStatement.setString(4, c.getEmail());
 			preparedStatement.setString(5, c.getNote());
 			preparedStatement.executeUpdate();
@@ -190,14 +190,14 @@ public class RubricaJDBC {
 		}
 	}
 	
-	public static void editContatto(Contatto c) {
+	public void editContatto(Contatto c) {
 		Connection connection = getConnection();
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE contatti SET nome = ?, cognome = ?, telefono = ?, email = ?, note = ? WHERE id = ?");
-			preparedStatement.setString(1, c.getName());
-			preparedStatement.setString(2, c.getSurname());
-			preparedStatement.setString(3, c.getTelephone());
+			preparedStatement.setString(1, c.getNome());
+			preparedStatement.setString(2, c.getCognome());
+			preparedStatement.setString(3, c.getTelefono());
 			preparedStatement.setString(4, c.getEmail());
 			preparedStatement.setString(5, c.getNote());
 			preparedStatement.setString(6, String.valueOf(c.getId()));
@@ -213,7 +213,7 @@ public class RubricaJDBC {
 		}
 	}
 	
-	public static void deleteContatto(Contatto c) {
+	public void deleteContatto(Contatto c) {
 		Connection connection = getConnection();
 		
 		try {
@@ -231,7 +231,7 @@ public class RubricaJDBC {
 		}
 	}
 	
-	public static List<Contatto> trovaContattiDuplicati() {
+	public List<Contatto> trovaContattiDuplicati() {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet rs = null;
@@ -246,9 +246,9 @@ public class RubricaJDBC {
 			while (rs.next()) {
 				Contatto c = new Contatto();
 				c.setId(rs.getInt("id"));
-				c.setName(rs.getString("nome"));
-				c.setSurname(rs.getString("cognome"));
-				c.setTelephone(rs.getString("telefono"));
+				c.setNome(rs.getString("nome"));
+				c.setCognome(rs.getString("cognome"));
+				c.setTelefono(rs.getString("telefono"));
 				c.setEmail(rs.getString("email"));
 				c.setNote(rs.getString("note"));
 				contatti.add(c);
@@ -266,7 +266,7 @@ public class RubricaJDBC {
 		return contatti;		
 	}
 	/*
-	public static List<Contatto> unisciContattiDuplicati() {
+	public List<Contatto> unisciContattiDuplicati() {
 		
 	}
 	*/

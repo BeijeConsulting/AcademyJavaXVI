@@ -74,11 +74,11 @@ public class CSVManager {
 				contatto = new Contatto();
 				
 				if (orderFields[0] != -1)
-					contatto.setName(fields[orderFields[0]]);
+					contatto.setNome(fields[orderFields[0]]);
 				if (orderFields[1] != -1)
-					contatto.setSurname(fields[orderFields[1]]);
+					contatto.setCognome(fields[orderFields[1]]);
 				if (orderFields[2] != -1)
-					contatto.setTelephone(fields[orderFields[2]]);
+					contatto.setTelefono(fields[orderFields[2]]);
 				if (orderFields[3] != -1)
 					contatto.setEmail(fields[orderFields[3]]);
 				if (orderFields[4] != -1)
@@ -107,9 +107,9 @@ public class CSVManager {
 			for (Contatto c : contatti) {
 				fileWriter.write(
 						c.getId() + separator +
-						c.getSurname() + separator +
-						c.getName() + separator +
-						c.getTelephone() + separator +
+						c.getCognome() + separator +
+						c.getNome() + separator +
+						c.getTelefono() + separator +
 						c.getEmail() + separator +
 						c.getNote());
 				fileWriter.write('\n');

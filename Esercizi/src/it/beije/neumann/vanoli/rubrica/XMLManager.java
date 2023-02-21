@@ -63,13 +63,13 @@ public class XMLManager {
 					contatto.setId(Integer.parseInt(v.getTextContent()));
 					break;
 				case "nome":
-					contatto.setName(v.getTextContent());
+					contatto.setNome(v.getTextContent());
 					break;
 				case "cognome":
-					contatto.setSurname(v.getTextContent());
+					contatto.setCognome(v.getTextContent());
 					break;
 				case "telefono":
-					contatto.setTelephone(v.getTextContent());
+					contatto.setTelefono(v.getTextContent());
 					break;
 				case "email":
 					contatto.setEmail(v.getTextContent());
@@ -99,9 +99,9 @@ public class XMLManager {
 		for (Contatto c: contatti) {
 			Element e = document.createElement("contatto");
 			addProperty(document, e, "id", String.valueOf(c.getId()));
-			addProperty(document, e, "nome", c.getName());
-			addProperty(document, e, "cognome", c.getSurname());
-			addProperty(document, e, "telefono", c.getTelephone());
+			addProperty(document, e, "nome", c.getNome());
+			addProperty(document, e, "cognome", c.getCognome());
+			addProperty(document, e, "telefono", c.getTelefono());
 			addProperty(document, e, "email", c.getEmail());
 			addProperty(document, e, "note", c.getNote());
 			documentElement.appendChild(e);

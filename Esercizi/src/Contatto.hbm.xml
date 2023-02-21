@@ -12,9 +12,9 @@
          <generator class="native"/>
       </id>
       
-      <property name = "surname" column = "cognome" type = "string"/>
-      <property name = "name" column = "nome" type = "string"/>
-      <property name = "telephone" column = "telefono" type = "string"/>
+      <property name = "cognome" column = "cognome" type = "string"/>
+      <property name = "nome" column = "nome" type = "string"/>
+      <property name = "telefono" column = "telefono" type = "string"/>
       <property name = "email" column = "email" type = "string"/>
       <property name = "note" column = "note" type = "text"/>
       

@@ -5,12 +5,24 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
-public class RubricaJPA implements RubricaInterface{
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+
+public class RubricaJPACriteria implements RubricaInterface{
 	
 	public List<Contatto> LoadRubricaFromDB() {		
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
+		Root<Contatto> root = cr.from(Contatto.class);
+		cr.select(root);
+		Query query = entityManager.createQuery(cr);
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
 		return contatti;
@@ -31,7 +43,11 @@ public class RubricaJPA implements RubricaInterface{
 	//funzioni riga di comando	
 	public List<Contatto> elencoRubrica(String orderBy) {				
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c ORDER BY " + orderBy);
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
+		Root<Contatto> root = cr.from(Contatto.class);
+		cr.select(root).orderBy(cb.asc(root.get(orderBy)));
+		Query query = entityManager.createQuery(cr);
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
 		return contatti;
@@ -39,11 +55,14 @@ public class RubricaJPA implements RubricaInterface{
 
 	public List<Contatto> cercaContatto(String nome, String cognome) {
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c WHERE nome = :param1 AND cognome = :param2");
-		query.setParameter("param1", nome);
-		query.setParameter("param2", cognome);
-		List<Contatto> contatti = query.getResultList();	
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
+		Root<Contatto> root = cr.from(Contatto.class);
+		cr.select(root).where(cb.and(cb.equal(root.get("nome"), nome), 
+									 cb.equal(root.get("cognome"), cognome)));
+		Query query = entityManager.createQuery(cr);
+		List<Contatto> contatti = query.getResultList();
+		entityManager.close();
 		return contatti;
 	}
 	
@@ -95,7 +114,7 @@ public class RubricaJPA implements RubricaInterface{
 	
 	public List<Contatto> trovaContattiDuplicati() {
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		Query query = entityManager.createQuery("SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT c2 FROM Contatto as c2 WHERE c2.nome = c1.nome AND c2.cognome = c1.cognome AND c2.id <> c1.id)");
+		Query query = entityManager.createQuery("SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT c2 FROM Contatto as c2 WHERE c2.name = c1.name AND c2.surname = c1.surname AND c2.id <> c1.id)");
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
 		return contatti;

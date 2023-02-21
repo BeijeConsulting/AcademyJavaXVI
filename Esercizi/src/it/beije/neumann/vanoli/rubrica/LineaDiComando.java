@@ -13,7 +13,12 @@ public class LineaDiComando {
 		}
 	}
 	
+	
+	
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
+		
+		RubricaInterface rubricaAPI = new RubricaJPA(); //istanziando una classe diversa qui si cambia facilmente da JPA a HBM o JDBC
+		
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Digita 0 per visualizzare tutti i contatti.");
@@ -30,10 +35,10 @@ public class LineaDiComando {
 			System.out.println("Come vuoi ordinare i contatti? Nome/Cognome/No");
 			input = sc.nextLine().trim();
 			if (input.equalsIgnoreCase("Nome") || input.equalsIgnoreCase("Cognome")) {
-				stampaListaContatti(RubricaJPA.elencoRubrica(input.toLowerCase()));
+				stampaListaContatti(rubricaAPI.elencoRubrica(input.toLowerCase()));
 			}
 			else {
-				stampaListaContatti(RubricaJPA.LoadRubricaFromDB());
+				stampaListaContatti(rubricaAPI.LoadRubricaFromDB());
 			}
 		}
 		else if (input.equals("1")) {
@@ -41,30 +46,30 @@ public class LineaDiComando {
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da cercare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> c = RubricaJPA.cercaContatto(nome, cognome);
+			List<Contatto> c = rubricaAPI.cercaContatto(nome, cognome);
 			System.out.println("Sono stati trovati " + c.size() + " contatti:");
 			stampaListaContatti(c);			
 		}
 		else if (input.equals("2")) {
 			Contatto newContatto = new Contatto();
 			System.out.println("Nome:");
-			newContatto.setName(sc.nextLine().trim());
+			newContatto.setNome(sc.nextLine().trim());
 			System.out.println("Cognome:");
-			newContatto.setSurname(sc.nextLine().trim());
+			newContatto.setCognome(sc.nextLine().trim());
 			System.out.println("Telefono:");
-			newContatto.setTelephone(sc.nextLine().trim());
+			newContatto.setTelefono(sc.nextLine().trim());
 			System.out.println("Email:");
 			newContatto.setEmail(sc.nextLine().trim());
 			System.out.println("Note:");
 			newContatto.setNote(sc.nextLine().trim());
-			RubricaJPA.inserisciContatto(newContatto);
+			rubricaAPI.inserisciContatto(newContatto);
 		}
 		else if (input.equals("3")) {
 			System.out.println("Nome del contatto da modificare: ");
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da modificare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> risultati = RubricaJPA.cercaContatto(nome, cognome);
+			List<Contatto> risultati = rubricaAPI.cercaContatto(nome, cognome);
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti");
 			}
@@ -88,19 +93,19 @@ public class LineaDiComando {
 				input = sc.nextLine().trim();
 				if (input.equalsIgnoreCase("Y")) {
 					System.out.println("Digita il nuovo nome");
-					toEdit.setName(sc.nextLine().trim());
+					toEdit.setNome(sc.nextLine().trim());
 				}
 				System.out.println("Vuoi modificare il cognome? Y/N");
 				input = sc.nextLine().trim();
 				if (input.equalsIgnoreCase("Y")) {
 					System.out.println("Digita il nuovo cognome");
-					toEdit.setSurname(sc.nextLine().trim());
+					toEdit.setCognome(sc.nextLine().trim());
 				}
 				System.out.println("Vuoi modificare il telefono? Y/N");
 				input = sc.nextLine().trim();
 				if (input.equalsIgnoreCase("Y")) {
 					System.out.println("Digita il nuovo telefono");
-					toEdit.setTelephone(sc.nextLine().trim());
+					toEdit.setTelefono(sc.nextLine().trim());
 				}
 				System.out.println("Vuoi modificare la mail? Y/N");
 				input = sc.nextLine().trim();
@@ -114,7 +119,7 @@ public class LineaDiComando {
 					System.out.println("Digita le nuove note");
 					toEdit.setNote(sc.nextLine().trim());
 				}
-				RubricaJPA.editContatto(toEdit);
+				rubricaAPI.editContatto(toEdit);
 			}
 		}
 		else if (input.equals("4")) {
@@ -122,7 +127,7 @@ public class LineaDiComando {
 			String nome = sc.nextLine().trim();
 			System.out.println("Cognome del contatto da eliminare: ");
 			String cognome = sc.nextLine().trim();
-			List<Contatto> risultati = RubricaJPA.cercaContatto(nome, cognome);
+			List<Contatto> risultati = rubricaAPI.cercaContatto(nome, cognome);
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti");
 			}
@@ -142,11 +147,11 @@ public class LineaDiComando {
 					}
 					toDelete = risultati.get(sceltaInd - 1);
 				}
-				RubricaJPA.deleteContatto(toDelete);
+				rubricaAPI.deleteContatto(toDelete);
 			}
 		}
 		else if (input.equals("5")) {			
-			List<Contatto> risultati = RubricaJPA.trovaContattiDuplicati();
+			List<Contatto> risultati = rubricaAPI.trovaContattiDuplicati();
 			if (risultati.size() == 0) {
 				System.out.println("Non sono stati trovati contatti duplicati");
 			}
@@ -157,7 +162,7 @@ public class LineaDiComando {
 		}
 		/*
 		else if (input.equals("6")) {			
-			List<Contatto> risultati = RubricaJPA.unisciContattiDuplicati();
+			List<Contatto> risultati = rubricaAPI.unisciContattiDuplicati();
 			if (risultati.size() == 0) {
 				System.out.println("Non è stato possibile unire nessun contatto");
 			}

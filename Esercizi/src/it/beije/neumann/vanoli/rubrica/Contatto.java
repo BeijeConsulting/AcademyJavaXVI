@@ -18,13 +18,13 @@ public class Contatto {
 	private int id;
 	
 	@Column(name = "nome")
-	private String name;
+	private String nome;
 	
 	@Column(name = "cognome")
-	private String surname;
+	private String cognome;
 	
 	@Column(name = "telefono")
-	private String telephone;
+	private String telefono;
 	
 	@Column(name = "email")
 	private String email;
@@ -35,50 +35,56 @@ public class Contatto {
 	public int getId() {
 		return id;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
-	
-	public String getSurname() {
-		return surname;
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getNote() {
-		return note;
-	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("- Nome: ").append(name)
-				.append("\n- Cognome: ").append(surname)
-				.append("\n- Telefono: ").append(telephone)
+				.append("- Nome: ").append(nome)
+				.append("\n- Cognome: ").append(cognome)
+				.append("\n- Telefono: ").append(telefono)
 				.append("\n- Email: ").append(email)
 				.append("\n- Note: ").append(note);
 		return builder.toString();

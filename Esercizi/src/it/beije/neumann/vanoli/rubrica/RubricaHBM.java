@@ -8,16 +8,16 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-public class RubricaHBM {
+public class RubricaHBM implements RubricaInterface {
 	
-	public static List<Contatto> LoadRubricaFromDB() throws ClassNotFoundException, IOException {		
+	public List<Contatto> LoadRubricaFromDB() {		
 		Session session = HBMsessionFactory.openSession();
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
 		List<Contatto> contatti = query.getResultList();	
 		return contatti;
 	}
 
-	public static void WriteRubricaToDB(List<Contatto> listaContatti) throws ClassNotFoundException, IOException {
+	public void WriteRubricaToDB(List<Contatto> listaContatti) {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();		
 		for (Contatto c: listaContatti) {				
@@ -27,14 +27,14 @@ public class RubricaHBM {
 	}
 	
 	//funzioni riga di comando	
-	public static List<Contatto> elencoRubrica(String orderBy) {				
+	public List<Contatto> elencoRubrica(String orderBy) {				
 		Session session = HBMsessionFactory.openSession();
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c ORDER BY " + orderBy);
 		List<Contatto> contatti = query.getResultList();	
 		return contatti;
 	}
 	
-	public static List<Contatto> cercaContatto(String nome, String cognome) {
+	public List<Contatto> cercaContatto(String nome, String cognome) {
 		Session session = HBMsessionFactory.openSession();
 		
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE nome = :param1 AND cognome = :param2");
@@ -44,14 +44,14 @@ public class RubricaHBM {
 		return contatti;
 	}
 	
-	public static void inserisciContatto(Contatto c) {
+	public void inserisciContatto(Contatto c) {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();		
 		session.save(c);
 		transaction.commit();
 	}
 	
-	public static void editContatto(Contatto newC) {
+	public void editContatto(Contatto newC) {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE id = :param1");
@@ -61,16 +61,16 @@ public class RubricaHBM {
 			throw new RuntimeException("Il DB si è rotto...");
 		}
 		Contatto oldC = contatti.get(0);
-		oldC.setName(newC.getName());
-		oldC.setSurname(newC.getSurname());
-		oldC.setTelephone(newC.getTelephone());
+		oldC.setNome(newC.getNome());
+		oldC.setCognome(newC.getCognome());
+		oldC.setTelefono(newC.getTelefono());
 		oldC.setEmail(newC.getEmail());
 		oldC.setNote(newC.getNote());
 		session.save(oldC);
 		transaction.commit();
 	}
 	
-	public static void deleteContatto(Contatto c) {
+	public void deleteContatto(Contatto c) {
 		Session session = HBMsessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE id = :param1");
@@ -83,14 +83,14 @@ public class RubricaHBM {
 		transaction.commit();
 	}
 	
-	public static List<Contatto> trovaContattiDuplicati() {
+	public List<Contatto> trovaContattiDuplicati() {
 		Session session = HBMsessionFactory.openSession();
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto AS c GROUP BY nome, cognome HAVING COUNT(*) > 1");
+		Query<Contatto> query = session.createQuery("SELECT c1 FROM Contatto as c1 WHERE EXISTS (SELECT c2 FROM Contatto as c2 WHERE c2.nome = c1.nome AND c2.cognome = c1.cognome AND c2.id <> c1.id)");
 		List<Contatto> contatti = query.getResultList();		
 		return contatti;		
 	}
 	/*
-	public static List<Contatto> unisciContattiDuplicati() {
+	public List<Contatto> unisciContattiDuplicati() {
 		
 	}
 	*/
