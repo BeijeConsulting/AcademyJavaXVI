@@ -35,16 +35,27 @@ public class FormServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String fname = request.getParameter("fname");
-		String lname = request.getParameter("lname");
+//		String fname = request.getParameter("fname");
+//		String lname = request.getParameter("lname");
+//		
+//		System.out.println("fname = " + fname);
+//		System.out.println("lname = " + lname);
+//		
+//		response.getWriter().append("<html><body><p>")
+//			.append("FNAME: ").append(fname).append("<br/>")
+//			.append("LNAME: ").append(lname)
+//			.append("</p></body></html>");
 		
-		System.out.println("fname = " + fname);
-		System.out.println("lname = " + lname);
+		String stringNum1 = request.getParameter("num1");
+		String stringNum2 = request.getParameter("num2");
 		
-		response.getWriter().append("<html><body><p>")
-			.append("FNAME: ").append(fname).append("<br/>")
-			.append("LNAME: ").append(lname)
-			.append("</p></body></html>");
+		Integer num1 = Integer.parseInt(stringNum1);
+		Integer num2 = Integer.parseInt(stringNum2);
+		
+		Integer result = num1 + num2;
+		
+		response.getWriter().println("Il risultato della somma tra " + num1 + " e " +  num2 + " e' uguale a " + result);
+		
 	}
 
 }
