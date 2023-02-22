@@ -1,1 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><rubrica><contatto><cognome>Roberta</cognome><nome>Bianchi</nome><telefono>325235252</telefono><email>r.bianchi@beije.it</email><note/></contatto><contatto><cognome>rossi</cognome><nome>mario</nome><telefono>3457384982</telefono><email>mrossi@gmail.com</email><note>ww</note></contatto><contatto><cognome>ponzi</cognome><nome>fabio</nome><telefono>3500</telefono><email>s</email><note/></contatto><contatto><cognome>b</cognome><nome>a</nome><telefono>3488555928</telefono><email>showup@gmail.com</email><note/></contatto><contatto><cognome>ooo</cognome><nome>oo</nome><telefono>rf</telefono><email>okf</email><note>rg</note></contatto></rubrica>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rubrica>
+	<contatto>
+		<cognome>Roberta</cognome>
+		<nome>Bianchi</nome>
+		<telefono>325235252</telefono>
+		<email>r.bianchi@beije.it</email>
+		<note />
+	</contatto>
+	<contatto>
+		<cognome>rossi</cognome>
+		<nome>mario</nome>
+		<telefono>3457384982</telefono>
+		<email>mrossi@gmail.com</email>
+		<note>ww</note>
+	</contatto>
+	<contatto>
+		<cognome>ponzi</cognome>
+		<nome>fabio</nome>
+		<telefono>3500</telefono>
+		<email>s</email>
+		<note />
+	</contatto>
+	<contatto>
+		<cognome>b</cognome>
+		<nome>a</nome>
+		<telefono>3488555928</telefono>
+		<email>showup@gmail.com</email>
+		<note />
+	</contatto>
+	<contatto>
+		<cognome>ooo</cognome>
+		<nome>oo</nome>
+		<telefono>rf</telefono>
+		<email>okf</email>
+		<note>rg</note>
+	</contatto>
+</rubrica>
