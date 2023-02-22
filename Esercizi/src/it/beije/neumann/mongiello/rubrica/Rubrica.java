@@ -68,8 +68,8 @@ public class Rubrica {
 				case 1:
 					//RubricaJdbc.stampaDb();
 					//hbm.stampaDb();
-					//rJpa.stampaDb();
-					rCriteria.stampaDb();
+					rJpa.stampaDb();
+				//	rCriteria.stampaDb();
 					break;
 				case 2:
 					System.out.println("Aggiungi contatto");
