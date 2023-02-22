@@ -37,11 +37,10 @@ public class DBhybernate implements ContactManager {
 	@Override
 	public int updateContatto(Contatto toUpdate) throws ClassNotFoundException {
 		Session session = HBMsessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE c.id = :updateID");
 		query.setParameter("updateID",toUpdate.getId());
 		List<Contatto> contatti = query.getResultList();
-		transaction.commit();
+		Transaction transaction = session.beginTransaction();
 		for (Contatto c: contatti) {
 			transaction = session.beginTransaction();
 			c.setName(toUpdate.getName());
@@ -127,8 +126,12 @@ public class DBhybernate implements ContactManager {
 	}
 	@Override
 	public List<Contatto> getContatto(Contatto contact) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = HBMsessionFactory.openSession();
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE c.name = :name AND c.surname = :surname");
+		query.setParameter("name",contact.getName());
+		query.setParameter("surname",contact.getSurname());
+		List<Contatto> contatti = query.getResultList();
+		return contatti;
 	}
 
 }

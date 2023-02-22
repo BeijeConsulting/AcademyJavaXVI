@@ -46,6 +46,8 @@ public class DBmanager implements ContactManager{
 				Contatto contatto= new Contatto(id, name, surname, telephone, email, note);
 				contacts.add(contatto);
 			}
+			statement.close();
+			connection.close();
 		}
 		catch (SQLException sqlEx) {
 			sqlEx.printStackTrace();
