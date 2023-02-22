@@ -35,7 +35,13 @@ public class FolderTree extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.getWriter().append("roomfeeler");
+		String dirpath = request.getParameter("dirpath");
+
+		RoomFeeler.roomFeeler(dirpath);
+		
+		response.getWriter().append("<html><body><p>").append("<embed src='C:/temp/tree.txt'>").append("</p></body></html>");
+
+		
 	}
 
 }
