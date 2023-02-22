@@ -20,6 +20,7 @@ import it.beije.neumann.rubrica.*;
 
 public class GestoreDiContattoJPA 
 {
+	
 	public static List<Contatto> vediListaContatti()
 	{
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
@@ -197,6 +198,7 @@ public class GestoreDiContattoJPA
 		int conta=1;
 		for(Contatto c : contatti)
 		{
+			
 			for(int i=conta; i<contatti.size();i++)
 			{
 				if(c.getName().equals(contatti.get(i).getName()))
@@ -210,6 +212,8 @@ public class GestoreDiContattoJPA
 			}
 			conta++;
 		}
+		
+		
 		transaction.commit();
 		em.close();
 		
@@ -250,6 +254,7 @@ public class GestoreDiContattoJPA
 				
 				s.close();
 				System.out.println("Sto uscendo dalla rubrica...");
+				
 	}
 
 }
