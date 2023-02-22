@@ -30,6 +30,7 @@ public class Rubrica {
 	
 		RubricaHBM hbm = new RubricaHBM();
 		RubricaJPA rJpa = new RubricaJPA();	
+		RubricaCriteria rCriteria = new RubricaCriteria();
 		
 		s = new Scanner(System.in);
 
@@ -67,8 +68,8 @@ public class Rubrica {
 				case 1:
 					//RubricaJdbc.stampaDb();
 					//hbm.stampaDb();
-					rJpa.stampaDb();
-					
+					//rJpa.stampaDb();
+					rCriteria.stampaDb();
 					break;
 				case 2:
 					System.out.println("Aggiungi contatto");
@@ -94,7 +95,8 @@ public class Rubrica {
 				
 					//RubricaJdbc.editDb( id,fieldToEdit,newField );
 					//hbm.editContatto( id,fieldToEdit,newField );
-					rJpa.editContatto( id,fieldToEdit,newField );
+					//rJpa.editContatto( id,fieldToEdit,newField );
+					rCriteria.editContatto(id, fieldToEdit, newField);
 					break;
 				case 4:
 					System.out.println("Inserisci il cognome del contatto da eliminare");
@@ -105,8 +107,8 @@ public class Rubrica {
 					
 					//RubricaJdbc.deleteContact( id );
 					//hbm.deleteContact( id );
-					rJpa.deleteContact(id);
-					
+					//rJpa.deleteContact(id);
+					rCriteria.deleteContact(id);
 					break;
 				case 5:
 					System.out.println("Vuoi ordinare per Nome o per Cognome ?");
@@ -114,14 +116,16 @@ public class Rubrica {
 					
 					//hbm.order(valore);
 					//RubricaJdbc.order(valore);
-					rJpa.order(valore);
+//					rJpa.order(valore);
+					rCriteria.order(valore);
 					break;
 					
 				case 6:
 					System.out.println("Inserisci il cognome del contatto da cercare");
 					surname = s.next();
 					//RubricaJdbc.search( surname );
-					rJpa.search(surname);
+					//rJpa.search(surname);
+					rCriteria.search(surname);
 					break;
 				case 7:
 					//RubricaJdbc.exportCsv();
@@ -137,8 +141,6 @@ public class Rubrica {
 					break;
 				case 10:
 					//RubricaJdbc.importXml();
-					
-
 					rJpa.importXml();
 					break;
 				case 11:
@@ -146,7 +148,8 @@ public class Rubrica {
 					//RubricaJdbc.trovaDuplicati();
 					//hbm.duplicate();
 					rJpa.duplicate();
-	//				RubricaHBM.duplicate();
+//					RubricaHBM.duplicate();
+					rCriteria.duplicate();
 					break;
 					
 			}
