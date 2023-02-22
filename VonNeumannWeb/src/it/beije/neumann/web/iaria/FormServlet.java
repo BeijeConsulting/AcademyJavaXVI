@@ -1,4 +1,4 @@
-package it.beije.neumann.web;
+package it.beije.neumann.web.iaria;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FormServlet
  */
-@WebServlet("/form")
+@WebServlet("/iaria/form")
 public class FormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
