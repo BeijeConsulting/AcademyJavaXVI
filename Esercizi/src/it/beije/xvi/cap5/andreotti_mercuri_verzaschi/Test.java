@@ -7,5 +7,6 @@ public class Test
 	    HaMotore a = new Automobile(5,"dacia",60,5,"benzina");
 		a.accendiSpegni();
 		a.accendiSpegni();
+		
 	}
 }
