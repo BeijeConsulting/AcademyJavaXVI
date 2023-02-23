@@ -23,7 +23,7 @@ public class HelloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		LocalDateTime dateTime = LocalDateTime.now();
 		
-		response.getWriter().append("<html><body><p>").append("ORA ESATTA: <br/>").append(dateTime.toString()).append("</p></body></html>");
+		response.getWriter().append("<html><body><p>").append("PROVA ORARIO: <br/>").append(dateTime.toString()).append("</p></body></html>");
 	}
 
 }
