@@ -35,10 +35,5 @@
   		<artifactId>hibernate-core</artifactId>
   		<version>5.4.30.Final</version>
   	</dependency>
-  	<dependency>
-  		<groupId>VonNeumann</groupId>
-  		<artifactId>VonNeumann</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
   </dependencies>
 </project>
