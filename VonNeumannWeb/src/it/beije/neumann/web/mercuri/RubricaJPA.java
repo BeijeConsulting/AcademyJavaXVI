@@ -18,8 +18,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
-import it.beije.neumann.mercuri.rubrica.JPAEntityManagerFactory;
-import it.beije.neumann.rubrica.Contatto;
 
 public class RubricaJPA {
 
@@ -81,7 +79,7 @@ public class RubricaJPA {
 		transaction.begin();
 		
 		Class<?> className = null;
-		String classPath = "it.beije.neumann.rubrica.Contatto";
+		String classPath = "it.beije.neumann.web.mercuri.Contatto";
 		try {
 			className = Class.forName(classPath);
 		} catch (ClassNotFoundException e) {
@@ -125,7 +123,7 @@ public class RubricaJPA {
 		
 	
 		if(typeCommand.equals("select")) {
-			
+			StringBuilder sb = new StringBuilder();
 			for(int i = 0; i < parameters.length; i++) 	
 				query.setParameter(i+1, parameters[i]);
 			

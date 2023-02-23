@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -76,13 +75,7 @@ public class Contatto {
 	}
 
 	public String toString() {
-//		StringBuilder builder = new StringBuilder("{");
-//		builder.append(" name: ").append(name);
-//		builder.append(", surname: ").append(surname);
-//		builder.append(", telephone: ").append(telephone);
-//		builder.append(", email: ").append(email);
-//		builder.append(", note: ").append(note);
-//		builder.append("}");
+
 
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
