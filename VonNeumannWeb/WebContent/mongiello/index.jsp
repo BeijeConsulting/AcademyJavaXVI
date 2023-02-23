@@ -30,12 +30,10 @@
 
 
 <!-- STAMPA DATABASE -->
-<jsp:useBean id="nuovoContatto" class="it.beije.neumann.web.Contatto" scope="session"></jsp:useBean>
 <%
-
-	//List<Contatto> contatti = (List) session.getAttribute("contatti");
-	//if( contatti != null ){
-		%>
+	List<Contatto> contatti = (List) session.getAttribute("contatti");
+	if( contatti != null ){
+%>		
 		<div class="container text-center">
 			<div class="row">
     			<div class="col mt-2" >
@@ -53,7 +51,7 @@
 						  <tbody>
 						  <% for( Contatto c: contatti){ %>
 						    <tr>
-						      <td scope="row"><%= c.getId() %></td>
+						     <td scope="row"><%= c.getId() %></td>
 						      <td><%= c.getSurname() %></td>
 						      <td><%= c.getName() %></td>
 						      <td><%= c.getTelephone() %></td>
@@ -66,7 +64,7 @@
     			</div>
   			</div>
 		</div>
-	<%
+<%
 	}
 	session.removeAttribute("contatti");
 %>

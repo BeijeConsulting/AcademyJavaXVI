@@ -42,25 +42,17 @@ public class InsertContactServlet extends HttpServlet {
 	
 		HttpSession session = request.getSession();
 		
-		String surname = request.getParameter("surname");
-		String name = request.getParameter("name");
-		String telelphone = request.getParameter("telephone");
-		String email = request.getParameter("email");
-		String note = request.getParameter("note");
-		
-		
 		EntityManager entityManager = JPAentityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
-		Contatto contatto = new Contatto( name,surname,telelphone,email,note );
+		Contatto newContact = (Contatto) session.getAttribute("nuovoContatto");
 		transaction.begin();
-		entityManager.persist(contatto);
+		entityManager.persist(newContact);
 		transaction.commit();
 		entityManager.close();
 		
-		session.setAttribute("message", "Valore Inserito correttamente");
-		response.sendRedirect("./insertContactForm.jsp");
+		request.getSession().removeAttribute("nuovoContatto");
 		
-		
+		response.sendRedirect("./insertContactForm.jsp");		
 	}
 
 }
