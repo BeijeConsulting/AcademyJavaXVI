@@ -1,4 +1,4 @@
-package it.beije.neumann.mercuri.rubrica;
+package it.beije.neumann.web.mercuri;
 
 import java.util.List;
 //Implementare un gestore di rubrica a linea di comando, con le seguenti funzionalità:
@@ -17,6 +17,8 @@ import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+
+import it.beije.neumann.mercuri.rubrica.JPAEntityManagerFactory;
 import it.beije.neumann.rubrica.Contatto;
 
 public class RubricaJPA {
