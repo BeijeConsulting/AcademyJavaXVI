@@ -30,9 +30,11 @@
 
 
 <!-- STAMPA DATABASE -->
+<jsp:useBean id="nuovoContatto" class="it.beije.neumann.web.Contatto" scope="session"></jsp:useBean>
 <%
-	List<Contatto> contatti = (List) session.getAttribute("contatti");
-	if( contatti != null ){
+
+	//List<Contatto> contatti = (List) session.getAttribute("contatti");
+	//if( contatti != null ){
 		%>
 		<div class="container text-center">
 			<div class="row">
