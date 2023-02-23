@@ -37,13 +37,13 @@ public class leggiContatti extends HttpServlet {
 		EntityManagerFactory entityManagerFactory = JPAEntityManager.openEntityManager();
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
+		Query query = entityManager.createQuery("SELECT c FROM Contatti as c");
 		List<Contatti> contatti = query.getResultList();
 		
 		entityManager.close();
 		
-		session.setAttribute("Contatti:", contatti);
-		response.sendRedirect("./operazioni.jsp");
+		session.setAttribute("contatti", contatti);
+		response.sendRedirect("./listaContatti.jsp");
 	}
 
 	/**

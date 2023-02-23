@@ -4,7 +4,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>GESTORE RUBRICA</title>
-<h1 align=center>Gestore Rubrica</h1>
+<h1 align=center>Gestore Rubrica:</h1>
 </head>
 <body>
 
