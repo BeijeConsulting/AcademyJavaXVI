@@ -35,6 +35,10 @@ public class inserisciContatti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		
+		//Trasformo l'id in integer dato che è object
+		Integer id = (Integer)session.getAttribute("id");
+		
 		String nome = request.getParameter("nomecontatto");
 		String cognome = request.getParameter("cognomecontatto");
 		String telefono = request.getParameter("telefonocontatto");
@@ -46,17 +50,33 @@ public class inserisciContatti extends HttpServlet {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		//Inserisco contatti
-		Contatti contatti = new Contatti();
-		//Almeno una riga piena
-		if(!nome.isEmpty() || !cognome.isEmpty() || !telefono.isEmpty() || !email.isEmpty() || !note.isEmpty()) {
-			contatti.setNome(nome);
-			contatti.setCognome(cognome);
-			contatti.setTelefono(telefono);
-			contatti.setEmail(email);
-			contatti.setNote(note);
+		//Creo istanza contatti
+		Contatti contatto = new Contatti();
 		
-			entityManager.persist(contatti);
+		//Se è stata inserito almeno un elemento
+		if(!nome.isEmpty() || !cognome.isEmpty() || !telefono.isEmpty() || !email.isEmpty() || !note.isEmpty()) {
+			if(id > 0) { //Se abbiamo un id, significa che vogliamo "modificare" un contatto
+				contatto = entityManager.find(Contatti.class, id); //Prendo il contatto da modificare
+				if(contatto != null) {
+					contatto.setNome(nome);
+					contatto.setCognome(cognome);
+					contatto.setTelefono(telefono);
+					contatto.setEmail(email);
+					contatto.setNote(note);
+					
+					id = 0;  //Resetto id dopo aver modificato il contatto desiderato
+					String modificaFalse = null;
+					session.setAttribute("modificaButton", modificaFalse); //Resetto anche modificaButton così da leggere i contatti senza vedere ("inserisci id")
+				}
+			} else {  //Altrimenti vogliamo solo inserirne uno
+				contatto.setNome(nome);
+				contatto.setCognome(cognome);
+				contatto.setTelefono(telefono);
+				contatto.setEmail(email);
+				contatto.setNote(note);
+			}
+		
+			entityManager.persist(contatto);
 			transaction.commit();
 			
 			//Leggo contatti
@@ -64,7 +84,6 @@ public class inserisciContatti extends HttpServlet {
 			List<Contatti> contattiLettura = query.getResultList();
 			
 			entityManager.close();
-			System.out.println("Contatto salvato con successo!");
 				
 			session.setAttribute("contatti", contattiLettura);
 			response.sendRedirect("./listaContatti.jsp");

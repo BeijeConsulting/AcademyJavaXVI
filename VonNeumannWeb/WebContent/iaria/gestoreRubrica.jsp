@@ -27,8 +27,8 @@
 	<input type="submit" value="Inserisci contatto" name="insertContact"><br><br>
 </form> 
 
-<form align="center" action="./" method="post">
-  <input type="submit" value="Modifica contatto" name="modifyContact"><br><br>
+<form align="center" action="./leggiContatti" method="post">
+	<input type="submit" name="modifyContact" value="Modifica contatto" ><br><br>
 </form> 
 
 <form align="center" action="./" method="post">

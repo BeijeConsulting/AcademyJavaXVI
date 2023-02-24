@@ -34,6 +34,9 @@ public class leggiContatti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
+		String modificaTrue = request.getParameter("modifyContact");
+		session.setAttribute("modificaButton", modificaTrue);
+				
 		EntityManagerFactory entityManagerFactory = JPAEntityManager.openEntityManager();
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
