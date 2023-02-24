@@ -12,7 +12,7 @@
 
 <%
 //Se è stato cliccato il bottone di modifica allora visualizza opzione
-//per modificare id e visualizza anche i contatti
+//per modificare contatto in base all'id e visualizza anche i contatti
 if(session.getAttribute("modificaButton")!=null){
 	%> 
 	<h3 align=center>Inserisci id del contatto da modificare:</h3>
@@ -34,7 +34,29 @@ if(session.getAttribute("modificaButton")!=null){
 		} else {
 			%><h3 align=center>Nessuna corrispondenza</h3><%
 		}
-//Altrimenti visualizza solo i contatti perché è stato cliccato "Leggi contatti"
+//Se è stato cliccato il bottone di elimina, allora visualizza opzione
+//per eliminare contatto in base all'id e visualizza anche i contatti
+} else if(session.getAttribute("deleteContact")!=null) {
+	%> 
+	<h3 align=center>Inserisci id del contatto da eliminare:</h3>
+	<form align="center" action="./eliminaContatto" method="post">
+ 		<label for="fid">ID:</label><br>
+		<input type="text" name="idcontatto" value=""><br><br>
+		<input type="submit" value="Elimina" name="modify"><br>
+	</form>
+	 <%
+	 List<Contatti> contatti = (List) session.getAttribute("contatti");
+		int riga = 0;
+		if(!contatti.isEmpty()){
+			for(Contatti c : contatti){
+				riga++;
+				%>
+				<h3 align=center>Contatto id: <%= c.getId() %>, <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
+				<%
+			}
+		} else {
+			%><h3 align=center>Nessuna corrispondenza</h3><%
+		}
 } else {
 	List<Contatti> contatti = (List) session.getAttribute("contatti");
 	int riga = 0;

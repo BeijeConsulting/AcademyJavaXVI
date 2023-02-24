@@ -31,7 +31,7 @@
 	<input type="submit" name="modifyContact" value="Modifica contatto" ><br><br>
 </form> 
 
-<form align="center" action="./" method="post">
+<form align="center" action="./leggiContatti" method="post">
   <input type="submit" value="Cancella contatto" name="deleteContact"><br><br>
 </form>
 

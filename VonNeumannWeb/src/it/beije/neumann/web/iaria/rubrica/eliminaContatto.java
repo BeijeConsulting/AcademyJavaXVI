@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,14 +17,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class leggiContatti
  */
-@WebServlet("/iaria/leggiContatti")
-public class leggiContatti extends HttpServlet {
+@WebServlet("/iaria/eliminaContatto")
+public class eliminaContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public leggiContatti() {
+    public eliminaContatto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +35,37 @@ public class leggiContatti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		String modificaTrue = request.getParameter("modifyContact");
-		session.setAttribute("modificaButton", modificaTrue);
-		
-		String eliminaTrue = request.getParameter("deleteContact");
-		session.setAttribute("deleteContact", eliminaTrue);
+		String idContatto = request.getParameter("idcontatto");
+		int id = Integer.parseInt(idContatto);
 		
 		EntityManagerFactory entityManagerFactory = JPAEntityManager.openEntityManager();
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
 		
-		Query query = entityManager.createQuery("SELECT c FROM Contatti as c");
-		List<Contatti> contatti = query.getResultList();
+		//Elimino il contatto selezionato dall'utente
+		//Query query = entityManager.createQuery("SELECT c FROM Contatti as c WHERE id = :id");
+		//query.setParameter("id",id);
+		Contatti contatto = new Contatti();
+		contatto = entityManager.find(Contatti.class, id);
+		if(contatto != null) {
+			System.out.println(contatto);
+			entityManager.remove(contatto);
+		} else {
+			response.sendRedirect("./errore.jsp");
+		}
 		
+		System.out.println(contatto);
+		
+		id = 0;  //Resetto id dopo aver modificato il contatto desiderato
+		String eliminaFalse = null;
+		session.setAttribute("deleteContact", eliminaFalse); //Resetto anche modificaButton così da leggere i contatti senza vedere ("inserisci id")
+		
+		//Aggiorno la lista dei contatti per poi stamparla
+		Query query2 = entityManager.createQuery("SELECT c FROM Contatti as c");
+		List<Contatti> contatti = query2.getResultList();
+		
+		transaction.commit();
 		entityManager.close();
 		
 		session.setAttribute("contatti", contatti);

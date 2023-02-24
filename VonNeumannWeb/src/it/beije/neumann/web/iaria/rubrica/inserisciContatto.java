@@ -18,13 +18,13 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class leggiContatti
  */
 @WebServlet("/iaria/inserisciContatti")
-public class inserisciContatti extends HttpServlet {
+public class inserisciContatto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public inserisciContatti() {
+    public inserisciContatto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +35,12 @@ public class inserisciContatti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		Integer id = 0;
 		
-		//Trasformo l'id in integer dato che è object
-		Integer id = (Integer)session.getAttribute("id");
+		if(session.getAttribute("id")!=null) {
+			//Trasformo l'id in integer dato che è object
+			id = (Integer)session.getAttribute("id");
+		}
 		
 		String nome = request.getParameter("nomecontatto");
 		String cognome = request.getParameter("cognomecontatto");
@@ -56,7 +59,7 @@ public class inserisciContatti extends HttpServlet {
 		//Se è stata inserito almeno un elemento
 		if(!nome.isEmpty() || !cognome.isEmpty() || !telefono.isEmpty() || !email.isEmpty() || !note.isEmpty()) {
 			if(id > 0) { //Se abbiamo un id, significa che vogliamo "modificare" un contatto
-				contatto = entityManager.find(Contatti.class, id); //Prendo il contatto da modificare
+				contatto = entityManager.find(Contatti.class, id); //Prendo il contatto da modificare e setto i vari parametri
 				if(contatto != null) {
 					contatto.setNome(nome);
 					contatto.setCognome(cognome);
@@ -67,6 +70,8 @@ public class inserisciContatti extends HttpServlet {
 					id = 0;  //Resetto id dopo aver modificato il contatto desiderato
 					String modificaFalse = null;
 					session.setAttribute("modificaButton", modificaFalse); //Resetto anche modificaButton così da leggere i contatti senza vedere ("inserisci id")
+				} else {
+					response.sendRedirect("./errore.jsp");
 				}
 			} else {  //Altrimenti vogliamo solo inserirne uno
 				contatto.setNome(nome);

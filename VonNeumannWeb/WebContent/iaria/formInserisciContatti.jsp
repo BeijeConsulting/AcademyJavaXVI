@@ -11,8 +11,10 @@
 <%
 //Prelevo id e lo trasformo in integer per poi passarlo come attributo in modo da
 //fare una ricerca su inserisci contatto
-Integer id = new Integer(request.getParameter("idcontatto"));
-session.setAttribute("id", id);
+if(request.getParameter("idcontatto") != null){
+	Integer id = new Integer(request.getParameter("idcontatto"));
+	session.setAttribute("id", id);
+}
 %>
 
 <form align="center" action="./inserisciContatti" method="post">
