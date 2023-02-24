@@ -1,4 +1,4 @@
-package it.beije.neumann.web.nido.rubrica;
+package it.beije.neumann.web.nido.rubrica.model;
 
 import java.util.ArrayList;
 import java.util.List;

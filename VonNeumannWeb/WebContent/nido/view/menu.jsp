@@ -17,7 +17,7 @@
   <li>Trova contatti duplicati</li>
   <li>Unisci contatti duplicati</li>
 </ol>
-	<form action="./rubrica" method="post">
+	<form action="/neumann/nido/controller/rubrica" method="post">
 		<label for="operation">Inserisci l'operazione</label><br>
 		<input type="text" name="operation"><br>
 		<input type="submit" value="Submit">

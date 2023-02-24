@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Aggiungi contatto</title>
+<title>Modifica contatto</title>
 </head>
 <body>
 
@@ -12,9 +12,9 @@
 		<input type="submit" value="Back to menu">
 	</form>
 	
-	<p><strong>Inserisci i dati del nuovo contatto</strong></p>
+	<p><strong>Inserisci i dati del contatto</strong></p>
 
-	<form action="./addnew.jsp" method="post">
+	<form action="../controller/editcontact" method="post">
   		<label for="name">Nome</label><br>
  		<input type="text" name="name"><br>
   		<label for="surname">Cognome</label><br>
@@ -25,7 +25,7 @@
   		<input type="text" name="email"><br>
   		 <label for="note">Note</label><br>
   		<input type="text" name="note"><br><br>
-  		<input type="submit" value="Aggiungi">
+  		<input type="submit" value="Salva le modifiche">
 	</form>
 
 </body>

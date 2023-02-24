@@ -12,7 +12,7 @@
 		<input type="submit" value="Back to menu">
 	</form>
 
-<form action="./searchby.jsp" method="post">
+<form action="../controller/searchcontact" method="post">
   <label for="name">Nome del contatto:</label><br>
   <input type="text" name="name"><br>
   <label for="surname">Cognome del contatto:</label><br>
