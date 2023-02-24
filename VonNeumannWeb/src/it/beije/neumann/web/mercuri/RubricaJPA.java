@@ -21,7 +21,7 @@ import javax.persistence.Query;
 
 public class RubricaJPA {
 
-	static void addContatto(Scanner sc) {
+public static void addContatto(Scanner sc) {
 		
 		System.out.println("inserisci nome, cognome, telefono, email e note; scrivere 'stop' se non si vogliono inserire altre info o 'null' per lasciare campi vuoti");
 		String [] fields = {"nome", "cognome", "telefono", "email", "note"};
@@ -41,7 +41,7 @@ public class RubricaJPA {
 		sqlCommand("Select c from Contatto as c", "insert", values);
 	}
 	
-	static void deleteContatto(Scanner sc) {
+public static void deleteContatto(Scanner sc) {
 		System.out.println("Per quale campo vuoi eliminare il contatto?");
 		String field = sc.nextLine();
 		System.out.println("quale valore?");
@@ -50,27 +50,21 @@ public class RubricaJPA {
 		sqlCommand("Select c from Contatto as c where " + field + " = ?1","delete", value);
 	}
 	
-	static void modifyContatto(Scanner sc) {}
+public static void modifyContatto(Scanner sc) {}
 		
-	static void searchContatto (Scanner sc) {
-		System.out.println("Per quale campo vuoi filtrare il contatto?");
-		String field = sc.nextLine();
-		System.out.println("quale valore?");
-		String value = sc.nextLine();
+public static List<Contatto> searchContatto (String field, String value) {
+
 		
-		sqlCommand("Select c from Contatto as c where " + field + " = ?1","select", value);
+		return sqlCommand("Select c from Contatto as c where " + field + " = ?1","select", value);
 	}
 	
-	static void viewContatti (Scanner sc) {
+public static List<Contatto> viewContatti (String filter) {
 		
-		System.out.println("vuoi ordinarli per nome o cognome?");
-		String orderField = sc.nextLine();
-		
-		sqlCommand("SELECT c FROM Contatto as c order by " + orderField ,"select" );
+		return sqlCommand("SELECT c FROM Contatto as c order by " + filter ,"select" );
 						
 	}
 	
-	static void searchCopie(Scanner sc) {
+public static void searchCopie(Scanner sc) {
 		
 		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
 		
@@ -111,12 +105,12 @@ public class RubricaJPA {
 		
 	}
 
-	static void sqlCommand(String sqlCommand, String typeCommand, String... parameters) {
+public static List<Contatto> sqlCommand(String sqlCommand, String typeCommand, String... parameters) {
 		
 		EntityManager entityManager = JPAEntityManagerFactory.createEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
-		
+		List<Contatto> contattiJPA = null;
 		transaction.begin();
 		
 		Query query = entityManager.createQuery(sqlCommand);		
@@ -127,15 +121,15 @@ public class RubricaJPA {
 			for(int i = 0; i < parameters.length; i++) 	
 				query.setParameter(i+1, parameters[i]);
 			
-			List<Contatto> contattiJPA = query.getResultList();
-			System.out.println(contattiJPA);
+			contattiJPA = query.getResultList();
+			
 		}
 		else if (typeCommand.equals("delete")) {
 			
 			for(int i = 0; i < parameters.length; i++) 		
 				query.setParameter(i+1, parameters[i]);
 			
-			List<Contatto> contattiJPA = query.getResultList();
+			contattiJPA = query.getResultList();
 			
 			for(Contatto c: contattiJPA)
 				entityManager.remove(c);
@@ -155,10 +149,12 @@ public class RubricaJPA {
 		}
 
 		transaction.commit();
-
+		
 		entityManager.close();
+		
+		return contattiJPA;
 	}
-
+/*
 	public static void menuRubrica () {
 		
 		System.out.println("digita 'help' per i comandi");
@@ -205,11 +201,10 @@ public class RubricaJPA {
 		
 		sc.close();
 	}
-	
+	*/
 
 	public static void main(String[] args) {
 	
-		menuRubrica();
 	}
 
 }
