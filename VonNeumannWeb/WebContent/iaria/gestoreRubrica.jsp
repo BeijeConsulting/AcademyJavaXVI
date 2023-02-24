@@ -23,7 +23,7 @@
   <input type="submit" value="Cerca contatto" name="searchContact"><br><br>
 </form> 
 
-<form align="center" action="./" method="post">
+<form align="center" action="./formInserisciContatti.jsp" method="post">
 	<input type="submit" value="Inserisci contatto" name="insertContact"><br><br>
 </form> 
 
