@@ -17,7 +17,7 @@ ordina per:
 	<label for="nome">Nome</label><br>
 	<input type="radio" id="cognome" name="ord" value="cognome">
 	<label for="nome">Cognome</label><br>
-  	<input type="submit" value="Submit">
+  	<input type="submit" value="Ordina">
 </form>
 <table>
   <tr>
@@ -32,7 +32,6 @@ ordina per:
 	if (ord == null) {
 		ord = "id";
 	}
-	System.out.println(ord);
 	List<Contatto> contatti = RubricaJPAWeb.elencoRubrica(ord);
 	for (Contatto c : contatti) { %>
 	<tr>
@@ -41,9 +40,19 @@ ordina per:
 		<th> <%= c.getTelefono() %> </th>
 		<th> <%= c.getEmail() %> </th>
 		<th> <%= c.getNote() %> </th>
+		<th> 
+			<form action="./edit.jsp" method="get">
+				<input type="hidden" name="id" value="<%=c.getId()%>">
+				<input type="submit" value="Modifica">
+			</form>
+		</th>		
 	</tr>
 	<%} %>
 </table>
+
+<form action="./insert.jsp" method="get">
+	<input type="submit" value="Inserisci Nuovo Contatto">
+</form>
 
 
 </body>

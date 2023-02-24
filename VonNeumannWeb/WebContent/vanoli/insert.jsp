@@ -3,29 +3,27 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LOGIN PAGE</title>
+<title>INSERIMENTO NUOVO CONTATTO</title>
 </head>
 <body>
 
-<%
-System.out.println("session in login.jsp: " + session.getId());
-
-String message = (String) session.getAttribute("message");
-if (message != null) {
-	%>
-<span style="color: red; font-weight: bold"><%= message %></span>
-<br/>
-	<%
-	session.removeAttribute("message");
-}
-%>
-<form action="search" method="post">
-  <label for="username">username:</label><br>
-  <input type="text" name="username"><br>
-  <label for="password">password:</label><br>
-  <input type="text" name="password"><br><br>
-  <input type="submit" value="Submit">
+<form action="./api/insert" method="post">
+  <label for="nome">Nome:</label><br>
+  <input type="text" name="nome"><br>
+  <label for="cognome">Cognome:</label><br>
+  <input type="text" name="cognome"><br><br>
+  <label for="telefono">Telefono:</label><br>
+  <input type="text" name="telefono"><br><br>
+  <label for="email">Email:</label><br>
+  <input type="text" name="email"><br><br>
+  <label for="note">Note:</label><br>
+  <input type="text" name="note"><br><br>
+  <input type="submit" value="Inserisci">
 </form> 
+
+<form action="./elenco.jsp" method="get">
+  <input type="submit" value="Indietro">
+</form>
 
 </body>
 </html>

@@ -49,8 +49,7 @@ public class RubricaJPAWeb{
 	}
 	
 
-	//funzioni riga di comando
-	/*
+	//funzioni riga di comando	
 	public static List<Contatto> elencoRubrica(String orderBy) {				
 		EntityManager entityManager = JPAEntityFactory.createEntityManager();
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -60,21 +59,6 @@ public class RubricaJPAWeb{
 		Query query = entityManager.createQuery(cr);
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
-		return contatti;
-	}*/
-
-	public static List<Contatto> testElencoRubrica(String orderBy) {
-		System.out.println("Vai col test");
-		return new ArrayList<Contatto>();
-	}
-
-	public static List<Contatto> elencoRubrica(String orderBy) {
-		System.out.println("Vai");
-		EntityManager entityManager = JPAEntityFactory.createEntityManager();
-		Query query = entityManager.createQuery("SELECT c FROM Contatto as c ORDER BY " + orderBy);
-		List<Contatto> contatti = query.getResultList();
-		entityManager.close();
-		System.out.println("Fatto");
 		return contatti;
 	}
 
@@ -89,6 +73,18 @@ public class RubricaJPAWeb{
 		List<Contatto> contatti = query.getResultList();
 		entityManager.close();
 		return contatti;
+	}
+	
+	public static Contatto findContattoById(int id) {
+		EntityManager entityManager = JPAEntityFactory.createEntityManager();
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Contatto> cr = cb.createQuery(Contatto.class);
+		Root<Contatto> root = cr.from(Contatto.class);
+		cr.select(root).where(cb.equal(root.get("id"), id));
+		Query query = entityManager.createQuery(cr);
+		List<Contatto> contatti = query.getResultList();
+		entityManager.close();
+		return contatti.get(0);
 	}
 	
 	public static void inserisciContatto(Contatto c) {
