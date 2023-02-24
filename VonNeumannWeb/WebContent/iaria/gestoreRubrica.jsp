@@ -19,7 +19,7 @@
   <input type="submit" value="Leggi contatti" name="readContact"><br><br>
 </form> 
 
-<form align="center" action="./" method="post">
+<form align="center" action="./formCercaContatti.jsp" method="post">
   <input type="submit" value="Cerca contatto" name="searchContact"><br><br>
 </form> 
 

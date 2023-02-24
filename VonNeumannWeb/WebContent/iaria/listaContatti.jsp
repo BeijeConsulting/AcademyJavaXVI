@@ -17,11 +17,15 @@ int riga = 0;
 <br/>
 
 <%
-for(Contatti c : contatti){
-	riga++;
+if(!contatti.isEmpty()){
+	for(Contatti c : contatti){
+		riga++;
 %>
 <h3 align=center>Contatto numero <%= riga %>: <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
 <%
+	}
+} else {
+	%><h3 align=center>Nessuna corrispondenza</h3><%
 }
 %>
 
