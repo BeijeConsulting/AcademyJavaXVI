@@ -7,26 +7,26 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Risultato ricerca</title>
+<title>Modifica contatto</title>
 </head>
 <body>
 
-	<form action="./menu.jsp" method="post">
-		<input type="submit" value="Back to menu">
+	<form action="./operation2.jsp" method="post">
+		<input type="submit" value="Back to search">
 	</form>
 
-<p><strong>Risultato ricerca</strong></p>
-
-<%	
-String name = request.getParameter("name");
-String surname = request.getParameter("surname");
-
-List<Contact> results = RubricaJPAWeb.getJPAManager().searchContact(name, surname);
-session.setAttribute("searchResults", results);
-
-if(!results.isEmpty()){
-%>
-<table>
+	<%
+	List<Contact> searchResults = (List<Contact>) session.getAttribute("searchResults");
+	String idcontact = request.getParameter("idcontact");
+	
+	if(idcontact==null){
+	if(searchResults.size()==1){
+		//singolo contatto da modificare (sistemare)
+		Contact toEdit = searchResults.get(0);
+	} else {//più contatti, ricerca tramite id nella lista dei risultati%>
+		
+		<p> C'è più di un contatto corrispondente</p>
+		<table>
 		<tr>
 			<th align="left">ID</th>
 			<th align="left">COGNOME</th>
@@ -35,7 +35,7 @@ if(!results.isEmpty()){
 			<th align="left">EMAIL</th>
 			<th align="left">NOTE</th>
 		</tr>
-		<% for(Contact contact : results){ %>
+		<% for(Contact contact : searchResults){ %>
 		<tr>
    			<td align="left"><%= contact.getId() %></td>
     		<td align="left"><%= contact.getSurname() %></td>
@@ -46,17 +46,18 @@ if(!results.isEmpty()){
  		</tr>
  		<%} %>
 	</table>
+	<br/>
 	
-		<%if(session.getAttribute("editEnabled")!=null && (boolean)session.getAttribute("editEnabled")){%>
-		<form action="./morethanone.jsp" method="post">
-			<input type="submit" value="Modifica">
-		</form>
-		<%}%>
-	
-	<%} else {%>
-	<p>Nessun risultato per <%=name %> <%=surname %></p>
-	<%} %>
-	
-	
+	<!-- % session.setAttribute("multi_id", searchResults); % -->
+	<form action="./morethanone.jsp" method="post">
+		<label for="idcontact">Inserisci l'ID del contatto da modificare:</label><br>
+		<input type="text" name="idcontact"><br> 
+		<input type="submit" value="Ok">
+	</form>
+	<%}
+	} else {
+		//ricevo l'id
+	}
+	%>
 </body>
 </html>

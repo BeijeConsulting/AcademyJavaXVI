@@ -30,7 +30,10 @@ public class RubricaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("<p><strong>Programma di gestione rubrica</strong><p>")
+		.append("	<form action=\"./menu.jsp\" method=\"post\">\r\n"
+				+ "		<input type=\"submit\" value=\"Avvia\">\r\n"
+				+ "	</form>");
 	}
 
 	/**
@@ -61,7 +64,8 @@ public class RubricaServlet extends HttpServlet {
 			break;
 
 		case 4:
-			response.sendRedirect("./operation4.jsp");
+			session.setAttribute("editEnabled", true);
+			response.sendRedirect("./operation2.jsp");
 			break;
 
 		case 5:
