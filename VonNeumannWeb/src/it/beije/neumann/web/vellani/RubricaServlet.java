@@ -23,7 +23,6 @@ public class RubricaServlet extends HttpServlet {
    
     public RubricaServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
@@ -33,8 +32,8 @@ public class RubricaServlet extends HttpServlet {
         
         switch (action) {
             case "vediListaContatti":
-                Query query = entityManager.createQuery("SELECT c FROM Contatto");
-                List<Contatto> contatti = query.getResultList();
+            	Query query = entityManager.createQuery("SELECT c FROM Contatto c");
+            	List<Contatto> contatti = (List<Contatto>) query.getResultList();
                 session.setAttribute("contatti", contatti);
                 response.sendRedirect("Rubrica.jsp");
                 break;
@@ -60,7 +59,7 @@ public class RubricaServlet extends HttpServlet {
 	}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	doPost(request, response);
+    	doGet(request, response);
     }
 
 }

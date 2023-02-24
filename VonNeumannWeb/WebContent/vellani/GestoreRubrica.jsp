@@ -9,8 +9,8 @@
 <body>
 	<h1>Gestore rubrica</h1>
 	<ul>
-		<li><a href="RubricaServlet?action=vediListaContatti">Vedi lista contatti</a></li>
-		<li><a href="RubricaServlet?action=cercaContatto">Cerca contatto</a></li>
+		<li><a href="./RubricaServlet?action=vediListaContatti">Vedi lista contatti</a></li>
+		<li><a href="./RubricaServlet?action=cercaContatto">Cerca contatto</a></li>
 		<li><a href="RubricaServlet?action=inserisciContatto">Inserisci nuovo contatto</a></li>
 		<li><a href="RubricaServlet?action=modificaContatto">Modifica contatto</a></li>
 		<li><a href="RubricaServlet?action=cancellaContatto">Cancella contatto</a></li>
