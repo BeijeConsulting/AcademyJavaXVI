@@ -15,10 +15,9 @@ public class DeleteServlet extends HttpServlet {
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Contatto c = new Contatto();
-		c.setId((Integer)session.getAttribute("id"));
+		Contatto c = (Contatto) session.getAttribute("contatto");
 		RubricaJPAWeb.deleteContatto(c);
-		response.sendRedirect("../elenco.jsp");
+		response.sendRedirect("../elenco");
 	}
 
 }

@@ -20,7 +20,7 @@ public class InsertServlet extends HttpServlet {
 		c.setNote(request.getParameter("note"));
 		
 		RubricaJPAWeb.inserisciContatto(c);
-		response.sendRedirect("../elenco.jsp");
+		response.sendRedirect("../elenco");
 	}
 
 }

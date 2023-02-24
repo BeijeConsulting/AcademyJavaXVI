@@ -1,5 +1,3 @@
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
-<%@page import="it.beije.neumann.web.vanoli.rubricaWeb.RubricaJPAWeb"%>
 <%@page import="it.beije.neumann.web.vanoli.rubricaWeb.Contatto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -11,10 +9,7 @@
 <body>
 
 <%
-String s = request.getParameter("id");
-Integer id = Integer.parseInt(s);
-Contatto c = RubricaJPAWeb.findContattoById(id);	
-session.setAttribute("id", id);
+Contatto c = (Contatto) session.getAttribute("contatto");
 %>
 
 <form action="./api/edit" method="post">
@@ -35,7 +30,7 @@ session.setAttribute("id", id);
   <input type="submit" value="Cancella Contatto">
 </form>
 
-<form action="./elenco.jsp" method="get">
+<form action="./elenco" method="get">
   <input type="submit" value="Indietro">
 </form>
 

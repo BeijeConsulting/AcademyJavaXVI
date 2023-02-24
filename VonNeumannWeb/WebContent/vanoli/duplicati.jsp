@@ -11,14 +11,8 @@
 </head>
 <body>
 
-ordina per:
-<form action="./elenco" method="get">
-	<input type="radio" id="nome" name="ord" value="nome">
-	<label for="nome">Nome</label><br>
-	<input type="radio" id="cognome" name="ord" value="cognome">
-	<label for="nome">Cognome</label><br>
-  	<input type="submit" value="Ordina">
-</form>
+QUESTI SONO I CONTATTI DUPLICATI:
+
 <table>
   <tr>
     <th>Nome</th>
@@ -27,7 +21,7 @@ ordina per:
     <th>Email</th>
     <th>Note</th>
   </tr>
-<%
+<%	
 	List<Contatto> contatti = (List<Contatto>)session.getAttribute("contatti");
 	for (Contatto c : contatti) { %>
 	<tr>
@@ -46,12 +40,12 @@ ordina per:
 	<%} %>
 </table>
 
-<form action="./insert.jsp" method="get">
-	<input type="submit" value="Inserisci Nuovo Contatto">
+<form action="./duplicati" method="post">
+	<input type="submit" value="Unisci Contatti Duplicati">
 </form>
 
-<form action="./duplicati" method="get">
-	<input type="submit" value="Trova Contatti Duplicati">
+<form action="./elenco" method="get">
+  <input type="submit" value="Indietro">
 </form>
 
 

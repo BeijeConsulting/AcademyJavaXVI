@@ -21,7 +21,7 @@
   <input type="submit" value="Inserisci">
 </form> 
 
-<form action="./elenco.jsp" method="get">
+<form action="./elenco" method="get">
   <input type="submit" value="Indietro">
 </form>
 
