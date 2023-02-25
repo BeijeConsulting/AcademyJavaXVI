@@ -18,8 +18,8 @@ public class progContatti {
 		// TODO rubrica manager da tastiera
 		//ContactManager db = new DBmanager();// JDBC implementation
 		//ContactManager db = new DBhybernate();// HBM implementation
-		//ContactManager db = new DBjpa();// JPA implementation
-		ContactManager db = new DBjpacriteria();// JPA with criteria queries implementation
+		ContactManager db = new DBjpa();// JPA implementation
+		//ContactManager db = new DBjpacriteria();// JPA with criteria queries implementation
 		
 		int menu=-1;
 		Scanner s = new Scanner(System.in);

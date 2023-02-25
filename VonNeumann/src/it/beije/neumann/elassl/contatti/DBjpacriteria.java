@@ -47,10 +47,12 @@ public class DBjpacriteria extends DBjpa {
 	@Override
 	public List<Contatto> getDuplicates() throws ClassNotFoundException {
 		
+		
 		EntityManager entityManager = EMfactory.openEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Contatto> criteriaQuery = cb.createQuery(Contatto.class);
+		/*
 		Root<Contatto> c1 = criteriaQuery.from(Contatto.class);
 		Root<Contatto> c2 = criteriaQuery.from(Contatto.class);
 		criteriaQuery.select(c1);
@@ -59,27 +61,23 @@ public class DBjpacriteria extends DBjpa {
 		Predicate differentID = cb.notEqual(c2.get("id"),c1.get("id"));
 		criteriaQuery.where(cb.and(sameName, sameSurname, differentID));
 		
-		/*
-		//create query with specified return class
 		CriteriaQuery<Contatto> criteriaQuery = cb.createQuery(Contatto.class);
-		// create a Root object
+		*/
+
 		Root<Contatto> c1 = criteriaQuery.from(Contatto.class);
-		// Predicate object for filtering contacts by id
+		Subquery<Contatto> subQuery = criteriaQuery.subquery(Contatto.class);
+		Root<Contatto> c2 = subQuery.from(Contatto.class);
 		
-		Subquery<Integer> subQuery = criteriaQuery.subquery(Integer.class);
-		Root<Contatto> c2 = criteriaQuery.from(Contatto.class);
-		
-		subQuery.select(cb.literal(1));
+		subQuery.select(c2);
 
 		Predicate sameName = cb.equal(c2.get("name"),c1.get("name"));
 		Predicate sameSurname = cb.equal(c2.get("surname"),c1.get("surname"));
 		Predicate differentID = cb.notEqual(c2.get("id"),c1.get("id"));
-		subQuery.where(cb.and(sameName, sameSurname, differentID)); //same as cb.and(sameName, sameSurname, differentID) as argument, not the same if I had to use an or
-		//apply predicate to query
+		subQuery.where(cb.and(sameName, sameSurname, differentID)); 
+	
 
 		criteriaQuery.select(c1);
 		criteriaQuery.where(cb.exists(subQuery));
-		*/
 		
 		
 		transaction.begin();

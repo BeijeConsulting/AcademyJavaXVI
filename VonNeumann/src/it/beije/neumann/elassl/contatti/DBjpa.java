@@ -73,11 +73,11 @@ public class DBjpa implements ContactManager {
 	public void mergeDuplicates() throws ClassNotFoundException {
 		
 		List<Contatto> duplicateContacts = getDuplicates();
-		List<Contatto> deleted = new ArrayList<>();
+		List<Integer> deleted = new ArrayList<>();
 		
 		for(Contatto contact1: duplicateContacts) {
 			for(Contatto contact2: duplicateContacts) {
-				if(!deleted.contains(contact1) && !deleted.contains(contact2) && contact1.equals(contact2) && contact1.getId() != contact2.getId()) {
+				if(!deleted.contains(contact1.getId()) && !deleted.contains(contact2.getId()) && contact1.equals(contact2) && (contact1.getId() != contact2.getId())) {
 					String telephone = (contact1.getTelephone() == null || contact1.getTelephone().length() == 0) ? contact2.getTelephone() : contact1.getTelephone();
 					String email = (contact1.getEmail() == null || contact1.getEmail().length() == 0) ? contact2.getEmail() : contact1.getEmail();
 					String note = (contact1.getNote() == null || contact1.getNote().length() == 0) ? contact2.getNote() : contact1.getNote();
@@ -85,7 +85,7 @@ public class DBjpa implements ContactManager {
 					contact1.setEmail(email);
 					contact1.setNote(note);
 					deleteContatto(contact2);
-					deleted.add(contact2);
+					deleted.add(contact2.getId());
 					updateContatto(contact1);
 				}	
 			}
