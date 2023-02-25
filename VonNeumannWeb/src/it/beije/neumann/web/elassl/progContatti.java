@@ -6,14 +6,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import it.beije.neumann.elassl.contatti.ContactManager;
-import it.beije.neumann.elassl.contatti.DBjpacriteria;
-import it.beije.neumann.rubrica.Contatto;
+import javax.servlet.http.HttpSession;
+
+import it.beije.neumann.web.elassl.contatti.Contatto;
+import it.beije.neumann.web.elassl.contatti.ContactManager;
+import it.beije.neumann.web.elassl.contatti.DBjpacriteria;
 
 @WebServlet("/getcontacts")
 public class progContatti extends HttpServlet {
@@ -39,8 +42,15 @@ public class progContatti extends HttpServlet {
 			System.out.println(e.getMessage());
 		}
 
-		PrintWriter out = response.getWriter();
 
+	    HttpSession session = request.getSession();
+	    session.setAttribute("contacts", contacts);
+	    //Forward request and response to jsp file
+	    RequestDispatcher rd = request.getRequestDispatcher("/elassl/mvc/list.jsp");
+	    rd.forward(request, response);
+	    /*
+		PrintWriter out = response.getWriter();
+	    rd.forward(request, response);
 		out.println("<html>");
 		out.println("<head><title>Contact Table</title>");
 
@@ -75,6 +85,7 @@ public class progContatti extends HttpServlet {
 		}
 
 		out.println("</table></div></body></html>");
+		*/
 
 	}
 

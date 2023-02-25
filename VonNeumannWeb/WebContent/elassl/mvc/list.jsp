@@ -12,15 +12,7 @@
 
 	<div class="w3-container">
     <h1>Contact List</h1>
-    <% List<Contatto> contacts = new ArrayList<>();
-		try {
-
-			ContactManager db = new DBjpacriteria();
-			contacts = db.getContatti();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
+    <% List<Contatto> contacts = (List<Contatto>) session.getAttribute("contacts");
      %>
     <table class="w3-table-all w3-hoverable w3-card-4">
         <tr class="w3-blue">

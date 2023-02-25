@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="it.beije.neumann.elassl.contatti.ContactManager,
-                 it.beije.neumann.elassl.contatti.DBjpacriteria,
-                 it.beije.neumann.rubrica.Contatto,
+<%@ page import="it.beije.neumann.web.elassl.contatti.ContactManager,it.beije.neumann.web.elassl.contatti.DBjpacriteria,
+                 it.beije.neumann.web.elassl.contatti.Contatto,
+                 it.beije.neumann.web.elassl.contatti.DBjpa,
                  java.util.ArrayList,
                  java.util.List" %>
 <html>

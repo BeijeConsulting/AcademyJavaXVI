@@ -22,7 +22,7 @@
 	            response.sendRedirect("jsp/export.jsp");
 	            break;
 	        default:
-	            break;
+	            out.println("Invalid option.");
 	    }
 %>
 <html>
@@ -31,12 +31,12 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-    <div class="w3-container w3-blue">
+    <div class="w3-container w3-teal">
         <h1>Address Book Manager</h1>
     </div>
 
     <div class="w3-container">
-        <form action="index.jsp" method="post">
+        <form action="sandbox.jsp" method="post">
             <p>Select an option:</p>
             <input class="w3-radio" type="radio" name="option" value="list" checked>
             <label>List all contacts</label><br>
@@ -56,7 +56,7 @@
             <input class="w3-radio" type="radio" name="option" value="export">
             <label>Export contacts to a file</label><br>
 
-            <input class="w3-button w3-blue w3-margin-top" type="submit" value="Submit">
+            <input class="w3-button w3-teal w3-margin-top" type="submit" value="Submit">
         </form>
     </div>
 </body>

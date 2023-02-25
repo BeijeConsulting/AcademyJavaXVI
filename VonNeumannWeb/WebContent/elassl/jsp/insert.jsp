@@ -1,101 +1,57 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="it.beije.neumann.elassl.contatti.ContactManager,
-                 it.beije.neumann.elassl.contatti.DBjpacriteria,
-                 it.beije.neumann.rubrica.Contatto,
+<%@ page import="it.beije.neumann.web.elassl.contatti.ContactManager,it.beije.neumann.web.elassl.contatti.DBjpacriteria,
+                 it.beije.neumann.web.elassl.contatti.Contatto,
+                 it.beije.neumann.web.elassl.contatti.DBjpa,
                  java.util.ArrayList,
                  java.util.List" %>
 <html>
 <head>
-    <title>Contact List</title>
+    <title>Insert Contact</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script>
-        // This function filters the table rows based on user inputs
-        function filterTable() {
-            // Declare variables
-            var inputId, inputName, inputSurname, filterId, filterName, filterSurname;
-            var table, tr, tdId, tdName, tdSurname;
-            inputId = document.getElementById("searchInputId");
-            inputName = document.getElementById("searchInputName");
-            inputSurname = document.getElementById("searchInputSurname");
-            filterId = inputId.value.toUpperCase();
-            filterName = inputName.value.toUpperCase();
-            filterSurname = inputSurname.value.toUpperCase();
-            table = document.getElementById("contactTable");
-            tr = table.getElementsByTagName("tr");
-
-            // Loop through all table rows and hide those who don't match
-            for (var i = 0; i < tr.length; i++) {
-                tdId = tr[i].getElementsByTagName("td")[0];
-                tdName = tr[i].getElementsByTagName("td")[1];
-                tdSurname = tr[i].getElementsByTagName("td")[2];
-                if (tdId && tdName && tdSurname) {
-                    var txtId = tdId.textContent || tdId.innerText;
-                    var txtName = tdName.textContent || tdName.innerText;
-                    var txtSurname = tdSurname.textContent || tdSurname.innerText;
-                    // Check if user inputs match id or name or surname
-                    if (txtId.toUpperCase().indexOf(filterId) > -1 ||
-                        txtName.toUpperCase().indexOf(filterName) > -1 ||
-                        txtSurname.toUpperCase().indexOf(filterSurname) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body>
+    <div class="w3-container w3-blue">
+        <h1>Insert Contact</h1>
+    </div>
 
-	<div class="w3-container">
-    <h1>Contact List</h1>
+    <div class="w3-container" class="w3-hoverable w3-card-4">
+        <form class="w3-container" action="insert.jsp" method="post">
+            <p>Enter the contact details:</p>
+            <label>Name:</label><br>
+            <input class="w3-input w3-border w3-light-grey" type="text" name="name" required><br>
 
-    <!-- These are the input elements for user to enter search criteria -->
-    <input type="text" id="searchInputId" onkeyup="filterTable()" placeholder="Search by id">
-    <input type="text" id="searchInputName" onkeyup="filterTable()" placeholder="Search by name">
-    <input type="text" id="searchInputSurname" onkeyup="filterTable()" placeholder="Search by surname">
+            <label>Surname:</label><br>
+            <input class="w3-input w3-border w3-light-grey" type="text" name="surname" required><br>
 
-    <% List<Contatto> contacts = new ArrayList<>();
-		try {
+            <label>Telephone:</label><br>
+            <input class="w3-input w3-border w3-light-grey" type="tel" name="telephone"><br>
 
-			ContactManager db = new DBjpacriteria();
-			contacts = db.getContatti();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
-     %>
+            <label>Email:</label><br>
+            <input class="w3-input w3-border w3-light-grey" type="email" name="email"><br>
 
-     <!-- This is the table element with an id -->
-    <table class="w3-table-all w3-hoverable w3-card-4" id="contactTable">
-        <tr class="w3-blue">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Telephone</th>
-            <th>Email</th>
-            <th>Note</th>
-        </tr>
+            <label>Notes:</label><br>
+            <textarea class="w3-input w3-border w3-light-grey" name="notes"></textarea><br>
 
-        <% for (Contatto contatto : contacts) { %>
+            <input class="w3-btn w3-blue" type="submit" value="Insert">
+        </form>
+    </div>
 
-            <tr>
-                <td><%= contatto.getId() %></td>
-                <td><%= contatto.getName() %></td>
-                <td><%= contatto.getSurname() %></td>
-                <td><%= contatto.getTelephone() %></td>
-                <td><%= contatto.getEmail() %></td>
-                <td><%= contatto.getNote() %></td>
+    <%-- Scriptlet to insert the contact into the database --%>
+    <% 
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String telephone = request.getParameter("telephone");
+        String email = request.getParameter("email");
+        String notes = request.getParameter("notes");
 
-            </tr>
-
-        <% } %> 
-
-    </table>
-
-	</div>
-
-
+        if (name != null && surname != null) {
+            ContactManager db = new DBjpacriteria();
+            Contatto contact = new Contatto(name, surname, telephone, email, notes);
+            db.writeContatto(contact);
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Contatto inserito con successo!');");
+            out.println("</script>");
+        }
+    %>
 </body>
-
 </html>
