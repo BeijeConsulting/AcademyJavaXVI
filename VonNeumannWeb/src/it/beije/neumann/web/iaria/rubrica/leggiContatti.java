@@ -34,12 +34,16 @@ public class leggiContatti extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
+		//Inizializzo le variabili per poi verificare che siano null o meno su listaContatti
 		String modificaTrue = request.getParameter("modifyContact");
 		session.setAttribute("modificaButton", modificaTrue);
 		
 		String eliminaTrue = request.getParameter("deleteContact");
 		session.setAttribute("deleteContact", eliminaTrue);
 		
+		String unisciTrue = request.getParameter("mergeDuplicate");
+		session.setAttribute("mergeDuplicate", unisciTrue);
+				
 		EntityManagerFactory entityManagerFactory = JPAEntityManager.openEntityManager();
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		

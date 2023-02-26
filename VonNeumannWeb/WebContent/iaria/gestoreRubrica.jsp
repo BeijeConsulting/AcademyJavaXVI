@@ -35,12 +35,12 @@
   <input type="submit" value="Cancella contatto" name="deleteContact"><br><br>
 </form>
 
-<form align="center" action="./" method="post">
-  <input type="submit" value="Cerca duplicato" name="searchDuplicate"><br><br>
+<form align="center" action="./cercaDuplicati" method="post">
+  <input type="submit" value="Cerca duplicati" name="searchDuplicate"><br><br>
 </form> 
 
-<form align="center" action="./" method="post">
-  <input type="submit" value="Unisci duplicato" name="addDuplicate"><br><br>
+<form align="center" action="./leggiContatti" method="post">
+  <input type="submit" value="Unisci duplicati" name="mergeDuplicate"><br><br>
 </form> 
 
 <form align="center" action="./" method="post">

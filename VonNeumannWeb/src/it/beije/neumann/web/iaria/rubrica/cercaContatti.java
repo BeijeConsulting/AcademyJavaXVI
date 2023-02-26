@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class leggiContatti
+ * Servlet implementation class cercaContatti
  */
 @WebServlet("/iaria/cercaContatti")
 public class cercaContatti extends HttpServlet {

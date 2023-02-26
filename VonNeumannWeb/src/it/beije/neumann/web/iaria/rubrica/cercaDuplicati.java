@@ -1,11 +1,11 @@
 package it.beije.neumann.web.iaria.rubrica;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class eliminaContatto
+ * Servlet implementation class cercaDuplicati
  */
-@WebServlet("/iaria/eliminaContatto")
-public class eliminaContatto extends HttpServlet {
+@WebServlet("/iaria/cercaDuplicati")
+public class cercaDuplicati extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public eliminaContatto() {
+    public cercaDuplicati() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,40 +33,51 @@ public class eliminaContatto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int rigaLetta = 0;
+		int rigaLetta2 = 0;
+		int duplicatiTrovati = 0;
+		List<Contatti> contattiDuplicati = new ArrayList<>();
+		Contatti duplicato = null;
+		
 		HttpSession session = request.getSession();
 		
-		String idContatto = request.getParameter("idcontatto");
-		int id = Integer.parseInt(idContatto);
+		String duplicatiTrue = request.getParameter("searchDuplicate");
+		session.setAttribute("searchDuplicate", duplicatiTrue);
 		
 		EntityManagerFactory entityManagerFactory = JPAEntityManager.openEntityManager();
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
 		
-		//Elimino il contatto selezionato dall'utente
-		Contatti contatto = new Contatti();
-		contatto = entityManager.find(Contatti.class, id);
-		if(contatto != null) {
-			System.out.println(contatto);
-			entityManager.remove(contatto);
-		} else {
-			response.sendRedirect("./errore.jsp");
+		Query queryLettura = entityManager.createQuery("SELECT c FROM Contatti as c");
+		List<Contatti> contattiLetti = queryLettura.getResultList();
+		
+		for (Contatti c : contattiLetti) {
+			rigaLetta++;
+			for(Contatti c2 : contattiLetti) {
+				rigaLetta2++;
+				if(rigaLetta != rigaLetta2) {
+					if(c2.getCognome().contains(c.getCognome()) && c2.getNome().contains(c.getNome())) {
+						duplicato = new Contatti();
+						duplicatiTrovati++;
+						duplicato.setNome(c2.getNome());
+						duplicato.setCognome(c2.getCognome());
+						duplicato.setEmail(c2.getEmail());
+						duplicato.setId(c2.getId());
+						duplicato.setNote(c2.getNote());
+						duplicato.setTelefono(c2.getTelefono());
+						contattiDuplicati.add(duplicato);
+						//System.out.println(c2.getNome()+" "+c2.getCognome()+" ha un duplicato alla riga: "+rigaLetta2);
+					}
+				}
+			}
+			rigaLetta2 = 0; 
+			if(duplicatiTrovati != 0) {
+				duplicatiTrovati = 0;
+			}
 		}
 		
-		System.out.println(contatto);
-		
-		id = 0;  //Resetto id dopo aver eliminato il contatto desiderato
-		String eliminaFalse = null;
-		session.setAttribute("deleteContact", eliminaFalse); //Resetto anche deleteContact così da leggere i contatti senza vedere ("inserisci id")
-		
-		//Aggiorno la lista dei contatti per poi stamparla
-		Query query2 = entityManager.createQuery("SELECT c FROM Contatti as c");
-		List<Contatti> contatti = query2.getResultList();
-		
-		transaction.commit();
 		entityManager.close();
 		
-		session.setAttribute("contatti", contatti);
+		session.setAttribute("contatti", contattiDuplicati);
 		response.sendRedirect("./listaContatti.jsp");
 	}
 

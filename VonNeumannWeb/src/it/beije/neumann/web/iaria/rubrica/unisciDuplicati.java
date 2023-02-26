@@ -1,6 +1,7 @@
 package it.beije.neumann.web.iaria.rubrica;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,16 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class eliminaContatto
+ * Servlet implementation class unisciDuplicati
  */
-@WebServlet("/iaria/eliminaContatto")
-public class eliminaContatto extends HttpServlet {
+@WebServlet("/iaria/unisciDuplicati")
+public class unisciDuplicati extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public eliminaContatto() {
+    public unisciDuplicati() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,6 +34,9 @@ public class eliminaContatto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean haDuplicato = false;
+		Contatti contatto = null;
+		
 		HttpSession session = request.getSession();
 		
 		String idContatto = request.getParameter("idcontatto");
@@ -43,21 +47,27 @@ public class eliminaContatto extends HttpServlet {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		//Elimino il contatto selezionato dall'utente
-		Contatti contatto = new Contatti();
+		//Seleziono contatto con id corrispondente
 		contatto = entityManager.find(Contatti.class, id);
-		if(contatto != null) {
-			System.out.println(contatto);
-			entityManager.remove(contatto);
-		} else {
-			response.sendRedirect("./errore.jsp");
+		
+		Query queryLettura = entityManager.createQuery("SELECT c FROM Contatti as c");
+		List<Contatti> contattiLetti = queryLettura.getResultList();
+		for(Contatti c : contattiLetti) { //Se nome e cognome corrispondono e l'id è diverso da quello inserito (così non cancello l'utente originale)
+			if(c.getNome().contains(contatto.getNome()) && c.getCognome().contains(contatto.getCognome()) && c.getId() != contatto.getId()) {
+				haDuplicato = true;
+				contatto.setTelefono(contatto.getTelefono() + " / " + c.getTelefono());
+				entityManager.persist(contatto);
+				entityManager.remove(c);
+			} //Aggiungo i numeri di telefono all'utente originale ed elimino gli altri
 		}
 		
-		System.out.println(contatto);
+		if(haDuplicato == false) {
+			response.getWriter().append("<html><body><p>").append("Nessuna corrispondenza!").append("</p></body></html>");
+		}
 		
 		id = 0;  //Resetto id dopo aver eliminato il contatto desiderato
-		String eliminaFalse = null;
-		session.setAttribute("deleteContact", eliminaFalse); //Resetto anche deleteContact così da leggere i contatti senza vedere ("inserisci id")
+		String unisciFalse = null;
+		session.setAttribute("mergeDuplicate", unisciFalse); //Resetto anche deleteContact così da leggere i contatti senza vedere ("inserisci id")
 		
 		//Aggiorno la lista dei contatti per poi stamparla
 		Query query2 = entityManager.createQuery("SELECT c FROM Contatti as c");
@@ -66,7 +76,7 @@ public class eliminaContatto extends HttpServlet {
 		transaction.commit();
 		entityManager.close();
 		
-		session.setAttribute("contatti", contatti);
+		session.setAttribute("contatti", contattiLetti);
 		response.sendRedirect("./listaContatti.jsp");
 	}
 

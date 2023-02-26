@@ -57,14 +57,56 @@ if(session.getAttribute("modificaButton")!=null){
 		} else {
 			%><h3 align=center>Nessuna corrispondenza</h3><%
 		}
+//Se è stato cliccato il bottone di ricerca duplicato
+} else if(session.getAttribute("searchDuplicate")!=null){
+	%>
+	<h1 align=center>Duplicati:<h1>
+	<%
+	 List<Contatti> contatti = (List) session.getAttribute("contatti");
+		int riga = 0;
+		if(!contatti.isEmpty()){
+			for(Contatti c : contatti){
+				riga++;
+				%>
+				<h3 align=center>Contatto id: <%= c.getId() %>, <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
+				<%
+			}
+		} else {
+			%><h3 align=center>Nessuna corrispondenza</h3><%
+		}
+//Se è stato cliccato il tasto per unire i duplicati
+} else if(session.getAttribute("mergeDuplicate")!=null) {
+	%> 
+	<h3 align=center>Inserisci id del contatto da unire con i duplicati:</h3>
+	<form align="center" action="./unisciDuplicati" method="post">
+ 		<label for="fid">ID:</label><br>
+		<input type="text" name="idcontatto" value=""><br><br>
+		<input type="submit" value="Elimina" name="modify"><br>
+	</form>
+	 <%
+	 List<Contatti> contatti = (List) session.getAttribute("contatti");
+		int riga = 0;
+		if(!contatti.isEmpty()){
+			for(Contatti c : contatti){
+				riga++;
+				%>
+				<h3 align=center>Contatto id: <%= c.getId() %>, <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
+				<%
+			}
+		} else {
+			%><h3 align=center>Nessuna corrispondenza</h3><%
+		} 
 } else {
 	List<Contatti> contatti = (List) session.getAttribute("contatti");
+	%>
+	<h1 align=center>Contatti:<h1>
+	<%
 	int riga = 0;
 	if(!contatti.isEmpty()){
 		for(Contatti c : contatti){
 			riga++;
 			%>
-			<h3 align=center>Contatto id: <%= c.getId() %>, <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
+			</h1></h1><h3 align=center>Contatto id: <%= c.getId() %>, <%= c.getNome() %>, <%= c.getCognome() %>, <%= c.getTelefono() %>, <%= c.getEmail() %>, <%= c.getNote() %></h3>
 			<%
 		}
 	} else {
