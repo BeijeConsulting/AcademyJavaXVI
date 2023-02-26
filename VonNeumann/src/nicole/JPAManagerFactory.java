@@ -4,15 +4,15 @@ import javax.persistence.EntityManagerFactory;
 
 public class JPAManagerFactory 
 {
-	private static  EntityManagerFactory istanza;
+	private static  JPAManagerFactory istanza;
 	
 	private JPAManagerFactory() {
 		
 	}
 	
-	public static EntityManagerFactory getJPAEntity()
+	public static JPAManagerFactory createJPAEntity(String s)
 	{
-		if(istanza== null) istanza=new EntityManagerFactory();
+		if(istanza== null) istanza = new JPAManagerFactory();
 		return  istanza;
 		
 	}

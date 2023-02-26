@@ -23,7 +23,7 @@ public class GestoreDiContattoJPA
 	
 	public static List<Contatto> vediListaContatti()
 	{
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
+		JPAManagerFactory entityManagerFactory = JPAManagerFactory.createJPAEntity("VonNeumann");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
@@ -32,10 +32,7 @@ public class GestoreDiContattoJPA
 		Query query = entityManager.createQuery("SELECT c FROM Contatto as c");
 		List<Contatto> contatti = query.getResultList();
 		
-		//for (it.beije.neumann.rubrica.Contatto c : contatti) {			
-			//System.out.println(c);		
-			//}
-		System.out.println(contatti);
+	
 		transaction.commit();
 		
 		return contatti;
@@ -234,26 +231,26 @@ public class GestoreDiContattoJPA
 	}
 	public static void main(String[] args)
 	{
-		//vediListaContatti();
+		System.out.println(vediListaContatti());
 		//cercaContatto();
 		//System.out.println(trovaDuplicati());
 		
-		System.out.println("Benvenuto in rubrica, scegliere l'operazione: "+"/n"+"1)lista contatti"+"/n"+"2) cerca contatto"+"/n"+"3)cancella contatto"+"/n"
-				+"4)trova contatti duplicati"+"/n"+"5)unisci contatti duplicati"+"/n"+"6) inserisci contatto");
-				Scanner s=new Scanner(System.in);
-				String st=s.next();
-				switch(st)
-				{
-				case ("lista contatti") : vediListaContatti(); break;
-				case("cerca contatto"): cercaContatto();break;
-				case("cancella contatto"): cancellaContatto();break;
-				case("trova contatti duplicati"): System.out.println(trovaDuplicati()); break;
-				case("unisci contatti duplicati"): unisciContattiDuplicati();break;
-				case("inserisci contatto"): inserisciContatto();break;
-				}
+		//System.out.println("Benvenuto in rubrica, scegliere l'operazione: "+"/n"+"1)lista contatti"+"/n"+"2) cerca contatto"+"/n"+"3)cancella contatto"+"/n"
+				//+"4)trova contatti duplicati"+"/n"+"5)unisci contatti duplicati"+"/n"+"6) inserisci contatto");
+				//Scanner s=new Scanner(System.in);
+				//String st=s.next();
+				//switch(st)
+				//{
+				//case ("lista contatti") : vediListaContatti(); break;
+				//case("cerca contatto"): cercaContatto();break;
+				//case("cancella contatto"): cancellaContatto();break;
+				//case("trova contatti duplicati"): System.out.println(trovaDuplicati()); break;
+				//case("unisci contatti duplicati"): unisciContattiDuplicati();break;
+				//case("inserisci contatto"): inserisciContatto();break;
+				//}
 				
-				s.close();
-				System.out.println("Sto uscendo dalla rubrica...");
+				//s.close();
+				//System.out.println("Sto uscendo dalla rubrica...");
 				
 	}
 
