@@ -23,7 +23,7 @@ public class GestoreDiContattoJPA
 	
 	public static List<Contatto> vediListaContatti()
 	{
-		JPAManagerFactory entityManagerFactory = JPAManagerFactory.createJPAEntity("VonNeumann");
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
@@ -231,7 +231,8 @@ public class GestoreDiContattoJPA
 	}
 	public static void main(String[] args)
 	{
-		System.out.println(vediListaContatti());
+		cancellaContatto();
+		//System.out.println(vediListaContatti());
 		//cercaContatto();
 		//System.out.println(trovaDuplicati());
 		

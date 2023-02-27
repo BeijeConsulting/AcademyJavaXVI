@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import it.beije.neumann.rubrica.HBMsessionFactory;
-
+import it.beije.neumann.rubrica.Contatto;
 public class GestoreDiContattoHBM 
 {
 	public static void vediListaContatti()

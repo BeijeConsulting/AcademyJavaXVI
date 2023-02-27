@@ -9,7 +9,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import nicole.Contatto;
 
 
 
@@ -34,12 +33,12 @@ public class GestoreContattiJPA
 		
 	
 		
-		entityManager.close();
-		transaction.commit();
+		
 		return contatti;
 		
 		
 	}
+	
 	public static List<Contact> cancellaContatto(String nome, String cognome)
 	{
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumannWeb");
@@ -48,27 +47,44 @@ public class GestoreContattiJPA
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-       List<Contact> contatti=new ArrayList<>();
-        List<Contact> eliminati=new ArrayList<>();
-		Contact contatto=new Contact();
+       List<Contact> contatti=vediListaContatti();
+       List<Contact> eliminati=new ArrayList<>();
+		
 		
 		for(Contact c : contatti)
 		{
 			if(c.getName().equals(nome))
 			{
 				if(c.getSurname().equals(cognome)) {
-					contatto=c;
-					eliminati.add(contatto);
+					entityManager.remove(entityManager.contains(c) ? c : entityManager.merge(c));
+					eliminati.add(c);
 				}
+					
+				
 			}
 		}
 		
-		entityManager.remove(contatto);
+		
 		transaction.commit();
 		entityManager.close();
+	
 		return eliminati;
 		
 		
+		
+	}
+	
+	public static void addContact(Contact c) {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumannWeb");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		entityManager.persist(c);
+		
+		transaction.commit();
+		entityManager.close();
 		
 	}
 	

@@ -15,7 +15,8 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
-
+import it.beije.neumann.*;
+import it.beije.neumann.rubrica.Contatto;
 public class ContattiJDBC 
 {
 	/**

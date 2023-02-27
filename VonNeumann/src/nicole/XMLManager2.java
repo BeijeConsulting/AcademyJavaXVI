@@ -1,6 +1,7 @@
 package nicole;
 
 import java.io.File;
+import it.beije.neumann.rubrica.Contatto;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

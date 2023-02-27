@@ -9,16 +9,13 @@
 <body>
 
 <%out.println("Benvenuto in Rubrica! Seleziona l'operazione desiderata:" );
-%>
+%><br>
 <form>
-<button type="submit" formmethod="post" formaction="./rubrica?action=Cerca contatto"> Cerca contatto</button><br>
-</form>
-<form>
-<button type="submit" formmethod="post" formaction="./rubrica?action=Cancella Contatto"> Cancella contatto</button> <br/>
-</form>
-<form> <button type="submit" formmethod="post" formaction="./rubrica"> Inserisci Contatto </button>
-</form> 
-<form>
+<button type="submit" formmethod="post" formaction="./rubrica?action=Visualizza lista contatti"> Visualizza lista contatti</button><br><br>
+<button type="submit" formmethod="post" formaction="./rubrica?action=Cancella contatto"> Cancella contatto</button> <br/><br>
+
+<button type="submit" formmethod="post" formaction="./rubrica?action=Inserisci nuovo contatto"> Inserisci nuovo contatto </button> <br><br>
+
 <button type="submit" formmethod="post" formaction="./rubrica?action=Visualizza contatti duplicati"> Visualizza contatti duplicati</button>
 
 </form>

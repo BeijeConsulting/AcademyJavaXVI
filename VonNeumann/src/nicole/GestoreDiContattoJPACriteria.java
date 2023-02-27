@@ -1,5 +1,5 @@
 package nicole;
-
+import it.beije.neumann.rubrica.Contatto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +21,7 @@ import org.hibernate.Transaction;
 import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 
 import it.beije.neumann.rubrica.HBMsessionFactory;
-
+import it.beije.neumann.rubrica.Contatto;
 public class GestoreDiContattoJPACriteria 
 {
 	public static List<Contatto> vediListaContatti()
@@ -124,9 +124,9 @@ public class GestoreDiContattoJPACriteria
 		//creo il Criteria Builder
 		CriteriaBuilder cb= em.getCriteriaBuilder();
 		
-		CriteriaQuery<Contatto> query= cb.createQuery(nicole.Contatto.class);
+		CriteriaQuery<Contatto> query= cb.createQuery(Contatto.class);
 		//creo la radice della query
-		Root<Contatto> root=query.from(nicole.Contatto.class);
+		Root<Contatto> root=query.from(Contatto.class);
 		
 		System.out.print("Avvio Scanner... ");
 		Scanner s=new Scanner(System.in);

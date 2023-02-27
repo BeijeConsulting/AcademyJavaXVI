@@ -1,5 +1,5 @@
 package nicole;
-
+import it.beije.neumann.rubrica.Contatto;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

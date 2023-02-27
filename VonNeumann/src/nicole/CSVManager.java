@@ -14,7 +14,7 @@ import java.util.List;
 
 
 
-
+import it.beije.neumann.rubrica.Contatto;
 public class CSVManager 
 {
 	

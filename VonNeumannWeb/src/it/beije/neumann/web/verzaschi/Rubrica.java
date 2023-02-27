@@ -44,23 +44,32 @@ public class Rubrica extends HttpServlet {
 		transaction.begin();
 		
 		switch(action) {
-		case("Cerca contatto"):
-			List<Contact> contatti= GestoreContattiJPA.vediListaContatti();
+		case("Visualizza lista contatti"):	
+		Query query = entityManager.createQuery("SELECT c FROM Contact as c");
+		List<Contact> contatti = query.getResultList();	
 		session.setAttribute("contactss", contatti);
 		response.sendRedirect("./RubricaJSP.jsp");
+		break;
 		
 		case("Visualizza contatti duplicati"):
-			List<Contact> contatti2=GestoreContattiJPA.vediListaDuplicati();
+		List<Contact> contatti2=GestoreContattiJPA.vediListaDuplicati();
 		session.setAttribute("contactss", contatti2);
-		response.sendRedirect("./RubricaJSP.jsp");
+		response.sendRedirect("./RubricaJSP.jsp"); break;
+		
+		
 		case("Cancella contatto"): 
-			List<Contact> eliminati=GestoreContattiJPA.cancellaContatto(action, action);
-			response.sendRedirect("./InsertContact.jsp");
+		System.out.println("session in LoginServlet: " + session.getId());
+		response.sendRedirect("./InsertContact.jsp");break;
 		
 		
+		case("Inserisci nuovo contatto"):
+		response.sendRedirect("./InserisciNuovoContatto.jsp");break;
+	
 		}
+		
 	
 	
+		
 		
 	
 		transaction.commit();
