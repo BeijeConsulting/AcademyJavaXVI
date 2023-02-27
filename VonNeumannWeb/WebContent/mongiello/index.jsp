@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@page import="it.beije.neumann.web.mongiello.Contatto"%>
+     <%@page import="it.beije.neumann.web.mongiello.RubricaJPA"%>
     <%@page import="java.util.List"%>
+    <%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,26 +14,35 @@
 <body>
 	<div class="container text-center">
 	<h1 class ="mt-2">Benvenuto nel gestore rubrica</h1>
+	
   <div class="row">
     <div class="col mt-2" >
       <form action="./StampaDbServlet" method="get">
-   
 		<input class ="ms-1 btn btn-primary" type="submit" value="Visualizza">
       </form>
     </div>
   </div>
+  
   <div class="row">
     <div class="col mt-2" >
 		<a href="insertContactForm.jsp" class="btn btn-primary">Inserisci contatto</a>
+         </div>
+   </div> 
+   
+   <div class="row">
+    <div class="col mt-2" >
+     <form action="./EditContactServlet" method="get">
+		<input class ="ms-1 btn btn-primary" type="submit" value="Modifica contatto">
       </form>
     </div>
    </div> 
+   
 </div>
 
 
 <!-- STAMPA DATABASE -->
 <%
-	List<Contatto> contatti = (List) session.getAttribute("contatti");
+	List<Contatto>contatti = (List)session.getAttribute("contatti");
 	if( contatti != null ){
 %>		
 		<div class="container text-center">

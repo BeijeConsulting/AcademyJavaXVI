@@ -58,6 +58,13 @@ public class Contatto {
 	
 	}
 	
+	public static Contatto getContactById( List<Contatto> contatti,int id ) {
+		for(Contatto c: contatti) {
+			if( c.getId() == id ) return c;
+		}
+		return null;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -92,38 +99,6 @@ public class Contatto {
 		return builder.toString();
 	}
 	
-//	public static List<Contatto> inputRubrica( List<Contatto> contatti ){	
-//		Scanner s = new Scanner(System.in);
-//		boolean isAlpha = true;
-//		String name = null;
-//		
-//		do {
-//			try {
-//				System.out.print("Nome: ");
-//				name = s.nextLine();
-//				isAlpha = Check.isAlpha( name );
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			isAlpha = false;
-//		}
-//			
-//		}while( !isAlpha );
-//		
-//		System.out.print("Cognome: ");
-//		String surname = s.nextLine();
-//		
-//		System.out.print("Telefono: ");
-//		String telephone = s.nextLine();
-//		
-//		System.out.println("Email: ");
-//		String email = s.nextLine();
-//		
-//		System.out.println("Note: ");
-//		String note = s.nextLine();
-//		
-//		contatti.add(new Contatto( name, surname, telephone, email, note ));
-//		return contatti;	
-//	}
 	public String getName() {
 		return name;
 	}

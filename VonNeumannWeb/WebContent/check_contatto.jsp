@@ -18,13 +18,13 @@ nuovoContatto2.setName(name);
 //..
 session.setAttribute("nuovoContatto", nuovoContatto2);
 --%>
-
+<%-- 
 <jsp:useBean id="nuovoContatto" class="it.beije.neumann.web.Contatto" scope="session"></jsp:useBean>
 <jsp:setProperty property="name" name="nuovoContatto" param="nome"/>
 <jsp:setProperty property="surname" name="nuovoContatto" param="cognome"/>
 <jsp:setProperty property="telephone" name="nuovoContatto" param="telefono"/>
 <jsp:setProperty property="email" name="nuovoContatto"/>
-
+--%>
 <%-- System.out.println(nuovoContatto); %>
 <% System.out.println(nuovoContatto2); %>
 <%= nuovoContatto == nuovoContatto2 --%>

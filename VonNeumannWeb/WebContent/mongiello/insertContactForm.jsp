@@ -57,7 +57,7 @@
 	
 	if ( nuovoContatto.getName() != null || nuovoContatto.getSurname() != null || nuovoContatto.getTelephone() != null && nuovoContatto.getEmail() != null || nuovoContatto.getNote()!= null ){
 %>		
-	<div class="container text-center">
+	<div class="container text-center mt-3">
 		Sei sicuro di voler aggiungere il seguente contatto ?
   		<div class="row">
    			 <div class="col mt-2" >
@@ -90,8 +90,12 @@
     </div>	
 <%		
 	}	
+
 %>
 
+<% out.print(message);
+
+	request.getSession().removeAttribute("message");%>
 <%--	
 	String message = (String) session.getAttribute("message");
 	if( message != null ) out.print(message);
