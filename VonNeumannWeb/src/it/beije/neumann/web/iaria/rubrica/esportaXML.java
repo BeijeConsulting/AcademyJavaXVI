@@ -27,7 +27,7 @@ import org.w3c.dom.Element;
 /**
  * Servlet implementation class leggiContatti
  */
-@WebServlet("/iaria/esportaCSV")
+@WebServlet("/iaria/esportaXML")
 public class esportaXML extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
