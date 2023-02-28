@@ -1,24 +1,41 @@
 package it.beije.neumann.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "contatti")
 public class Contatto {
 
-	private int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 	
+	@Column(name = "nome")
 	private String name;
 	
+	@Column(name = "cognome")
 	private String surname;
 	
+	@Column(name = "telefono")
 	private String telephone;
 	
+	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -62,14 +79,6 @@ public class Contatto {
 	}
 
 	public String toString() {
-//		StringBuilder builder = new StringBuilder("{");
-//		builder.append(" name: ").append(name);
-//		builder.append(", surname: ").append(surname);
-//		builder.append(", telephone: ").append(telephone);
-//		builder.append(", email: ").append(email);
-//		builder.append(", note: ").append(note);
-//		builder.append("}");
-
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
 				.append(", name: ").append(name)
