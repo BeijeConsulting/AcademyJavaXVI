@@ -13,13 +13,13 @@
 <span style="color: white; font-size: 20px">Benvenuto nella tua rubrica</span>
 </div>
 	<%
-List<Contatto> contacts = Rubrica.getContacts();
+List<Contatto> contacts = (List<Contatto>) session.getAttribute("contacts");
 int i = 0;
 String message = (String) session.getAttribute("message");
 for(Contatto c : contacts) {
 	i++;
 	%>
-<span style="color: red; font-weight: bold"><%= i %>) <%= c.getName() %>, <%=  c.getSurname() %> </span>
+<a style="color: red; font-weight: bold" href="./update.jsp?id=<%= c.getId() %>"><%= i %>) <%= c.getName() %>, <%=  c.getSurname() %> </a>
 <br/>
 	
 	<%}%>

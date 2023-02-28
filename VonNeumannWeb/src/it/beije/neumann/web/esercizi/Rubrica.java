@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 
 
+
 public class Rubrica {
 //	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
 //	public static void main(String[] args) {
@@ -37,4 +38,24 @@ public static void addContact(Contatto contact) {
 		transaction.commit();
 		entityManager.close();
 	}
+
+public static Contatto searchContact(String id) {
+	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    int i = Integer.parseInt(id);
+	Contatto contatto = entityManager.find(Contatto.class, i);
+	System.out.println(contatto);
+	entityManager.close();
+	return contatto;
+}
+
+ 	public static void updateContact(Contatto c) {
+ 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("VonNeumann");
+ 	    EntityManager entityManager = entityManagerFactory.createEntityManager();
+ 	    EntityTransaction transaction = entityManager.getTransaction();
+ 	    transaction.begin();
+ 		entityManager.merge(c);
+ 		transaction.commit();
+		entityManager.close();
+ 	}
 }
