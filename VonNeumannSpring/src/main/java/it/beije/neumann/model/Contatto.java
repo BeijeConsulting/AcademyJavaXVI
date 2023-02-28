@@ -1,4 +1,4 @@
-package it.beije.neumann.model;
+package main.java.it.beije.neumann.model;
 
 
 public class Contatto {
