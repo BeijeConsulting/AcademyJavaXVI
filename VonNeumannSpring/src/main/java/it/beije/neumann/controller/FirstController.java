@@ -1,4 +1,4 @@
-package main.java.it.beije.neumann.controller;
+package it.beije.neumann.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import main.java.it.beije.neumann.model.Contatto;
+import it.beije.neumann.model.Contatto;
 
 
 @Controller

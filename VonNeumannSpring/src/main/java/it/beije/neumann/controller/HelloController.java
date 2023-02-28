@@ -1,4 +1,4 @@
-package main.java.it.beije.neumann.controller;
+package it.beije.neumann.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
