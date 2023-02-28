@@ -39,6 +39,14 @@ public class RubricaServlet extends HttpServlet {
                 break;
                 
             case "cercaContatto":
+            	String stringaRicerca = request.getParameter("stringaRicerca");
+                Query queryRicerca = entityManager.createQuery("SELECT c FROM Contatto c WHERE c.name LIKE :stringaRicerca");
+                queryRicerca.setParameter("stringaRicerca", "%" + stringaRicerca + "%");
+                List<Contatto> contattiRicerca = (List<Contatto>) queryRicerca.getResultList();
+                session.setAttribute("contatti", contattiRicerca);
+                response.sendRedirect("CercaContatto.jsp");
+            	
+            	
                 break;
                 
             case "inserisciContatto":
