@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SearchDuplicateServlet
  */
-@WebServlet("/nido/controller/searchduplicate")
+@WebServlet("/nido/controller/search_duplicate")
 public class SearchDuplicateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

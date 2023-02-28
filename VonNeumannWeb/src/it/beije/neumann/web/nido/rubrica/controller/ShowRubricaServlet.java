@@ -16,7 +16,7 @@ import it.beije.neumann.web.nido.rubrica.model.RubricaJPAWeb;
 /**
  * Servlet implementation class ShowRubricaServlet
  */
-@WebServlet("/nido/controller/showrubrica")
+@WebServlet("/nido/controller/show_rubrica")
 public class ShowRubricaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

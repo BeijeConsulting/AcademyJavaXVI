@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MergeDuplicateServlet
  */
-@WebServlet("/nido/controller/mergeduplicate")
+@WebServlet("/nido/controller/merge_duplicate")
 public class MergeDuplicateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

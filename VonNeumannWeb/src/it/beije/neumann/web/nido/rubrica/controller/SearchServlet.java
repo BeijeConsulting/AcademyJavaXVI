@@ -16,7 +16,7 @@ import it.beije.neumann.web.nido.rubrica.model.RubricaJPAWeb;
 /**
  * Servlet implementation class SearchServlet
  */
-@WebServlet("/nido/controller/searchcontact")
+@WebServlet("/nido/controller/search_contact")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

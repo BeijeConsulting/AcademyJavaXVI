@@ -16,7 +16,7 @@ import it.beije.neumann.web.nido.rubrica.model.RubricaJPAWeb;
 /**
  * Servlet implementation class EditContactServlet
  */
-@WebServlet("/nido/controller/editcontact")
+@WebServlet("/nido/controller/edit_contact")
 public class EditContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

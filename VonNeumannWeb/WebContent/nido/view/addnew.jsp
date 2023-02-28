@@ -14,7 +14,7 @@
 	
 	<p><strong>Inserisci i dati del contatto</strong></p>
 
-	<form action="../controller/addcontact" method="post">
+	<form action="../controller/add_contact" method="post">
   		<label for="name">Nome</label><br>
  		<input type="text" name="name"><br>
   		<label for="surname">Cognome</label><br>

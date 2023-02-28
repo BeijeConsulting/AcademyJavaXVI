@@ -16,7 +16,7 @@ import it.beije.neumann.web.nido.rubrica.model.RubricaJPAWeb;
 /**
  * Servlet implementation class DeleteContactServlet
  */
-@WebServlet("/nido/controller/deletecontact")
+@WebServlet("/nido/controller/delete_contact")
 public class DeleteContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

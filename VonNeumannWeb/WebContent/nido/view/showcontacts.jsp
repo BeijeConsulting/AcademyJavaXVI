@@ -66,7 +66,7 @@
 		if(contacts.size()==1){
 			session.setAttribute("contact", contacts.get(0));
 	%>
-	<form action="../controller/deletecontact" method="post">
+	<form action="../controller/delete_contact" method="post">
 		<input type="submit" value="Cancella">
 	</form>
 	<% } else if(contacts.size()>0){

@@ -13,7 +13,7 @@
 	
 	<p><strong>Inserisci l'id del contatto</strong></p>
 
-	<form action="../controller/editcontact" method="post">
+	<form action="../controller/edit_contact" method="post">
   		<label for="idcontact">ID del contatto:</label><br>
  		<input type="text" name="idcontact"><br>
   		<input type="submit" value="Modifica">

@@ -12,7 +12,7 @@
 		<input type="submit" value="Back to menu">
 	</form>
 
-<form action="../controller/searchcontact" method="post">
+<form action="../controller/search_contact" method="post">
   <label for="name">Nome del contatto:</label><br>
   <input type="text" name="name"><br>
   <label for="surname">Cognome del contatto:</label><br>
