@@ -14,12 +14,12 @@ public class HelloController {
 	public String hello(HttpServletRequest request) {
 		System.out.println("GET " + request.getRequestURL());
 		return "hello"; // /WEB-INF/views/hello.jsp
-	}	
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 		System.out.println("GET / ");
 		return "index";
-	}	
-	
+	}
+
 }

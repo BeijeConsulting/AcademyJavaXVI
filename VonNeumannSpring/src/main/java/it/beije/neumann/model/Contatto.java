@@ -4,17 +4,17 @@ package it.beije.neumann.model;
 public class Contatto {
 
 	private int id;
-	
+
 	private String name;
-	
+
 	private String surname;
-	
+
 	private String telephone;
-	
+
 	private String email;
-	
+
 	private String note;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -28,39 +28,40 @@ public class Contatto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getSurname() {
 		return surname;
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	public String getTelephone() {
 		return telephone;
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
+
 	public String getCompleteName() {
 		return name + " " + surname;
 	}
 
+	@Override
 	public String toString() {
 //		StringBuilder builder = new StringBuilder("{");
 //		builder.append(" name: ").append(name);
