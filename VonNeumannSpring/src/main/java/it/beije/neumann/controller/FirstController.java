@@ -17,17 +17,17 @@ public class FirstController {
 	@RequestMapping(value = "/lista_contatti", method = RequestMethod.GET)
 	public String prova(Model model) {
 		System.out.println("GET /lista_contatti");
-
+		
 		Contatto contatto = new Contatto();
 		contatto.setName("Paolino");
 		contatto.setSurname("Paperino");
 		contatto.setTelephone("3334445556");
-		List<Contatto> contatti = new ArrayList<>();
+		List<Contatto> contatti = new ArrayList<Contatto>();
 		contatti.add(contatto);
-
+						
 		model.addAttribute("lista", contatti);
-
+		
 		return "lista_contatti";
-	}
+	}	
 
 }
