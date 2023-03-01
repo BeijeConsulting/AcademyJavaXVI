@@ -12,6 +12,14 @@
 LISTA CONTATTI<br><br>
 
 <%--c:if test=""></c:if --%>
+<form action="lista_contatti" method="get">
+Cognome:<br>
+<input type="text" name="surname"><br>
+Nome:<br>
+<input type="text" name="name">
+<input type="submit" value="Cerca">
+
+</form>
 <c:choose>
 	<c:when test="${empty lista}">NESSUN CONTATTO</c:when>
 	<c:otherwise>

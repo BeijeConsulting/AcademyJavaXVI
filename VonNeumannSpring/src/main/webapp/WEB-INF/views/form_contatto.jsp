@@ -7,23 +7,28 @@
 <title>INSERIMENTO NUOVO CONTATTO</title>
 </head>
 <body>
-
 <c:choose>
-	<c:when test="${not empty contatto}">
+	<c:when test="${not empty contattoNew}">
 		Confermi di voler inserire il seguente contatto?<br><br>
-		NOME: ${contatto.name}<br>
-		COGNOME: ${contatto.surname}<br>
-		TELEFONO: ${contatto.telephone}<br>
-		EMAIL: ${contatto.email}<br><br>
-		<form action="./insert_contatto" method="post">
+		NOME: ${contattoNew.name}<br>
+		COGNOME: ${contattoNew.surname}<br>
+		TELEFONO: ${contattoNew.telephone}<br>
+		EMAIL: ${contattoNew.email}<br><br>
+<form action="./insert_contatto" method="post">
+ <input type="submit" value="OK">
+</form>
+
+
+<!--  		<form action="./insert_contatto" method="post">
 		  <input type="hidden" name="name" value="${contatto.name}"><br>
 		  <input type="hidden" name="surname" value="${contatto.surname}"><br>
 		  <input type="hidden" name="telephone" value="${contatto.telephone}"><br>
 		  <input type="hidden" name="email" value="${contatto.email}"><br><br>
 		  <input type="submit" value="OK">
 		  <input type="reset" value="ANNULLA">
-		</form> 
+		</form> --> 
 	</c:when>
+
 	<c:otherwise>
 		<form action="./form_contatto" method="post">
 		  <label for="name">nome:</label><br>

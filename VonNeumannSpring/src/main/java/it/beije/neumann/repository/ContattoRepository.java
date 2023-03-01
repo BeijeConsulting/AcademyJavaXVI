@@ -13,6 +13,8 @@ public interface ContattoRepository extends JpaRepository<Contatto, Integer> {
 
 	public List<Contatto> findBySurname(String surname);
 	
+	public List<Contatto> findByName(String name);
+	
 	public List<Contatto> findBySurnameAndName(String surname, String name);
 	
 }

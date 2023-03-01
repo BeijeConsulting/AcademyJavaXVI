@@ -1,8 +1,10 @@
 package it.beije.neumann.controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -23,7 +25,7 @@ public class FirstController {
 	private ContattoRepository contattoRepository;
 
 	@RequestMapping(value = "/lista_contatti", method = RequestMethod.GET)
-	public String prova(Model model, @RequestParam(required = false) String surname) {
+	public String prova(Model model, @RequestParam(required = false) String surname, @RequestParam(required = false) String name) {
 		System.out.println("GET /lista_contatti");
 		
 //		Contatto contatto = new Contatto();
@@ -36,14 +38,20 @@ public class FirstController {
 
 		//List<Contatto> contatti = contattoRepository.findBySurnameAndName("Rossi", "Francesco");
 		//List<Contatto> contatti = contattoRepository.findAll();		
-
-		List<Contatto> contatti;
-		if (surname != null) {
-			contatti = contattoRepository.findBySurname(surname);
-		} else {
+System.out.println("name "+ name +"---"+"surname: "+surname);
+		List<Contatto> contatti = contattoRepository.findAll();
+		
+		if (  name == null && surname == null || surname.length()==0 && name.length() == 0  ) {
 			contatti = contattoRepository.findAll();
+		}else if( name != null && surname.length() == 0 ) {
+			contatti = contattoRepository.findByName(name);
+		} else if(surname != null && name.length()==0 ) {
+			contatti = contattoRepository.findBySurname(surname);
+		}else {
+			contatti = contattoRepository.findBySurnameAndName(surname,name);
 		}
-		 
+		
+		
 						
 
 		model.addAttribute("lista", contatti);
@@ -61,7 +69,7 @@ public class FirstController {
 	@RequestMapping(value = "/form_contatto", method = RequestMethod.POST)
 	//public String formContatto(Model model, @RequestParam(value = "nome", required = false) String name) {
 	public String formContatto(Model model, @RequestParam String name, @RequestParam String surname,
-			@RequestParam String telephone, @RequestParam String email) {
+			@RequestParam String telephone, @RequestParam String email, HttpServletRequest request) {
 		System.out.println("POST /form_contatto");
 		
 		//String name = request.getParameter("nome");
@@ -76,18 +84,33 @@ public class FirstController {
 		contatto.setTelephone(telephone);
 		contatto.setEmail(email);
 		
-		model.addAttribute("contatto", contatto);
+		HttpSession session = request.getSession();
+		session.setAttribute("contattoNew", contatto);
+		
+
+	//	model.addAttribute("contatto", contatto);
 		
 		return "form_contatto";
+	
 	}
+	
+
+	
+	
 
 	@RequestMapping(value = "/insert_contatto", method = RequestMethod.POST)
-	public String insertContatto(Model model, Contatto contatto) {
+	public String insertContatto(Model model, Contatto contatto, HttpServletRequest request) {
 		System.out.println("POST /form_contatto");
 		
 		System.out.println("contatto : " + contatto);
+		//model.addAttribute("contatto", contatto);
+		HttpSession session = request.getSession();
+		Contatto contattoNew = (Contatto) session.getAttribute("contattoNew");
+		contattoRepository.save(contattoNew);
 		
-		model.addAttribute("contatto", contatto);
+		session.removeAttribute("contattoNew");
+		
+		//session.setAttribute("message", "Contatto inserito correttamente");
 		
 		return "form_contatto";
 	}
