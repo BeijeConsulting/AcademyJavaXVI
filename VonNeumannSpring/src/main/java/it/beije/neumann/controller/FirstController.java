@@ -29,7 +29,7 @@ public class FirstController {
 //		List<Contatto> contatti = new ArrayList<Contatto>();
 //		contatti.add(contatto);
 		
-		List<Contatto> contatti = contattoRepository.findBySurnameAndName("Rossi", "Francesco");
+		List<Contatto> contatti = contattoRepository.findBySurnameAndName("Franco", "Giovanni");
 						
 		model.addAttribute("lista", contatti);
 		
