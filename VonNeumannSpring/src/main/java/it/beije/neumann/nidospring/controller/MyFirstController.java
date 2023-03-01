@@ -3,6 +3,7 @@ package it.beije.neumann.nidospring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,9 @@ public class MyFirstController {
 	public String prova(Model model) {
 		System.out.println("GET /lista_contatti");
 		
-		List<Contact> contacts = contactRepository.findAll();
+//		List<Contact> contacts = contactRepository.findAll();
+//		List<Contact> contacts = contactRepository.findByNameOrderByNameAsc();
+		List<Contact> contacts = contactRepository.findAll(Sort.by("name").descending());
 						
 		model.addAttribute("lista", contacts);
 		

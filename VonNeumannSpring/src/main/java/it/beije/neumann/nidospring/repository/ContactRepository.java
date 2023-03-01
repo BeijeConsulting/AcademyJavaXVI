@@ -13,6 +13,8 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
 	public List<Contact> findBySurname(String surname);
 	
+	public List<Contact> findByName(String name);
+	
 	public List<Contact> findBySurnameAndName(String surname, String name);
 	
 }
