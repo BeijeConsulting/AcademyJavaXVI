@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>CIAO!!!</title>
+<title>HomePage</title>
 </head>
 <body>
-
-Hello Von Neumann ciao
-
+Welcome in <b>Von Neumann Spring Project</b>
 </body>
 </html>
