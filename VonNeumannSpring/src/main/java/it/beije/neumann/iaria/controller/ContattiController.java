@@ -68,7 +68,13 @@ public class ContattiController {
 		
 		model.addAttribute("contatto", contatto);
 		
-		return "iaria/form_contatto";
+		//Inserisco dati
+		iariaContattoRepository.save(contatto);
+		
+		//Leggo i dati
+		Lettura(model);
+		
+		return "/iaria/lista_contatti";
 	}
 	
 }
