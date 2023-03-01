@@ -29,8 +29,8 @@ public class FirstController {
 //		List<Contatto> contatti = new ArrayList<Contatto>();
 //		contatti.add(contatto);
 		
-		List<Contatto> contatti = contattoRepository.findBySurnameAndName("Rossi", "Francesco");
-						
+		//List<Contatto> contatti = contattoRepository.findBySurnameAndName("Rossi", "Francesco");
+		List<Contatto> contatti = contattoRepository.findAll();		
 		model.addAttribute("lista", contatti);
 		
 		return "lista_contatti";
