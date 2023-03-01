@@ -33,17 +33,14 @@ public class FirstController {
 //		List<Contatto> contatti = new ArrayList<Contatto>();
 //		contatti.add(contatto);
 		
-<<<<<<< HEAD
-		List<Contatto> contatti = contattoRepository.findAll();
-=======
+
 		List<Contatto> contatti;
 		if (surname != null) {
 			contatti = contattoRepository.findBySurname(surname);
 		} else {
 			contatti = contattoRepository.findAll();
 		}
-		 
->>>>>>> refs/remotes/origin/main
+
 						
 		model.addAttribute("lista", contatti);
 		
