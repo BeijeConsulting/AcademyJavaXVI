@@ -56,7 +56,7 @@ public class IariaContatto {
 	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelephone(String telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	
