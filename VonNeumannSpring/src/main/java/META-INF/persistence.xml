@@ -4,6 +4,9 @@
 		<class>it.beije.neumann.model.Contatto</class>
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
+		
+		<class>it.beije.neumann.mongiello.model.User</class>
+		<class>it.beije.neumann.mongiello.model.Product</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
