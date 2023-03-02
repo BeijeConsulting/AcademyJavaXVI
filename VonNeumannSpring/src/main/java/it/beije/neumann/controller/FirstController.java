@@ -35,13 +35,17 @@ public class FirstController {
 		
 
 		List<Contatto> contatti;
+		Integer totale = null;
 		if (surname != null) {
 			contatti = contattoRepository.findBySurname(surname);
+			totale = contattoRepository.countBySurname(surname);
+			System.out.println("totale : " + totale);
 		} else {
 			contatti = contattoRepository.findAll();
 		}
 
 						
+		model.addAttribute("totale", totale);
 		model.addAttribute("lista", contatti);
 		
 		return "lista_contatti";
