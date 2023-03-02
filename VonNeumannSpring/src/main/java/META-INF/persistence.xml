@@ -5,6 +5,7 @@
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
 		<class>it.beije.neumann.model.Product</class>
+		<class>it.beije.neumann.model.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
