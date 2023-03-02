@@ -18,7 +18,7 @@ public class ContattiController {
 	@Autowired
 	private IariaContattoRepository iariaContattoRepository;
 
-	@RequestMapping(value = "/iaria/lista_contatti", method = RequestMethod.GET)
+	@RequestMapping(value = "/iaria/contatto/lista_contatti", method = RequestMethod.GET)
 	public String Lettura(Model model) {
 		System.out.println("GET lettura/lista_contatti");
 
@@ -27,17 +27,17 @@ public class ContattiController {
 						
 		model.addAttribute("lista", contatti);
 		
-		return "iaria/lista_contatti";
+		return "iaria/contatto/lista_contatti";
 	}
 	
 
-	@RequestMapping(value = "/iaria/form_contatto", method = RequestMethod.GET)
+	@RequestMapping(value = "/iaria/contatto/form_contatto", method = RequestMethod.GET)
 	public String formContatto() {
 		System.out.println("GET /form_contatto");
-		return "iaria/form_contatto";
+		return "iaria/contatto/form_contatto";
 	}
 
-	@RequestMapping(value = "/iaria/form_contatto", method = RequestMethod.POST)
+	@RequestMapping(value = "/iaria/contatto/form_contatto", method = RequestMethod.POST)
 	public String formContatto(Model model, @RequestParam String nome, @RequestParam String cognome,
 			@RequestParam String telefono, @RequestParam String email, @RequestParam String note) {
 		System.out.println("POST /form_contatto");
@@ -57,10 +57,10 @@ public class ContattiController {
 		
 		model.addAttribute("contatto", contatto);
 		
-		return "iaria/form_contatto";
+		return "iaria/contatto/form_contatto";
 	}
 	
-	@RequestMapping(value = "/iaria/insert_contatto", method = RequestMethod.POST)
+	@RequestMapping(value = "/iaria/contatto/insert_contatto", method = RequestMethod.POST)
 	public String insertContatto(Model model, IariaContatto contatto) {
 		System.out.println("POST /form_contatto");
 		
@@ -74,7 +74,7 @@ public class ContattiController {
 		//Leggo i dati
 		Lettura(model);
 		
-		return "/iaria/lista_contatti";
+		return "iaria/contatto/lista_contatti";
 	}
 	
 }
