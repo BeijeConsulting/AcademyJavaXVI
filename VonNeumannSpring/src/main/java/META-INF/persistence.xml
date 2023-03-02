@@ -5,12 +5,24 @@
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
 		<class>it.beije.neumann.nidospring.model.Contact</class>
+		
+		<class>it.beije.neumann.nidospring.model.Address</class>
+		<class>it.beije.neumann.nidospring.model.ConversionSize</class>
+		<class>it.beije.neumann.nidospring.model.MyOrderItem</class>
+		<class>it.beije.neumann.nidospring.model.MyOrder</class>
+		<class>it.beije.neumann.nidospring.model.ProductDetail</class>
+		<class>it.beije.neumann.nidospring.model.ProductImage</class>
+		<class>it.beije.neumann.nidospring.model.Product</class>
+		<class>it.beije.neumann.nidospring.model.ShoppingCart</class>
+		<class>it.beije.neumann.nidospring.model.ShoppingCartItem</class>
+		<class>it.beije.neumann.nidospring.model.User</class>
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/neumann"/>
+			<!--property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/neumann"/-->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce_shoes"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="Mary23BeijeSQL"/>
 		</properties>
