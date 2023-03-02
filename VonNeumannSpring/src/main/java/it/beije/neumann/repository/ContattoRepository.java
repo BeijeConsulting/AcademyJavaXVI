@@ -1,3 +1,4 @@
+/*
 package it.beije.neumann.repository;
 
 import java.util.List;
@@ -22,3 +23,4 @@ public interface ContattoRepository extends JpaRepository<Contatto, Integer> {
 	public int countBySurname(@Param("surname") String surname);
 	
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package it.beije.neumann.model;
 
 import javax.persistence.Column;
@@ -90,4 +91,4 @@ public class Contatto {
 
 		return builder.toString();
 	}
-}
+} */
