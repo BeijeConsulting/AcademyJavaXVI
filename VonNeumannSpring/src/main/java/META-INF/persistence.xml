@@ -3,6 +3,8 @@
 	<persistence-unit name="VonNeumann">
 		<class>it.beije.neumann.model.Contatto</class>
 		<class>it.beije.neumann.iaria.model.IariaContatto</class>
+		<class>it.beije.neumann.model.Order</class>
+		<class>it.beije.neumann.model.OrderItem</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
