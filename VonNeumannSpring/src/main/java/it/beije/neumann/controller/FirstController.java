@@ -28,20 +28,15 @@ public class FirstController {
 	public String prova(Model model, @RequestParam(required = false) String surname, @RequestParam(required = false) String name) {
 		System.out.println("GET /lista_contatti");
 		
-//		Contatto contatto = new Contatto();
-//		contatto.setName("Paolino");
-//		contatto.setSurname("Paperino");
-//		contatto.setTelephone("3334445556");
-//		List<Contatto> contatti = new ArrayList<Contatto>();
-//		contatti.add(contatto);
-		
+
 
 		//List<Contatto> contatti = contattoRepository.findBySurnameAndName("Rossi", "Francesco");
 		//List<Contatto> contatti = contattoRepository.findAll();		
-System.out.println("name "+ name +"---"+"surname: "+surname);
+		System.out.println("name "+ name +"---"+"surname: "+surname);
 		List<Contatto> contatti = contattoRepository.findAll();
-		
+		Integer totale = contattoRepository.countBySurname(surname);
 		if (  name == null && surname == null || surname.length()==0 && name.length() == 0  ) {
+
 			contatti = contattoRepository.findAll();
 		}else if( name != null && surname.length() == 0 ) {
 			contatti = contattoRepository.findByName(name);
@@ -52,8 +47,8 @@ System.out.println("name "+ name +"---"+"surname: "+surname);
 		}
 		
 		
-						
-
+			
+		model.addAttribute("totale", totale);
 		model.addAttribute("lista", contatti);
 		
 		return "lista_contatti";
