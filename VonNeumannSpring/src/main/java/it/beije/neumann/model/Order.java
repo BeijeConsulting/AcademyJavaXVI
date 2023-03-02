@@ -23,7 +23,7 @@ public class Order {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "users_id")
+	@Column(name = "user_id")
 	private Integer userId;
 	
 	@Column(name = "datetime")
