@@ -3,7 +3,7 @@
 	<persistence-unit name="VonNeumann">
 		<class>it.beije.neumann.model.Contatto</class>
 		
-		<class>it.beije.neumann.iaria.model.IariaContatto</class>
+		<class>it.beije.neumann.iaria_contatti.model.IariaContatto</class>
 		
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
@@ -12,7 +12,7 @@
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/neumann"/> -->
+			<!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/neumann"/>-->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce_shoes"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="beije2023"/>

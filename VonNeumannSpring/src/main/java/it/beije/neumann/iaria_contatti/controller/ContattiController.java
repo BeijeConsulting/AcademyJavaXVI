@@ -1,4 +1,4 @@
-package it.beije.neumann.iaria.controller;
+package it.beije.neumann.iaria_contatti.controller;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.iaria.model.IariaContatto;
-import it.beije.neumann.iaria.repository.IariaContattoRepository;
+import it.beije.neumann.iaria_contatti.model.IariaContatto;
+import it.beije.neumann.iaria_contatti.repository.IariaContattoRepository;
 
 @Controller
 public class ContattiController {

@@ -1,4 +1,4 @@
-package it.beije.neumann.iaria.model;
+package it.beije.neumann.iaria_contatti.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

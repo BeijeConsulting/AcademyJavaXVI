@@ -1,4 +1,4 @@
-package it.beije.neumann.iaria;
+package it.beije.neumann.iaria_contatti;
 
 
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(value = "it.beije.neumann.iaria.repository")
+@EnableJpaRepositories(value = "it.beije.neumann.iaria_contatti.repository")
 public class IariaConfigurationClass {
 	
     @Primary

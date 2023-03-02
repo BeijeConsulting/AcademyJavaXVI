@@ -1,4 +1,4 @@
-package it.beije.neumann.iaria;
+package it.beije.neumann.iaria_contatti;
 
 
 import javax.persistence.EntityManagerFactory;
