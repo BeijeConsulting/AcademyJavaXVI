@@ -1,5 +1,6 @@
 package it.beije.neumann.nidospring.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -35,7 +36,7 @@ public class User {
 	private String password;
 	
 	@Column(name="birth_date")
-	private LocalDateTime birthDate;
+	private LocalDate birthDate;
 	
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
@@ -93,11 +94,11 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDateTime getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(LocalDateTime birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -120,6 +121,23 @@ public class User {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" User Id: ").append(id).append(",<br>")
+				.append(" Name: ").append(name).append(",<br>")
+				.append(" Surname: ").append(surname).append(",<br>")
+				.append(" Telephone: ").append(telephone).append(",<br>")
+				.append(" E-mail: ").append(email).append(",<br>")
+				.append(" Password: ").append(password).append(",<br>")
+				.append(" Birth Date: ").append(birthDate).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Name: ").append(name)
@@ -134,4 +152,5 @@ public class User {
 		
 		return builder.toString();
 	}
+	 */
 }

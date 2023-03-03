@@ -15,7 +15,7 @@ public class ConversionSize {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 
 	@Column(name = "EU")
 	private String EU;
@@ -28,14 +28,16 @@ public class ConversionSize {
 
 	@Column(name = "CM")
 	private String CM;
-
+	
+	@Column(name = "type")
+	private String type;
 	
 	// Getters-Setters
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -71,8 +73,30 @@ public class ConversionSize {
 		CM = cM;
 	}
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	//Other methods
 	@Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Size Id: ").append(id).append(",<br>")
+				.append(" EU: ").append(EU).append(",<br>")
+				.append(" USA: ").append(USA).append(",<br>")
+				.append(" UK: ").append(UK).append(",<br>")
+				.append(" CM: ").append(CM).append(",<br>")
+				.append(" Type: ").append(type).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
@@ -80,8 +104,10 @@ public class ConversionSize {
 				.append(", USA: ").append(USA)
 				.append(", UK: ").append(UK)
 				.append(", CM: ").append(CM)
+				.append(", Type: ").append(type)
 				.append("}");
 		
 		return builder.toString();
 	}
+	 */
 }

@@ -46,6 +46,7 @@ public class Address {
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
+//	@ManyToOne
 	@Column(name = "user_id")
 	private Integer userId;
 
@@ -141,6 +142,25 @@ public class Address {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Address Id: ").append(id).append(",<br>")
+				.append(" Label: ").append(label).append(",<br>")
+				.append(" Full Name: ").append(fullName).append(",<br>")
+				.append(" Country: ").append(country).append(",<br>")
+				.append(" Street Address: ").append(streetAddress).append(",<br>")
+				.append(" Telephone: ").append(telephone).append(",<br>")
+				.append(" Zipcode: ").append(zipcode).append(",<br>")
+				.append(" Instructions: ").append(instructions).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append(",<br>")
+				.append(" User Id: ").append(userId).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Label: ").append(label)
@@ -157,5 +177,7 @@ public class Address {
 		
 		return builder.toString();
 	}
+	 * 
+	 */
 
 }

@@ -141,6 +141,24 @@ public class Product {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Product Id: ").append(id).append(",<br>")
+				.append(" Name: ").append(name).append(",<br>")
+				.append(" Description: ").append(description).append(",<br>")
+				.append(" Is Listed: ").append(isListed).append(",<br>")
+				.append(" Listed Price: ").append(listedPrice).append(",<br>")
+				.append(" Category: ").append(category).append(",<br>")
+				.append(" Type: ").append(type).append(",<br>")
+				.append(" Brand: ").append(brand).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Name: ").append(name)
@@ -156,5 +174,6 @@ public class Product {
 		
 		return builder.toString();
 	}
+	 */
 
 }

@@ -25,7 +25,7 @@ public class MyOrderItem {
 	@Column(name = "price")
 	private Double price;
 
-	@Column(name = "orders_id")
+	@Column(name = "order_id")
 	private Integer orderId;
 
 	@Column(name = "product_details_id")
@@ -34,7 +34,7 @@ public class MyOrderItem {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@Column(name = "disabeledAT") // TODO occhio al nome, da cambiare sul DB
+	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 
 	// Getters-Setters
@@ -97,6 +97,21 @@ public class MyOrderItem {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Order Item Id: ").append(id).append(",<br>")
+				.append(" Quantity: ").append(quantity).append(",<br>")
+				.append(" Price: ").append(price).append(",<br>")
+				.append(" Order Id: ").append(orderId).append(",<br>")
+				.append(" Product Details Id: ").append(productDetailsId).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Quantity: ").append(quantity)
@@ -109,5 +124,6 @@ public class MyOrderItem {
 		
 		return builder.toString();
 	}
+	 */
 
 }

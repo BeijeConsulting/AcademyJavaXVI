@@ -75,6 +75,19 @@ public class ProductImage {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Image Id: ").append(id).append(",<br>")
+				.append(" Image Path: ").append(imagePath).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append(",<br>")
+				.append(" Product Id: ").append(productId).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Image Path: ").append(imagePath)
@@ -85,5 +98,6 @@ public class ProductImage {
 		
 		return builder.toString();
 	}
+	 */
 
 }

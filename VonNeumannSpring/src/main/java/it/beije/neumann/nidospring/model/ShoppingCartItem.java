@@ -86,6 +86,20 @@ public class ShoppingCartItem {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Cart Item Id: ").append(id).append(",<br>")
+				.append(" Quantity: ").append(quantity).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append(",<br>")
+				.append(" Shopping Cart Id: ").append(productDetailsId).append(",<br>")
+				.append(" Product Details Id: ").append(productDetailsId).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", Quantity: ").append(quantity)
@@ -97,5 +111,6 @@ public class ShoppingCartItem {
 		
 		return builder.toString();
 	}
+	 */
 
 }

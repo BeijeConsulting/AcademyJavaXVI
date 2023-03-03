@@ -30,10 +30,10 @@ public class MyOrder {
 	private LocalDateTime transactionDate;
 
 	@Column(name = "payment_status")
-	private Integer paymentStatus;
+	private String paymentStatus;
 
 	@Column(name = "status")
-	private Integer status;
+	private String status;
 
 	@Column(name = "total_price")
 	private Double totalPrice;
@@ -48,7 +48,7 @@ public class MyOrder {
 	private Integer userId;
 	
 	@OneToMany(targetEntity = MyOrderItem.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "orders_id")
+	@JoinColumn(name = "order_id")
 	private List<MyOrderItem> items;
 
 	// Getters-Setters
@@ -76,19 +76,19 @@ public class MyOrder {
 		this.transactionDate = transactionDate;
 	}
 
-	public Integer getPaymentStatus() {
+	public String getPaymentStatus() {
 		return paymentStatus;
 	}
 
-	public void setPaymentStatus(Integer paymentStatus) {
+	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -135,6 +135,24 @@ public class MyOrder {
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+		StringBuilder builder = new StringBuilder()
+				.append(" Order Id: ").append(id).append(",<br>")
+				.append(" Transaction: ").append(transaction).append(",<br>")
+				.append(" Transaction Date: ").append(transactionDate).append(",<br>")
+				.append(" Payment Status: ").append(paymentStatus).append(",<br>")
+				.append(" Status: ").append(status).append(",<br>")
+				.append(" Total Price: ").append(totalPrice).append(",<br>")
+				.append(" Created At: ").append(createdAt).append(",<br>")
+				.append(" Disabled At: ").append(disabledAt).append(",<br>")
+				.append(" User Id: ").append(userId).append(",<br>")
+				.append(" Items: ").append(items).append("<br>");
+		
+		return builder.toString();
+	}
+	
+	/*
+	 * @Override
+	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
 				.append(", \nTransaction: ").append(transaction)
@@ -149,5 +167,6 @@ public class MyOrder {
 		
 		return builder.toString();
 	}
+	 */
 
 }
