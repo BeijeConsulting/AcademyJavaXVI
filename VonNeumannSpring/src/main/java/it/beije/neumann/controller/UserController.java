@@ -18,7 +18,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@RequestMapping(value = "/lista_users", method = RequestMethod.GET)
-	public String listaProdotti(Model model) {
+	public String listaUser(Model model) {
 		System.out.println("GET /lista_users");
 		
 		List<User> users = userRepository.findAll();

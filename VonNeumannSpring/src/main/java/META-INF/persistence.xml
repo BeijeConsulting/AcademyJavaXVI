@@ -7,6 +7,7 @@
 		<class>it.beije.neumann.model.Product</class>
 		<class>it.beije.neumann.model.User</class>
 		<class>it.beije.neumann.model.ConversionSizes</class>
+		<class>it.beije.neumann.model.Address</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
