@@ -1,5 +1,8 @@
 package it.beije.neumann.iaria_ecommerce.model;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +20,10 @@ public class Products {
 	private Integer id;
 	
 	@Column(name = "created_at")
-	private String createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name = "disabled_at")
-	private String disabledAt;
+	private LocalDateTime disabledAt;
 	
 	@Column(name = "name")
 	private String name;
@@ -29,10 +32,10 @@ public class Products {
 	private String description;
 	
 	@Column(name = "is_listed")
-	private String isListed;
+	private Integer isListed;
 	
 	@Column(name = "listed_price")
-	private String listedPrice;
+	private Double listedPrice;
 	
 	@Column(name = "color")
 	private String color;
@@ -53,17 +56,17 @@ public class Products {
 		this.id = id;
 	}
 
-	public String getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 	
-	public String getDisabledAt() {
+	public LocalDateTime getDisabledAt() {
 		return disabledAt;
 	}
-	public void setDisableAt(String disabledAt) {
+	public void setDisableAt(LocalDateTime disabledAt) {
 		this.disabledAt = disabledAt;
 	}
 	
@@ -81,17 +84,17 @@ public class Products {
 		this.description = description;
 	}
 	
-	public String getIsListed() {
+	public Integer getIsListed() {
 		return isListed;
 	}
-	public void setIsListed(String isListed) {
+	public void setIsListed(Integer isListed) {
 		this.isListed = isListed;
 	}
 	
-	public String getListedPrice() {
+	public Double getListedPrice() {
 		return listedPrice;
 	}
-	public void setListedPrice(String listedPrice) {
+	public void setListedPrice(Double listedPrice) {
 		this.listedPrice = listedPrice;
 	}
 	

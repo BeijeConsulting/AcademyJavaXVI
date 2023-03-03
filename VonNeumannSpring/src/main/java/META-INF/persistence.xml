@@ -9,6 +9,8 @@
 		<class>it.beije.neumann.model.OrderItem</class>
 		
 		<class>it.beije.neumann.iaria_ecommerce.model.Products</class>
+		<class>it.beije.neumann.iaria_ecommerce.model.Users</class>
+		<class>it.beije.neumann.iaria_ecommerce.model.Addresses</class>
 		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
