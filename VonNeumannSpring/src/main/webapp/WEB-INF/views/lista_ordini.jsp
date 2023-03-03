@@ -20,7 +20,7 @@ LISTA ORDINI<br><br>
 			datetime: ${order.datetime}<br>
 			amount: ${order.amount}<br>
 			discount: ${order.discount}<br>
-			items:<br>
+			indirizzi:<br>
 			<c:forEach var="item" items="${order.items}">
 				- ${item.productId}, ${item.quantity}, ${item.price}<br>
 			</c:forEach>

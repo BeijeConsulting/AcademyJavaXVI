@@ -28,7 +28,7 @@ public class UserContr {
 		System.out.println(utenti);
 		
 		model.addAttribute("users", utenti);
-		return "lista_utenti";
+		return "mercuri/lista_utenti";
 	}
 
 }

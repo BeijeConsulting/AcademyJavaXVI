@@ -9,21 +9,21 @@
 </head>
 <body>
 
-LISTA ORDINI<br><br>
+LISTA utenti e indirizzi<br><br>
 
 <c:choose>
 	<c:when test="${empty users}">NESSUN utente</c:when>
 	<c:otherwise>
-		<c:forEach var="uer" items="${users}">
+		<c:forEach var="user" items="${users}">
 			id: ${user.id}<br>
 			name: ${user.name}<br>
 			surname: ${user.surname}<br>
 			telephone: ${user.telephone}<br>
-			<!--  items:<br>
-			<c:forEach var="item" items="${order.items}">
-				- ${item.productId}, ${item.quantity}, ${item.price}<br>
+			  items:<br>
+			<c:forEach var="address" items="${user.addresses}">
+				- ${address.label}, ${address.streetAddress}, ${address.zipCode}<br>
 			</c:forEach>
-			<br>-->
+			<br>
 			---------------------------<br><br>
 		</c:forEach>
 	</c:otherwise>

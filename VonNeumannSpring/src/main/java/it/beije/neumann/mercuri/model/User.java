@@ -29,9 +29,6 @@ public class User {
 	
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
-		
-	@Column(name = "label")
-	private String label;
 	
 	@Column(name = "name")
 	private String name;
@@ -53,14 +50,15 @@ public class User {
 	
 	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<Address> adresses;
+	
+	private List<Address> addresses;
 
-	public List<Address> getAdresses() {
-		return adresses;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setAdresses(List<Address> adresses) {
-		this.adresses = adresses;
+	public void setAdresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 
 	public Integer getId() {
@@ -69,15 +67,6 @@ public class User {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
 	}
 
 	public String getName() {
@@ -149,7 +138,6 @@ public class User {
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
-				.append(", label: ").append(label)
 				.append(", name: ").append(name)
 				.append(", surname: ").append(surname)
 				.append(", email: ").append(email)
