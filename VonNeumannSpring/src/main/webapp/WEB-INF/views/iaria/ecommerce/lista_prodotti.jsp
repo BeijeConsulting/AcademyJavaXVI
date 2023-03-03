@@ -13,10 +13,10 @@
 
 <%--c:if test=""></c:if --%>
 <c:choose>
-	<c:when test="${empty lista}">NESSUN PRODOTTO</c:when>
+	<c:when test="${empty products}">NESSUN PRODOTTO</c:when>
 	<c:otherwise>
-		<c:forEach var="prodotto" items="${lista}">
-			<h4 align="center"></h4>
+		<c:forEach var="product" items="${products}">
+			<h4 align="center">ID: ${product.id}, Created: ${product.createdAt}, Disabled: ${product.disabledAt}, Name: ${product.name}, Description: ${product.description}, Listed: ${product.isListed}, Listed price: ${product.listedPrice}, Color: ${product.color}, Category: ${product.category}, Type: ${product.type}, Brand: ${product.brand}</h4>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>

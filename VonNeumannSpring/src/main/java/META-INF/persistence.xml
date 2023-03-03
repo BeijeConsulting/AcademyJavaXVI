@@ -8,6 +8,8 @@
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
 		
+		<class>it.beije.neumann.iaria_ecommerce.model.Products</class>
+		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
