@@ -1,5 +1,6 @@
 package it.beije.neumann.mongiello.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -31,10 +32,10 @@ public class OrderItem {
 	private Integer prodcutDetailId;
 	
 	@Column(name="created_at")
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name="disabeld_at")
-	private Date disabeldAt;
+	private LocalDateTime disabeldAt;
 
 	
 	
@@ -79,19 +80,19 @@ public class OrderItem {
 		this.prodcutDetailId = prodcutDetailId;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getDisabeldAt() {
+	public LocalDateTime getDisabeldAt() {
 		return disabeldAt;
 	}
 
-	public void setDisabeldAt(Date disabeldAt) {
+	public void setDisabeldAt(LocalDateTime disabeldAt) {
 		this.disabeldAt = disabeldAt;
 	}
 	

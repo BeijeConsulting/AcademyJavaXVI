@@ -1,5 +1,6 @@
 package it.beije.neumann.mongiello.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -29,6 +30,9 @@ public class Adress {
 	@Column(name="street_address")
 	private String streetAddress;
 	
+	@Column
+	private String telephone;
+	
 	@Column(name="zipcode")
 	private String zipCode;
 	
@@ -39,10 +43,10 @@ public class Adress {
 	private Integer userId;
 	
 	@Column(name="created_at")
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name="disabeld_at")
-	private Date disabeldAt;
+	private LocalDateTime disabeldAt;
 
 	public Integer getId() {
 		return id;
@@ -83,6 +87,14 @@ public class Adress {
 	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
+	
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	public String getZipCode() {
 		return zipCode;
@@ -108,19 +120,19 @@ public class Adress {
 		this.userId = userId;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getDisabeldAt() {
+	public LocalDateTime getDisabeldAt() {
 		return disabeldAt;
 	}
 
-	public void setDisabeldAt(Date disabeldAt) {
+	public void setDisabeldAt(LocalDateTime disabeldAt) {
 		this.disabeldAt = disabeldAt;
 	}
 

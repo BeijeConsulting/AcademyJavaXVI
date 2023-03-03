@@ -1,5 +1,6 @@
 package it.beije.neumann.mongiello.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ public class Product {
 	private String description;
 	
 	@Column(name="is_listed")
-	private Integer isListed;
+	private boolean isListed;
 	
 	@Column(name="listed_price")
 	private Double listedPrice;
@@ -44,10 +45,10 @@ public class Product {
 	
 	
 	@Column(name="created_at")
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
-	@Column(name="disabeld_at")
-	private Date disabeldAt;
+	@Column(name="disabled_at")
+	private LocalDateTime disabledAt;
 
 	public Integer getId() {
 		return id;
@@ -75,11 +76,11 @@ public class Product {
 
 
 
-	public Integer getIsListed() {
+	public boolean getIsListed() {
 		return isListed;
 	}
 
-	public void setIsListed(Integer isListed) {
+	public void setIsListed(boolean isListed) {
 		this.isListed = isListed;
 	}
 
@@ -122,22 +123,42 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	public Date getDisabeldAt() {
-		return disabeldAt;
+	
+	public LocalDateTime getDisabledAt() {
+		return disabledAt;
 	}
 
-	public void setDisabeldAt(Date disabeldAt) {
-		this.disabeldAt = disabeldAt;
+	public void setDisabledAt(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
 	}
-	
-	
+
+	public void setListed(boolean isListed) {
+		this.isListed = isListed;
+	}
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
+				.append(", name: ").append(name)
+				.append(", description: ").append(description)
+				.append(", is listed: ").append(isListed)
+				.append(", Listed Price: ").append(listedPrice)
+				.append(", color: ").append(color)
+				.append(", category: ").append(category)
+				.append(", type: ").append(type)
+				.append(", brand: ").append(brand)
+				.append(", created at: ").append(createdAt)
+				.append(", disabled at: ").append(disabledAt)
+				.append("}");
+
+		return builder.toString();
+	}	
 
 }

@@ -1,15 +1,13 @@
 package it.beije.neumann.mongiello.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.beije.neumann.model.Contatto;
 import it.beije.neumann.mongiello.model.Product;
+import it.beije.neumann.mongiello.model.ProductDetail;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductDetailRepository extends JpaRepository<ProductDetail, Integer> {
 
-	public List<Product> findByName(String name);
 }
+

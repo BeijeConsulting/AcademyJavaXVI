@@ -27,6 +27,17 @@ public class ConversionSize {
 	@Column(name="CM")
 	private String cm;
 
+	@Column
+	private String size;
+	
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
 	public Integer getId() {
 		return id;
 	}

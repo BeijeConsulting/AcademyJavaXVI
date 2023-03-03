@@ -8,16 +8,16 @@
 </head>
 <body>
 
-<form action="./mongiello/insertProduct" method="post">
+<form action="./insertProduct" method="post">
 Name: <input type="text" name="name"><br>
-Description: <input type="text" name="description"><br> 
+Description: <input type="textarea" name="description"><br> 
 Is Listed: <input type="text" name="isLListed"><br> 
 Color:  <input type="text" name="color"><br> 
+Listed Price:  <input type="text" name="listedPrice"><br> 
 Category:  <input type="text" name="category"><br> 
 Type:  <input type="text" name="type"><br> 
 Brand:  <input type="text" name="brand"><br> 
-<input type="submit" value="invia">
+<input type="submit" value="Salva prodotto">
 </form>
-
 </body>
 </html>
