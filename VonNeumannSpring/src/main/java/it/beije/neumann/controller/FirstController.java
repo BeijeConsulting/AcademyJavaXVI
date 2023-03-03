@@ -35,7 +35,7 @@ public class FirstController {
 		
 		List<Contatto> contatti;
 		if (surname != null) {
-			contatti = contattoRepository.findBySurname(surname);
+			contatti = contattoRepository.findByCognome(surname);
 		} else {
 			contatti = contattoRepository.findAll();
 		}
@@ -66,9 +66,9 @@ public class FirstController {
 		System.out.println("email : " + email);
 		
 		Contatto contatto = new Contatto();
-		contatto.setName(name);
-		contatto.setSurname(surname);
-		contatto.setTelephone(telephone);
+		contatto.setNome(name);
+		contatto.setCognome(surname);
+		contatto.setTelefono(telephone);
 		contatto.setEmail(email);
 		
 		model.addAttribute("contatto", contatto);

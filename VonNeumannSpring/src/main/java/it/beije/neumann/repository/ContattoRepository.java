@@ -11,8 +11,8 @@ import it.beije.neumann.model.Contatto;
 @Repository
 public interface ContattoRepository extends JpaRepository<Contatto, Integer> {
 
-	public List<Contatto> findBySurname(String surname);
+	public List<Contatto> findByCognome(String cognome);
 	
-	public List<Contatto> findBySurnameAndName(String surname, String name);
+	public List<Contatto> findByCognomeAndNome(String cognome, String nome);
 	
 }

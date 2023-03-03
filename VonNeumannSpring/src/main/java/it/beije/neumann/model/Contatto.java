@@ -15,16 +15,16 @@ public class Contatto {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id;
+	private int id;
 	
 	@Column(name = "nome")
-	private String name;
+	private String nome;
 	
 	@Column(name = "cognome")
-	private String surname;
+	private String cognome;
 	
 	@Column(name = "telefono")
-	private String telephone;
+	private String telefono;
 	
 	@Column(name = "email")
 	private String email;
@@ -32,62 +32,65 @@ public class Contatto {
 	@Column(name = "note", columnDefinition="text")
 	private String note;
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+
+	public String getNome() {
+		return nome;
 	}
 
-	public String getName() {
-		return name;
+	public String getCognome() {
+		return cognome;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public String getTelefono() {
+		return telefono;
 	}
-	
-	public String getSurname() {
-		return surname;
-	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
+
 	public String getNote() {
 		return note;
 	}
+
+	public String getCompleteName() {
+		return nome + " " + cognome;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
-	public String getCompleteName() {
-		return name + " " + surname;
-	}
 
 	public String toString() {
-		StringBuilder builder = new StringBuilder("{")
-				.append(" id: ").append(id)
-				.append(", name: ").append(name)
-				.append(", surname: ").append(surname)
-				.append(", telephone: ").append(telephone)
-				.append(", email: ").append(email)
-				.append(", note: ").append(note)
-				.append("}");
-
+		StringBuilder builder = new StringBuilder()
+				.append("- Nome: ").append(nome)
+				.append("\n- Cognome: ").append(cognome)
+				.append("\n- Telefono: ").append(telefono)
+				.append("\n- Email: ").append(email)
+				.append("\n- Note: ").append(note);
 		return builder.toString();
 	}
 }

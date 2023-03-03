@@ -11,14 +11,14 @@
 <c:choose>
 	<c:when test="${not empty contatto}">
 		Confermi di voler inserire il seguente contatto?<br><br>
-		NOME: ${contatto.name}<br>
-		COGNOME: ${contatto.surname}<br>
-		TELEFONO: ${contatto.telephone}<br>
+		NOME: ${contatto.nome}<br>
+		COGNOME: ${contatto.cognome}<br>
+		TELEFONO: ${contatto.telefono}<br>
 		EMAIL: ${contatto.email}<br><br>
 		<form action="./insert_contatto" method="post">
-		  <input type="hidden" name="name" value="${contatto.name}"><br>
-		  <input type="hidden" name="surname" value="${contatto.surname}"><br>
-		  <input type="hidden" name="telephone" value="${contatto.telephone}"><br>
+		  <input type="hidden" name="name" value="${contatto.nome}"><br>
+		  <input type="hidden" name="surname" value="${contatto.cognome}"><br>
+		  <input type="hidden" name="telephone" value="${contatto.telefono}"><br>
 		  <input type="hidden" name="email" value="${contatto.email}"><br><br>
 		  <input type="submit" value="OK">
 		  <input type="reset" value="ANNULLA">

@@ -16,10 +16,10 @@ LISTA CONTATTI<br><br>
 	<c:when test="${empty lista}">NESSUN CONTATTO</c:when>
 	<c:otherwise>
 		<c:forEach var="contatto" items="${lista}">
-			${contatto.name}<br>
-			${contatto.surname}<br>
+			${contatto.nome}<br>
+			${contatto.cognome}<br>
 			${contatto.completeName}<br>
-			${contatto.telephone}<br><br>
+			${contatto.telefono}<br><br>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
