@@ -1,102 +1,48 @@
 package it.beije.neumann.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "order_items")
 public class OrderItem {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
-	
-	@Column(name = "orders_id")
-	private Integer orderId;
-	
-	@Column(name = "product_id")
-	private Integer productId;
-	
-	@Column(name = "quantity")
-	private Integer quantity;
-	
-	@Column(name = "price")
-	private Double price;
-	
-	@Column(name = "discount")
-	private Double discount;
+    @Column(name = "quantity")
+    private Integer quantity;
 
-	
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "price")
+    private Double price;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-	
-	public Integer getOrderId() {
-		return orderId;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_details_id")
+    private ProductDetails productDetails;
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-	
-	public Integer getProductId() {
-		return productId;
-	}
+    @Column(name = "disabled_at")
+    private LocalDateTime disabledAt;
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-
-	
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	
-	public Double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
-
-	
-	public String toString() {
-		StringBuilder builder = new StringBuilder("{")
-				.append(" id: ").append(id)
-				.append(", orderId: ").append(orderId)
-				.append(", productId: ").append(productId)
-				.append(", quantity: ").append(quantity)
-				.append(", price: ").append(price)
-				.append(", discount: ").append(discount)
-				.append("}");
-
-		return builder.toString();
-	}
+    
 }

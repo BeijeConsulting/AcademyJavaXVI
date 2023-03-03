@@ -19,16 +19,16 @@ public class User {
     @Column(name = "id")
     private Integer id;
     
-    @Column(name = "createdAT")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
-    @Column(name = "disabledAT")
+    @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
     
     @Column(name = "name")
     private String name;
     
-    @Column(name = "lastname")
+    @Column(name = "surname")
     private String lastname;
     
     @Column(name = "email")

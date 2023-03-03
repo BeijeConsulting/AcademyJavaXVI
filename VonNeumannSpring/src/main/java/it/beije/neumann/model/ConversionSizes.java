@@ -27,6 +27,9 @@ public class ConversionSizes {
 	
 	@Column(name = "CM")
 	private String CM;
+	
+	@Column(name = "type")
+	private String type;
 
 	public Integer getId() {
 		return id;
@@ -68,9 +71,17 @@ public class ConversionSizes {
 		CM = cM;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		return "ConversionSizes [id=" + id + ", EU=" + EU + ", USA=" + USA + ", UK=" + UK + ", CM=" + CM + "]";
-	}
-	
+		return "ConversionSizes [id=" + id + ", EU=" + EU + ", USA=" + USA + ", UK=" + UK + ", CM=" + CM + ", type="
+				+ type + "]";
+	}	
 }
