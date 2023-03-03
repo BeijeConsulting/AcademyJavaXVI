@@ -20,16 +20,16 @@ public class OrdersItems {
 	
 	
 	@Column(name = "quantity")
-	private int quantity;
+	private Integer quantity;
 	
 	@Column(name = "price")
-	private double price;
+	private Double price;
 	
 	@Column(name = "order_id")
-	private int orderId;
+	private Integer orderId;
 	
 	@Column(name = "product_details_id")
-	private int productDetailsId;
+	private Integer productDetailsId;
 	
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -49,31 +49,31 @@ public class OrdersItems {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
-	public int getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 
-	public int getProductDetailsId() {
+	public Integer getProductDetailsId() {
 		return productDetailsId;
 	}
 
-	public void setProductDetailsId(int productDetailsId) {
+	public void setProductDetailsId(Integer productDetailsId) {
 		this.productDetailsId = productDetailsId;
 	}
 

@@ -5,9 +5,15 @@
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
 		<class>it.beije.neumann.model.ecommerce.Product</class>
+		<class>it.beije.neumann.model.ecommerce.ProductDetails</class>
 		<class>it.beije.neumann.model.ecommerce.Orders</class>
 	    <class>it.beije.neumann.model.ecommerce.OrdersItems</class>
 		<class>it.beije.neumann.model.ecommerce.User</class>
+		<class>it.beije.neumann.model.ecommerce.ProductImage</class>
+		<class>it.beije.neumann.model.ecommerce.Addresses</class>
+		<class>it.beije.neumann.model.ecommerce.ConvertionSize</class>
+		<class>it.beije.neumann.model.ecommerce.ShoppingCart</class>
+		<class>it.beije.neumann.model.ecommerce.ShoppingCartItem</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

@@ -31,10 +31,10 @@ public class Product
 	private String description;
 
 	@Column(name = "is_listed")
-	private int isListed;
+	private Boolean isListed;
 	
 	@Column(name = "listed_price")
-	private double listedPrice;
+	private Double listedPrice;
 	
 	@Column(name = "color")
 	private String color;
@@ -88,15 +88,15 @@ public class Product
 		this.description = description;
 	}
 
-	public int getIsListed() {
+	public Boolean getIsListed() {
 		return isListed;
 	}
 
-	public void setIsListed(int isListed) {
+	public void setIsListed(Boolean isListed) {
 		this.isListed = isListed;
 	}
 
-	public double getListedPrice() {
+	public Double getListedPrice() {
 		return listedPrice;
 	}
 
