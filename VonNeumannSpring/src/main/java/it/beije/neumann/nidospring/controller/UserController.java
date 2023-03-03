@@ -2,6 +2,7 @@ package it.beije.neumann.nidospring.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import it.beije.neumann.nidospring.repository.UserRepository;
 @Controller
 public class UserController {
 	
+	@Autowired
 	private UserRepository userRepo;
 	
 	@RequestMapping(value = {"/nidospring/login"}, method = RequestMethod.GET)

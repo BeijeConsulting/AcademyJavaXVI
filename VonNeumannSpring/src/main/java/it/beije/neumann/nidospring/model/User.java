@@ -135,6 +135,21 @@ public class User {
 		return builder.toString();
 	}
 	
+	public String getTableFormat() {
+		StringBuilder table = new StringBuilder()
+							   .append(id).append("</td>")
+				.append("<td>").append(name).append("</td>")
+				.append("<td>").append(surname).append("</td>")
+				.append("<td>").append(telephone).append("</td>")
+				.append("<td>").append(email).append("</td>")
+				.append("<td>").append(password).append("</td>")
+				.append("<td>").append(birthDate).append("</td>")
+				.append("<td>").append(createdAt).append("</td>")
+				.append("<td>").append(disabledAt);
+		
+		return table.toString();
+	}
+	
 	/*
 	 * @Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
