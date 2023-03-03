@@ -1,4 +1,4 @@
-package it.beije.neumann.repository;
+package it.beije.neumann.elassl.repository;
 
 import java.util.List;
 
