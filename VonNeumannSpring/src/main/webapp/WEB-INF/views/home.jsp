@@ -98,6 +98,19 @@
 		</form>
 	</section>
 	
+	<section class="products">
+	
+		<div class="product-card">
+		  <img src="https://picsum.photos/200/300?grayscale" alt="">
+		  <h2 class="product-name">Nike Dunk Low</h2>
+		  <p class="product-price">$19.99</p>
+		  <p class="product-brand">Nike</p>
+		  <p class="product-color">Red</p>
+		  <p class="product-description">Descrizione del prodotto</p>
+		</div>
+		
+	</section>
+	
 
 </body>
 
@@ -185,6 +198,45 @@
 	#button-search-product:hover{
 		opacity: 0.8;
 		cursor: pointer;
+	}
+	
+	
+	.products {
+		margin: 60px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 47px;
+	
+	}
+	
+	.product-card {
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		padding: 10px;
+		width: 220px;
+	}
+	
+	.product-card img {
+		width: 220px;
+		height: 220px;
+		border-radius: 5px;
+	}
+	
+	.product-card h2.product-name {
+		font-size: 20px;
+		margin: 10px 0;
+	}
+	
+	.product-card p {
+		margin: 5px 0;
+	}
+	
+	.product-card p.product-price {
+		font-weight: bold;
+	}
+	
+	.product-card p.product-description {
+		font-size: 14px;
 	}
 	
 </style>
