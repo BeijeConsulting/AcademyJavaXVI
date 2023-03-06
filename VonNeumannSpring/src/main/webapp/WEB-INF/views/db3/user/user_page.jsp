@@ -7,25 +7,40 @@
 <title>WELCOME PAGE</title>
 </head>
 <body>
-	<p><strong>Welcome ${user.name}!</strong></p>
+	<p><strong>Ciao ${user.name}!</strong></p>
 
 	<p>Ecco i tuoi dettagli:</p>
 	<br>
 	<table>
 		<tr>
-			<th align="left">User Id</th>
 			<th align="left">Name</th>
 			<th align="left">Surname</th>
 			<th align="left">Telephone</th>
 			<th align="left">E-mail</th>
-			<th align="left">Password</th>
 			<th align="left">Birth Date</th>
-			<th align="left">Created At</th>
-			<th align="left">Disabled At</th>
 		</tr>
 		<tr>
 			<td>${user.tableFormat}</td>
 		</tr>
 	</table>
+	
+	<p>Cosa vuoi fare?</p>
+	
+	<!--  form action="./edit_user" method="get">
+		  <input type="hidden" name="name" value="${user.name}">
+		  <input type="hidden" name="surname" value="${user.surname}">
+		  <input type="hidden" name="telephone" value="${user.telephone}">
+		  <input type="hidden" name="email" value="${user.email}">
+		<input type="submit" value="Modifica dettagli">
+	</form-->
+	
+	<form action="./menu" method="post">
+		<input type="submit" value="Visualizza i miei ordini">
+	</form>
+	
+		<form action="./addresses" method="get">
+		<input type="submit" value="Visualizza i miei indirizzi">
+	</form>
+	
 </body>
 </html>

@@ -156,15 +156,17 @@ public class User {
 	
 	public String getTableFormat() {
 		StringBuilder table = new StringBuilder()
-							   .append(id).append("</td>")
-				.append("<td>").append(name).append("</td>")
+//							   .append(id).append("</td>")
+//				.append("<td>")
+				.append(name).append("</td>")
 				.append("<td>").append(surname).append("</td>")
 				.append("<td>").append(telephone).append("</td>")
 				.append("<td>").append(email).append("</td>")
-				.append("<td>").append(password).append("</td>")
-				.append("<td>").append(birthDate).append("</td>")
-				.append("<td>").append(createdAt).append("</td>")
-				.append("<td>").append(disabledAt);
+//				.append("<td>").append(password).append("</td>")
+				.append("<td>").append(birthDate)//.append("</td>")
+//				.append("<td>").append(createdAt).append("</td>")
+//				.append("<td>").append(disabledAt)
+				;
 //				.append("<td>").append(addresses).append("</td>")
 		
 		return table.toString();

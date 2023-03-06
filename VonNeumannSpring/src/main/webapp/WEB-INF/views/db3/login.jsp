@@ -18,7 +18,7 @@
 	
 	<c:choose>
 		<c:when test="${not empty login_error}">
-			<span style="color: red; font-weight: bold">${login_error}</span>
+			<br><span style="color: red; font-weight: bold">${login_error}</span>
 		</c:when>
 	</c:choose>
 </body>

@@ -19,17 +19,24 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	//Per il momento tanto per non far aprire 404
+	@RequestMapping(value = {"/db3/"}, method = RequestMethod.GET)
+	public String index() {
+		System.out.println("GET /db3/");
+		return "db3/index";
+	}
+	
 	@RequestMapping(value = {"/db3/login"}, method = RequestMethod.GET)
 	public String loginGet() {
 		System.out.println("GET /db3/login");
-		return "db3/user/login";
+		return "db3/login";
 	}	
 	
 	@RequestMapping(value = {"/db3/login"}, method = RequestMethod.POST)
 	public String loginPost(HttpServletRequest request, Model model, @RequestParam(required = false) String email, @RequestParam(required=false) String password) {
 		System.out.println("POST /db3/login");
 		
-		String jsp = "db3/user/";
+		String jsp = "db3/";
 		
 		HttpSession session = request.getSession();
 		
@@ -39,7 +46,7 @@ public class UserController {
 			session.setAttribute("logged_user", user);
 			model.addAttribute("user", user);
 //			jsp+="index";
-			jsp+="user_page";
+			jsp+="user/user_page";
 		} else {
 			model.addAttribute("login_error", "Email o password errati :(");
 			jsp+="login";
@@ -50,10 +57,25 @@ public class UserController {
 		return jsp;
 	}
 	
-	@RequestMapping(value = {"/db3/"}, method = RequestMethod.GET)
-	public String m() {
-		System.out.println("GET /db3/login");
-		return "db3/user/login";
+	@RequestMapping(value = {"/db3/user_page"}, method = RequestMethod.GET)
+	public String userPage() {
+		System.out.println("GET /db3/user_page");
+		return "db3/user/user_page";
+	}	
+	
+	@RequestMapping(value = {"/db3/edit_user"}, method = RequestMethod.GET)
+	public String editUserGet() {
+		System.out.println("GET /db3/edit_user");
+		return "db3/user/edit_user";
+	}	
+	
+	@RequestMapping(value = {"/db3/edit_user"}, method = RequestMethod.POST)
+	public String editUserPost() {
+		System.out.println("POST /db3/edit_user");
+		
+		//Apportare le modifiche
+		
+		return "db3/user/edit_user";
 	}	
 
 }
