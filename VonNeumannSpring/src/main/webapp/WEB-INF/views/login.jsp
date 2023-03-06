@@ -30,7 +30,7 @@
 			<p>Clicca qui sotto per registrarti</p>
 			
 			<button class="button-crea-account">
-				<a href="#">CREA ACCOUNT</a>
+				<a href="create_account">CREA ACCOUNT</a>
 			</button>
 		</div>
 		
