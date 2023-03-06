@@ -1,4 +1,4 @@
-package it.beije.controller;
+package it.beije.neumann.controller;
 
 public class ProductController {
 
