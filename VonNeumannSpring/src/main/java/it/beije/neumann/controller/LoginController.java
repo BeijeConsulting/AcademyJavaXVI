@@ -7,24 +7,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.repository.UserRepository;
+import it.beije.neumann.service.LoginService;
 
 @Controller
 public class LoginController {
 
 
-//    @Autowired
-//    private OrderService orderService;
 
     @Autowired
-    private UserRepository userRepository;
+    private LoginService loginService;
     
-    @RequestMapping(value = "/JSP_DI_FEDE", method = RequestMethod.GET)
-    public String formUser (Model model) {
+    @RequestMapping(value = "/JSP_login", method = RequestMethod.GET)
+    public String loginGet(Model model) {
     	
     	
     	
-    	return "/JSP_DI_FEDE";
+    	return "/JSP_login";
+    }
+    
+    
+    @RequestMapping(value = "/JSP_login", method = RequestMethod.POST)
+    public String formUser (@RequestParam(value = "email") String email,@RequestParam(value = "password") String password, Model model) {
+    	
+    	if(loginService.isAuthenticated(email, password))
+    		return "Jsp_home_o_profilo_boh";
+    	
+
+    	
+    	return "/JSP_login";
     }
 //    @RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)
 //    public String listaOrdini(Model model) {
