@@ -32,7 +32,6 @@ public class LoginController {
     	if(loginService.isAuthenticated(email, password))
     		return "Jsp_home_o_profilo_boh";
     	
-
     	
     	return "/JSP_login";
     }
