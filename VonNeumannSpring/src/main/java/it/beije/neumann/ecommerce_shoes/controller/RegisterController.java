@@ -1,9 +1,8 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,16 +43,10 @@ public class RegisterController {
 		u.setEmail(email);
 		u.setPassword(password);
 		u.setTelephone(telephone);
-		//u.setBirthdate()
-		/*
-		if (risultati.isEmpty()) {
-			model.addAttribute("error", "Invalid Credentials!");
-			return "login";
-		}
-		else {
-			return "index";
-		}
-		*/
+		u.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		
+		userRepository.save(u);
+		
 		return "index";
 	}
 }
