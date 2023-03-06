@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(value = "it.beije.neumann.repository")
+@EnableJpaRepositories(value = "it.beije.neumann.db3.repository")
 public class Db3ConfigurationClass {
 	
     @Primary
