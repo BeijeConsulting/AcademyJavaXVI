@@ -32,7 +32,7 @@
               </div>
              <div class="form-group">
                 <label for="birthdate">Birthdate</label>
-                <input type="text" class="form-control" name="birthdate" id="birthdate" placeholder="Birthdate">
+                <input type="date" class="form-control" name="birthdate" id="birthdate" placeholder="Birthdate">
               </div>
               <div class="form-group">
                 <label for="email">Email address</label>
