@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,12 @@
           <a class="nav-link active" aria-current="page" href="#">Brand</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+            <c:choose>
+	       <c:when test="${ not empty user }"><a class="nav-link" href="/logout">/Logout</a></c:when>
+	       <c:otherwise>
+	         <a class="nav-link" href="./login">Login</a>
+	       </c:otherwise>
+          </c:choose> 
         </li>
       </ul>
     </div>
@@ -33,17 +39,24 @@
 <div class="py-5 container">
 	<div class="row">
 		
-		<!-- Cards -->
-		<c:forEach var="p" items="${products}">
-		 <div class="card" style="width: 18rem;">
-  			<img src="..." class="card-img-top" alt="...">
- 			<div class="card-body">
-    		  <h5 class="card-title">${p.name}</h5>
-   			  <p class="card-text">${p.description}</p>
-              <a href="#" class="btn btn-primary">Dettaglio</a>
-  			</div>
-  		 </div>
-  		</c:forEach>
+		 <c:choose>
+	       <c:when test="${ not empty products }">
+	       	<c:forEach var="p" items="${products }">
+				 <div class="card" style="width: 18rem;">
+  					<img src="..." class="card-img-top" alt="...">
+ 					<div class="card-body">
+   			    	 <p class="card-text"><c:out value="${p.description}"></c:out></p>
+           		     <a href="product/details/${p.id }" class="btn btn-primary">Dettaglio</a>
+  				    </div>
+  		        </div>
+  		    </c:forEach>
+	       </c:when>
+	       <c:otherwise>
+	         Nessun Prodotto
+	       </c:otherwise>
+          </c:choose> 
+		<!-- Cards --> 
+		
 		
 		
 	</div>
