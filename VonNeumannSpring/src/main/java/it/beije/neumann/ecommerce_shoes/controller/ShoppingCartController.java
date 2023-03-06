@@ -1,5 +1,6 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,21 +11,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import it.beije.neumann.ecommerce_shoes.model.OrdersItems;
+import it.beije.neumann.ecommerce_shoes.model.ProductDetails;
+import it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
+import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 
 @Controller
 public class ShoppingCartController {
 	
 	
 	@Autowired
-	private OrdersItemsRepository orderItemRepo;
+	private ShoppingCartItemRepository cartItemRepo;
 	
 	
 	
-	@RequestMapping(value = "/shopping_cart", method = RequestMethod.GET)
+	@RequestMapping(value = "/shopping", method = RequestMethod.GET)
 	public String getCart(Model model) {
+		
+		int totale=0;
+		List<ProductDetails> det=new ArrayList<>();
 		System.out.println("GET /shopping_cart");
-		List<OrdersItems> items=orderItemRepo.findAll();
+		List<ShoppingCartItem> items=cartItemRepo.findAll();
+		
+		
+		for(ShoppingCartItem item: items) {
+			totale+=item.getProductDetails().getSellingPrice();
+			det.add(item.getProductDetails());
+		}
+		
+		System.out.println(totale);
+
+		System.out.println(det);
+		model.addAttribute("totale",totale);
 		model.addAttribute("items",items);
 		return "shopping_cart";
 	}

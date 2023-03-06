@@ -9,32 +9,24 @@
 <title>Shopping Cart</title>
 </head>
 <body>
-
+<% %>
   
    
        <div class="container">
            <div class="d-flex  py-3">
-               <h3> Total Price : 
-                     <c:forEach var="p" items="${items}">
-                     out.print()
-		    
-		    
-  		             </c:forEach>
+               <h3> Total Price :
+                <c:out value="${totale}">
+                </c:out>
+               
+               </h3>
+               
+             <c:forEach var="p" items="${items}">
+                     ${p.price}<br>
+                     ${p.id}<br>
+                     ${p.product_details_id}<br>
+                     
+             </c:forEach>
                     
-               
-               
-                </h3>
-                
-            <c:forEach var="p" items="${orders}">
-		        <div class="card" style="width: 18rem;">
-  			<img src="..." class="card-img-top" alt="...">
- 			<div class="card-body">
-    		  <h5 class="card-title">${p.name}</h5>
-   			  <p class="card-text">${p.description}</p>
-              <a href="#" class="btn btn-primary">Dettaglio</a>
-  			</div>
-  		 </div>
-  		</c:forEach>
                <a class="mx-3 btn-primary" href="#"> Checkout</a>
            </div>
        </div>
