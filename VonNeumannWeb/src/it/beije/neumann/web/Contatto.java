@@ -1,4 +1,4 @@
-package it.beije.neumann.rubrica;
+package it.beije.neumann.web;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
