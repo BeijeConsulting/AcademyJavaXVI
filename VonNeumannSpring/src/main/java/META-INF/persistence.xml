@@ -5,12 +5,16 @@
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
 		
+		<!-- Youness -->
 		<class>it.beije.neumann.db3.model.Product</class>
 		<class>it.beije.neumann.db3.model.ProductDetails</class>
 		<class>it.beije.neumann.db3.model.ConversionSize</class>
+		<!-- /Youness -->
 		
+		<!-- Gianfranco -->
 		<class>it.beije.neumann.db3.model.ShoppingCart</class>
 		<class>it.beije.neumann.db3.model.ShoppingCartItem</class>
+		<!-- /Gianfranco -->
 		
 		<!-- Marianna -->
 		<class>it.beije.neumann.db3.model.User</class>
