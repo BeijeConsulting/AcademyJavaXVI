@@ -31,10 +31,6 @@ public class ShoppingCart {
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@Column(name = "user_id")
-	private Integer userId;
-	
-
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -71,18 +67,11 @@ public class ShoppingCart {
 		this.disabledAt = disabledAt;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
-				.append(", user_id: ").append(userId)
+				.append(", user_id: ").append(user.getId())
 				.append(", created_at: ").append(createdAt)
 				.append(", disabled_at: ").append(disabledAt)
 				.append("}");

@@ -39,16 +39,10 @@ public class ProductDetails {
 	@Column(name = "quantity")
 	private Double quantity;
 	
-	@Column(name = "size")
-	private String size;
-	
-	@Column(name = "product_id")
-	private Integer productId;
-
 	
 	@OneToOne(targetEntity = ConvertionSize.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "size")
-	private ConvertionSize sizeS;
+	private ConvertionSize size;
 	
 	@OneToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
@@ -63,11 +57,11 @@ public class ProductDetails {
 	}
 
 	public ConvertionSize getSizeS() {
-		return sizeS;
+		return size;
 	}
 
 	public void setSizeS(ConvertionSize sizeS) {
-		this.sizeS=sizeS;
+		this.size=sizeS;
 				
 	}
 	public Integer getId() {
@@ -118,28 +112,13 @@ public class ProductDetails {
 		this.quantity = quantity;
 	}
 
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public Integer getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
 				.append(", size_id: ").append(size)
 				.append(", quantity: ").append(quantity)
-				.append(", product_id: ").append(productId)
+				.append(", product_id: ").append(product.getId())
 				.append(", selling_price: ").append(sellingPrice)
 				.append(", created_at: ").append(createdAt)
 				.append(", disabled_at: ").append(disabledAt)

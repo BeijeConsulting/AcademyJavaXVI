@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
 public class LoginController {
 	
 	@Autowired
+	@Qualifier("userRepository")
 	private UserRepository userRepository;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

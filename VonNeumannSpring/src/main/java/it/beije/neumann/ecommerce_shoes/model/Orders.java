@@ -58,23 +58,21 @@ public class Orders {
 	private LocalDateTime disabledAt;
 	
 
-	@Column(name = "user_id")
-	private Integer userId;
 	
 
 	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<User> users;
+	private User user;
 	
 	 
 	
-	public List<User> getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setItems(List<User> users) {
-		this.users = users;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public Integer getId() {
@@ -141,19 +139,13 @@ public class Orders {
 		this.disabledAt = disabledAt;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	
 	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
-				.append(", user_id: ").append(userId)
+				
 				.append(", total_price ").append(totalPrice)
 				.append(", status: ").append(status)
 				.append(", payment_status: ").append(paymentStatus)

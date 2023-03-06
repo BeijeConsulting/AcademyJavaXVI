@@ -32,22 +32,12 @@ import javax.persistence.Table;
 		@Column(name = "price")
 		private Double price;
 		
-		@Column(name = "order_id")
-		private Integer orderId;
-		
-		
-		
-		private Integer productDetailsId;
 		
 		@Column(name = "created_at")
 		private LocalDateTime createdAt;
 		
 		@Column(name = "disabled_at")
 		private LocalDateTime disabledAt;
-		
-		
-		@Column(name = "size")
-		private String size;
 		
 		@Column(name = "name")
 		private String name;
@@ -66,7 +56,7 @@ import javax.persistence.Table;
 		
 		@OneToOne(targetEntity = ConvertionSize.class, fetch = FetchType.EAGER)
 		@JoinColumn(name = "size")
-		private ConvertionSize sizeS;
+		private ConvertionSize size;
 		
 		
 		public ProductDetails getProductDetails() {
@@ -80,11 +70,11 @@ import javax.persistence.Table;
 		
 		
 		public ConvertionSize getSizeS() {
-			return sizeS;
+			return size;
 		}
 
 		public void setSizeS(ConvertionSize sizeS) {
-			this.sizeS=sizeS;
+			this.size=sizeS;
 					
 		}
 		
@@ -112,22 +102,7 @@ import javax.persistence.Table;
 			this.price = price;
 		}
 
-		public Integer getOrderId() {
-			return orderId;
-		}
-
-		public void setOrderId(Integer orderId) {
-			this.orderId = orderId;
-		}
-
-		public Integer getProductDetailsId() {
-			return productDetailsId;
-		}
-
-		public void setProductDetailsId(Integer productDetailsId) {
-			this.productDetailsId = productDetailsId;
-		}
-
+		
 		public LocalDateTime getCreatedAt() {
 			return createdAt;
 		}
@@ -144,13 +119,7 @@ import javax.persistence.Table;
 			this.disabledAt = disabledAt;
 		}
 		
-		public String getSize() {
-			return size;
-			}
 		
-		public void setSize(String size) {
-			this.size=size;
-		}
 		
 		public String getName() {
 			return name;
@@ -171,9 +140,9 @@ import javax.persistence.Table;
 		public String toString() {
 			StringBuilder builder = new StringBuilder("{")
 					.append(" id: ").append(id)
-					.append(", order_id: ").append(orderId)
+					.append(", order_id: ").append(order.getId())
 					.append(", quantity: ").append(quantity)
-					.append(", product_details_id: ").append(productDetailsId)
+					.append(", product_details_id: ").append(productDetails.getId())
 					.append(", price: ").append(price)
 					.append(", name: ").append(name)
 					.append(", size: ").append(size)
