@@ -9,5 +9,5 @@ import it.beije.neumann.ecommerce_shoes.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
-	public List<User> findByCredentials(String email, String password);
+	public List<User> findByNameAndPassword(String email, String password);
 }

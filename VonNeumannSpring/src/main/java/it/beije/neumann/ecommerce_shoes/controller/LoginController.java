@@ -31,7 +31,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String postLogin(Model model, @RequestParam(required = true) String email, @RequestParam(required = true) String password) throws IOException {
 		System.out.println("POST /login");
-		List<User> risultati = userRepository.findByCredentials(email, password);
+		List<User> risultati = userRepository.findByNameAndPassword(email, password);
 		if (risultati.isEmpty()) {
 			model.addAttribute("error", "Invalid Credentials!");
 			return "login";
