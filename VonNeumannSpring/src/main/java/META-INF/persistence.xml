@@ -6,7 +6,13 @@
 		<class>it.beije.neumann.model.OrderItem</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.User</class>
 	    <class>it.beije.neumann.ecommerce_shoes.model.Product</class>
-		
+	    <class>it.beije.neumann.ecommerce_shoes.model.ConvertionSize</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.OrdersItems</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.Orders</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.ProductDetails</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.ProductImage</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.ShoppingCart</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
