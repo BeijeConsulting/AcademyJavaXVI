@@ -12,29 +12,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = shopping_cart_item)
+@Table(name = "shopping_cart_item")
 public class ShoppingCartItem {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = id)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = quantity)
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = created_at)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = disabled_at)
+    @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
 
     @ManyToOne
-    @JoinColumn(name = shopping_cart_id)
+    @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
 
     @ManyToOne
-    @JoinColumn(name = product_details_id)
+    @JoinColumn(name = "product_details_id")
     private ProductDetails productDetails;
 
     public Integer getId() {
@@ -84,10 +84,10 @@ public class ShoppingCartItem {
     public void setProductDetails(ProductDetails productDetails) {
         this.productDetails = productDetails;
     }
-    
-    @Override
+
+	@Override
 	public String toString() {
-		return ShoppingCartItem [id= + id + , quantity= + quantity + , createdAt= + createdAt + , disabledAt=
-				+ disabledAt + , shoppingCart= + shoppingCart + , productDetails= + productDetails + ];
+		return "ShoppingCartItem [id=" + id + ", quantity=" + quantity + ", createdAt=" + createdAt + ", disabledAt="
+				+ disabledAt + ", shoppingCart=" + shoppingCart + ", productDetails=" + productDetails + "]";
 	}
 }
