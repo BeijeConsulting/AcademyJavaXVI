@@ -3,7 +3,9 @@ package it.beije.neumann.ecommerce_shoes.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,13 +27,18 @@ public class LoginController {
 	private UserRepository userRepository;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String getLogin() {
-		System.out.println("GET /login");		
+	public String getLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("GET /login");
+		
+		response.sendRedirect("/");
 		return "login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String postLogin(Model model, @RequestParam(required = true) String email, @RequestParam(required = true) String password) throws IOException {
+	public String postLogin(HttpServletRequest request,
+							Model model,
+							@RequestParam(required = true) String email,
+							@RequestParam(required = true) String password) throws IOException {
 		System.out.println("POST /login");
 		List<User> risultati = userRepository.findByEmailAndPassword(email, password);
 		if (risultati.isEmpty()) {
@@ -39,7 +46,16 @@ public class LoginController {
 			return "login";
 		}
 		else {
+			HttpSession session = request.getSession();
+			session.setAttribute("user", risultati.get(0));
 			return "index";
 		}
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		return "login";
 	}
 }
