@@ -39,7 +39,7 @@ public class User {
 	@Column(name = "telephone")
 	private String telephone;
 	
-	@Column(name = "birthdate")
+	@Column(name = "birth_date")
 	private LocalDate birthdate;
 
 	public Integer getId() {
