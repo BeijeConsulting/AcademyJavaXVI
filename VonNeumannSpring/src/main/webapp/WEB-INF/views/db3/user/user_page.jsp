@@ -26,19 +26,15 @@
 	
 	<p>Cosa vuoi fare?</p>
 	
-	<!--  form action="./edit_user" method="get">
-		  <input type="hidden" name="name" value="${user.name}">
-		  <input type="hidden" name="surname" value="${user.surname}">
-		  <input type="hidden" name="telephone" value="${user.telephone}">
-		  <input type="hidden" name="email" value="${user.email}">
+	<form action="./edit_user" method="get">
 		<input type="submit" value="Modifica dettagli">
-	</form-->
+	</form>
 	
-	<form action="./menu" method="post">
+	<form action="./" method="get">
 		<input type="submit" value="Visualizza i miei ordini">
 	</form>
 	
-		<form action="./addresses" method="get">
+		<form action="./" method="get">
 		<input type="submit" value="Visualizza i miei indirizzi">
 	</form>
 	

@@ -7,7 +7,7 @@
 <title>ECOMMERCE LOGIN</title>
 </head>
 <body>
-	<form action="./login" method="post">
+	<form action="./signin" method="post">
 	  <label for="email">Email:</label><br>
 	  <input type="email" name="email"><br><br>
 	  <label for="password">Password:</label><br>
@@ -17,8 +17,8 @@
 	</form> 
 	
 	<c:choose>
-		<c:when test="${not empty login_error}">
-			<br><span style="color: red; font-weight: bold">${login_error}</span>
+		<c:when test="${not empty signin_error}">
+			<br><span style="color: red; font-weight: bold">${signin_error}</span>
 		</c:when>
 	</c:choose>
 </body>

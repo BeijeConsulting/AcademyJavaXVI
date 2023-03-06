@@ -26,15 +26,15 @@ public class UserController {
 		return "db3/index";
 	}
 	
-	@RequestMapping(value = {"/db3/login"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.GET)
 	public String loginGet() {
-		System.out.println("GET /db3/login");
-		return "db3/login";
+		System.out.println("GET /db3/signin");
+		return "db3/signin";
 	}	
 	
-	@RequestMapping(value = {"/db3/login"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.POST)
 	public String loginPost(HttpServletRequest request, Model model, @RequestParam(required = false) String email, @RequestParam(required=false) String password) {
-		System.out.println("POST /db3/login");
+		System.out.println("POST /db3/signin");
 		
 		String jsp = "db3/";
 		
@@ -48,8 +48,8 @@ public class UserController {
 //			jsp+="index";
 			jsp+="user/user_page";
 		} else {
-			model.addAttribute("login_error", "Email o password errati :(");
-			jsp+="login";
+			model.addAttribute("signin_error", "Email o password errati :(");
+			jsp+="signin";
 		}
 		
 		model.addAttribute("user", user);
@@ -58,24 +58,31 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = {"/db3/user_page"}, method = RequestMethod.GET)
-	public String userPage() {
+	public String userPage(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/user_page");
+		
+		HttpSession session = request.getSession();
+		model.addAttribute("user", (User) session.getAttribute("logged_user"));
+		
 		return "db3/user/user_page";
 	}	
 	
 	@RequestMapping(value = {"/db3/edit_user"}, method = RequestMethod.GET)
-	public String editUserGet() {
+	public String editUserGet(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/edit_user");
+		HttpSession session = request.getSession();
+		model.addAttribute("user", (User) session.getAttribute("logged_user"));
 		return "db3/user/edit_user";
 	}	
 	
 	@RequestMapping(value = {"/db3/edit_user"}, method = RequestMethod.POST)
-	public String editUserPost() {
+	public String editUserPost(HttpServletRequest request, User editedUser) {
 		System.out.println("POST /db3/edit_user");
-		
+//		User editedUser = new User();
 		//Apportare le modifiche
+//		System.out.println(editedUser); è questo il problema (forse dipende da Address)
 		
-		return "db3/user/edit_user";
+		return "db3/index";
 	}	
 
 }
