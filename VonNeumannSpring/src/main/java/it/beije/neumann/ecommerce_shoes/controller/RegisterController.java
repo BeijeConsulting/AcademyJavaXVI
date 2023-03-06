@@ -2,7 +2,11 @@ package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +32,8 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String postLogin(Model model,
+	public String postLogin(HttpServletRequest request,
+							Model model,
 							@RequestParam(required = true) String name,
 							@RequestParam(required = true) String surname,
 							@RequestParam(required = true) String email, 
@@ -37,6 +42,8 @@ public class RegisterController {
 							@RequestParam(required = true) String birthdate) throws IOException {
 		System.out.println("POST /register");
 		
+		HttpSession session = request.getSession();
+		
 		User u = new User();
 		u.setName(name);
 		u.setSurname(surname);
@@ -44,8 +51,11 @@ public class RegisterController {
 		u.setPassword(password);
 		u.setTelephone(telephone);
 		u.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		u.setCreatedAt(LocalDateTime.now());
 		
 		userRepository.save(u);
+		
+		session.setAttribute("user", u);
 		
 		return "index";
 	}
