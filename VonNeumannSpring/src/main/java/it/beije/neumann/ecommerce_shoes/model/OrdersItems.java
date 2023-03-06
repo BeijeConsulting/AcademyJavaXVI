@@ -35,8 +35,8 @@ import javax.persistence.Table;
 		@Column(name = "order_id")
 		private Integer orderId;
 		
-		@OneToOne(targetEntity = ProductDetails.class, fetch = FetchType.EAGER)
-		@Column(name = "product_details_id")
+		
+		
 		private Integer productDetailsId;
 		
 		@Column(name = "created_at")
