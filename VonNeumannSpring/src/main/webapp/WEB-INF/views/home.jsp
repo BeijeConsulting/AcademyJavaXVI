@@ -10,13 +10,13 @@
 
 	<header>
 	
-		<h1>ECOMMERCE SHOES</h1>
+		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	
 		
 		<div class="header-right">
 				
 			<button class="signin">
-				<a href="#">
+				<a href="login">
 					SIGN IN
 				</a>
 			</button>
@@ -41,7 +41,7 @@
 
 	<section class="filter">
 		
-		<form class="filter-form" method="GET" action="">
+		<form class="filter-form" method="GET" action="filtro">
 			<div class="brand">
 			  <label class="label-brand" for="brandName">CERCA BRAND</label>
 			  <input type="text" id="brandName" name="brandName">
@@ -74,8 +74,8 @@
 			</div>
 			
 			<div class="gender">
-			  <label class="label-gender">SELEZIONA GENERE</label>
-			  <select name="gender">
+			  <label class="label-gender">SELEZIONA TIPO</label>
+			  <select name="type">
 			    <option value="">Tutti</option>
 			    <option value="uomo">Uomo</option>
 			    <option value="donna">Donna</option>
@@ -124,6 +124,11 @@
 		color: white;
 		margin: 0;
 	
+	}
+	
+	h1 a{
+		text-decoration: none;
+		color: white;
 	}
 	
 	header{
