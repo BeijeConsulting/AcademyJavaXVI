@@ -4,9 +4,19 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>HomePage</title>
+<title>HOME</title>
 </head>
 <body>
-Welcome in <b>Von Neumann Spring Project</b>
+
+	<h1>Ciao</h1>	
+
 </body>
+
+<style>
+	h1 {
+		color: red;
+	
+	}
+</style>
 </html>
+
