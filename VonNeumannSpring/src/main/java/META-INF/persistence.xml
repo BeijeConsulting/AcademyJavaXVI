@@ -9,6 +9,9 @@
 		<class>it.beije.neumann.db3.model.ProductDetails</class>
 		<class>it.beije.neumann.db3.model.ConversionSize</class>
 		
+		<class>it.beije.neumann.db3.model.ShoppingCart</class>
+		<class>it.beije.neumann.db3.model.ShoppingCartItem</class>
+		
 		<!-- Marianna -->
 		<class>it.beije.neumann.db3.model.User</class>
 		<class>it.beije.neumann.db3.model.Address</class>
