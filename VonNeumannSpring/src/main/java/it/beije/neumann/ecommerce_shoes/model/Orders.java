@@ -16,7 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 import it.beije.neumann.ecommerce_shoes.model.OrdersItems;
+
 
 @Entity
 @Table(name = "orders")
