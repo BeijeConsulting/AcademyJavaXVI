@@ -9,6 +9,7 @@
 	    <class>it.beije.neumann.ecommerce_shoes.model.ConvertionSize</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.OrdersItems</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.Orders</class>
+		<class>it.beije.neumann.ecommerce_shoes.model.Addresses</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.ProductDetails</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.ProductImage</class>
 		<class>it.beije.neumann.ecommerce_shoes.model.ShoppingCart</class>

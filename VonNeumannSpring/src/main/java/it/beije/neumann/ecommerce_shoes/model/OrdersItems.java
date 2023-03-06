@@ -2,13 +2,19 @@ package it.beije.neumann.ecommerce_shoes.model;
 
 
 	import java.time.LocalDateTime;
+import java.util.List;
 
-	import javax.persistence.Column;
+import javax.persistence.Column;
 	import javax.persistence.Entity;
-	import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 	import javax.persistence.GenerationType;
 	import javax.persistence.Id;
-	import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 	@Entity
 	@Table(name = "order_items")
@@ -29,6 +35,7 @@ package it.beije.neumann.ecommerce_shoes.model;
 		@Column(name = "order_id")
 		private Integer orderId;
 		
+		@OneToOne(targetEntity = ProductDetails.class, fetch = FetchType.EAGER)
 		@Column(name = "product_details_id")
 		private Integer productDetailsId;
 		
@@ -37,6 +44,7 @@ package it.beije.neumann.ecommerce_shoes.model;
 		
 		@Column(name = "disabled_at")
 		private LocalDateTime disabledAt;
+		
 		
 		@Column(name = "size")
 		private String size;
@@ -47,6 +55,39 @@ package it.beije.neumann.ecommerce_shoes.model;
 		@Column(name = "color")
 		private String color;
 
+		
+		@ManyToOne(targetEntity = Orders.class, fetch = FetchType.EAGER)
+		@JoinColumn(name = "order_id")
+		private Orders order;
+		
+		@OneToOne(targetEntity = ProductDetails.class, fetch = FetchType.EAGER)
+		@JoinColumn(name = "product_details_id")
+		private ProductDetails productDetails;
+		
+		@OneToOne(targetEntity = ConvertionSize.class, fetch = FetchType.EAGER)
+		@JoinColumn(name = "size")
+		private ConvertionSize sizeS;
+		
+		
+		public ProductDetails getProductDetails() {
+			return productDetails;
+		}
+
+		public void setOrder(ProductDetails productDetails) {
+			this.productDetails=productDetails;
+					
+		}
+		
+		
+		public ConvertionSize getSizeS() {
+			return sizeS;
+		}
+
+		public void setSizeS(ConvertionSize sizeS) {
+			this.sizeS=sizeS;
+					
+		}
+		
 		public Integer getId() {
 			return id;
 		}

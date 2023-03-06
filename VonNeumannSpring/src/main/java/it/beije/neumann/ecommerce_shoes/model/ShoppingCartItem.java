@@ -6,9 +6,13 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -35,6 +39,32 @@ public class ShoppingCartItem {
 	
 	@Column(name = "product_details_id")
 	private Integer productDetailsId;
+	
+	@ManyToOne(targetEntity = ShoppingCart.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "shopping_cart_id")
+	private ShoppingCart shoppingCart;
+	
+
+	@OneToOne(targetEntity = ProductDetails.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_details_id")
+	private ProductDetails productDetails;
+	
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+	
+	public void getProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
+	}
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+
 
 	public Integer getId() {
 		return id;

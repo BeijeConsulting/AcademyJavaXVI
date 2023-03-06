@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -41,6 +45,31 @@ public class ProductDetails {
 	@Column(name = "product_id")
 	private Integer productId;
 
+	
+	@OneToOne(targetEntity = ConvertionSize.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "size")
+	private ConvertionSize sizeS;
+	
+	@OneToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	private Product product;
+	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product=product;
+	}
+
+	public ConvertionSize getSizeS() {
+		return sizeS;
+	}
+
+	public void setSizeS(ConvertionSize sizeS) {
+		this.sizeS=sizeS;
+				
+	}
 	public Integer getId() {
 		return id;
 	}

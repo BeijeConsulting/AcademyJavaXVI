@@ -3,12 +3,17 @@ package it.beije.neumann.ecommerce_shoes.model;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +33,19 @@ public class ShoppingCart {
 	
 	@Column(name = "user_id")
 	private Integer userId;
+	
+
+	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Integer getId() {
 		return id;

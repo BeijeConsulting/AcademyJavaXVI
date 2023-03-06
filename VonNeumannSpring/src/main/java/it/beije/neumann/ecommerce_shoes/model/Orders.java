@@ -3,13 +3,20 @@ package it.beije.neumann.ecommerce_shoes.model;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import it.beije.neumann.model.OrderItem;
 
 @Entity
 @Table(name = "orders")
@@ -52,10 +59,21 @@ public class Orders {
 	@Column(name = "user_id")
 	private Integer userId;
 	
+
+	
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private List<User> users;
 	
 	 
 	
-	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setItems(List<User> users) {
+		this.users = users;
+	}
 	
 	public Integer getId() {
 		return id;
