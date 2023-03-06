@@ -2,6 +2,7 @@ package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class RegisterController {
 		u.setPassword(password);
 		u.setTelephone(telephone);
 		u.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		u.setCreatedAt(LocalDateTime.now());
 		
 		userRepository.save(u);
 		
