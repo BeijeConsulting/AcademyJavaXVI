@@ -9,7 +9,7 @@
 <title>register</title>
 </head>
 <body>
-	<div class="container mt-5">
+ <div class="container mt-5">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
@@ -18,6 +18,22 @@
           </div>
           <div class="card-body">
             <form action="./register" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control" name="surname" id="surname" placeholder="Surname">
+              </div>
+              <div class="form-group">
+                <label for="telephone">Telephone</label>
+                <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Telephone">
+              </div>
+             <div class="form-group">
+                <label for="birthdate">Birthdate</label>
+                <input type="text" class="form-control" name="birthdate" id="birthdate" placeholder="Birthdate">
+              </div>
               <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
