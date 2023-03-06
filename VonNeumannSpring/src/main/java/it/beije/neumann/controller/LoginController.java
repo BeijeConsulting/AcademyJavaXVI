@@ -35,28 +35,6 @@ public class LoginController {
     	
     	return "/JSP_login";
     }
-//    @RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)
-//    public String listaOrdini(Model model) {
-//        System.out.println("GET /lista_ordini");
-//
-//        List<Order> orders = orderService.findAll();
-//        System.out.println(orders);
-//
-//        model.addAttribute("orders", orders);
-//
-//        return "lista_ordini";
-//    }
-//
-//    @RequestMapping(value = "/ordine", method = RequestMethod.GET)
-//    public String dettaglioOrdine(@RequestParam(value = "id") Integer orderId, Model model) {
-//        System.out.println("GET /ordine?id=" + orderId);
-//
-//        Order order = orderService.findById(orderId);
-//        System.out.println("order: " + order);
-//
-//        model.addAttribute("order", order);
-//
-//        return "ordine";
-//    }
+
 
 }
