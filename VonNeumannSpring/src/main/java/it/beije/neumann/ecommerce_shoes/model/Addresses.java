@@ -50,8 +50,7 @@ public class Addresses {
 	@Column(name = "instructions")
 	private String instructions;
 	
-	@Column(name = "user_id")
-	private Integer userId;
+	
 	
 
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
@@ -147,13 +146,7 @@ public class Addresses {
 		this.instructions = instructions;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)

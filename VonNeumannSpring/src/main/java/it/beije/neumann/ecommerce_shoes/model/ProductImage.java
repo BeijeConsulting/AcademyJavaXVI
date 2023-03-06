@@ -56,13 +56,7 @@ public class ProductImage {
 		this.imagePath = imagePath;
 	}
 
-	public Integer getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
+	
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -73,8 +67,7 @@ public class ProductImage {
 	@Column(name = "image_path")
 	private String imagePath;
 	
-	@Column(name = "product_id")
-	private Integer productId;
+	
 	
 	@OneToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
@@ -91,7 +84,7 @@ public class ProductImage {
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
-				.append(", product__id: ").append(productId)
+				
 				.append(", image_path: ").append(imagePath)
 				.append(", created_at: ").append(createdAt)
 				.append(", disabled_at: ").append(disabledAt)

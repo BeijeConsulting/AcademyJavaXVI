@@ -33,12 +33,7 @@ public class ShoppingCartItem {
 	
 	@Column(name = "quantity")
 	private Integer quantity;
-
-	@Column(name = "shopping_cart_id")
-	private Integer shoppingCartId;
 	
-	@Column(name = "product_details_id")
-	private Integer productDetailsId;
 	
 	@ManyToOne(targetEntity = ShoppingCart.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "shopping_cart_id")
@@ -98,28 +93,13 @@ public class ShoppingCartItem {
 		this.quantity = quantity;
 	}
 
-	public Integer getShoppingCartId() {
-		return shoppingCartId;
-	}
-
-	public void setShoppingCartId(Integer shoppingCartId) {
-		this.shoppingCartId = shoppingCartId;
-	}
-
-	public Integer getProductDetailsId() {
-		return productDetailsId;
-	}
-
-	public void setProductDetailsId(Integer productDetailsId) {
-		this.productDetailsId = productDetailsId;
-	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
 				.append(" id: ").append(id)
 				.append(", quantity: ").append(quantity)
-				.append(", shopping_cart_item: ").append(shoppingCartId)
-				.append(", products_details_id: ").append(productDetailsId)
+				.append(", shopping_cart_item: ").append(shoppingCart.getId())
+				.append(", products_details_id: ").append(productDetails.getId())
 				
 				.append(", created_at: ").append(createdAt)
 				.append(", disabled_at: ").append(disabledAt)
