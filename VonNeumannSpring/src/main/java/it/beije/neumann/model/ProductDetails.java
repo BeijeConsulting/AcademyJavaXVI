@@ -10,42 +10,41 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "product_details")
 public class ProductDetails {
-
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	
+	@Column(name="is_listed")
+	private boolean isListed;
+	
+	@Column(name="selling_price")
+	private Double sellingPrice;
+	
+	@Column
+	private Integer quantity;
+	
+//	@OneToOne(targetEntity = ConversionSizes.class, fetch = FetchType.EAGER)
+//	@JoinColumn(name = "size_id")
+	private Integer size;
+	
+	@Column(name="product_id")
+	private Integer productId;
+	
+	@Column(name="created_at")
+	private LocalDateTime createdAt;
+	
+	@Column(name="disabled_at")
+	private LocalDateTime disabled_at;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-	@Column(name = "disabled_at")
-    private LocalDateTime disabledAt;
-
-    @Column(name = "is_listed")
-    private Boolean isListed;
-
-    @Column(name = "selling_price")
-    private Double sellingPrice;
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "size_id")
-    private ConversionSizes size;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Product product;
-    
-    public Integer getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -53,27 +52,11 @@ public class ProductDetails {
 		this.id = id;
 	}
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public LocalDateTime getDisabledAt() {
-		return disabledAt;
-	}
-
-	public void setDisabledAt(LocalDateTime disabledAt) {
-		this.disabledAt = disabledAt;
-	}
-
-	public Boolean getIsListed() {
+	public boolean isListed() {
 		return isListed;
 	}
 
-	public void setIsListed(Boolean isListed) {
+	public void setListed(boolean isListed) {
 		this.isListed = isListed;
 	}
 
@@ -93,29 +76,41 @@ public class ProductDetails {
 		this.quantity = quantity;
 	}
 
-	public ConversionSizes getSize() {
+	
+
+	public Integer getSize() {
 		return size;
 	}
 
-	public void setSize(ConversionSizes size) {
+	public void setSize(Integer size) {
 		this.size = size;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Integer getProductId() {
+		return productId;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getDisabled_at() {
+		return disabled_at;
+	}
+
+	public void setDisabled_at(LocalDateTime disabled_at) {
+		this.disabled_at = disabled_at;
+	}
+
 	
-	@Override
-	public String toString() {
-		return "ProductDetails [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", isListed="
-				+ isListed + ", sellingPrice=" + sellingPrice + ", quantity=" + quantity + ", size=" + size
-				+ ", product=" + product + "]";
-	}
-
 }
 
 
