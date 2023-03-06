@@ -20,7 +20,7 @@ public class SignUpController {
   @RequestMapping(value = "/jsp_newAccount", method = RequestMethod.POST)
   public String listaOrdini(Model model) {
 
-      User user = (User) model.getAttribute("user");
+      loginService.addAccount(model);
       
       
 
