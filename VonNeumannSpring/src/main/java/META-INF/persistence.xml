@@ -3,6 +3,14 @@
 	<persistence-unit name="VonNeumann">
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
+		<class>it.beije.neumann.model.Product</class>
+		<class>it.beije.neumann.model.User</class>
+		<class>it.beije.neumann.model.ConversionSizes</class>
+		<class>it.beije.neumann.model.Address</class>
+		<class>it.beije.neumann.model.ProductDetails</class>
+		<class>it.beije.neumann.model.ShoppingCart</class>
+		<class>it.beije.neumann.model.ShoppingCartItem</class>
+		<class>it.beije.neumann.model.ProductImage</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
