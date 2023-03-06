@@ -44,8 +44,8 @@ public class RegisterController {
 		u.setEmail(email);
 		u.setPassword(password);
 		u.setTelephone(telephone);
-		u.setBirthdate()
-		
+		//u.setBirthdate()
+		/*
 		if (risultati.isEmpty()) {
 			model.addAttribute("error", "Invalid Credentials!");
 			return "login";
@@ -53,5 +53,7 @@ public class RegisterController {
 		else {
 			return "index";
 		}
+		*/
+		return "index";
 	}
 }
