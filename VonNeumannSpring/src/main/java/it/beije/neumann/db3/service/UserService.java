@@ -15,4 +15,12 @@ public class UserService {
 	public User findByEmailAndPassword(String email, String password) {
 		return userRepo.findByEmailAndPassword(email, password);
 	}
+	
+	public User findByEmail(String email) {
+		return userRepo.findByEmail(email);
+	}
+	
+	public User saveUser(User user) {
+		return userRepo.save(user);
+	}
 }
