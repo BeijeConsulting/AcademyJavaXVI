@@ -17,14 +17,14 @@ public class SignUpController {
     private LoginService loginService;
     
     
-  @RequestMapping(value = "/new_account", method = RequestMethod.POST)
+  @RequestMapping(value = "/create_account", method = RequestMethod.POST)
   public String listaOrdini(Model model) {
 
       loginService.addAccount(model);
       
       
 
-      return "/new_account";
+      return "/create_account";
   }
     
 //  @RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)

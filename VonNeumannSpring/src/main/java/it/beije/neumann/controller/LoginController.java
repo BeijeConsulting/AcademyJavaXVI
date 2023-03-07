@@ -22,7 +22,7 @@ public class LoginController {
     	
     	
     	
-    	return "/login";
+    	return "login";
     }
     
     
@@ -33,7 +33,7 @@ public class LoginController {
     		return "/home";
     	
     	
-    	return "/login";
+    	return "login";
     }
 
 
