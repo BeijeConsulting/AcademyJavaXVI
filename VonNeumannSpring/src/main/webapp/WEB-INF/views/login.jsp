@@ -15,7 +15,7 @@
 	</header>
 	
 	<section class="login-section">
-		<form method="post" action="login.jsp">
+		<form method="post" action="./login">
 			<label for="email">EMAIL</label>
 			<input type="email" id="email" name="email" required><br><br>
 			<label for="password">PASSWORD</label>

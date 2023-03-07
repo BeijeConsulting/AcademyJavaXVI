@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -40,8 +42,9 @@ public class User {
     @Column(name = "telephone")
     private String telephone;
     
+
     @Column(name = "birth_date")
-    private LocalDate birthDate;
+    private String birthDate;
 
     public Integer getId() {
         return id;
@@ -56,6 +59,8 @@ public class User {
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
+    	
+    	createdAt = LocalDateTime.now();
         this.createdAt = createdAt;
     }
 
@@ -107,11 +112,12 @@ public class User {
         this.telephone = telephone;
     }
 
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
+    	
         this.birthDate = birthDate;
     }
 

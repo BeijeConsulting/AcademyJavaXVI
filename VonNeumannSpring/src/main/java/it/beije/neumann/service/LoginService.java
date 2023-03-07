@@ -29,10 +29,9 @@ public class LoginService {
 		return true;
 	}
 	
-	public void addAccount (Model model) {
+	
+	public void addAccount (User user) {
 		
-		User user = (User) model.getAttribute("user");
-
 		userRepository.save(user);
 	}
 	
