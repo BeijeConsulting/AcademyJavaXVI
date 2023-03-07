@@ -22,9 +22,11 @@ import it.beije.neumann.ecommerce_shoes.repository.ProductDetailsRepository;
 @Controller
 public class AddItemController {
 
+	/*
 	@Autowired
 	@Qualifier("productDetailsRepository")
 	private ProductDetailsRepository productDetailsRepository;
+	*/
 	
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addItem(Model model, HttpServletRequest request,
