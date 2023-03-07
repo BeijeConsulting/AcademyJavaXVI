@@ -24,7 +24,7 @@ public class DeleteCartItemController {
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String getLogin(@RequestParam("id") String id, Model model) throws IOException {
-		System.out.println("GET /details, id: " + id);
+		System.out.println("GET /delete, id: " + id);
 		int intId = 0;
 		try{
             intId = Integer.parseInt(id);
@@ -36,6 +36,7 @@ public class DeleteCartItemController {
 		Optional<ShoppingCartItem> item = shoppingCartItemRepository.findById(intId);
 		ShoppingCartItem i = item.get();
 		i.setDisabledAt(LocalDateTime.now());
+		shoppingCartItemRepository.save(i);
 		return "shopping_cart";
 	}
 }
