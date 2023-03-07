@@ -1,5 +1,6 @@
 package it.beije.neumann.db3.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,10 @@ public class ProductService {
 	@Transactional
 	public List<ProductDetails> getProductDetails(Integer id){
 		Product p = findProduct(id);
-    	List<ProductDetails> pd = p.getProductDetails();
+		List<ProductDetails> pd = new ArrayList<>();
+		if(p!=null) {
+			pd = p.getProductDetails();
+		}
 		return pd;
 	}
 }

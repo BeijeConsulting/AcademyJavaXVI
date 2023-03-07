@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "product_details")
 public class ProductDetails {
@@ -12,6 +15,7 @@ public class ProductDetails {
 	private Integer id;
 
 	@Column(name = "created_at", nullable = false)
+	@Generated(value=GenerationTime.INSERT)
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")

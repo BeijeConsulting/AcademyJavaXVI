@@ -35,6 +35,7 @@ public class UserController {
 	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.POST)
 	public String loginPost(HttpServletRequest request, Model model, @RequestParam(required = false) String email, @RequestParam(required=false) String password) {
 		System.out.println("POST /db3/signin");
+		System.setProperty("hibernate.show_sql", "true");
 		
 		String jsp = "db3/";
 		

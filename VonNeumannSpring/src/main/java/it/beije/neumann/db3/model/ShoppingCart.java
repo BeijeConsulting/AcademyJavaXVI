@@ -3,6 +3,7 @@ package it.beije.neumann.db3.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import it.beije.neumann.model.OrderItem;
 
@@ -24,14 +29,19 @@ public class ShoppingCart {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false)
+	@Generated(value=GenerationTime.INSERT)
 	private LocalDateTime createdAt;
 	
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@Column(name = "user_id", unique = true)
+	@Column(name = "user_id", unique = true, nullable = false)
 	private Integer userId;
+	
+
+	@OneToOne(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
+	private User user;
 	
 	//@OneToMany(targetEntity = ShoppingCartItem.class, fetch = FetchType.EAGER)
 	//@JoinColumn(name = "shopping_cart_id")
@@ -66,7 +76,25 @@ public class ShoppingCart {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	
+	@OneToMany(targetEntity = ShoppingCartItem.class,fetch = FetchType.LAZY)
+	@JoinColumn(name = "shopping_cart_id")
+	private List<ShoppingCartItem> shoppingCartItem;
 
+	public List<ShoppingCartItem> getShoppingCartItem() {
+		return shoppingCartItem;
+	}
+
+	public void setShoppingCartItem(List<ShoppingCartItem> shoppingCartItem) {
+		this.shoppingCartItem = shoppingCartItem;
+	}
+	public void addShoppingCartItem(ShoppingCartItem shoppingCartItem) {
+		this.shoppingCartItem.add(shoppingCartItem);
+	}
+
+	public void setDisabledAt(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
+	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")

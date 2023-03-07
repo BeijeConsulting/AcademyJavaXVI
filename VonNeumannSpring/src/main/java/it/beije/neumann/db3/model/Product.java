@@ -1,6 +1,9 @@
 package it.beije.neumann.db3.model;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +15,7 @@ public class Product {
 	private int id;
 
 	@Column(name = "created_at", nullable = false)
+	@Generated(value=GenerationTime.INSERT)
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")

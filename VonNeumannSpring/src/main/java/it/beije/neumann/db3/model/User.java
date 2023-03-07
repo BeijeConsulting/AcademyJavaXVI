@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -49,13 +50,24 @@ public class User {
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
+	@OneToOne(targetEntity = ShoppingCart.class, fetch = FetchType.LAZY)
+		@JoinColumn(name = "id")
+	private ShoppingCart shoppingCart;
 //	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "user_id")
 //	private List<Address> addresses;
 	
-	//TODO Collegamento col carrello
-	
+
 	//Getters-Setters
+	
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -153,7 +165,7 @@ public class User {
 		
 		return builder.toString();
 	}
-	
+
 	public String getTableFormat() {
 		StringBuilder table = new StringBuilder()
 //							   .append(id).append("</td>")

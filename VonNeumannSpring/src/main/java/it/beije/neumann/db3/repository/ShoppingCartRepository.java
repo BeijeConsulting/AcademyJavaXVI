@@ -9,5 +9,5 @@ import it.beije.neumann.db3.model.ShoppingCart;
 
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer>{
-
+	//ShoppingCart findByUserIdAndDisabledAtIsNull(Integer userId);
 }

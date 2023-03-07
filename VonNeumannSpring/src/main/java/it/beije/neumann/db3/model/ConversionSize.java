@@ -70,7 +70,7 @@ public class ConversionSize {
 
 	@Override
 	public String toString() {
-		return "ConversionSizes [eu=" + eu + ", usa=" + usa + ", uk=" + uk + ", cm=" + cm + "]";
+		return "Size: EU=" + eu + ", USA=" + usa + ", UK=" + uk + ", CM=" + cm + "";
 	}
     
 }
