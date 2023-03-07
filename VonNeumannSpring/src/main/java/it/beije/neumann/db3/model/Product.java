@@ -42,7 +42,7 @@ public class Product {
 	private String brand;
 
 	// constructors
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
 	private List<ProductDetails> productDetails;
 
 	public List<ProductDetails> getProductDetails() {

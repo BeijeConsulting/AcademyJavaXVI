@@ -26,8 +26,8 @@ public class ProductDetails {
 	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "size_id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "size", nullable = false)
 	private ConversionSize size;
 
 	@ManyToOne(fetch = FetchType.LAZY)

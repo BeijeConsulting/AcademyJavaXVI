@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
@@ -22,11 +23,9 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "db3/index";
     }
-    @GetMapping("/db3/product")
-    public String getProduct(Model model) {
-    	
-    	Product p = productService.findProduct((Integer)model.getAttribute("id"));
-    	List<ProductDetails> pd = p.getProductDetails();
+    @GetMapping("/db3/product/{id}")
+    public String getProduct(Model model, @PathVariable int id) {
+    	List<ProductDetails> pd = productService.getProductDetails(id);
         model.addAttribute("productDetails", pd);
         return "db3/product";
     }
