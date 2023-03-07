@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="products")
 public class Product {
 
-	@Id
+	 @Id
 	 @GeneratedValue(strategy=GenerationType.IDENTITY)
 	 @Column(name = "id")
 	 private Integer id;
@@ -42,10 +42,10 @@ public class Product {
 	 @Column(name = "category")
 	 private String category;
 
-	    @Column(name = "type")
+	 @Column(name = "type")
 	 private String type;
 
-	    @Column(name = "brand")
+	 @Column(name = "brand")
 	 private String brand;
 
 	 public Integer getId() {

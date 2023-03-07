@@ -24,16 +24,20 @@
                <th scope="col">Name</th>
                <th scope="col">Description</th>
                <th scope="col">Color</th>
+               <th scope="col">Type</th>
+               <th scope="col">Quantity</th>
                <th scope="col">Price</th>
             </tr>
        </thead>
        <tbody>
-            <c:forEach var="p" items="${products}">
+            <c:forEach var="p" items="${details}">
                      <td>      </td>
-                      <td>${p.name}</td><br>
-                      <td>${p.description}</td><br>
-                      <td>${p.color}</td><br>
-                      <td></td><br>
+                      <td>${p.product_id.name}</td><br>
+                      <td>${p.product_id.description}</td><br>
+                      <td>${p.product_id.color}</td><br>
+                      <td>${p.product_id.type}</td><br>
+                      <td>${p.quantity}</td><br>
+                      <td>${p.selling_price}</td><br>
                      
              </c:forEach>
        
