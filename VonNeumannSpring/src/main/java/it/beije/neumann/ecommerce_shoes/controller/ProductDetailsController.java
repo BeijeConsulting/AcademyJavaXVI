@@ -42,8 +42,8 @@ public class ProductDetailsController {
 		List<ProductDetails> productDetails = productDetailsRepository.findByProductId(intId);
 		Optional<Product> product = productRepository.findById(intId);
 		Product p = product.get();
-		System.out.println(p);
-		System.out.println(productDetails);
+//		System.out.println(p);
+//		System.out.println(productDetails);
 
 		model.addAttribute("product", p);
 		model.addAttribute("details", productDetails);
