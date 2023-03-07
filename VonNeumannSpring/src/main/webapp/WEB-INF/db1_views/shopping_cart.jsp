@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     		    pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,24 +10,53 @@
 <title>Shopping Cart</title>
 </head>
 <body>
-<% %>
-  
-   
-       <div class="container">
+ <div class="container">
+           <div class="d-flex  py-3">
+               <h3>Shopping Cart</h3>
+           </div>
+ </div>
+ <hr size=5>
+ 
+ <table class="table table-loght">
+      <thead>
+           <tr> 
+               <th scope="col">Image</th>
+               <th scope="col">Name</th>
+               <th scope="col">Description</th>
+               <th scope="col">Color</th>
+               <th scope="col">Price</th>
+            </tr>
+       </thead>
+       <tbody>
+            <c:forEach var="p" items="${products}">
+                     <td>      </td>
+                      <td>${p.name}</td><br>
+                      <td>${p.description}</td><br>
+                      <td>${p.color}</td><br>
+                      <td></td><br>
+                     
+             </c:forEach>
+       
+       
+       
+       
+       
+       </tbody>
+               
+ 
+ 
+ 
+ 
+ </table>
+ <hr size=5> 
+   <div class="container">
            <div class="d-flex  py-3">
                <h3> Total Price :
-                <c:out value="${totale}">
+                <c:out value="${totale}€">
                 </c:out>
                
                </h3>
-               
-             <c:forEach var="p" items="${items}">
-                     ${p.price}<br>
-                     ${p.id}<br>
-                     ${p.product_details_id}<br>
-                     
-             </c:forEach>
-                    
+                 
                <a class="mx-3 btn-primary" href="#"> Checkout</a>
            </div>
        </div>
