@@ -43,11 +43,11 @@
 	       <c:when test="${ not empty products }">
 	       	<c:forEach var="p" items="${products }">
 				 <div class="card mx-2" style="width: 18rem;">
-  					<img src="..." class="card-img-top" alt="...">
+  					<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSq7obFsdJk8RO8n4l-MNwEZWjPHlNFS2qYqMDqSTNKjFtt-x-G" alt="Jerry Scotti" class="card-img-top">
  					<div class="card-body">
  			         <h4 class="card-title"><c:out value="${p.name}"></c:out></h4>
    			    	 <p class="card-text"><c:out value="${p.description}"></c:out></p>
-           		     <a href="product/detailsid?=${p.id }" class="btn btn-primary">Dettaglio</a>
+           		     <a href="product/details?id=${p.id }" class="btn btn-primary">Dettaglio</a>
   				    </div>
   		        </div>
   		    </c:forEach>

@@ -22,9 +22,9 @@ public class ProductDetailsController {
 	@Qualifier("productDetailsRepository")
 	private ProductDetailsRepository ProductDetailsRepository;
 	
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
+	@RequestMapping(value = "/product/details", method = RequestMethod.GET)
 	public String getLogin(@RequestParam("id") String id, Model model) throws IOException {
-		System.out.println("GET /details");
+		System.out.println("GET /details, id: " + id);
 		List<ProductDetails> products = ProductDetailsRepository.findByProductId(null);
 		System.out.println(products);
 		model.addAttribute("products", products);
