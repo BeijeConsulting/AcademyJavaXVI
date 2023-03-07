@@ -152,75 +152,20 @@ public class User {
 				.append(" Password: ").append(password).append(",\n")
 				.append(" Birth Date: ").append(birthDate).append(",\n")
 				.append(" Created At: ").append(createdAt).append(",\n")
-				.append(" Disabled At: ").append(disabledAt).append("\n");
-//				.append(" Addresses: ").append(addresses).append("\n")
+				.append(" Disabled At: ").append(disabledAt).append("\n")
+				.append(" Addresses: ").append(addresses).append("\n");
 		
 		return builder.toString();
 	}
 	
 	public String getTableFormat() {
 		StringBuilder table = new StringBuilder()
-//							   .append(id).append("</td>")
-//				.append("<td>")
 				.append(name).append("</td>")
 				.append("<td>").append(surname).append("</td>")
 				.append("<td>").append(telephone).append("</td>")
 				.append("<td>").append(email).append("</td>")
-//				.append("<td>").append(password).append("</td>")
-				.append("<td>").append(birthDate)//.append("</td>")
-//				.append("<td>").append(createdAt).append("</td>")
-//				.append("<td>").append(disabledAt)
-				;
-//				.append("<td>").append(addresses).append("</td>")
+				.append("<td>").append(birthDate);
 		
 		return table.toString();
 	}
-	
-	public String getAddressesTable() {
-		StringBuilder table = new StringBuilder();
-		
-		/*
-		 * 			<th align="left">Label</th>
-			<th align="left">Full Name</th>
-			<th align="left">Country</th>
-			<th align="left">Street Address</th>
-			<th align="left">Zipcode</th>
-			<th align="left">Telephone</th>
-			<th align="left">Instructions</th>
-		 */
-		for(Address a : addresses) { //un primo aperto viene da fuori (jsp)
-			table.append(a.getLabel()).append("</td>")
-				 .append("<td>").append(a.getFullName()).append("</td>")
-				 .append("<td>").append(a.getCountry()).append("</td>")
-				 .append("<td>").append(a.getStreetAddress()).append("</td>")
-				 .append("<td>").append(a.getZipcode()).append("</td>")
-				 .append("<td>").append(a.getTelephone()).append("</td>")
-				 .append("<td>").append(a.getInstructions()).append("</td>");
-		}  //un ultimo chiuso viene da fuori (jsp)
-		
-		if (!addresses.isEmpty()) {
-			table.delete(table.lastIndexOf("</td>"), table.length());	
-		}
-		
-		return table.toString();
-	}
-	
-	/*
-	 * @Override
-	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder("{")
-				.append(" Id: ").append(id)
-				.append(", Name: ").append(name)
-				.append(", Surname: ").append(surname)
-				.append(", Telephone: ").append(telephone)
-				.append(", E-mail: ").append(email)
-				.append(", Password: ").append(password)
-				.append(", Birth Date: ").append(birthDate)
-				.append(", Created At: ").append(createdAt)
-				.append(", Disabled At: ").append(disabledAt)
-				.append("}");
-		
-		return builder.toString();
-	}
-	 */
 }

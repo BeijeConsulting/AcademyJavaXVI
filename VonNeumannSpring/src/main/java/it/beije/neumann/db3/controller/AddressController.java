@@ -47,6 +47,10 @@ public class AddressController {
 		
 		userService.saveAddress(addressData); //TODO Fix
 		
+		session.setAttribute("logged_user", userService.findById(addressData.getUserId()));
+		
+		System.out.println((User) session.getAttribute("logged_user"));
+		
 		return "db3/user/addresses";
 	}
 

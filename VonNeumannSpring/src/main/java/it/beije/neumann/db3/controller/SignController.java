@@ -30,7 +30,8 @@ public class SignController {
 		String jsp = "db3/";
 		
 		if ((User)session.getAttribute("logged_user")!=null){
-			jsp+="index";
+//			jsp+="index";
+			jsp+="user/user_page";
 		} else {
 			jsp+="signin";
 		}
