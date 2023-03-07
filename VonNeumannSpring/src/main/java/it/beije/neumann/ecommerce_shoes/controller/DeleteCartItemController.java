@@ -22,7 +22,7 @@ public class DeleteCartItemController {
 	@Qualifier("shoppingCartItemRepository")
 	private ShoppingCartItemRepository shoppingCartItemRepository;
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String getLogin(@RequestParam("id") String id, Model model) throws IOException {
 		System.out.println("GET /details, id: " + id);
 		int intId = 0;
