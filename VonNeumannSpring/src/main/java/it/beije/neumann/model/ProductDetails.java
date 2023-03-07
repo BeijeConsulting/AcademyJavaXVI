@@ -1,6 +1,7 @@
 package it.beije.neumann.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,8 +33,18 @@ public class ProductDetails {
 	@Column
 	private Integer quantity;
 	
-//	@OneToOne(targetEntity = ConversionSizes.class, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "size_id")
+//	@ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "id")
+//	private Product product;
+//	
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
+
 	private Integer size;
 	
 	@Column(name="product_id")
@@ -75,8 +87,6 @@ public class ProductDetails {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
-	
 
 	public Integer getSize() {
 		return size;

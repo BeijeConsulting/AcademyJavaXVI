@@ -38,7 +38,6 @@ public class ProductController {
 		Double minPricel = null;
 		Double maxPricel = null;
 		try {
-			
 			name = name.length() > 0 ? name : "%";
 			category = category.equals("") ? "%" : category;
 			color = color.length() > 0 ? color : "%";
@@ -47,11 +46,17 @@ public class ProductController {
 			brand = brand.equals("") ? "%" : brand;
 			minPricel = minSellingPrice.length() > 0 ? Double.valueOf(minSellingPrice) :  productService.findMinSellingPrice();
 			maxPricel= maxSellingPrice.length() > 0 ? Double.valueOf(maxSellingPrice) :  productService.findMaxSellingPrice();
-
 			
+			List<String> categories = productService.getCategories();
+			List<String> types = productService.getTypes();
+			List<String> brands = productService.getBrands();
 			 products = productService.find( name,category, color, type, brand,minPricel, maxPricel );
 			 
-			System.out.println(products);
+			model.addAttribute("brands", brands);
+			model.addAttribute("types", types);
+			model.addAttribute("categories", categories);
+			 model.addAttribute("products", products);
+			//System.out.println(products);
 
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";
@@ -59,7 +64,7 @@ public class ProductController {
 			model.addAttribute("message", message);
 		}
 	
-		return "home";
+		return "/home";
 	}
 
 	

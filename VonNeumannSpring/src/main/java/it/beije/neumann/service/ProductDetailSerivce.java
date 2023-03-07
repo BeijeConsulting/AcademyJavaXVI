@@ -16,17 +16,10 @@ public class ProductDetailSerivce {
 	@Autowired
 	ProductDetailRepository productDetailRepository;
 	
+	
 	public List<ProductDetails> findByProductId( Integer id ) {	
 		return productDetailRepository.findByProductId(id);
 	}
 	
-//	public ProductDetails findByProductId( Integer id ) {		
-//		Optional<ProductDetails> pd = productDetailRepository.findByProductId(id);
-//		
-//		if (pd.isPresent()) {
-//			ProductDetails productDetail = pd.get();
-//			return productDetail;
-//		}else return null;
-//	}
 
 }	

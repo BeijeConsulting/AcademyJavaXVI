@@ -1,6 +1,7 @@
 package it.beije.neumann.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -55,6 +56,14 @@ public class ProductService {
 	public List<Product> find(String name,String category, String color, String type,  String brand, Double minPricel, Double maxPricel) {
 		List<Product> products = productRepository.find(name, category, color, type, brand, minPricel, maxPricel);	
 		return products;	
+	}
+	
+	public Product findById(Integer id) {
+		Optional<Product> p = productRepository.findById(id);
+		if (p.isPresent()) {
+			Product product = p.get();
+			return product;
+		} else return null;
 	}
 
 	

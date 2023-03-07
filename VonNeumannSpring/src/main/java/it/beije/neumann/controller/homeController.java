@@ -30,7 +30,6 @@ public class homeController {
 			model.addAttribute("types", types);
 			model.addAttribute("categories", categories);
 			model.addAttribute("products", products);
-			System.out.println(products);
 
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";

@@ -20,23 +20,16 @@
 					SIGN IN
 				</a>
 			</button>
-		
-		
 			<form id="searchForm" method="get">
 				<div class="searchProductName">
 					<label class="label-search-product" for="productName">CERCA PRODOTTO</label>
-					
 					<div>
 						<input type="text" id="productName" name="productName">
 						<button id="button-search-product" type="submit">Cerca</button>
 					</div>
-					
 				</div>
 			</form>
-		
 		</div>
-
-	
 	</header>
 
 	<section class="filter">
