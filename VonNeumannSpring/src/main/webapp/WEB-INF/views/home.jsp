@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,45 +41,42 @@
 
 	<section class="filter">
 		
-		<form class="filter-form" method="GET" action="filtro">
+		<form class="filter-form" method="GET" action="products_filtred">
+			<div class="searchProductName">
+			<input type="text" id="productName" name="name">
+		</div>
+		
 			<div class="brand">
 			  <label class="label-brand" for="brandName">CERCA BRAND</label>
-			  <input type="text" id="brandName" name="brandName">
+			  <select name="brand">
+			    <option value="">Tutti</option>
+			    <c:forEach var="b" items="${brands}">
+			    	<option value="${b}">${b}</option>
+			    </c:forEach>
+			  </select>
 			</div>
 			
 			<div class="color">
 			  <label class="label-price" for="color">SELEZIONA COLORE</label>
-			  <select name="color">
-			    <option value="">Tutti</option>
-			    <option value="nero">Nero</option>
-			    <option value="bianco">Bianco</option>
-			    <option value="blu">Blu</option>
-			    <option value="verde">Verde</option>
-			    <option value="rosso">Rosso</option>
-			    <option value="giallo">Giallo</option>
-			  </select>
+			   <input type="text" name="color">
 			</div>
 			
 			<div class="price">
-			  <label class="label-price">SELEZIONA FASCIA PREZZI</label>
-			  <select name="price_range">
-			    <option value="">Tutti</option>
-			    <option value="0-49.99">0 - 49.99</option>
-			    <option value="50-99.99">50 - 99.99</option>
-			    <option value="100-149.99">100 - 149.99</option>
-			    <option value="150-199.99">150 - 199.99</option>
-			    <option value="200-249.99">200 - 249.99</option>
-			    <option value="250+">250 &lt;</option>
-			  </select>
+			  <label class="label-price">PREZZO MINIMO</label>
+			  <input type="text" id="priceMin" name="minSellingPrice">
+							 	
+			  <label class="label-price">PREZZO MASSIMO</label>
+			  <input type="text" id="priceMax" name="maxSellingPrice">
+							 	
 			</div>
 			
 			<div class="gender">
 			  <label class="label-gender">SELEZIONA TIPO</label>
 			  <select name="type">
 			    <option value="">Tutti</option>
-			    <option value="uomo">Uomo</option>
-			    <option value="donna">Donna</option>
-			    <option value="unisex">Unisex</option>
+			    <c:forEach var="t" items="${types}">
+			    	<option value="${t}">${t}</option>
+			    </c:forEach>
 			  </select>
 			</div>
 			
@@ -87,10 +84,9 @@
 			  <label class="label-category">SELEZIONA CATEGORIA</label>
 			  <select name="category">
 			    <option value="">Tutti</option>
-			    <option value="sneakers">Sneakers</option>
-			    <option value="fashion">Fashion</option>
-			    <option value="calcio">Calcio</option>
-			    <option value="basket">Basket</option>
+			    <c:forEach var="c" items="${categories}">
+			    	<option value="${c}">${c}</option>
+			    </c:forEach>
 			  </select>
 			</div>
 			

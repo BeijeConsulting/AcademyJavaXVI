@@ -33,6 +33,21 @@ public class ProductService {
 		return maxPrice;
 	}
 	
+	public List<String> getCategories() {
+		List<String> categories = productRepository.getCategories();
+		return categories;
+	}
+	
+	public List<String> getTypes() {
+		List<String> types = productRepository.getTypes();
+		return types;
+	}
+	
+	public List<String> getBrands() {
+		List<String> brands = productRepository.getBrands();
+		return brands;
+	}
+	
 //	
 //	@Transactional
 //	public List<Product> findByName(String name) {

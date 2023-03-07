@@ -36,6 +36,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	@Query(value = "select max(sellingPrice) from ProductDetails")
 	public Double findMaxSellingPrice();
 	
+	@Query(value = "select category from Product group by category")
+	public List<String> getCategories();
+	
+	@Query(value = "select type from Product group by type")
+	public List<String> getTypes();
+	
+	@Query(value = "select brand from Product group by brand")
+	public List<String> getBrands();
+	
 	
 	
 }
