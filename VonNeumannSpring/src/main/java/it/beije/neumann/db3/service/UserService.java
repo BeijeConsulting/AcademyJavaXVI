@@ -1,10 +1,13 @@
 package it.beije.neumann.db3.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.neumann.db3.model.User;
 import it.beije.neumann.db3.repository.UserRepository;
+import it.beije.neumann.model.Order;
 
 @Service
 public class UserService {
@@ -24,4 +27,11 @@ public class UserService {
 	public User saveUser(User user) {
 		return userRepo.save(user);
 	}
+	
+	public User findById(Integer id) {
+		Optional<User> u = userRepo.findById(id);
+		return u.get(); //Essendo un logged user, non tornerà mai null
+	}
+	
+	
 }

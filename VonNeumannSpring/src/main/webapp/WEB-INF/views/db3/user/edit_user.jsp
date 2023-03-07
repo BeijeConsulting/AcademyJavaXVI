@@ -21,11 +21,11 @@
   		<label for="email">Email</label><br>
   		<input type="email" name="email" value="${logged_user.email}"><br>
   		<label for="password">Password</label><br>
-  		<input type="text" name="password" value="${logged_user.password}"><br><br>
+  		<input type="text" name="password" value="${logged_user.password}"><br>
 		<label for="telephone">Telefono</label><br>
   		<input type="text" name="telephone" value="${logged_user.telephone}"><br>
-  		<label for="birthDate">Data di nascita</label><br>
-  		<input type="date" name="birthDate" value="${logged_user.birthDate}"><br>
+  		<label for="birthdate">Data di nascita</label><br>
+  		<input type="date" name="birthdate" value="${logged_user.birthDate}"><br><br>
   		<input type="submit" value="Salva le modifiche">
 	</form>
 </body>

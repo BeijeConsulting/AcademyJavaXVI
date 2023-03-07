@@ -51,8 +51,8 @@ public class SignController {
 		if(user!=null) {
 			session.setAttribute("logged_user", user);
 			model.addAttribute("logged_user", user);
-			jsp+="index";
-//			jsp+="user/user_page";
+//			jsp+="index";
+			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
 			jsp+="signin";
@@ -94,5 +94,14 @@ public class SignController {
 		}
 		return jsp;
 	}
+	
+	@RequestMapping(value = {"/db3/signout"}, method = RequestMethod.GET)
+	public String signOut(HttpServletRequest request) {
+		System.out.println("GET /db3/signout");
+		HttpSession session = request.getSession();
+		session.removeAttribute("logged_user");
+		
+		return "db3/index";
+	}	
 		
 }
