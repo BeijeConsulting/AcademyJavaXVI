@@ -49,9 +49,9 @@ public class User {
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-	private List<Address> addresses;
+//	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//	private List<Address> addresses;
 	
 	//TODO Collegamento col carrello
 	
@@ -127,7 +127,7 @@ public class User {
 	public void setDisabledAt(LocalDateTime disabledAt) {
 		this.disabledAt = disabledAt;
 	}
-
+//
 //	public List<Address> getAddresses() {
 //		return addresses;
 //	}

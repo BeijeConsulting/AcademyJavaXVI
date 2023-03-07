@@ -76,11 +76,10 @@ public class UserController {
 	}	
 	
 	@RequestMapping(value = {"/db3/edit_user"}, method = RequestMethod.POST)
-	public String editUserPost(HttpServletRequest request, User editedUser) {
+	public String editUserPost(Model model) {
 		System.out.println("POST /db3/edit_user");
 //		User editedUser = new User();
 		//Apportare le modifiche
-//		System.out.println(editedUser); è questo il problema (forse dipende da Address)
 		
 		return "db3/index";
 	}	

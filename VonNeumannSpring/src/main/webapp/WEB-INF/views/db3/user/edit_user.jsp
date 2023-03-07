@@ -19,13 +19,13 @@
   		<label for="surname">Cognome</label><br>
   		<input type="text" name="surname" value="${user.surname}"><br>
   		<label for="email">Email</label><br>
-  		<input type="text" name="email" value="${user.email}"><br>
-  		<label for="note">Password</label><br>
+  		<input type="email" name="email" value="${user.email}"><br>
+  		<label for="password">Password</label><br>
   		<input type="text" name="password" value="${user.password}"><br><br>
 		<label for="telephone">Telefono</label><br>
   		<input type="text" name="telephone" value="${user.telephone}"><br>
   		<label for="birthDate">Data di nascita</label><br>
-  		<input type="text" name="birthDate" value="${user.birthDate}"><br>
+  		<input type="date" name="birthDate" value="${user.birthDate}"><br>
   		<input type="submit" value="Salva le modifiche">
 	</form>
 </body>
