@@ -32,15 +32,12 @@ public class ShoppingCartController {
 	
 	
 	@Autowired
-	@Qualifier("cartItemRepo")
 	private ShoppingCartItemRepository cartItemRepo;
 	
 	@Autowired
-	@Qualifier("shoppingCartRepo")
-	private ShoppingCartRepository shoppingCartRepo;
+    private ShoppingCartRepository shoppingCartRepo;
 	
 	@Autowired
-	@Qualifier("userRepo")
 	private UserRepository userRepo;
 	
 	/**
@@ -65,10 +62,12 @@ public class ShoppingCartController {
 		User user=(User) session.getAttribute("user");
 		
 		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.getId());
-		System.out.println(userCart);
+//		System.out.println(userCart);
 		
 		List<Integer> itemsId= cartItemRepo.findByCartId(userCart.getId());
 		List<ShoppingCartItem> items=cartItemRepo.findAllById(itemsId);
+//		System.out.println(items);
+		
 		
 		for(ShoppingCartItem item : items) {
 			prodDetails.add(item.getProductDetails());
@@ -80,9 +79,9 @@ public class ShoppingCartController {
 		}
 		
 		
-		System.out.println(totale);
+//		System.out.println(totale);
 
-		System.out.println(prodDetails);
+//		System.out.println(prodDetails);
 		model.addAttribute("totale",totale);
 		model.addAttribute("pdetails",prodDetails);
 		return "shopping_cart";

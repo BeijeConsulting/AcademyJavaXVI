@@ -12,8 +12,8 @@ import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer>{
 	
-	@Query(value = "SELECT c.id FROM shopping_cart as c WHERE c.user_id = :userId", nativeQuery = true)
-	public ShoppingCart findByUserId(@Param(value = "userId")Integer userId);
+	
+	public  ShoppingCart findByUserId(Integer userId);
 	
 
 }
