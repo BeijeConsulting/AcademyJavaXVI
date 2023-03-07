@@ -20,7 +20,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGet(Model model) {
     	
-    	
+    	System.out.println("login");
     	
     	return "login";
     }
@@ -33,7 +33,7 @@ public class LoginController {
     		return "/home";
     	
     	
-    	return "login";
+    	return "redirect:/login";
     }
 
 
