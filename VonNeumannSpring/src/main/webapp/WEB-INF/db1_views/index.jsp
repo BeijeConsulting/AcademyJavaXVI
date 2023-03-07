@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item">
             <c:choose>
-	       <c:when test="${ not empty user }"><a class="nav-link" href="/logout">/Logout</a></c:when>
+	       <c:when test="${ not empty user }"><a class="nav-link" href="./logout">Logout</a></c:when>
 	       <c:otherwise>
 	         <a class="nav-link" href="./login">Login</a>
 	       </c:otherwise>
