@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +25,23 @@ import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
+import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
 
 @Controller
 public class ShoppingCartController {
 	
 	
 	@Autowired
+	@Qualifier("cartItemRepo")
 	private ShoppingCartItemRepository cartItemRepo;
 	
 	@Autowired
+	@Qualifier("shoppingCartRepo")
 	private ShoppingCartRepository shoppingCartRepo;
+	
+	@Autowired
+	@Qualifier("userRepo")
+	private UserRepository userRepo;
 	
 	/**
 	 * Visualizzazione shopping_cart
@@ -52,11 +61,14 @@ public class ShoppingCartController {
 		List<Product> products=new ArrayList<>();
 		
 		
-		HttpSession session = request.getSession();
-		User user=(User) session.getAttribute("user");
+		//HttpSession session = request.getSession();
+		//User user=(User) session.getAttribute("user");
+		List<User> user=userRepo.findAll();
+		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.get(0).getId());
+		System.out.println(userCart);
 		
-		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.getId());
-		List<ShoppingCartItem> items= cartItemRepo.findByCartId(userCart.getId());
+		List<Integer> itemsId= cartItemRepo.findByCartId(userCart.getId());
+		List<ShoppingCartItem> items=cartItemRepo.findAllById(itemsId);
 		
 		for(ShoppingCartItem item : items) {
 			prodDetails.add(item.getProductDetails());
