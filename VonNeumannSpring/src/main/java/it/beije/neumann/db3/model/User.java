@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,36 +29,38 @@ public class User {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "surname")
+	@Column(name = "surname", nullable = false, length = 100)
 	private String surname;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
-	@Column(name = "telephone")
+	@Column(name = "telephone", length = 100)
 	private String telephone;
 
-	@Column(name = "email", unique = true)
+	@Column(name = "email", unique = true, nullable = false, length = 100)
 	private String email;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 	
-	@Column(name="birth_date")
+	@Column(name="birth_date", nullable = false)
 	private LocalDate birthDate;
-	
-	@Column(name="created_at")
-	private LocalDateTime createdAt;
 
+	@Column(name = "created_at", nullable = false)
+	@Generated(GenerationTime.INSERT)
+	private LocalDateTime createdAt;
+	
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
+
 	@OneToOne(targetEntity = ShoppingCart.class, fetch = FetchType.LAZY)
 		@JoinColumn(name = "id")
 	private ShoppingCart shoppingCart;
-//	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//	private List<Address> addresses;
+	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private List<Address> addresses;
 	
 
 	//Getters-Setters
@@ -139,14 +144,14 @@ public class User {
 	public void setDisabledAt(LocalDateTime disabledAt) {
 		this.disabledAt = disabledAt;
 	}
-//
-//	public List<Address> getAddresses() {
-//		return addresses;
-//	}
-//
-//	public void setAddresses(List<Address> addresses) {
-//		this.addresses = addresses;
-//	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
 
 	//Other methods
 	@Override
@@ -160,46 +165,20 @@ public class User {
 				.append(" Password: ").append(password).append(",\n")
 				.append(" Birth Date: ").append(birthDate).append(",\n")
 				.append(" Created At: ").append(createdAt).append(",\n")
-				.append(" Disabled At: ").append(disabledAt).append("\n");
-//				.append(" Addresses: ").append(addresses).append("\n")
+				.append(" Disabled At: ").append(disabledAt).append("\n")
+				.append(" Addresses: ").append(addresses).append("\n");
 		
 		return builder.toString();
 	}
 
 	public String getTableFormat() {
 		StringBuilder table = new StringBuilder()
-//							   .append(id).append("</td>")
-//				.append("<td>")
 				.append(name).append("</td>")
 				.append("<td>").append(surname).append("</td>")
 				.append("<td>").append(telephone).append("</td>")
 				.append("<td>").append(email).append("</td>")
-//				.append("<td>").append(password).append("</td>")
-				.append("<td>").append(birthDate)//.append("</td>")
-//				.append("<td>").append(createdAt).append("</td>")
-//				.append("<td>").append(disabledAt)
-				;
-//				.append("<td>").append(addresses).append("</td>")
+				.append("<td>").append(birthDate);
 		
 		return table.toString();
 	}
-	
-	/*
-	 * @Override
-	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder("{")
-				.append(" Id: ").append(id)
-				.append(", Name: ").append(name)
-				.append(", Surname: ").append(surname)
-				.append(", Telephone: ").append(telephone)
-				.append(", E-mail: ").append(email)
-				.append(", Password: ").append(password)
-				.append(", Birth Date: ").append(birthDate)
-				.append(", Created At: ").append(createdAt)
-				.append(", Disabled At: ").append(disabledAt)
-				.append("}");
-		
-		return builder.toString();
-	}
-	 */
 }

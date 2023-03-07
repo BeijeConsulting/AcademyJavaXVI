@@ -7,7 +7,7 @@
 <title>WELCOME PAGE</title>
 </head>
 <body>
-	<p><strong>Ciao ${user.name}!</strong></p>
+	<p><strong>Ciao ${logged_user.name}!</strong></p>
 
 	<p>Ecco i tuoi dettagli:</p>
 	<br>
@@ -20,7 +20,7 @@
 			<th align="left">Birth Date</th>
 		</tr>
 		<tr>
-			<td>${user.tableFormat}</td>
+			<td>${logged_user.tableFormat}</td>
 		</tr>
 	</table>
 	
@@ -34,7 +34,7 @@
 		<input type="submit" value="Visualizza i miei ordini">
 	</form>
 	
-		<form action="./" method="get">
+		<form action="./addresses" method="get">
 		<input type="submit" value="Visualizza i miei indirizzi">
 	</form>
 	

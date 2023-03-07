@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -19,34 +22,35 @@ public class Address {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "label")
+	@Column(name = "label", length = 100)
 	private String label;
 
-	@Column(name = "name_surname")
+	@Column(name = "name_surname", nullable = false, length = 100)
 	private String fullName;
 
-	@Column(name = "country")
+	@Column(name = "country", nullable = false, length = 100)
 	private String country;
 
-	@Column(name = "street_address")
+	@Column(name = "street_address", nullable = false, length = 100)
 	private String streetAddress;
 
-	@Column(name = "telephone")
+	@Column(name = "telephone", nullable = false, length = 100)
 	private String telephone;
 
-	@Column(name = "zipcode")
+	@Column(name = "zipcode", nullable = false, length = 5)
 	private String zipcode;
 
 	@Column(name = "instructions", columnDefinition = "text")
 	private String instructions;
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false)
+	@Generated(GenerationTime.INSERT)
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	private Integer userId;
 
 	// Getters-Setters
@@ -142,17 +146,17 @@ public class Address {
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder()
-				.append(" Address Id: ").append(id).append(",<br>")
-				.append(" Label: ").append(label).append(",<br>")
-				.append(" Full Name: ").append(fullName).append(",<br>")
-				.append(" Country: ").append(country).append(",<br>")
-				.append(" Street Address: ").append(streetAddress).append(",<br>")
-				.append(" Telephone: ").append(telephone).append(",<br>")
-				.append(" Zipcode: ").append(zipcode).append(",<br>")
-				.append(" Instructions: ").append(instructions).append(",<br>")
-				.append(" Created At: ").append(createdAt).append(",<br>")
-				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" User Id: ").append(userId).append("<br>");
+				.append(" Address Id: ").append(id).append(",")
+				.append(" Label: ").append(label).append(",")
+				.append(" Full Name: ").append(fullName).append(",")
+				.append(" Country: ").append(country).append(",")
+				.append(" Street Address: ").append(streetAddress).append(",")
+				.append(" Telephone: ").append(telephone).append(",")
+				.append(" Zipcode: ").append(zipcode).append(",")
+				.append(" Instructions: ").append(instructions).append(",")
+				.append(" Created At: ").append(createdAt).append(",")
+				.append(" Disabled At: ").append(disabledAt).append(",")
+				.append(" User Id: ").append(userId).append("");
 		
 		return builder.toString();
 	}
