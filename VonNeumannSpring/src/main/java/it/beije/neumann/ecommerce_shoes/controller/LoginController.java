@@ -30,7 +30,10 @@ public class LoginController {
 	public String getLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("GET /login");
 		
-		response.sendRedirect("/");
+		HttpSession session = request.getSession();
+		if (session.getAttribute("user") != null) {
+			response.sendRedirect("./");
+		}
 		return "login";
 	}
 	

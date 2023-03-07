@@ -24,7 +24,7 @@
         </li>
         <li class="nav-item">
             <c:choose>
-	       <c:when test="${ not empty user }"><a class="nav-link" href="/logout">/Logout</a></c:when>
+	       <c:when test="${ not empty user }"><a class="nav-link" href="./logout">Logout</a></c:when>
 	       <c:otherwise>
 	         <a class="nav-link" href="./login">Login</a>
 	       </c:otherwise>
@@ -42,9 +42,10 @@
 		 <c:choose>
 	       <c:when test="${ not empty products }">
 	       	<c:forEach var="p" items="${products }">
-				 <div class="card" style="width: 18rem;">
+				 <div class="card mx-2" style="width: 18rem;">
   					<img src="..." class="card-img-top" alt="...">
  					<div class="card-body">
+ 			         <h4 class="card-title"><c:out value="${p.name}"></c:out></h4>
    			    	 <p class="card-text"><c:out value="${p.description}"></c:out></p>
            		     <a href="product/details/${p.id }" class="btn btn-primary">Dettaglio</a>
   				    </div>
