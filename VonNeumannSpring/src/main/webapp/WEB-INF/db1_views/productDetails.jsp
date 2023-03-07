@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<title>index</title>
+<title>Dettaglio</title>
 </head>
 <body>
 
@@ -39,24 +39,21 @@
 <div class="py-5 container">
 	<div class="row">
 		
-		 <c:choose>
-	       <c:when test="${ not empty products }">
-	       	<c:forEach var="p" items="${products }">
-				 <div class="card mx-2" style="width: 18rem;">
-  					<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSq7obFsdJk8RO8n4l-MNwEZWjPHlNFS2qYqMDqSTNKjFtt-x-G" alt="Jerry Scotti" class="card-img-top">
- 					<div class="card-body">
- 			         <h4 class="card-title"><c:out value="${p.name}"></c:out></h4>
-   			    	 <p class="card-text"><c:out value="${p.description}"></c:out></p>
-           		     <a href="product/details?id=${p.id }" class="btn btn-primary">Dettaglio</a>
-  				    </div>
-  		        </div>
-  		    </c:forEach>
-	       </c:when>
-	       <c:otherwise>
+		<c:choose>
+		<c:when test="${ not empty products }">
+		
+		<div class="col">
+			<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSq7obFsdJk8RO8n4l-MNwEZWjPHlNFS2qYqMDqSTNKjFtt-x-G" alt="Jerry Scotti" width="500" height="600">
+		</div>
+		
+		 </c:when>
+		 <c:otherwise>
 	         Nessun Prodotto
 	       </c:otherwise>
-          </c:choose> 
-		<!-- Cards --> 
+         </c:choose> 
+         
+		
+		
 		
 		
 		
