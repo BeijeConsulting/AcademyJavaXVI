@@ -34,7 +34,7 @@ public class User {
 	@Column(name = "telephone")
 	private String telephone;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
 	@Column(name = "password")
@@ -49,9 +49,9 @@ public class User {
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-	private List<Address> addresses;
+//	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//	private List<Address> addresses;
 	
 	//TODO Collegamento col carrello
 	
@@ -127,7 +127,7 @@ public class User {
 	public void setDisabledAt(LocalDateTime disabledAt) {
 		this.disabledAt = disabledAt;
 	}
-
+//
 //	public List<Address> getAddresses() {
 //		return addresses;
 //	}
@@ -156,15 +156,17 @@ public class User {
 	
 	public String getTableFormat() {
 		StringBuilder table = new StringBuilder()
-							   .append(id).append("</td>")
-				.append("<td>").append(name).append("</td>")
+//							   .append(id).append("</td>")
+//				.append("<td>")
+				.append(name).append("</td>")
 				.append("<td>").append(surname).append("</td>")
 				.append("<td>").append(telephone).append("</td>")
 				.append("<td>").append(email).append("</td>")
-				.append("<td>").append(password).append("</td>")
-				.append("<td>").append(birthDate).append("</td>")
-				.append("<td>").append(createdAt).append("</td>")
-				.append("<td>").append(disabledAt);
+//				.append("<td>").append(password).append("</td>")
+				.append("<td>").append(birthDate)//.append("</td>")
+//				.append("<td>").append(createdAt).append("</td>")
+//				.append("<td>").append(disabledAt)
+				;
 //				.append("<td>").append(addresses).append("</td>")
 		
 		return table.toString();
