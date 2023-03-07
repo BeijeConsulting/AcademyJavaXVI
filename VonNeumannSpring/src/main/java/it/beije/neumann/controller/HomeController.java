@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.beije.neumann.model.Product;
 import it.beije.neumann.service.ProductService;
 
-@Controller
-public class homeController {
 
+@Controller
+public class HomeController {
 	@Autowired
 	private ProductService productService;
+//    @RequestMapping(value = "/home", method = RequestMethod.GET)
+//    public String home(Model model) {
+//    	return "home";
+//    }
 	
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String home(Model model) {
@@ -38,4 +42,24 @@ public class homeController {
 		}
 		return "home";
 	}
+    
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String login(Model model) {
+//    	return "login";
+//    }
+//
+//    @RequestMapping(value = "/create_account", method = RequestMethod.GET)
+//    public String createAccount(Model model) {
+//    	return "create_account";
+//    }
+//    
+//    @RequestMapping(value = "/dettagli_prodotto", method = RequestMethod.GET)
+//    public String dettagliProdotto(Model model) {
+//    	return "dettagli_prodotto";
+//    }
+    
+    
+
+
+
 }
