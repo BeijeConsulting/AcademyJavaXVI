@@ -1,37 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>SignUp</title>
+<!-- Import W3.CSS stylesheet -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 
-<h3 align=center>SignUp</h3>
-	
-	<form align=center action="./signup" method="post">
-		<label for="name">*Nome:</label><br>
-		<input type="text" name="name" value = "${signup_user.name}" required><br>
-		<label for="surname">*Cognome:</label><br>
-		<input type="text" name="surname" value = "${signup_user.surname}" required><br>
-		<label for="email">*Email:</label><br>
-		<input type="email" name="email" value = "${signup_user.email}" required><br><br>
-		<label for="password">*Password:</label><br>
-		<input type="text" name="password" required><br><br>
-		<label for="birthdate">*Data di nascita:</label><br>
-		<input type="date" name="birthdate" value = "${signup_user.birthDate}" required><br><br>
-		<label for="telephone">Telefono:</label><br>
-		<input type="text" name="telephone" value = "${signup_user.telephone}"><br>
-		<input type="submit" value="REGISTRATI">
-		<input type="reset" value="ANNULLA">
-	</form> 
-	
-	<c:choose>
-		<c:when test="${not empty signup_error}">
-			<h4 align=center style="color:red;">${signup_error}</h4>
-		</c:when>
-	</c:choose>
+	<!-- Header da mettere ovunque -->
+	<div class="w3-bar w3-deep-orange w3-padding w3-card">
+		<a class="w3-bar-item w3-button w3-hover-white"
+			href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+		<div class="w3-right"></div>
+	</div>
+	<!-- Header da mettere ovunque -->
+
+
+	<div class="w3-container">
+		<br>
+		<div class="w3-container w3-card-4">
+				<h3>Sign-Up</h3>
+
+			<form class="w3-container" action="./signup" method="post">
+				<label class="w3-text-black" for="name"><b>*Nome:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="name" required
+					value="${signup_user.name}"><br> <label
+					class="w3-text-black" for="surname"><b>*Cognome:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="surname"
+					required value="${signup_user.surname}"><br> <label
+					class="w3-text-black" for="email"><b>*Email:</b></label><br> <input
+					class="w3-input w3-border" type="email" name="email" required
+					value="${signup_user.email}"><br> <label
+					class="w3-text-black" for="password"><b>*Password:</b></label><br>
+				<input class="w3-input w3-border" type="password" name="password"
+					required><br> <label class="w3-text-black"
+					for="birthdate"><b>*Data di nascita:</b></label><br> <input
+					class="w3-input w3-border" type="date" name="birthdate" required
+					value="${signup_user.birthDate}"><br> <label
+					class="w3-text-black" for="telephone"><b>Telefono:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="telephone"
+					value="${signup_user.telephone}"><br>
+				<br> <input class="w3-button w3-deep-orange w3-hover-black"
+					type="submit" value="Sign-Up"> <input
+					class="w3-button w3-deep-orange w3-hover-black" type="reset"
+					value="ANNULLA">
+			</form>
+
+			<c:choose>
+				<c:when test="${not empty signup_error}">
+					<h4 align=center style="color: red;">
+						<b>${signup_error}</b>
+					</h4>
+				</c:when>
+			</c:choose>
+		</div>
+	</div>
 
 </body>
 </html>

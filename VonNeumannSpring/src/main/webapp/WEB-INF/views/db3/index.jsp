@@ -20,6 +20,7 @@
       <c:choose>
       <c:when test="${empty logged_user}">
         <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/signin">Sign-In</a>
+        <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/signup">Sign-Up</a>
        </c:when>
        <c:otherwise>
         <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/signout">Sign-Out</a>
