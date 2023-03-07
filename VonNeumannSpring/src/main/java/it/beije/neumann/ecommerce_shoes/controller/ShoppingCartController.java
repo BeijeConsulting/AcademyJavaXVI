@@ -61,10 +61,10 @@ public class ShoppingCartController {
 		List<Product> products=new ArrayList<>();
 		
 		
-		//HttpSession session = request.getSession();
-		//User user=(User) session.getAttribute("user");
-		List<User> user=userRepo.findAll();
-		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.get(0).getId());
+		HttpSession session = request.getSession();
+		User user=(User) session.getAttribute("user");
+		
+		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.getId());
 		System.out.println(userCart);
 		
 		List<Integer> itemsId= cartItemRepo.findByCartId(userCart.getId());
