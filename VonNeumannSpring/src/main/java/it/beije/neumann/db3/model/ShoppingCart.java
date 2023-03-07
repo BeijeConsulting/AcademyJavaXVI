@@ -30,7 +30,7 @@ public class ShoppingCart {
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@Column(name = "user_id")
+	@Column(name = "user_id", unique = true)
 	private Integer userId;
 	
 	//@OneToMany(targetEntity = ShoppingCartItem.class, fetch = FetchType.EAGER)
