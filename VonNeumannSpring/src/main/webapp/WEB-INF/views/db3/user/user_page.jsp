@@ -34,7 +34,7 @@
 		<input type="submit" value="Visualizza i miei ordini">
 	</form>
 	
-		<form action="./" method="get">
+		<form action="./addresses" method="get">
 		<input type="submit" value="Visualizza i miei indirizzi">
 	</form>
 	

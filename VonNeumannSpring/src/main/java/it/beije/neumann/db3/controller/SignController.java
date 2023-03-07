@@ -75,6 +75,7 @@ public class SignController {
 		HttpSession session = request.getSession();
 		
 		userData.setBirthDate(birthdate);
+		System.out.println(userData);
 		
 		boolean userPresent = userService.userAlreadyPresent(userData.getEmail());
 

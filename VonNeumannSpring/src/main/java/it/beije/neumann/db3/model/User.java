@@ -53,9 +53,9 @@ public class User {
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
-//	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
-//  @JoinColumn(name = "user_id")
-//	private List<Address> addresses;
+	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private List<Address> addresses;
 	
 	//TODO Collegamento col carrello
 	
@@ -131,14 +131,14 @@ public class User {
 	public void setDisabledAt(LocalDateTime disabledAt) {
 		this.disabledAt = disabledAt;
 	}
-//
-//	public List<Address> getAddresses() {
-//		return addresses;
-//	}
-//
-//	public void setAddresses(List<Address> addresses) {
-//		this.addresses = addresses;
-//	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
 
 	//Other methods
 	@Override
@@ -172,6 +172,35 @@ public class User {
 //				.append("<td>").append(disabledAt)
 				;
 //				.append("<td>").append(addresses).append("</td>")
+		
+		return table.toString();
+	}
+	
+	public String getAddressesTable() {
+		StringBuilder table = new StringBuilder();
+		
+		/*
+		 * 			<th align="left">Label</th>
+			<th align="left">Full Name</th>
+			<th align="left">Country</th>
+			<th align="left">Street Address</th>
+			<th align="left">Zipcode</th>
+			<th align="left">Telephone</th>
+			<th align="left">Instructions</th>
+		 */
+		for(Address a : addresses) { //un primo aperto viene da fuori (jsp)
+			table.append(a.getLabel()).append("</td>")
+				 .append("<td>").append(a.getFullName()).append("</td>")
+				 .append("<td>").append(a.getCountry()).append("</td>")
+				 .append("<td>").append(a.getStreetAddress()).append("</td>")
+				 .append("<td>").append(a.getZipcode()).append("</td>")
+				 .append("<td>").append(a.getTelephone()).append("</td>")
+				 .append("<td>").append(a.getInstructions()).append("</td>");
+		}  //un ultimo chiuso viene da fuori (jsp)
+		
+		if (!addresses.isEmpty()) {
+			table.delete(table.lastIndexOf("</td>"), table.length());	
+		}
 		
 		return table.toString();
 	}

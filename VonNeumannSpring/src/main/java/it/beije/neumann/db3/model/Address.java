@@ -146,17 +146,17 @@ public class Address {
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder()
-				.append(" Address Id: ").append(id).append(",<br>")
-				.append(" Label: ").append(label).append(",<br>")
-				.append(" Full Name: ").append(fullName).append(",<br>")
-				.append(" Country: ").append(country).append(",<br>")
-				.append(" Street Address: ").append(streetAddress).append(",<br>")
-				.append(" Telephone: ").append(telephone).append(",<br>")
-				.append(" Zipcode: ").append(zipcode).append(",<br>")
-				.append(" Instructions: ").append(instructions).append(",<br>")
-				.append(" Created At: ").append(createdAt).append(",<br>")
-				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" User Id: ").append(userId).append("<br>");
+				.append(" Address Id: ").append(id).append(",")
+				.append(" Label: ").append(label).append(",")
+				.append(" Full Name: ").append(fullName).append(",")
+				.append(" Country: ").append(country).append(",")
+				.append(" Street Address: ").append(streetAddress).append(",")
+				.append(" Telephone: ").append(telephone).append(",")
+				.append(" Zipcode: ").append(zipcode).append(",")
+				.append(" Instructions: ").append(instructions).append(",")
+				.append(" Created At: ").append(createdAt).append(",")
+				.append(" Disabled At: ").append(disabledAt).append(",")
+				.append(" User Id: ").append(userId).append("");
 		
 		return builder.toString();
 	}
