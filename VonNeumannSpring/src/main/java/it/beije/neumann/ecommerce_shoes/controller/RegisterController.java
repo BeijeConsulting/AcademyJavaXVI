@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 import it.beije.neumann.ecommerce_shoes.model.User;
+import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
 import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
 
 
@@ -24,6 +26,9 @@ public class RegisterController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ShoppingCartRepository shoppingCartRepository;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String getRegister() {
@@ -44,6 +49,7 @@ public class RegisterController {
 		
 		HttpSession session = request.getSession();
 		
+		//Creazione utente
 		User u = new User();
 		u.setName(name);
 		u.setSurname(surname);
@@ -52,8 +58,14 @@ public class RegisterController {
 		u.setTelephone(telephone);
 		u.setBirthdate(LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		u.setCreatedAt(LocalDateTime.now());
-		
 		userRepository.save(u);
+		// Siccome mi serve l'id assegnato allo user, mi prendo dal database lo user che ho appena creato
+		u = userRepository.findByEmailAndPassword(email, password).get(0);
+		// e adesso creo il carrello per l'utente
+		ShoppingCart cart = new ShoppingCart();
+		cart.setUser(u);
+		cart.setCreatedAt(LocalDateTime.now());
+		shoppingCartRepository.save(cart);
 		
 		session.setAttribute("user", u);
 		
