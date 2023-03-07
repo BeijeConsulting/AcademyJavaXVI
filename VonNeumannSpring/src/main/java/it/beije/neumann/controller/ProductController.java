@@ -35,6 +35,7 @@ public class ProductController {
 		try {
 			List<Product> products = productService.findAll();
 			model.addAttribute("products", products);
+
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";
 			System.out.println(message + iobEx);
@@ -53,13 +54,17 @@ public class ProductController {
 			@RequestParam(required = false) String maxPrice, 
 			@RequestParam(required = false) String color,
 			@RequestParam(required = false) String type,
-			@RequestParam(required = false) String brand) {
+			@RequestParam(required = false) String brand,
+			@RequestParam(required = false) String minSellingPrice,
+			@RequestParam(required = false) String maxSellingPrice
+			 ) {
 		
 		//System.out.println( "name " + name + "category "+category + "color " + color + "type " + type + "brand "+ brand );
 		//&& category.equals("") && color.length() == 0 && type.equals("") && brand.equals("")  
-		List<Product> products = productService.findAll();
-		
-		
+		//List<Product> products = productService.findAll();
+		List<Product> products = null;
+		Double minPricel = null;
+		Double maxPricel = null;
 		try {
 			
 			name = name.length() > 0 ? name : "%";
@@ -68,12 +73,22 @@ public class ProductController {
 			category = category.equals("") ? "%" : category;
 			type = type.equals("") ? "%" : type;
 			brand = brand.equals("") ? "%" : brand;
+			minPricel = minSellingPrice.length() > 0 ? Double.valueOf(minSellingPrice) :  productService.findMinSellingPrice();
+			maxPricel= maxSellingPrice.length() > 0 ? Double.valueOf(maxSellingPrice) :  productService.findMaxSellingPrice();
 			
-			System.out.println("brand" + brand);
+		//	Double minSellingPrice = productService.findMinSellingPrice();
+			System.out.println("minSellingPrice" + minPricel);
 			
-			 products = productService.find( name,category, color, type, brand  );
-			 System.out.println(products);
+			//Double maxSellingPrice = productService.findMaxSellingPrice();
+			System.out.println("maxSellingPrice" + maxPricel);
 			
+			 products = productService.find( name,category, color, type, brand,minPricel, maxPricel );
+			 
+			 for( Product p : products ) {
+				 System.out.println(p);
+				 System.out.println("Details " + p.getProductDetails());
+			 }
+			 
 			
 //			//NOME + CATEGORIA + COLORE
 //			if( name.length() > 0 && !category.equals("") && color.length()>0 ) {

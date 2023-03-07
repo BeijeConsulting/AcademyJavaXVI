@@ -16,11 +16,21 @@ public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
 	
-	@Transactional
+	//@Transactional
 	public List<Product> findAll() {
 		List<Product> products = productRepository.findAll();
-		System.out.println(products.get(0).getProductDetails().get(0).getSellingPrice());
+		//System.out.println(products.get(0).getProductDetails().get(0).getSellingPrice());
 		return products;
+	}
+	
+	public Double findMinSellingPrice() {
+		Double minPrice = productRepository.findMinSellingPrice();
+		return minPrice;
+	}
+	
+	public Double findMaxSellingPrice() {
+		Double maxPrice = productRepository.findMaxSellingPrice();
+		return maxPrice;
 	}
 	
 //	
@@ -74,13 +84,15 @@ public class ProductService {
 //		return products;	
 //	}
 //	
-	@Transactional
-	public List<Product> find(String name,String category, String color, String type,  String brand) {
-		List<Product> products = productRepository.find(name, category, color, type, brand);
-		System.out.println(products.get(0).getProductDetails().get(0).getSellingPrice());
+	//@Transactional
+	public List<Product> find(String name,String category, String color, String type,  String brand, Double minPricel, Double maxPricel) {
+		List<Product> products = productRepository.find(name, category, color, type, brand, minPricel, maxPricel);
+	//	System.out.println(products.get(0).getProductDetails().get(0).getSellingPrice());
+		
+		
 		return products;	
 	}
-	
+
 //	
 //	@Transactional
 //	public List<Product> find(String name,String category) {

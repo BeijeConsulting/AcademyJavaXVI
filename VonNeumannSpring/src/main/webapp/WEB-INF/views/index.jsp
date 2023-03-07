@@ -29,6 +29,8 @@ brand: <select name="brand">
 			    <option value="nike">nike</option>	 
 	</select><br>	
 	
+	Prezzo minimo: <input type="text" name="minSellingPrice"><br>
+	Prezzo massimo: <input type="text" name="maxSellingPrice"><br>
 	<input type="submit" value="vai">
 		    
 </form>

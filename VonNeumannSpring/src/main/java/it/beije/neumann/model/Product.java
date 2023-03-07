@@ -54,7 +54,7 @@ public class Product {
 	private LocalDateTime disabledAt;
 
 	
-	@OneToMany(targetEntity = ProductDetails.class, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = ProductDetails.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	private List<ProductDetails> productDetails;
 
