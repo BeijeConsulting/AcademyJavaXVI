@@ -20,7 +20,8 @@ public class homeController {
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
 	public String home(Model model) {
 		try {
-			List<Product> products = productService.findAll();
+			
+			List<Product> products = productService.findAvailble();
 			List<String> categories = productService.getCategories();
 			List<String> types = productService.getTypes();
 			List<String> brands = productService.getBrands();
@@ -29,6 +30,7 @@ public class homeController {
 			model.addAttribute("types", types);
 			model.addAttribute("categories", categories);
 			model.addAttribute("products", products);
+			System.out.println(products);
 
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";

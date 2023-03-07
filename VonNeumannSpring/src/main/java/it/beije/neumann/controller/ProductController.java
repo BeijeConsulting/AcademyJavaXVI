@@ -1,5 +1,6 @@
 package it.beije.neumann.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,37 +20,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
-	
-	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String home() {
-//		System.out.println("GET /");
-//		return "index";
-//	}
-	
-//	@RequestMapping(value = "/list_products", method = RequestMethod.GET)
-//	public String listaProdotti(Model model) {
-//		System.out.println("GET /lista_prodotti");
-//		
-//		try {
-//			List<Product> products = productService.findAll();
-//			List<String> categories = productService.getCategories();
-//			List<String> types = productService.getTypes();
-//			
-//			model.addAttribute("types", types);
-//			model.addAttribute("categories", categories);
-//			model.addAttribute("products", products);
-//
-//		}catch( IndexOutOfBoundsException iobEx ) {
-//			String message = "Non ci sono prodotti da visualizzare ";
-//			System.out.println(message + iobEx);
-//			model.addAttribute("message", message);
-//		}
-//		
-//		
-//		return "index";
-//	}
+
 	
 	@RequestMapping(value = "/products_filtred", method = RequestMethod.GET)
 	public String filtred( Model model, 
@@ -60,7 +31,8 @@ public class ProductController {
 			@RequestParam(required = false) String brand,
 			@RequestParam(required = false) String minSellingPrice,
 			@RequestParam(required = false) String maxSellingPrice
-			 ) {
+			) {
+		
 		
 		List<Product> products = null;
 		Double minPricel = null;
@@ -80,16 +52,13 @@ public class ProductController {
 			 products = productService.find( name,category, color, type, brand,minPricel, maxPricel );
 			 
 			System.out.println(products);
-				
-		
-	
+
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";
 			System.out.println(message + iobEx);
 			model.addAttribute("message", message);
 		}
-
-		
+	
 		return "home";
 	}
 

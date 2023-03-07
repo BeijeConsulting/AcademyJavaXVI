@@ -89,24 +89,27 @@
 			    </c:forEach>
 			  </select>
 			</div>
-			
 			<input id="button-filtra" type="submit" value="Filtra">
 		</form>
 	</section>
 	
 	<section class="products">
-	
+	 <c:forEach var="p" items="${products}">
 		<div class="product-card">
 		  <img src="https://picsum.photos/200/300?grayscale" alt="">
-		  <h2 class="product-name">Nike Dunk Low</h2>
-		  <p class="product-price">$19.99</p>
-		  <p class="product-brand">Nike</p>
-		  <p class="product-color">Red</p>
+		  <h2 class="product-name">${p.name}</h2>
+		  <p class="product-price">$ ${p.listedPrice}</p>
+		  <p class="product-brand">${p.brand}</p>
+		  <p class="product-color">${p.color}</p>
 		  <p class="product-description">Descrizione del prodotto</p>
+		  <form action="./show_detail" method="get">
+		  	<input type="submit" value="visualizza dettagli">
+		  	<input type="hidden" name="id" value="${p.id}">
+		  </form>
 		</div>
-		
+	</c:forEach>
 	</section>
-	
+
 
 </body>
 
