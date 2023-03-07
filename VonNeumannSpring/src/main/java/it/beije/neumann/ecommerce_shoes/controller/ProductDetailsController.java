@@ -25,9 +25,9 @@ public class ProductDetailsController {
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public String getLogin(@RequestParam("id") String id, Model model) throws IOException {
 		System.out.println("GET /details");
-//		List<ProductDetails> products = ProductDetailsRepository;
-//		System.out.println(products);
-//		model.addAttribute("products", products);
+		List<ProductDetails> products = ProductDetailsRepository.findByProductId(null);
+		System.out.println(products);
+		model.addAttribute("products", products);
 		return "productDetails";
 	}
 }

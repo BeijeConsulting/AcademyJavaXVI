@@ -12,5 +12,5 @@ import it.beije.neumann.ecommerce_shoes.model.ProductDetails;
 @Repository
 public interface ProductDetailsRepository extends JpaRepository<ProductDetails, Integer>{
 	public List<ProductDetails> findByProductIdAndSize(Product product, ConvertionSize size);
-	public List<ProductDetails> findByProductId(Product product);
+	public List<ProductDetails> findByProductId(Integer id);
 }
