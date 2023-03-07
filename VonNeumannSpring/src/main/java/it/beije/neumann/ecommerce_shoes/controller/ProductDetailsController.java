@@ -19,7 +19,7 @@ import it.beije.neumann.ecommerce_shoes.repository.ProductDetailsRepository;
 public class ProductDetailsController {
 
 	@Autowired
-	@Qualifier("productRepository")
+	@Qualifier("productDetailsRepository")
 	private ProductDetailsRepository ProductDetailsRepository;
 	
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
