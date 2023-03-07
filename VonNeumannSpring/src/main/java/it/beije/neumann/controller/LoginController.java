@@ -22,6 +22,7 @@ public class LoginController {
     	
     	System.out.println("login");
     	
+
     	return "login";
     }
     

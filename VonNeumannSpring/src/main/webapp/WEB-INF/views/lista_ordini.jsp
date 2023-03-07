@@ -11,9 +11,10 @@
 <body>
 LISTA ORDINI<br><br>
 
-<c:choose>
-	<c:when test="${empty orders}">NESSUN ORDINE</c:when>
+	<c:choose>
+		<c:when test="${empty orders}"> NESSUN ORDINE</c:when>
 	<c:otherwise>
+
 		<c:forEach var="order" items="${orders}">
 			id: ${order.id}<br>
 			userId: ${order.userId}<br>

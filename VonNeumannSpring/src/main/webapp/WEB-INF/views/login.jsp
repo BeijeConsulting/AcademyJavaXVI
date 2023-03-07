@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +14,7 @@
 
 	</header>
 	
+
 	<section class="login-section">
 		<form method="post" action="./login">
 			<label for="email">EMAIL</label>
@@ -23,6 +24,10 @@
 			<input class="sign-in-submit" type="submit" value="SIGN IN">
 		</form>
 		
+	<c:choose>
+		<c:when test="${isFailed = true}">CREDENZIALI ERRATE</c:when>
+	</c:choose>
+
 		<div class="vertical-line"></div>
 		
 		<div>
