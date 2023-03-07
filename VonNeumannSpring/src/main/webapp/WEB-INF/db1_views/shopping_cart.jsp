@@ -44,8 +44,7 @@
                       <td>${p.productDetails.size.EU}</td><br>
                      <td>${p.quantity}</td>
                      <td>${p.productDetails.product.listedPrice*p.quantity}</td>
-                     <td> <form><input type="reset" value="delete"></form>
-                     </td>
+                     <td> <a href="./delete?id=${p.id}">Delete</a></td>
                     </tr>
                    </c:forEach>
              

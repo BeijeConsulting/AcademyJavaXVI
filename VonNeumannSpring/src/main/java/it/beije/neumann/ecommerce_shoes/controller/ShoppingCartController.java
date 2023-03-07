@@ -90,14 +90,11 @@ public class ShoppingCartController {
 		}
 		
 		
-		System.out.println(totale);
-
+//		System.out.println(totale);
 //		System.out.println(prodDetails);
+		
 		model.addAttribute("totale",totale);
-		
-		
 		model.addAttribute("items",items);
-		model.addAttribute("images",images);
 		return "shopping_cart";
 	}
 
