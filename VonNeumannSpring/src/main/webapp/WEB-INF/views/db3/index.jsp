@@ -10,13 +10,21 @@
 </head>
 <body>
 
-  <!-- Header da mettere ovunque, da aggiungere il controllo per signout invece di signin e register -->
   
-    <div class="w3-bar w3-blue w3-padding w3-card">
-      <a class="w3-bar-item w3-button w3-hover-white" href="db3">Beije - Shoes First</a>
+  <!-- Header da mettere ovunque -->
+  	
+    
+    <div class="w3-bar w3-deep-orange w3-padding w3-card">
+      <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3">Beije - Shoes First</a>
       <div class="w3-right">
-        <a class="w3-bar-item w3-button w3-hover-white" href="db3/signin">Sign-In</a>
-        <a class="w3-bar-item w3-button w3-hover-white" href="db3/signout">Sign-Out</a>
+      <c:choose>
+      <c:when test="${empty logged_user}">
+        <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/signin">Sign-In</a>
+       </c:when>
+       <c:otherwise>
+        <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/signout">Sign-Out</a>
+        </c:otherwise>
+        </c:choose>
       </div>
     </div>
   <!-- Header da mettere ovunque -->
@@ -29,7 +37,7 @@
                         <div class="w3-container">
                             <h5>${product.name}</h2>
                             <p>${product.description}</p>
-                            <a href="<c:url value="db3/product/${product.id}"/>" class="w3-button w3-block w3-blue">View Details</a>
+                            <a href="<c:url value="db3/product/${product.id}"/>" class="w3-button w3-block w3-deep-orange">View Details</a>
                             
                 			<br> 
                         </div>
