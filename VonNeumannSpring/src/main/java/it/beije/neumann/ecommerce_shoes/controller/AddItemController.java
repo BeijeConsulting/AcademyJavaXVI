@@ -1,9 +1,11 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +22,13 @@ import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem;
 import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.ProductDetailsRepository;
+import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
 
 
 @Controller
 public class AddItemController {
-	@RequestMapping(value = "/addItem", method = RequestMethod.GET)
-	public String test() {
-		return "index";
-	}
-/*
+	
 	@Autowired
 	@Qualifier("productDetailsRepository")
 	private ProductDetailsRepository productDetailsRepository;
@@ -38,20 +37,30 @@ public class AddItemController {
 	@Qualifier("shoppingCartRepository")
 	private ShoppingCartRepository shoppingCartRepository;
 	
+	@Autowired
+	@Qualifier("shoppingCartItemRepository")
+	private ShoppingCartItemRepository shoppingCartItemRepository;
+	
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
-	public String addItem(Model model, HttpServletRequest request,
-						  @RequestParam(required = true) String productDetailsId,
+	public String addItem(Model model, HttpServletRequest request, HttpServletResponse response,
+						  @RequestParam(required = true) String productDetails,
 						  @RequestParam(required = true) String quantity) throws IOException {
 		System.out.println("POST /addItem");
 		HttpSession session = request.getSession();		
 		User user = (User)session.getAttribute("user");
 		
 		ShoppingCart cart = shoppingCartRepository.findByUserId(user.getId());
+		ProductDetails prodDetails = productDetailsRepository.findById(Integer.parseInt(productDetails)).get();
 		ShoppingCartItem cartItem = new ShoppingCartItem();
+		cartItem.setQuantity(Integer.parseInt(quantity));
+		cartItem.setShoppingCart(cart);
+		cartItem.setProductDetails(prodDetails);
+		cartItem.setCreatedAt(LocalDateTime.now());
 		
-		ProductDetails prodDetails = productDetailsRepository.findById(Integer.parseInt(productDetailsId)).get();
+		shoppingCartItemRepository.save(cartItem);
+		
+		response.sendRedirect("./cart");
 		
 		return "index";
 	}
-	*/
 }
