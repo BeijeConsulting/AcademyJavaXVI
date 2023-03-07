@@ -52,6 +52,11 @@ public class ProductService {
 		List<String> brands = productRepository.getBrands();
 		return brands;
 	}
+	
+	public List<String> getSizes() {
+		List<String> sizes = productRepository.getSizes();
+		return sizes;
+	}
 
 	public List<Product> find(String name,String category, String color, String type,  String brand, Double minPricel, Double maxPricel) {
 		List<Product> products = productRepository.find(name, category, color, type, brand, minPricel, maxPricel);	

@@ -27,12 +27,16 @@ public class ProductdDetailController {
 		System.out.println("id " + id);
 
 		Product product = productService.findById(Integer.valueOf(id));
+		List<String> sizes = productService.getSizes();
+		System.out.println(sizes );
+		
 		model.addAttribute("product", product);
+		model.addAttribute("sizes", sizes);
 		
 		System.out.println(product);
 		
-		return "redirect: ./home";
-		//return "dettagli_prodotti";
+		//return "redirect: ./home";
+		return "dettagli_prodotto";
 	}
 	
 	

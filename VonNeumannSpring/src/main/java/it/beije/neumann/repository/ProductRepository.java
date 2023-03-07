@@ -34,7 +34,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	@Query(value = "select brand from Product group by brand")
 	public List<String> getBrands();
 	
-	//public Optional<Product> findById(Integer id);
+	@Query(value = "select pd.size from Product p INNER JOIN  ProductDetails pd  ON p.id = pd.productId group by pd.size")
+	public List<String> getSizes();
+	
 	
 	
 }

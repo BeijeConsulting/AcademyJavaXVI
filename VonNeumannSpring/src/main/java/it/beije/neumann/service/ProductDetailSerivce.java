@@ -16,10 +16,7 @@ public class ProductDetailSerivce {
 	@Autowired
 	ProductDetailRepository productDetailRepository;
 	
-	
-	public List<ProductDetails> findByProductId( Integer id ) {	
-		return productDetailRepository.findByProductId(id);
-	}
+
 	
 
 }	
