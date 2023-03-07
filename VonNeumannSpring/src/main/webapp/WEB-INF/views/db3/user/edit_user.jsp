@@ -15,17 +15,17 @@
 
 	<form action="./edit_user" method="post">
   		<label for="name">Nome</label><br>
- 		<input type="text" name="name" value="${user.name}"><br>
+ 		<input type="text" name="name" value="${logged_user.name}"><br>
   		<label for="surname">Cognome</label><br>
-  		<input type="text" name="surname" value="${user.surname}"><br>
+  		<input type="text" name="surname" value="${logged_user.surname}"><br>
   		<label for="email">Email</label><br>
-  		<input type="email" name="email" value="${user.email}"><br>
+  		<input type="email" name="email" value="${logged_user.email}"><br>
   		<label for="password">Password</label><br>
-  		<input type="text" name="password" value="${user.password}"><br><br>
+  		<input type="text" name="password" value="${logged_user.password}"><br><br>
 		<label for="telephone">Telefono</label><br>
-  		<input type="text" name="telephone" value="${user.telephone}"><br>
+  		<input type="text" name="telephone" value="${logged_user.telephone}"><br>
   		<label for="birthDate">Data di nascita</label><br>
-  		<input type="date" name="birthDate" value="${user.birthDate}"><br>
+  		<input type="date" name="birthDate" value="${logged_user.birthDate}"><br>
   		<input type="submit" value="Salva le modifiche">
 	</form>
 </body>

@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -25,32 +28,33 @@ public class User {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "surname")
+	@Column(name = "surname", nullable = false, length = 100)
 	private String surname;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false, length = 100)
 	private String name;
 
-	@Column(name = "telephone")
+	@Column(name = "telephone", length = 100)
 	private String telephone;
 
-	@Column(name = "email", unique = true)
+	@Column(name = "email", unique = true, nullable = false, length = 100)
 	private String email;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 	
-	@Column(name="birth_date")
+	@Column(name="birth_date", nullable = false)
 	private LocalDate birthDate;
-	
-	@Column(name="created_at")
-	private LocalDateTime createdAt;
 
+	@Column(name = "created_at", nullable = false)
+	@Generated(GenerationTime.INSERT)
+	private LocalDateTime createdAt;
+	
 	@Column(name="disabled_at")
 	private LocalDateTime disabledAt;
 	
 //	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
+//  @JoinColumn(name = "user_id")
 //	private List<Address> addresses;
 	
 	//TODO Collegamento col carrello

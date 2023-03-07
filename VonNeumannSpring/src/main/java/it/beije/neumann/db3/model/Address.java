@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -19,34 +22,35 @@ public class Address {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "label")
+	@Column(name = "label", length = 100)
 	private String label;
 
-	@Column(name = "name_surname")
+	@Column(name = "name_surname", nullable = false, length = 100)
 	private String fullName;
 
-	@Column(name = "country")
+	@Column(name = "country", nullable = false, length = 100)
 	private String country;
 
-	@Column(name = "street_address")
+	@Column(name = "street_address", nullable = false, length = 100)
 	private String streetAddress;
 
-	@Column(name = "telephone")
+	@Column(name = "telephone", nullable = false, length = 100)
 	private String telephone;
 
-	@Column(name = "zipcode")
+	@Column(name = "zipcode", nullable = false, length = 5)
 	private String zipcode;
 
 	@Column(name = "instructions", columnDefinition = "text")
 	private String instructions;
 
-	@Column(name = "created_at")
+	@Column(name = "created_at", nullable = false)
+	@Generated(GenerationTime.INSERT)
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 	
-	@Column(name = "user_id")
+	@Column(name = "user_id", nullable = false)
 	private Integer userId;
 
 	// Getters-Setters

@@ -16,8 +16,9 @@ public class UserService {
 		return userRepo.findByEmailAndPassword(email, password);
 	}
 	
-	public User findByEmail(String email) {
-		return userRepo.findByEmail(email);
+	public boolean userAlreadyPresent(String email) {
+		User u = userRepo.findByEmail(email);
+		return u!=null? true : false;
 	}
 	
 	public User saveUser(User user) {
