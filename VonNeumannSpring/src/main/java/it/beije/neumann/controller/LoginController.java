@@ -29,9 +29,13 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String formUser (@RequestParam(value = "email") String email,@RequestParam(value = "password") String password, Model model) {
     	
+    	Boolean isFailed = false;
+    	
     	if(loginService.isAuthenticated(email, password))
     		return "/home";
     	
+    	isFailed = true;
+    	model.addAttribute("isFailed", isFailed);
     	
     	return "redirect:/login";
     }
