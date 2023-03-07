@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Brand</a>
+          <a class="nav-link active" aria-current="page" href="./cart">Cart</a>
         </li>
         <li class="nav-item">
             <c:choose>
@@ -47,7 +47,7 @@
  					<div class="card-body">
  			         <h4 class="card-title"><c:out value="${p.name}"></c:out></h4>
    			    	 <p class="card-text"><c:out value="${p.description}"></c:out></p>
-           		     <a href="product/details?id=${p.id }" class="btn btn-primary">Dettaglio</a>
+           		     <a href="./details?id=${p.id }" class="btn btn-primary">Dettaglio</a>
   				    </div>
   		        </div>
   		    </c:forEach>

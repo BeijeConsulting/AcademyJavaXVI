@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Brand</a>
+          <a class="nav-link active" aria-current="page" href="./cart">Cart</a>
         </li>
         <li class="nav-item">
             <c:choose>
@@ -40,10 +40,34 @@
 	<div class="row">
 		
 		<c:choose>
-		<c:when test="${ not empty products }">
+		<c:when test="${ not empty product }">
 		
 		<div class="col">
 			<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSq7obFsdJk8RO8n4l-MNwEZWjPHlNFS2qYqMDqSTNKjFtt-x-G" alt="Jerry Scotti" width="500" height="600">
+		</div>
+		<div class="col">
+			<h1><c:out value="${product.brand }"></c:out></h1>
+			<h2><c:out value="${product.name }"></c:out></h2>
+			<h4>Color: <c:out value="${product.color }"></c:out></h4>
+			
+			<div>
+			<form action="./addItem" method="post">
+			    <label for="productDetails">Size: </label>
+				<select name="productDetails" id="productDetails"  class="form-control">
+				
+					<c:forEach var="d" items="${ details }">
+   					 <option value="${d.id }"><c:out value="${d.size.EU }"></c:out></option>
+   					</c:forEach>
+				</select>
+				<div class="mt-2">
+				<label for="quantity">Inserisci la quantità: </label>
+				<input name="quantity" type="number" class="form-control">
+				</div>
+				<div>
+					 <button type="submit" class="btn btn-primary mt-3">Add to cart</button>			
+		     	</div>
+			</form>
+			</div>
 		</div>
 		
 		 </c:when>

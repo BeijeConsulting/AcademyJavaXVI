@@ -48,7 +48,7 @@ public class ShoppingCartItem {
 		return productDetails;
 	}
 	
-	public void getProductDetails(ProductDetails productDetails) {
+	public void setProductDetails(ProductDetails productDetails) {
 		this.productDetails = productDetails;
 	}
 	public ShoppingCart getShoppingCart() {
