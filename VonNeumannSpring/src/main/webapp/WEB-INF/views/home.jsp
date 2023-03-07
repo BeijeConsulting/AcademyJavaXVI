@@ -107,6 +107,8 @@
 		  <p class="product-brand">Nike</p>
 		  <p class="product-color">Red</p>
 		  <p class="product-description">Descrizione del prodotto</p>
+		  <a href="dettagli_prodotto">DETTAGLI PRODOTTO</a>
+		  
 		</div>
 		
 	</section>
