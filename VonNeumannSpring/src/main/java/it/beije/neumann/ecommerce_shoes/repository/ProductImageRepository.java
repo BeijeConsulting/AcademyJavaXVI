@@ -7,5 +7,7 @@ import it.beije.neumann.ecommerce_shoes.model.ProductImage;
 
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Integer>{
+	
+	public ProductImage findByProductId(Integer productId);
 
 }
