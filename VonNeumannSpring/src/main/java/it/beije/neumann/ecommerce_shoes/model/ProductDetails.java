@@ -56,12 +56,12 @@ public class ProductDetails {
 		this.product=product;
 	}
 
-	public ConvertionSize getSizeS() {
+	public ConvertionSize getSize() {
 		return size;
 	}
 
-	public void setSizeS(ConvertionSize sizeS) {
-		this.size=sizeS;
+	public void setSize(ConvertionSize size) {
+		this.size=size;
 				
 	}
 	public Integer getId() {
