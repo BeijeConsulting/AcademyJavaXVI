@@ -53,14 +53,16 @@
 			<div>
 			<form action="./addItem" method="get">
 			    <label for="productDetails">Size: </label>
-				<select name="productDetails" id="productDetails">
+				<select name="productDetails" id="productDetails"  class="form-control">
 				
 					<c:forEach var="d" items="${ details }">
    					 <option value="${d }"><c:out value="${d.size.EU }"></c:out></option>
    					</c:forEach>
 				</select>
-				<label for="quantity">Inserisci la quantità</label>
-				<input name="quantity" type="number">
+				<div class="mt-2">
+				<label for="quantity">Inserisci la quantità: </label>
+				<input name="quantity" type="number" class="form-control">
+				</div>
 				<div>
 					 <button type="submit" class="btn btn-primary mt-3">Add to cart</button>			
 		     	</div>
