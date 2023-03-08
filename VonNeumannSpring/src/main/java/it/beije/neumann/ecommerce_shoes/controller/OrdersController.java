@@ -12,10 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
+import it.beije.neumann.ecommerce_shoes.model.Orders;
 import it.beije.neumann.ecommerce_shoes.model.OrdersItems;
 import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
+import it.beije.neumann.ecommerce_shoes.repository.OrdersRepository;
 
 
 @Controller
@@ -28,7 +29,7 @@ public class OrdersController {
 	 * 
 	 */
 	@Autowired
-	private OrdersItemsRepository orderItemsRepo;
+	private OrdersRepository ordersRepo;
 	
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String getOrders(Model model,HttpServletRequest request, HttpServletResponse response) {
@@ -36,12 +37,17 @@ public class OrdersController {
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
 		
-		List<OrdersItems> ordersItems=orderItemsRepo.findAll();
+		List<Orders> orders=ordersRepo.findAll();
+		
+		//Raggruppo gli items in base
+		
+		
+		
 		System.out.println("GET / orders");
 		
 //		System.out.println(ordersItems.size());
 		
-		model.addAttribute("orders",ordersItems);
+		model.addAttribute("orders",orders);
 		return"/orders";
 	}
 		

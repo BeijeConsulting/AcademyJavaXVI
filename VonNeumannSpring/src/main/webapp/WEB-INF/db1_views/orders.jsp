@@ -47,31 +47,30 @@
  <table class="table table-loght">
  
       <thead>
-           <tr> 
-               
+           <tr>   
+               <th scope="col">    </th>  
                <th scope="col">Order Id</th>
                <th scope="col">Order Status</th>
                <th scope="col">Date</th>
-               <th scope="col">Quantity</th>
+               <th scope="col">Payment Status</th>
                <th scope="col">Total Price</th>
                
                
             </tr>
        </thead>
        <tbody>
-        
-               <tr>
-                      
+           <tr>
              <c:forEach var="p" items="${orders}">
                  <tr>
-                      <td>${p.order.id}</td>
-                      <td>${p.order.status}</td>
-                      <td>${p.order.createdAt}</td>
-                      <td>${p.quantity}</td> 
-                      <td>${p.order.totalPrice}</td><br>
+                      <td></td>
+                      <td>${p.id}</td>
+                      <td>${p.status}</td>
+                      <td>${p.createdAt}</td> 
+                      <td>${p.paymentStatus}</td><br>   
+                      <td>${p.totalPrice}</td><br>
                     
                     
-                    </tr>
+                 </tr>
             </c:forEach>
              
               
