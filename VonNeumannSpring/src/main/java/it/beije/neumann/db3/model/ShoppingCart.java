@@ -3,6 +3,7 @@ package it.beije.neumann.db3.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.GenerationTime;
 import it.beije.neumann.model.OrderItem;
 
 @Entity
+@Cacheable(false)
 @Table(name = "shopping_cart")
 public class ShoppingCart {
 
@@ -40,8 +42,8 @@ public class ShoppingCart {
 	private Integer userId;
 	
 
-	@OneToOne(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
-	private User user;
+	//@OneToOne(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
+	//private User user;
 	
 	//@OneToMany(targetEntity = ShoppingCartItem.class, fetch = FetchType.EAGER)
 	//@JoinColumn(name = "shopping_cart_id")
@@ -96,15 +98,13 @@ public class ShoppingCart {
 		this.disabledAt = disabledAt;
 	}
 
+	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder("{")
-				.append(" ID: ").append(id)
-				.append(", Created: ").append(createdAt)
-				.append(", Disabled: ").append(disabledAt)
-				.append(", User id: ").append(userId)
-				.append("}");
-
-		return builder.toString();
+		return "ShoppingCart [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", userId="
+				+ userId + ", shoppingCartItem=" + shoppingCartItem + "]";
 	}
+
+
+
 
 }

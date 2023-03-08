@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -41,17 +42,44 @@ public class AddressController {
 		System.out.println("POST /db3/add_address");
 		
 		HttpSession session = request.getSession();
-//		model.addAttribute("logged_user", (User) session.getAttribute("logged_user"));
 		addressData.setUserId(((User) session.getAttribute("logged_user")).getId());
 		System.out.println(addressData);
 		
-		userService.saveAddress(addressData); //TODO Fix
+		userService.saveAddress(addressData);
 		
 		session.setAttribute("logged_user", userService.findById(addressData.getUserId()));
 		
 		System.out.println((User) session.getAttribute("logged_user"));
 		
 		return "db3/user/addresses";
+	}
+	
+	@RequestMapping(value = { "/db3/edit_address/{addressId}" }, method = RequestMethod.GET)
+	public String editAddressGet(@PathVariable int addressId) {
+		System.out.println("GET /db3/edit_address");
+		
+		return "db3/user/edit_address";
+	}
+	
+	@RequestMapping(value = { "/db3/edit_address" }, method = RequestMethod.POST)
+	public String editAddressPost() {
+		System.out.println("POST /db3/edit_address");
+		
+		return "db3/user/edit_address";
+	}
+	
+	@RequestMapping(value = { "/db3/delete_address/{addressId}" }, method = RequestMethod.GET)
+	public String deleteAddressGet(@PathVariable int addressId) {
+		System.out.println("GET /db3/delete_address");
+		
+		return "db3/user/delete_address";
+	}
+	
+	@RequestMapping(value = { "/db3/delete_address" }, method = RequestMethod.POST)
+	public String deleteAddressPost() {
+		System.out.println("POST /db3/delete_address");
+		
+		return "db3/user/delete_address";
 	}
 
 }

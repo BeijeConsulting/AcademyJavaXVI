@@ -56,6 +56,7 @@ public class SignController {
 			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
+			//TODO Messaggio personalizzato errore login
 			jsp+="signin";
 		}
 		
@@ -66,7 +67,7 @@ public class SignController {
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.GET)
 	public String signupUtente() {
-		return "db3/user/signup";
+		return "db3/signup";
 	}
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.POST)
@@ -83,7 +84,7 @@ public class SignController {
 		if(userPresent) {
 			model.addAttribute("signup_error", "Email già esistente!");
 			model.addAttribute("signup_user", userData);
-			jsp+="user/signup";
+			jsp+="signup";
 		} else {
 			//Va aggiunto il carrello
 			model.addAttribute("userSignUp", userData);
@@ -92,7 +93,7 @@ public class SignController {
 			session.setAttribute("logged_user", userData);
 			model.addAttribute("logged_user", userData);
 			
-			jsp="index";	
+			jsp+="index";	
 		}
 		return jsp;
 	}

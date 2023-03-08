@@ -27,6 +27,7 @@ public class UserService {
 
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
+	
 	@Autowired
 	private AddressRepository addressRepo;
 
@@ -48,8 +49,13 @@ public class UserService {
 		ShoppingCart s = null;
 		Optional<User> user = userRepo.findById(user_id);
 		if (user.isPresent()) {
-			s = user.get().getShoppingCart();
-			if (s == null) {
+			System.out.print(user.get());
+			Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserId(user_id);
+			
+			if(shoppingCart.isPresent()) {
+				s=shoppingCart.get();
+			}
+			else {
 				s = new ShoppingCart();
 				s.setUserId(user_id);
 				s.setId(0);
@@ -57,9 +63,8 @@ public class UserService {
 				shoppingCartRepository.save(s);
 			}
 		}
-		for (ShoppingCartItem sc : s.getShoppingCartItem()) {
-			System.out.print(sc);
-		}
+		
+		System.out.print(s);
 		return s;
 	}
 
