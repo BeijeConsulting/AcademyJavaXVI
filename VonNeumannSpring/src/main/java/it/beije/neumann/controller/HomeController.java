@@ -33,6 +33,11 @@ public class HomeController {
     public String cart(Model model) {
     	return "cart";
     }
+    
+    @RequestMapping(value = "/address", method = RequestMethod.GET)
+    public String address(Model model) {
+    	return "address";
+    }
 
 
 
