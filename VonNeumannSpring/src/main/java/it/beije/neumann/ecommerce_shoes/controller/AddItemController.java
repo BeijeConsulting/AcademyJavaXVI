@@ -51,16 +51,20 @@ public class AddItemController {
 		
 		ShoppingCart cart = shoppingCartRepository.findByUserId(user.getId());
 		ProductDetails prodDetails = productDetailsRepository.findById(Integer.parseInt(productDetails)).get();
-		ShoppingCartItem cartItem = new ShoppingCartItem();
-		cartItem.setQuantity(Integer.parseInt(quantity));
-		cartItem.setShoppingCart(cart);
-		cartItem.setProductDetails(prodDetails);
-		cartItem.setCreatedAt(LocalDateTime.now());
-		
+		ShoppingCartItem cartItem = shoppingCartItemRepository.findExistingItem(cart.getId(), prodDetails.getId());
+		if (cartItem == null) {
+			cartItem = new ShoppingCartItem();
+			cartItem.setQuantity(Integer.parseInt(quantity));
+			cartItem.setShoppingCart(cart);
+			cartItem.setProductDetails(prodDetails);
+			cartItem.setCreatedAt(LocalDateTime.now());
+		}
+		else {
+			cartItem.setQuantity(cartItem.getQuantity() + Integer.parseInt(quantity));
+		}
 		shoppingCartItemRepository.save(cartItem);
 		
-		response.sendRedirect("./cart");
-		
+		response.sendRedirect("./");		
 		return "index";
 	}
 }
