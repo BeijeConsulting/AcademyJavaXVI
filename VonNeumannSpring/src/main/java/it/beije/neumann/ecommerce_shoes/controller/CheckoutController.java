@@ -85,18 +85,20 @@ public class CheckoutController {
 		List<Integer> itemsId = cartItemRepo.findByCartId(userCart.getId());
 		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
 		for (ShoppingCartItem i : cartItems) {
-			OrdersItems ordItem = new OrdersItems();
-			ordItem.setCreatedAt(LocalDateTime.now());
-			ordItem.setOrder(order);
-			ordItem.setColor(i.getProductDetails().getProduct().getColor());
-			ordItem.setName(i.getProductDetails().getProduct().getName());
-			ordItem.setPrice(i.getProductDetails().getProduct().getListedPrice());
-			ordItem.setProductDetails(i.getProductDetails());
-			ordItem.setQuantity(i.getQuantity());
-			ordItem.setSize(i.getProductDetails().getSize());
-			ordersItemsRepo.save(ordItem);
-			i.setDisabledAt(LocalDateTime.now());
-			cartItemRepo.save(i);
+			if (i.getDisabledAt() == null) {
+				OrdersItems ordItem = new OrdersItems();
+				ordItem.setCreatedAt(LocalDateTime.now());
+				ordItem.setOrder(order);
+				ordItem.setColor(i.getProductDetails().getProduct().getColor());
+				ordItem.setName(i.getProductDetails().getProduct().getName());
+				ordItem.setPrice(i.getProductDetails().getProduct().getListedPrice());
+				ordItem.setProductDetails(i.getProductDetails());
+				ordItem.setQuantity(i.getQuantity());
+				ordItem.setSize(i.getProductDetails().getSize());
+				ordersItemsRepo.save(ordItem);
+				i.setDisabledAt(LocalDateTime.now());
+				cartItemRepo.save(i);
+			}
 		}
 		response.sendRedirect("./");
 		return "index";
