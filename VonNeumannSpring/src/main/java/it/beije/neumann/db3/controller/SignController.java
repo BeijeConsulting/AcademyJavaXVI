@@ -56,6 +56,7 @@ public class SignController {
 			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
+			//TODO Messaggio personalizzato errore login
 			jsp+="signin";
 		}
 		

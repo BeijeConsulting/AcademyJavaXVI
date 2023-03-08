@@ -22,20 +22,29 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/db3/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/db3/"}, method = RequestMethod.GET)
 	public String index() {
-		System.out.println("GET /db3/");
+		System.out.println("GET /db3");
 		return "db3/index";
 	}
 
 	@RequestMapping(value = { "/db3/user_page" }, method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/user_page");
-
+		
+		String jsp = "db3/";
 		HttpSession session = request.getSession();
-		model.addAttribute("logged_user", (User) session.getAttribute("logged_user"));
-
-		return "db3/user/user_page";
+		
+		User loggedUser = (User) session.getAttribute("logged_user");
+		
+		if (loggedUser!=null) {
+			model.addAttribute("logged_user", loggedUser);
+			jsp+="user/user_page";
+		} else {
+			jsp+="signin";
+		}
+		
+		return jsp;
 	}
 
 	@RequestMapping(value = { "/db3/edit_user" }, method = RequestMethod.GET)
