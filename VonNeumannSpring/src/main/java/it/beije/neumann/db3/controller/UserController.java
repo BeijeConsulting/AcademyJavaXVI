@@ -22,12 +22,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/db3/"}, method = RequestMethod.GET)
-	public String index() {
-		System.out.println("GET /db3");
-		return "db3/index";
-	}
-
 	@RequestMapping(value = { "/db3/user_page" }, method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/user_page");

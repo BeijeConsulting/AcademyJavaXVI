@@ -93,7 +93,7 @@ public class SignController {
 			session.setAttribute("logged_user", userData);
 			model.addAttribute("logged_user", userData);
 			
-			jsp="index";	
+			jsp+="index";	
 		}
 		return jsp;
 	}

@@ -153,22 +153,29 @@ public class User {
 		this.addresses = addresses;
 	}
 
-	//Other methods
+//	//Other methods
+//	@Override
+//	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
+//		StringBuilder builder = new StringBuilder()
+//				.append(" User Id: ").append(id).append(",\n")
+//				.append(" Name: ").append(name).append(",\n")
+//				.append(" Surname: ").append(surname).append(",\n")
+//				.append(" Telephone: ").append(telephone).append(",\n")
+//				.append(" E-mail: ").append(email).append(",\n")
+//				.append(" Password: ").append(password).append(",\n")
+//				.append(" Birth Date: ").append(birthDate).append(",\n")
+//				.append(" Created At: ").append(createdAt).append(",\n")
+//				.append(" Disabled At: ").append(disabledAt).append("\n")
+//				.append(" Addresses: ").append(addresses).append("\n");
+//		
+//		return builder.toString();
+//	}
+
 	@Override
-	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder()
-				.append(" User Id: ").append(id).append(",\n")
-				.append(" Name: ").append(name).append(",\n")
-				.append(" Surname: ").append(surname).append(",\n")
-				.append(" Telephone: ").append(telephone).append(",\n")
-				.append(" E-mail: ").append(email).append(",\n")
-				.append(" Password: ").append(password).append(",\n")
-				.append(" Birth Date: ").append(birthDate).append(",\n")
-				.append(" Created At: ").append(createdAt).append(",\n")
-				.append(" Disabled At: ").append(disabledAt).append("\n")
-				.append(" Addresses: ").append(addresses).append("\n");
-		
-		return builder.toString();
+	public String toString() {
+		return "User [id=" + id + ", surname=" + surname + ", name=" + name + ", telephone=" + telephone + ", email="
+				+ email + ", password=" + password + ", birthDate=" + birthDate + ", createdAt=" + createdAt
+				+ ", disabledAt=" + disabledAt + ", shoppingCart=" + shoppingCart + ", addresses=" + addresses + "]";
 	}
 
 	public String getTableFormat() {

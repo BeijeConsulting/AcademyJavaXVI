@@ -57,9 +57,9 @@ public class UserService {
 				shoppingCartRepository.save(s);
 			}
 		}
-		for (ShoppingCartItem sc : s.getShoppingCartItem()) {
-			System.out.print(sc);
-		}
+		//for (ShoppingCartItem sc : s.getShoppingCartItem()) {
+			//System.out.print(sc);
+		//}
 		return s;
 	}
 
