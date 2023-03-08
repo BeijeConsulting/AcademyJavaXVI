@@ -45,10 +45,10 @@
 	<div class="row">
 		
 		 <c:choose>
-	       <c:when test="${ not empty productsImages }">
-	       	<c:forEach var="p" items="${productsImages }">
-				 <div class="card mx-2" style="width: 18rem;">
-  					<img src="${p.imagePath}" alt="Jerry Scotti" class="card-img-top">
+	       <c:when test="${ not empty images }">
+	       	<c:forEach var="p" items="${images }">
+				 <div class="card m-3" style="width: 18rem;">
+  					<img src="${p.imagePath}" alt="img" class="card-img-top">
  					<div class="card-body">
  			         <h4 class="card-title"><c:out value="${p.product.name}"></c:out></h4>
    			    	 <p class="card-text"><c:out value="${p.product.description}"></c:out></p>

@@ -43,7 +43,7 @@
 		<c:when test="${ not empty product }">
 		
 		<div class="col">
-			<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSq7obFsdJk8RO8n4l-MNwEZWjPHlNFS2qYqMDqSTNKjFtt-x-G" alt="Jerry Scotti" width="500" height="600">
+			<img src="${image.imagePath }" alt="img" width="500" height="600">
 		</div>
 		<div class="col">
 			<h1><c:out value="${product.brand }"></c:out></h1>
@@ -61,7 +61,7 @@
 				</select>
 				<div class="mt-2">
 				<label for="quantity">Inserisci la quantità: </label>
-				<input name="quantity" type="number" class="form-control">
+				<input name="quantity" type="number" class="form-control" min="1" max="${d.quantity }">
 				</div>
 				<div>
 					 <button type="submit" class="btn btn-primary mt-3">Add to cart</button>			
