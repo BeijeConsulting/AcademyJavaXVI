@@ -63,18 +63,18 @@ import javax.persistence.Table;
 			return productDetails;
 		}
 
-		public void setOrder(ProductDetails productDetails) {
+		public void setProductDetails(ProductDetails productDetails) {
 			this.productDetails=productDetails;
 					
 		}
 		
 		
-		public ConvertionSize getSizeS() {
+		public ConvertionSize getSize() {
 			return size;
 		}
 
-		public void setSizeS(ConvertionSize sizeS) {
-			this.size=sizeS;
+		public void setSize(ConvertionSize size) {
+			this.size=size;
 					
 		}
 		
@@ -119,8 +119,14 @@ import javax.persistence.Table;
 			this.disabledAt = disabledAt;
 		}
 		
-		
-		
+		public Orders getOrder() {
+			return order;
+		}
+
+		public void setOrder(Orders order) {
+			this.order = order;
+		}
+
 		public String getName() {
 			return name;
 		}
