@@ -13,24 +13,48 @@
 
 </head>
 <body>
+	<!-- Header da mettere ovunque -->
 
-  <h1>Shopping Cart</h1>
-  
-  <c:if test="${not empty shoppingCart}">
-    <!-- display shopping cart items as cards -->
-    <c:forEach items="${shoppingCart.shoppingCartItem}" var="item">
-      <div class="w3-card-4">
+
+	<div class="w3-bar w3-deep-orange w3-padding w3-card">
+		<a class="w3-bar-item w3-button w3-hover-white"
+			href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+		<div class="w3-right">
+			<c:choose>
+				<c:when test="${empty logged_user}">
+					<a class="w3-bar-item w3-button w3-hover-white"
+						href="/VonNeumannSpring/db3/signin">Sign-In</a>
+					<a class="w3-bar-item w3-button w3-hover-white"
+						href="/VonNeumannSpring/db3/signup">Sign-Up</a>
+				</c:when>
+				<c:otherwise>
+					<a class="w3-bar-item w3-button w3-hover-white"
+						href="/VonNeumannSpring/db3/user_page">User page</a>
+					<a class="w3-bar-item w3-button w3-hover-white"
+						href="/VonNeumannSpring/db3/signout">Sign-Out</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+	<!-- Header da mettere ovunque -->
+	<div><h1> &nbsp; Shopping Cart</h1></div>
+        
+    <c:if test="${not empty shoppingCart}">
         <div class="w3-container">
-          <h3><c:out value="${item.productDetailsId}"/></h3>
-          <p>Quantity: <c:out value="${item.quantity}"/></p>
+            <c:forEach items="${shoppingCart.shoppingCartItem}" var="item">
+                <div class="w3-card-4 w3-margin">
+                    <div class="w3-container">
+                        <h3><c:out value="${item.productDetailsId}"/></h3>
+                        <p>Quantity: <c:out value="${item.quantity}"/></p>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
-      </div>
-    </c:forEach>
-  </c:if>
-  
-  <c:if test="${empty shoppingCart}">
-    <p>Your shopping cart is empty.</p>
-  </c:if>
+    </c:if>
+
+    <c:if test="${empty shoppingCart}">
+        <p class="w3-container">Your shopping cart is empty.</p>
+    </c:if>
 
 </body>
 </html>
