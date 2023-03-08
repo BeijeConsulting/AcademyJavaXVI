@@ -58,7 +58,10 @@ public class HomeController {
 //    	return "dettagli_prodotto";
 //    }
     
-    
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public String cart(Model model) {
+    	return "cart";
+    }
 
 
 
