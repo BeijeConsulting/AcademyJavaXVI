@@ -37,7 +37,7 @@ public class OrdersController {
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
 		
-		List<Orders> orders=ordersRepo.findAll();
+		List<Orders> orders=ordersRepo.findByUserId(user.getId());
 		
 		//Raggruppo gli items in base
 		
