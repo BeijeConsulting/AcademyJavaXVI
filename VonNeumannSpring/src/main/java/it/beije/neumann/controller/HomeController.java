@@ -2,6 +2,8 @@ package it.beije.neumann.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +24,15 @@ public class HomeController {
 //    }
 	
 	@RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
 		try {
+			
 			
 			List<Product> products = productService.findAvailble();
 			List<String> categories = productService.getCategories();
 			List<String> types = productService.getTypes();
 			List<String> brands = productService.getBrands();
+			
 			
 			model.addAttribute("brands", brands);
 			model.addAttribute("types", types);

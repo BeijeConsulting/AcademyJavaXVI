@@ -1,10 +1,9 @@
 package it.beije.neumann.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+
 
 import it.beije.neumann.model.ShoppingCart;
 import it.beije.neumann.model.User;
