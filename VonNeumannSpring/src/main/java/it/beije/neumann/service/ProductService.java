@@ -60,6 +60,8 @@ public class ProductService {
 
 	public List<Product> find(String name,String category, String color, String type,  String brand, Double minPricel, Double maxPricel) {
 		List<Product> products = productRepository.find(name, category, color, type, brand, minPricel, maxPricel);	
+		if( products.size() == 0 ) throw new IndexOutOfBoundsException();
+		
 		return products;	
 	}
 	
@@ -70,6 +72,7 @@ public class ProductService {
 			return product;
 		} else return null;
 	}
+
 
 	
 

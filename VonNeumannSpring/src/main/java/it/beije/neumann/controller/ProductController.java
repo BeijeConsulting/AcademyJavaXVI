@@ -55,8 +55,8 @@ public class ProductController {
 			model.addAttribute("brands", brands);
 			model.addAttribute("types", types);
 			model.addAttribute("categories", categories);
-			 model.addAttribute("products", products);
-			//System.out.println(products);
+			model.addAttribute("products", products);
+			
 
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";
@@ -65,6 +65,24 @@ public class ProductController {
 		}
 	
 		return "/home";
+	}
+	
+	
+	@RequestMapping(value = "/show_detail", method = RequestMethod.GET)
+	public String showDetails( Model model, @RequestParam String id){
+		System.out.println("id " + id);
+
+		Product product = productService.findById(Integer.valueOf(id));
+		List<String> sizes = productService.getSizes();
+		System.out.println(sizes );
+		
+		model.addAttribute("product", product);
+		model.addAttribute("sizes", sizes);
+		
+		System.out.println(product);
+		
+		//return "redirect: ./home";
+		return "dettagli_prodotto";
 	}
 
 	

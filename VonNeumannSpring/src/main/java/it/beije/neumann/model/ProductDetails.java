@@ -45,7 +45,7 @@ public class ProductDetails {
 //		this.product = product;
 //	}
 
-	private Integer size;
+	private String size;
 	
 	@Column(name="product_id")
 	private Integer productId;
@@ -54,7 +54,7 @@ public class ProductDetails {
 	private LocalDateTime createdAt;
 	
 	@Column(name="disabled_at")
-	private LocalDateTime disabled_at;
+	private LocalDateTime disabledAt;
 
 	public Integer getId() {
 		return id;
@@ -88,11 +88,11 @@ public class ProductDetails {
 		this.quantity = quantity;
 	}
 
-	public Integer getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Integer size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -113,14 +113,28 @@ public class ProductDetails {
 	}
 
 	public LocalDateTime getDisabled_at() {
-		return disabled_at;
+		return disabledAt;
 	}
 
-	public void setDisabled_at(LocalDateTime disabled_at) {
-		this.disabled_at = disabled_at;
+	public void setDisabled_at(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
 	}
 
 	
+	public String toString() {
+		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
+				.append(", isListed: ").append(isListed)
+				.append(", selling Price: ").append(sellingPrice)
+				.append(", quantity: ").append(quantity)
+				.append(", size: ").append(size)
+				.append(", product id: ").append(productId)
+				.append(", created at: ").append(createdAt)
+				.append(", disabled at: ").append(disabledAt)
+				.append("}");
+
+		return builder.toString();
+	}
 }
 
 

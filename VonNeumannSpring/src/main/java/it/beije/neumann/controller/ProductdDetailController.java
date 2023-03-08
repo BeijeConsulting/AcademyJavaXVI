@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.beije.neumann.NotEnoughQuantityException;
 import it.beije.neumann.model.Product;
 import it.beije.neumann.model.ProductDetails;
 import it.beije.neumann.service.ProductDetailSerivce;
@@ -21,23 +22,32 @@ public class ProductdDetailController {
 	
 	@Autowired
 	private ProductService  productService;
-	
-	@RequestMapping(value = "/show_detail", method = RequestMethod.GET)
-	public String showDetails( Model model, @RequestParam String id){
-		System.out.println("id " + id);
 
-		Product product = productService.findById(Integer.valueOf(id));
-		List<String> sizes = productService.getSizes();
-		System.out.println(sizes );
+	@RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
+	public String addToCart( Model model, @RequestParam(name="id") String id, @RequestParam String size, @RequestParam String quantity){
 		
-		model.addAttribute("product", product);
-		model.addAttribute("sizes", sizes);
+		System.out.println("Id prodotto " + id);
+		System.out.println("Taglia scelta " + size);
+		System.out.println("Quantita scelta " + quantity);
 		
-		System.out.println(product);
+		try {
+			ProductDetails productDetail = productDetailService.findByProductIdAndSize(Integer.valueOf(id), size);
+			productDetailService.checkQuantity(productDetail, Integer.valueOf(quantity));
+			System.out.println("Dettagli prodotto " + productDetail);
 		
-		//return "redirect: ./home";
-		return "dettagli_prodotto";
+		}catch( NotEnoughQuantityException neqEX ) {
+			String message = "Non ci sono abbastanza prodotti";
+			System.out.println(message + neqEX);
+			model.addAttribute("message", message);
+		
+		}catch( IllegalArgumentException iaEX ) {
+			String message = "Inserisci correttamente la quantità";
+			System.out.println(message + iaEX);
+			model.addAttribute("message", message);
+		}
+
+		return "cart";
+	
+	
 	}
-	
-	
 }

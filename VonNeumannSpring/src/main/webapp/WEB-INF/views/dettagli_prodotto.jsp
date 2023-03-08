@@ -20,10 +20,13 @@
 				<img src="https://picsum.photos/200/300?grayscale" alt="">
 			</div>
 			<div class="product-info">
+			
+			<form action="add_to_cart" method="get">
 				<h2 class="product-name">${product.name}</h2>
 				<div class="product-brand">${product.brand}</div>
 				<div class="product-category">${product.category}</div>
 				<div class="product-type">${product.type}</div>
+				
 				<div class="product-price">&euro; 99,99 <span>&euro; 119,99</span></div>
 				<div class="product-sizes">
 					<label for="size">Size:</label>
@@ -34,8 +37,13 @@
 					</select>
 				</div>
 				<div class="product-description">Descrizione</div>
+				<input type="text" name="quantity">
+				<input type="hidden" name="id" value="${product.id}">
+						<input type="submit" value="Aggiungi al carrello">	
+				</form>
 			</div>
 		</div>
+
 	</section>
 </body>
 

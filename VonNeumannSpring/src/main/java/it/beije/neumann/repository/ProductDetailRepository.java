@@ -10,6 +10,8 @@ import it.beije.neumann.model.ProductDetails;
 
 public interface ProductDetailRepository extends JpaRepository<ProductDetails, Integer>{
 
+	Optional<ProductDetails> findByProductIdAndSize(Integer id, String size);
+
 
 	
 	
