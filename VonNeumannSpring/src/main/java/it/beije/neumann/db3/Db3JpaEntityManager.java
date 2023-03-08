@@ -17,6 +17,7 @@ public class Db3JpaEntityManager {
 	
 	@Bean(name = "entityManagerFactory")
 	public static synchronized EntityManagerFactory getInstance() {
+		System.setProperty("hibernate.show_sql", "true");
 		try {
 			if (emfactory == null) {
 				emfactory = Persistence.createEntityManagerFactory("VonNeumann");
