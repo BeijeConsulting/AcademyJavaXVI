@@ -46,6 +46,7 @@ public class ShoppingCart {
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
+		createdAt = LocalDateTime.now();
 		this.createdAt = createdAt;
 	}
 

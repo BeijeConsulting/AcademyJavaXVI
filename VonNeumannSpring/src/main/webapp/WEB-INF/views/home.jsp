@@ -14,12 +14,25 @@
 	
 		
 		<div class="header-right">
-				
-			<button class="signin">
-				<a href="login">
-					SIGN IN
-				</a>
-			</button>
+			<c:choose>
+				<c:when test="${isFailed == false}">
+					<div>
+						<a href="profile" class="black-link"> ${user.name} ${user.lastname}</a>
+						<button class="signin">
+							<a href="login">
+								LOG OUT
+							</a>
+						</button>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<button class="signin">
+						<a href="login">
+							SIGN IN
+						</a>
+					</button>
+				</c:otherwise>
+			</c:choose>	
 			<form id="searchForm" method="get">
 				<div class="searchProductName">
 					<label class="label-search-product" for="productName">CERCA PRODOTTO</label>
@@ -134,6 +147,11 @@
 	
 	.header-right{
 		display: flex;
+	}
+	
+	.black-link {
+	
+		color: white;
 	}
 	
 	.signin{

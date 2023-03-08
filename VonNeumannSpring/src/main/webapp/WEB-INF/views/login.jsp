@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +14,12 @@
 
 	</header>
 	
+
 	<section class="login-section">
 		<form method="post" action="./login">
+	<c:choose>
+		<c:when test="${isFailed == true}"><label class = "wrong">Credenziali errate </label> <br><br></c:when>
+	</c:choose>
 			<label for="email">EMAIL</label>
 			<input type="email" id="email" name="email" required><br><br>
 			<label for="password">PASSWORD</label>
@@ -23,6 +27,8 @@
 			<input class="sign-in-submit" type="submit" value="SIGN IN">
 		</form>
 		
+
+
 		<div class="vertical-line"></div>
 		
 		<div>
@@ -104,6 +110,11 @@
 	
 	}
 	
+	.wrong {
+
+		color: red;
+	
+	}
 	.button-crea-account {
 	  background-color: black;
 	  border: 1px solid white;

@@ -1,10 +1,14 @@
 package it.beije.neumann.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import it.beije.neumann.model.ShoppingCart;
 import it.beije.neumann.model.User;
+import it.beije.neumann.repository.ShoppingCartRepository;
 import it.beije.neumann.repository.UserRepository;
 
 @Service
@@ -12,7 +16,9 @@ public class LoginService {
 
 	@Autowired
 	private UserRepository userRepository;
-		
+	@Autowired
+	private ShoppingCartRepository cartRepository;
+	
 	public boolean isAuthenticated(String email, String password) {
 		
 		if (userRepository.findByEmailAndPassword(email, password).size() == 1)
@@ -28,11 +34,20 @@ public class LoginService {
 		
 		return true;
 	}
+	public User findByEmailAndPassword(String email, String password){
+		
+		return userRepository.findByEmailAndPassword(email, password).get(0);
+	}
 	
 	
 	public void addAccount (User user) {
 		
 		userRepository.save(user);
+		ShoppingCart cart = new ShoppingCart();
+		
+		cart.setCreatedAt(null);
+		cart.setUserId(user.getId());
+		cartRepository.save(cart);
 	}
 	
 }
