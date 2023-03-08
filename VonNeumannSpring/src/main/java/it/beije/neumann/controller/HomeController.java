@@ -48,6 +48,11 @@ public class HomeController {
     public String profile(Model model) {
     	return "profile";
     }
+    
+    @RequestMapping(value = "/order_history", method = RequestMethod.GET)
+    public String order_history(Model model) {
+    	return "order_history";
+    }
 
 
 }
