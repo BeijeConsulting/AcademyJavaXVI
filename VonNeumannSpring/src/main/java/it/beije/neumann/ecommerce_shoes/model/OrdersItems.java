@@ -119,8 +119,14 @@ import javax.persistence.Table;
 			this.disabledAt = disabledAt;
 		}
 		
-		
-		
+		public Orders getOrder() {
+			return order;
+		}
+
+		public void setOrder(Orders order) {
+			this.order = order;
+		}
+
 		public String getName() {
 			return name;
 		}
