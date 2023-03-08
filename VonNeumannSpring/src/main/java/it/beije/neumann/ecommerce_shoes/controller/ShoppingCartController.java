@@ -63,8 +63,9 @@ public class ShoppingCartController {
 
 //		System.out.println(items);
 		
-		int totale=0;
 
+
+		int totale=0;
 		for(int i=0;i<items.size();i++)
 		{			if((items.get(i).getDisabledAt().equals(null))) {
 			 totale+=items.get(i).getProductDetails().getProduct().getListedPrice()*items.get(i).getQuantity();

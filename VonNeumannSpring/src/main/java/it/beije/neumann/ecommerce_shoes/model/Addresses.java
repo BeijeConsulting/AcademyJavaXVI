@@ -55,14 +55,14 @@ public class Addresses {
 
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	private List<User> user;
+	private User user;
 	
 
-	public List<User> getItems() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setItems(List<User> user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	
