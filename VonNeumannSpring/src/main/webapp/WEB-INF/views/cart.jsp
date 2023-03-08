@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +18,12 @@
 			<div class="product">
 				<img src="https://picsum.photos/200/300?grayscale">
 				<div>
-					<div class="product-name">Nome prodotto</div>
-					<div class="product-brand">Brand</div>
-					<div class="product-size">Taglia: 43</div>
+					<div class="product-name">${productDetail.product.name}</div>
+					<div class="product-brand">${productDetail.product.brand}</div>
+					<div class="product-size">Taglia:${productDetail.size}</div>
 					<div>
-						<span class="product-price">&euro; 50</span>
-						<span class="product-discount">&euro; 40</span>
+						<span class="product-price">&euro;${productDetail.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${productDetail.sellingPrice}</span>
 					</div>
 				</div>
 				<button class="product-remove">Rimuovi</button>

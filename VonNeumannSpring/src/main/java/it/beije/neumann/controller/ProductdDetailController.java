@@ -24,17 +24,22 @@ public class ProductdDetailController {
 	private ProductService  productService;
 
 	@RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
-	public String addToCart( Model model, @RequestParam(name="id") String id, @RequestParam String size, @RequestParam String quantity){
+	public String addToCart( Model model, @RequestParam(name="id") String idProduct, @RequestParam String size, @RequestParam String quantity){
 		
-		System.out.println("Id prodotto " + id);
+		System.out.println("Id prodotto " + idProduct);
 		System.out.println("Taglia scelta " + size);
 		System.out.println("Quantita scelta " + quantity);
-		
 		try {
-			ProductDetails productDetail = productDetailService.findByProductIdAndSize(Integer.valueOf(id), size);
+			Product product = productService.findById(Integer.valueOf(idProduct));
+			ProductDetails productDetail = productService.getProductDetail( product, size );
 			productDetailService.checkQuantity(productDetail, Integer.valueOf(quantity));
-			System.out.println("Dettagli prodotto " + productDetail);
-		
+			
+
+			System.out.println( "product Detail Id " + productDetail.getId()  );
+			System.out.println( "product  " + productDetail.getProduct().getName()  );
+			
+			model.addAttribute("productDetail", productDetail);
+			
 		}catch( NotEnoughQuantityException neqEX ) {
 			String message = "Non ci sono abbastanza prodotti";
 			System.out.println(message + neqEX);
@@ -45,6 +50,8 @@ public class ProductdDetailController {
 			System.out.println(message + iaEX);
 			model.addAttribute("message", message);
 		}
+	
+		
 
 		return "cart";
 	

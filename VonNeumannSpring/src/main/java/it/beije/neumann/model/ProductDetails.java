@@ -33,23 +33,41 @@ public class ProductDetails {
 	@Column
 	private Integer quantity;
 	
-//	@ManyToOne(targetEntity = Product.class, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "id")
-//	private Product product;
-//	
-//	public Product getProduct() {
-//		return product;
-//	}
-//
-//	public void setProduct(Product product) {
-//		this.product = product;
-//	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public LocalDateTime getDisabledAt() {
+		return disabledAt;
+	}
+
+	public void setDisabledAt(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
+	}
+
 
 	private String size;
 	
-	@Column(name="product_id")
-	private Integer productId;
-	
+//	@Column(name="product_id")
+//	private Integer productId;
+//	
+//	public Integer getProductId() {
+//		return productId;
+//	}
+//
+//	public void setProductId(Integer productId) {
+//		this.productId = productId;
+//	}
+
+
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
 	
@@ -96,13 +114,7 @@ public class ProductDetails {
 		this.size = size;
 	}
 
-	public Integer getProductId() {
-		return productId;
-	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -128,7 +140,7 @@ public class ProductDetails {
 				.append(", selling Price: ").append(sellingPrice)
 				.append(", quantity: ").append(quantity)
 				.append(", size: ").append(size)
-				.append(", product id: ").append(productId)
+				.append(", product ").append(product)
 				.append(", created at: ").append(createdAt)
 				.append(", disabled at: ").append(disabledAt)
 				.append("}");

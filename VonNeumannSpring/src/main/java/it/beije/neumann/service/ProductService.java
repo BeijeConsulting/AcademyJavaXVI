@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.beije.neumann.model.Product;
+import it.beije.neumann.model.ProductDetails;
 import it.beije.neumann.repository.ProductRepository;
 
 @Service
@@ -53,11 +54,12 @@ public class ProductService {
 		return brands;
 	}
 	
-	public List<String> getSizes() {
-		List<String> sizes = productRepository.getSizes();
-		return sizes;
-	}
+//	public List<String> getSizes() {
+//		List<String> sizes = productRepository.getSizes();
+//		return sizes;
+//	}
 
+	
 	public List<Product> find(String name,String category, String color, String type,  String brand, Double minPricel, Double maxPricel) {
 		List<Product> products = productRepository.find(name, category, color, type, brand, minPricel, maxPricel);	
 		if( products.size() == 0 ) throw new IndexOutOfBoundsException();
@@ -65,18 +67,28 @@ public class ProductService {
 		return products;	
 	}
 	
+	@Transactional
 	public Product findById(Integer id) {
 		Optional<Product> p = productRepository.findById(id);
 		if (p.isPresent()) {
-			Product product = p.get();
-			return product;
+			Product productDetail = p.get();
+			return productDetail;
 		} else return null;
+	}
+	
+	
+	public ProductDetails getProductDetail( Product product, String size ) {
+		ProductDetails pd;
+		for( int i = 0; i < product.getProductDetails().size();i++ ) {
+			if( product.getProductDetails().get(i).getSize().equals(size) ) {
+				pd = product.getProductDetails().get(i);
+				return pd;
+			}
+		}
+		return null;
+	}
+	
 	}
 
 
 	
-
-
-
-
-}

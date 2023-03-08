@@ -1,5 +1,6 @@
 package it.beije.neumann.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.model.Product;
+import it.beije.neumann.model.ProductDetails;
 import it.beije.neumann.repository.ProductRepository;
 import it.beije.neumann.service.ProductService;
 
@@ -56,7 +58,7 @@ public class ProductController {
 			model.addAttribute("types", types);
 			model.addAttribute("categories", categories);
 			model.addAttribute("products", products);
-			
+			//System.out.println(products);
 
 		}catch( IndexOutOfBoundsException iobEx ) {
 			String message = "Non ci sono prodotti da visualizzare ";
@@ -73,15 +75,23 @@ public class ProductController {
 		System.out.println("id " + id);
 
 		Product product = productService.findById(Integer.valueOf(id));
-		List<String> sizes = productService.getSizes();
+		
+		
+		List<String> sizes = new ArrayList<>();
+		
+		for( int i = 0; i < product.getProductDetails().size(); i++  ) {
+			sizes.add( product.getProductDetails().get(i).getSize() );
+		}
+		
+		//List<String> sizes = productService.getSizes();
 		System.out.println(sizes );
 		
 		model.addAttribute("product", product);
 		model.addAttribute("sizes", sizes);
 		
-		System.out.println(product);
+
 		
-		//return "redirect: ./home";
+		
 		return "dettagli_prodotto";
 	}
 
