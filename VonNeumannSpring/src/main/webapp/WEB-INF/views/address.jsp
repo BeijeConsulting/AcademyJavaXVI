@@ -26,13 +26,7 @@
 				<p><label>Istruzioni:</label> Nessuna istruzione</p>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-		
-		
+	
 		<form action="" method="post">
 			
 			<label for="label">Tipo indirizzo: </label>
