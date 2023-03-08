@@ -1,5 +1,7 @@
 package it.beije.neumann.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -31,6 +33,10 @@ public class LoginService {
 			return false;
 		
 		return true;
+	}
+	public User findByEmailAndPassword(String email, String password){
+		
+		return userRepository.findByEmailAndPassword(email, password).get(0);
 	}
 	
 	

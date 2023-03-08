@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.beije.neumann.model.User;
 import it.beije.neumann.service.LoginService;
 
 @Controller
@@ -34,6 +35,9 @@ public class LoginController {
     	System.out.println("pre Auth " +isFailed);
     	if(loginService.isAuthenticated(email, password)) {
     		
+    		User user = loginService.findByEmailAndPassword(email, password);
+    		
+    		model.addAttribute("user", user);
     		model.addAttribute("isFailed", isFailed);
     		return "/home";
     	}
