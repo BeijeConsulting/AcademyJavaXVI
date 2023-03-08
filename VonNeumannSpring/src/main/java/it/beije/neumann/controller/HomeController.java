@@ -43,6 +43,11 @@ public class HomeController {
     public String order(Model model) {
     	return "order";
     }
+    
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile(Model model) {
+    	return "profile";
+    }
 
 
 }
