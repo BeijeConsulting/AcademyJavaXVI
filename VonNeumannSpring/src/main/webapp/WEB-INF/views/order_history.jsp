@@ -26,18 +26,8 @@
 				<div class="order_status">Stato pagamento: Pagato</div>
 				<div class="order_link"><a href="order">Dettagli Ordine</a></div>
 			</div>
-			
-			<div class="order">
-				<div class="order_header">
-					<div class="order_id">ID Ordine: #002</div>
-					<div class="order_date">Data transazione: 02/01/2023</div>
-				</div>
-				<div class="order_price">Prezzo totale: 20,00 &euro;</div>
-				<div class="order_status">Stato pagamento: In attesa di pagamento</div>
-				<div class="order_link"><a href="order">Dettagli Ordine</a></div>
-			</div>
 
-    </div>	
+    	</div>	
 	
 	</div>
 
