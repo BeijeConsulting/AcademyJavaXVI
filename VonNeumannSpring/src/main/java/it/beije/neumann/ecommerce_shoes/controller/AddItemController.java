@@ -47,7 +47,16 @@ public class AddItemController {
 						  @RequestParam(required = true) String quantity) throws IOException {
 		System.out.println("POST /addItem");
 		HttpSession session = request.getSession();		
-		User user = (User)session.getAttribute("user");
+		User user = (User)session.getAttribute("user");		
+		if (user == null) {
+			response.sendRedirect("./login");
+			return "index";
+		}
+		
+		if (Integer.parseInt(quantity) <= 0) {
+			model.addAttribute("error", "Per favore seleziona una quantita' positiva");
+			return "error";
+		}
 		
 		ShoppingCart cart = shoppingCartRepository.findByUserId(user.getId());
 		ProductDetails prodDetails = productDetailsRepository.findById(Integer.parseInt(productDetails)).get();
@@ -62,9 +71,14 @@ public class AddItemController {
 		else {
 			cartItem.setQuantity(cartItem.getQuantity() + Integer.parseInt(quantity));
 		}
+		
+		if (cartItem.getQuantity() > prodDetails.getQuantity()) {
+			model.addAttribute("error", "La quantita' selezionata e' maggiore di quella in stock");
+			return "error";
+		}
 		shoppingCartItemRepository.save(cartItem);
 		
-		response.sendRedirect("./");		
+		response.sendRedirect("./");
 		return "index";
 	}
 }

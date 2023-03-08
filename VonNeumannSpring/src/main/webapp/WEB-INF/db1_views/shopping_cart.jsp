@@ -90,7 +90,7 @@
                
                </h3>
                  
-               <a class="mx-3 btn-primary" href="#"> Checkout</a>
+               <a class="mx-3 btn-primary" href="./checkout"> Checkout</a>
            </div>
        </div>
 
