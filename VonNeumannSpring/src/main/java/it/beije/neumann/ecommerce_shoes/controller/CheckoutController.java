@@ -1,6 +1,7 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.ecommerce_shoes.model.Addresses;
+import it.beije.neumann.ecommerce_shoes.model.Orders;
+import it.beije.neumann.ecommerce_shoes.model.OrdersItems;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem;
 import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.AddressesRepository;
+import it.beije.neumann.ecommerce_shoes.repository.OrdersRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
 import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
@@ -34,6 +38,8 @@ public class CheckoutController {
 	private ShoppingCartItemRepository cartItemRepo;
 	@Autowired
 	private AddressesRepository addressesRepo;
+	@Autowired
+	private OrdersRepository ordersRepo;
 
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
 	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,6 +51,7 @@ public class CheckoutController {
 			response.sendRedirect("./login");
 			return "index";
 		}
+		
 		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
 		model.addAttribute("totale", calcoloTotale(userCart.getId()));
 		List<Addresses> addresses = addressesRepo.findByUserId(user.getId());
@@ -53,7 +60,35 @@ public class CheckoutController {
 		return "checkout";
 	}
 	
-	public double calcoloTotale(int cartId) {
+	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
+	public String postCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		if (user == null) {
+			response.sendRedirect("./login");
+			return "index";
+		}
+		
+		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
+		//Creazione ordine
+		Orders order = new Orders();
+		order.setCreatedAt(LocalDateTime.now());
+		order.setPaymentStatus("Complete");
+		order.setStatus("Complete");
+		order.setTotalPrice(calcoloTotale(userCart.getId()));
+		order.setUser(user);
+		order = ordersRepo.save(order); //la save dovrebbe ritornare l'order che ha creato con il suo id?
+		//Creazione orderItems
+		List<Integer> itemsId = cartItemRepo.findByCartId(userCart.getId());
+		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
+		for (ShoppingCartItem i : cartItems) {
+			OrdersItems ordItem = new OrdersItems();
+		}
+		
+		return "index";
+	}
+	
+	private double calcoloTotale(int cartId) {
 		double totale = 0;
 		List<Integer> itemsId = cartItemRepo.findByCartId(cartId);
 		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
