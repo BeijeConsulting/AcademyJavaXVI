@@ -109,7 +109,8 @@ public class CheckoutController {
 		List<Integer> itemsId = cartItemRepo.findByCartId(cartId);
 		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
 		for(ShoppingCartItem item : cartItems) {
-			totale += item.getProductDetails().getProduct().getListedPrice() * item.getQuantity();
+			if (item.getDisabledAt() == null)
+				totale += item.getProductDetails().getProduct().getListedPrice() * item.getQuantity();
 		}
 		return totale;
 	}
