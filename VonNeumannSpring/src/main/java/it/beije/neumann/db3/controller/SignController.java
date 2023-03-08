@@ -25,12 +25,12 @@ public class SignController {
 	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request) {
 		System.out.println("GET /db3/signin");
-		HttpSession session = request.getSession();
 		
 		String jsp = "db3/";
 		
-		if ((User)session.getAttribute("logged_user")!=null){
-//			jsp+="index";
+		HttpSession session = request.getSession();
+		
+		if (userService.isUserLogged(session)) {
 			jsp+="user/user_page";
 		} else {
 			jsp+="signin";
@@ -52,7 +52,6 @@ public class SignController {
 		if(user!=null) {
 			session.setAttribute("logged_user", user);
 			model.addAttribute("logged_user", user);
-//			jsp+="index";
 			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
@@ -101,6 +100,7 @@ public class SignController {
 	@RequestMapping(value = {"/db3/signout"}, method = RequestMethod.GET)
 	public String signOut(HttpServletRequest request) {
 		System.out.println("GET /db3/signout");
+		
 		HttpSession session = request.getSession();
 		session.removeAttribute("logged_user");
 		

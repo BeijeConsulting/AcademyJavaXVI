@@ -25,47 +25,53 @@ public class UserController {
 	@RequestMapping(value = { "/db3/user_page" }, method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/user_page");
-		
+
 		String jsp = "db3/";
 		HttpSession session = request.getSession();
-		
-		User loggedUser = (User) session.getAttribute("logged_user");
-		
-		if (loggedUser!=null) {
-			model.addAttribute("logged_user", loggedUser);
-			jsp+="user/user_page";
+
+		if (userService.isUserLogged(session)) {
+			model.addAttribute("logged_user", userService.getLoggedUser(session));
+			jsp += "user/user_page";
 		} else {
-			jsp+="signin";
+			jsp += "signin";
 		}
-		
+
 		return jsp;
 	}
 
 	@RequestMapping(value = { "/db3/edit_user" }, method = RequestMethod.GET)
 	public String editUserGet(HttpServletRequest request, Model model) {
 		System.out.println("GET /db3/edit_user");
+
+		String jsp = "db3/";
+
 		HttpSession session = request.getSession();
-		model.addAttribute("logged_user", (User) session.getAttribute("logged_user"));
-		return "db3/user/edit_user";
+
+		if (userService.isUserLogged(session)) {
+			model.addAttribute("logged_user", userService.getLoggedUser(session));
+			jsp += "user/edit_user";
+		} else {
+			jsp += "signin";
+		}
+
+		return jsp;
 	}
 
 	@RequestMapping(value = { "/db3/edit_user" }, method = RequestMethod.POST)
-	public String editUserPost(HttpServletRequest request, Model model, User userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
+	public String editUserPost(HttpServletRequest request, Model model, User userData,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthdate) {
 		System.out.println("POST /db3/edit_user");
-		
+
 		HttpSession session = request.getSession();
-		
-		User toEdit = userService.findById(((User) session.getAttribute("logged_user")).getId());
-		
-		toEdit.setName(userData.getName());
-		toEdit.setSurname(userData.getSurname());
-		toEdit.setEmail(userData.getEmail());
-		toEdit.setPassword(userData.getPassword());
-		toEdit.setTelephone(userData.getTelephone());
-		toEdit.setBirthDate(birthdate);
-		
+
+		User toEdit = userService.findById((userService.getLoggedUser(session)).getId());
+
+		userData.setBirthDate(birthdate);
+
+		toEdit.copyValuesOf(userData);
+
 		userService.saveUser(toEdit);
-		
+
 		session.setAttribute("logged_user", toEdit);
 		model.addAttribute("logged_user", toEdit);
 

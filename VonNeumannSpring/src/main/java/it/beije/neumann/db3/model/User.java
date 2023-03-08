@@ -172,4 +172,14 @@ public class User {
 		
 		return table.toString();
 	}
+	
+	//Utilità
+	public void copyValuesOf(User other) {
+		this.setName(other.getName());
+		this.setSurname(other.getSurname());
+		this.setEmail(other.getEmail());
+		this.setPassword(other.getPassword());
+		this.setTelephone(other.getTelephone());
+		this.setBirthDate(other.getBirthDate());
+	}
 }

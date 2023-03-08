@@ -161,26 +161,16 @@ public class Address {
 		return builder.toString();
 	}
 	
-	/*
-	 * @Override
-	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder("{")
-				.append(" Id: ").append(id)
-				.append(", Label: ").append(label)
-				.append(", Full Name: ").append(fullName)
-				.append(", Country: ").append(country)
-				.append(", Street Address: ").append(streetAddress)
-				.append(", Telephone: ").append(telephone)
-				.append(", Zipcode: ").append(zipcode)
-				.append(", Instructions: ").append(instructions)
-				.append(", Created At: ").append(createdAt)
-				.append(", Disabled At: ").append(disabledAt)
-				.append(", User Id: ").append(userId)
-				.append("}");
-		
-		return builder.toString();
+	//Utilità
+	public void copyValuesOf(Address other) {
+		this.setLabel(other.getLabel());
+		this.setFullName(other.getFullName());
+		this.setCountry(other.getCountry());
+		this.setStreetAddress(other.getStreetAddress());
+		this.setTelephone(other.getTelephone());
+		this.setZipcode(other.getZipcode());
+		this.setInstructions(other.getInstructions());
+		this.setUserId(other.getUserId());
 	}
-	 * 
-	 */
 
 }
