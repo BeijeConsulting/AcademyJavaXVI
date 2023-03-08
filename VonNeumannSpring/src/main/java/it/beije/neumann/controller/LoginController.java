@@ -21,8 +21,8 @@ public class LoginController {
     public String loginGet(Model model) {
     	
     	System.out.println("login");
-    	
 
+    	System.out.println("pre Auth " + (Boolean) model.getAttribute("isFailed"));
     	return "login";
     }
     
@@ -31,14 +31,18 @@ public class LoginController {
     public String formUser (@RequestParam(value = "email") String email,@RequestParam(value = "password") String password, Model model) {
     	
     	Boolean isFailed = false;
-    	
-    	if(loginService.isAuthenticated(email, password))
+    	System.out.println("pre Auth " +isFailed);
+    	if(loginService.isAuthenticated(email, password)) {
+    		
+    		model.addAttribute("isFailed", isFailed);
     		return "/home";
+    	}
     	
     	isFailed = true;
+    	System.out.println(isFailed);
     	model.addAttribute("isFailed", isFailed);
     	
-    	return "redirect:/login";
+    	return "/login";
     }
 
 

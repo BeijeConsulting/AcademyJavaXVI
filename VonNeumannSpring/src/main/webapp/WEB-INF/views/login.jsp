@@ -17,6 +17,9 @@
 
 	<section class="login-section">
 		<form method="post" action="./login">
+	<c:choose>
+		<c:when test="${isFailed == true}"><label class = "wrong">Credenziali errate </label> <br><br></c:when>
+	</c:choose>
 			<label for="email">EMAIL</label>
 			<input type="email" id="email" name="email" required><br><br>
 			<label for="password">PASSWORD</label>
@@ -24,9 +27,7 @@
 			<input class="sign-in-submit" type="submit" value="SIGN IN">
 		</form>
 		
-	<c:choose>
-		<c:when test="${isFailed = true}">CREDENZIALI ERRATE</c:when>
-	</c:choose>
+
 
 		<div class="vertical-line"></div>
 		
@@ -109,6 +110,11 @@
 	
 	}
 	
+	.wrong {
+
+		color: red;
+	
+	}
 	.button-crea-account {
 	  background-color: black;
 	  border: 1px solid white;
