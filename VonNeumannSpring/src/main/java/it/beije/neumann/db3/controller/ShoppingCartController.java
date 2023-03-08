@@ -44,6 +44,7 @@ public class ShoppingCartController {
 	
 	  @RequestMapping(value = "/db3/shopping_cart", method = RequestMethod.GET)
 	  public String showShoppingCart(HttpServletRequest request, Model model) {
+		System.out.println("GET: /db3/shopping_cart");
 	    HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("logged_user");
 		

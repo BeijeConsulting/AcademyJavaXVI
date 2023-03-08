@@ -49,7 +49,7 @@
 					class="w3-button w3-deep-orange w3-hover-black" type="reset"
 					value="ANNULLA">
 			</form>
-
+			<br>
 			<c:choose>
 				<c:when test="${not empty signup_error}">
 					<h4 align=center style="color: red;">
