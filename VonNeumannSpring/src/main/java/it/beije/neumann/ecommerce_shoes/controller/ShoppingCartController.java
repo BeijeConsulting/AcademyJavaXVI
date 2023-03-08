@@ -1,5 +1,6 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -43,16 +44,21 @@ public class ShoppingCartController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-	public String getCart(Model model,HttpServletRequest request, HttpServletResponse response) {
+	public String getCart(Model model,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		System.out.println("GET /shopping_cart");
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
 		
-		if(!(Objects.isNull(user))) {
+		if (user == null) {
+			response.sendRedirect("./login");
+			return "index";
+		}			
+			
 		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.getId());
 //		System.out.println(userCart);
 		List<ShoppingCartItem> items2=new ArrayList<>();
@@ -67,7 +73,7 @@ public class ShoppingCartController {
 
 		int totale=0;
 		for(int i=0;i<items.size();i++)
-		{			if((items.get(i).getDisabledAt().equals(null))) {
+		{			if((items.get(i).getDisabledAt() == null)) {
 			 totale+=items.get(i).getProductDetails().getProduct().getListedPrice()*items.get(i).getQuantity();
 			 items2.add(items.get(i));
 		}
@@ -77,11 +83,6 @@ public class ShoppingCartController {
 		model.addAttribute("totale",totale);
 		model.addAttribute("items",items2);
 		return "shopping_cart";
-			
-		}
-		else {
-			return "login";
-		}
 	}
 
 }

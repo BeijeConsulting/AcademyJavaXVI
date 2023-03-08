@@ -23,6 +23,7 @@ import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem;
 import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.AddressesRepository;
+import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
@@ -40,6 +41,8 @@ public class CheckoutController {
 	private AddressesRepository addressesRepo;
 	@Autowired
 	private OrdersRepository ordersRepo;
+	@Autowired
+	private OrdersItemsRepository ordersItemsRepo;
 
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
 	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -60,7 +63,7 @@ public class CheckoutController {
 		return "checkout";
 	}
 	
-	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
+	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public String postCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
@@ -83,8 +86,19 @@ public class CheckoutController {
 		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
 		for (ShoppingCartItem i : cartItems) {
 			OrdersItems ordItem = new OrdersItems();
+			ordItem.setCreatedAt(LocalDateTime.now());
+			ordItem.setOrder(order);
+			ordItem.setColor(i.getProductDetails().getProduct().getColor());
+			ordItem.setName(i.getProductDetails().getProduct().getName());
+			ordItem.setPrice(i.getProductDetails().getProduct().getListedPrice());
+			ordItem.setProductDetails(i.getProductDetails());
+			ordItem.setQuantity(i.getQuantity());
+			ordItem.setSize(i.getProductDetails().getSize());
+			ordersItemsRepo.save(ordItem);
+			i.setDisabledAt(LocalDateTime.now());
+			cartItemRepo.save(i);
 		}
-		
+		response.sendRedirect("./");
 		return "index";
 	}
 	
