@@ -39,6 +39,10 @@ public class HomeController {
     	return "address";
     }
 
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public String order(Model model) {
+    	return "order";
+    }
 
 
 }
