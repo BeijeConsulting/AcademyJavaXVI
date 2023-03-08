@@ -78,8 +78,6 @@ public class ShoppingCartController {
 		
 		for(ProductDetails det : prodDetails) {
 			products.add(det.getProduct());
-			
-			
 		}
 		
 		for(Product p : products) {

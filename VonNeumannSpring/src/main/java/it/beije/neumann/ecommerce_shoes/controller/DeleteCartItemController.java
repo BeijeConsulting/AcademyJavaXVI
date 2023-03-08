@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,8 @@ public class DeleteCartItemController {
 	private ShoppingCartItemRepository shoppingCartItemRepository;
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String getLogin(@RequestParam("id") String id, Model model) throws IOException {
-		System.out.println("GET /details, id: " + id);
+	public String getLogin(@RequestParam("id") String id, Model model, HttpServletResponse response) throws IOException {
+		System.out.println("GET /delete, id: " + id);
 		int intId = 0;
 		try{
             intId = Integer.parseInt(id);
@@ -36,6 +38,8 @@ public class DeleteCartItemController {
 		Optional<ShoppingCartItem> item = shoppingCartItemRepository.findById(intId);
 		ShoppingCartItem i = item.get();
 		i.setDisabledAt(LocalDateTime.now());
+		shoppingCartItemRepository.save(i);
+		response.sendRedirect("./cart");
 		return "shopping_cart";
 	}
 }
