@@ -12,6 +12,6 @@ import it.beije.neumann.ecommerce_shoes.model.User;
 
 @Repository
 public interface AddressesRepository extends JpaRepository<Addresses, Integer>{
-	@Query(value = "SELECT address.id FROM addresses as address WHERE address.user_id = :userId", nativeQuery = true)
-	public List<Integer> findByUserId(@Param(value = "userId") Integer userId);
+	@Query(value = "SELECT * FROM addresses as address WHERE address.user_id = :userId", nativeQuery = true)
+	public List<Addresses> findByUserId(@Param(value = "userId") Integer userId);
 }

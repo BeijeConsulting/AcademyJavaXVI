@@ -47,8 +47,7 @@ public class CheckoutController {
 		}
 		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
 		model.addAttribute("totale", calcoloTotale(userCart.getId()));
-		List<Integer> addressesId = addressesRepo.findByUserId(user.getId());
-		List<Addresses> addresses = addressesRepo.findAllById(addressesId);
+		List<Addresses> addresses = addressesRepo.findByUserId(user.getId());
 		System.out.println(addresses);
 		model.addAttribute("addresses", addresses);
 		return "checkout";
