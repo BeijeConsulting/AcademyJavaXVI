@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +51,8 @@ public class ShoppingCartController {
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
-		if(user.equals(null)) {
+		
+		if(!(Objects.isNull(user))) {
 		ShoppingCart userCart=shoppingCartRepo.findByUserId(user.getId());
 //		System.out.println(userCart);
 		List<ShoppingCartItem> items2=new ArrayList<>();
