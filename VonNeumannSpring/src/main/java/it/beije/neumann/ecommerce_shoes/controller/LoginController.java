@@ -38,7 +38,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String postLogin(HttpServletRequest request,
+	public String postLogin(HttpServletRequest request, HttpServletResponse response,
 							Model model,
 							@RequestParam(required = true) String email,
 							@RequestParam(required = true) String password) throws IOException {
@@ -51,6 +51,7 @@ public class LoginController {
 		else {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", risultati.get(0));
+			response.sendRedirect("./");
 			return "index";
 		}
 	}

@@ -15,44 +15,45 @@
                <h3>Shopping Cart</h3>
            </div>
  </div>
- <hr size=5>
- 
+
  <table class="table table-loght">
+ 
       <thead>
            <tr> 
-               <th scope="col">Image</th>
+               
                <th scope="col">Name</th>
                <th scope="col">Description</th>
-               <th scope="col">Color</th>
                <th scope="col">Type</th>
+               <th scope="col">Color</th>
+               <th scope="col">Size</th>
                <th scope="col">Quantity</th>
                <th scope="col">Price</th>
+               <th scope="col">        </th>
             </tr>
        </thead>
        <tbody>
-            <c:forEach var="p" items="${details}">
-                     <td>      </td>
-                      <td>${p.product_id.name}</td><br>
-                      <td>${p.product_id.description}</td><br>
-                      <td>${p.product_id.color}</td><br>
-                      <td>${p.product_id.type}</td><br>
-                      <td>${p.quantity}</td><br>
-                      <td>${p.selling_price}</td><br>
-                     
-             </c:forEach>
-       
-       
-       
-       
-       
-       </tbody>
+        
+               <tr>
+                      
+             <c:forEach var="p" items="${items}">
+                 <tr>
+                      <td>${p.productDetails.product.name}</td>
+                      <td>${p.productDetails.product.description}</td>
+                      <td>${p.productDetails.product.type}</td>
+                      <td>${p.productDetails.product.color}</td> 
+                      <td>${p.productDetails.size.EU}</td><br>
+                     <td>${p.quantity}</td>
+                     <td>${p.productDetails.product.listedPrice*p.quantity}</td>
+                     <td> <form><input type="reset" value="delete"></form>
+                     </td>
+                    </tr>
+                   </c:forEach>
+             
+              
+        </tbody>
                
- 
- 
- 
- 
- </table>
- <hr size=5> 
+ </table>   
+
    <div class="container">
            <div class="d-flex  py-3">
                <h3> Total Price :

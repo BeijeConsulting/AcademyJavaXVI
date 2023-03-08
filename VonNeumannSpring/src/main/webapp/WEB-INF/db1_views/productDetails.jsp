@@ -51,12 +51,12 @@
 			<h4>Color: <c:out value="${product.color }"></c:out></h4>
 			
 			<div>
-			<form action="./addItem" method="get">
+			<form action="./addItem" method="post">
 			    <label for="productDetails">Size: </label>
 				<select name="productDetails" id="productDetails"  class="form-control">
 				
 					<c:forEach var="d" items="${ details }">
-   					 <option value="${d }"><c:out value="${d.size.EU }"></c:out></option>
+   					 <option value="${d.id }"><c:out value="${d.size.EU }"></c:out></option>
    					</c:forEach>
 				</select>
 				<div class="mt-2">

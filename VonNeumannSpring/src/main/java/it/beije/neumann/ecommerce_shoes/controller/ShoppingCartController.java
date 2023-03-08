@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.beije.neumann.ecommerce_shoes.model.OrdersItems;
 import it.beije.neumann.ecommerce_shoes.model.Product;
 import it.beije.neumann.ecommerce_shoes.model.ProductDetails;
+import it.beije.neumann.ecommerce_shoes.model.ProductImage;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCart;
 import it.beije.neumann.ecommerce_shoes.model.ShoppingCartItem;
 import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
+import it.beije.neumann.ecommerce_shoes.repository.ProductImageRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
 import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
@@ -38,7 +40,7 @@ public class ShoppingCartController {
     private ShoppingCartRepository shoppingCartRepo;
 	
 	@Autowired
-	private UserRepository userRepo;
+	private ProductImageRepository productImageRepo;
 	
 	/**
 	 * Visualizzazione shopping_cart
@@ -56,7 +58,7 @@ public class ShoppingCartController {
 		int totale=0;
 		List<ProductDetails> prodDetails=new ArrayList<>();
 		List<Product> products=new ArrayList<>();
-		
+		List<ProductImage> images=new ArrayList<>();
 		
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
@@ -68,22 +70,32 @@ public class ShoppingCartController {
 		List<ShoppingCartItem> items=cartItemRepo.findAllById(itemsId);
 //		System.out.println(items);
 		
-		
+		ProductImage pImage=null; productImageRepo.findByProductId(null);
 		for(ShoppingCartItem item : items) {
 			prodDetails.add(item.getProductDetails());
+			totale+=item.getProductDetails().getProduct().getListedPrice()*item.getQuantity();
 		}
 		
 		for(ProductDetails det : prodDetails) {
 			products.add(det.getProduct());
-			totale+=det.getSellingPrice();
+		}
+		
+		for(Product p : products) {
+			
+			pImage=productImageRepo.findByProductId(p.getId());
+			images.add(pImage);
+			
 		}
 		
 		
-//		System.out.println(totale);
+		System.out.println(totale);
 
 //		System.out.println(prodDetails);
 		model.addAttribute("totale",totale);
-		model.addAttribute("pdetails",prodDetails);
+		
+		
+		model.addAttribute("items",items);
+		model.addAttribute("images",images);
 		return "shopping_cart";
 	}
 
