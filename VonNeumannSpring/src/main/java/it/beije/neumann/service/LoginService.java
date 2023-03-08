@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 
 import it.beije.neumann.model.ShoppingCart;
 import it.beije.neumann.model.User;
-import it.beije.neumann.repository.ShoppingCartRepository;
+import it.beije.neumann.repository.ShoppingCartReposistory;
 import it.beije.neumann.repository.UserRepository;
 
 @Service
@@ -16,8 +16,9 @@ public class LoginService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 	@Autowired
-	private ShoppingCartRepository cartRepository;
+	private ShoppingCartReposistory cartRepository;
 	
 	public boolean isAuthenticated(String email, String password) {
 		
@@ -45,7 +46,7 @@ public class LoginService {
 		userRepository.save(user);
 		ShoppingCart cart = new ShoppingCart();
 		
-		cart.setCreatedAt(null);
+		cart.setCreatedAt();
 		cart.setUserId(user.getId());
 		cartRepository.save(cart);
 	}

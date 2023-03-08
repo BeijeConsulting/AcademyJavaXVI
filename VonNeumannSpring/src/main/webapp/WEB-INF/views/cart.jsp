@@ -12,7 +12,7 @@
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	</header>
 	
-	<div class="container">
+<!--  	<div class="container">
 		<h2>CARRELLO</h2>
 		<div class="products">
 			<div class="product">
@@ -31,8 +31,35 @@
 		</div>
 		<div class="total">Totale: &euro; 40</div>
 		<button class="checkout">CHECKOUT</button>
-	</div>
+	</div> -->
 	
+	
+	
+	
+	<div class="container">
+		<h2>CARRELLO</h2>
+		<div class="products">
+	 <c:forEach var="cartItem" items="${shoppingCartItemsList}">
+			<div class="product">
+				<img src="https://picsum.photos/200/300?grayscale">
+				<div>
+					<div class="product-name">${cartItem.productDetails.product.name}</div>
+					<div class="product-brand">${cartItem.productDetails.product.brand}</div>
+					<div class="product-size">Taglia:${cartItem.productDetails.size}</div>
+					<div>
+						<span class="product-price">&euro; ${cartItem.productDetails.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${cartItem.productDetails.sellingPrice}</span>
+					</div>
+				</div>
+				<button class="product-remove">Rimuovi</button>
+			</div>
+			</c:forEach>
+		</div>
+		
+		<div class="total">Totale: &euro; ${totale}</div>
+		<button class="checkout">CHECKOUT</button>
+	</div> 
+
 </body>
 
 <style>

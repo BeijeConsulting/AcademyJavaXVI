@@ -9,8 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "shopping_cart")
@@ -30,8 +32,10 @@ public class ShoppingCart {
 	@Column(name = "user_id")
 	private Integer userId;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<ShoppingCartItem> shoppingCartItems;
+	@OneToMany(targetEntity = ShoppingCartItem.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "shopping_cart_id")
+	List<ShoppingCartItem> shoppingCartItem;
+	
 	
 	public Integer getId() {
 		return id;
@@ -45,9 +49,8 @@ public class ShoppingCart {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		createdAt = LocalDateTime.now();
-		this.createdAt = createdAt;
+	public void setCreatedAt() {
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public LocalDateTime getDisabledAt() {
@@ -65,13 +68,24 @@ public class ShoppingCart {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
-	public List<ShoppingCartItem> getShoppingCartItems() {
-		return shoppingCartItems;
+	
+	
+	public List<ShoppingCartItem> getShoppingCartItem() {
+		return shoppingCartItem;
 	}
 
-	public void setCartItems(List<ShoppingCartItem> shoppingCartItems) {
-		this.shoppingCartItems = shoppingCartItems;
+	public void setShoppingCartItem(List<ShoppingCartItem> shoppingCartItem) {
+		this.shoppingCartItem = shoppingCartItem;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		createdAt = LocalDateTime.now();
+	}
+	
+	@Override
+	public String toString() {
+		return "ShoppingCart [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", userId="
+				+ userId + ", shoppingCartItem=" + shoppingCartItem + "]";
 	}
 	
 }
