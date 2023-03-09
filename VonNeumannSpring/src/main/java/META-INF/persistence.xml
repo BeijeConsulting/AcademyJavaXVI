@@ -19,6 +19,8 @@
 		<!-- Marianna -->
 		<class>it.beije.neumann.db3.model.User</class>
 		<class>it.beije.neumann.db3.model.Address</class>
+		<class>it.beije.neumann.db3.model.OrderD</class>
+		<class>it.beije.neumann.db3.model.OrderItemD</class>
 		<!-- /Marianna -->
 		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

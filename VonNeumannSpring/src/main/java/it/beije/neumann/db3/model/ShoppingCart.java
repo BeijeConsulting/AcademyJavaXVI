@@ -79,7 +79,7 @@ public class ShoppingCart {
 		this.userId = userId;
 	}
 	
-	@OneToMany(targetEntity = ShoppingCartItem.class,fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = ShoppingCartItem.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "shopping_cart_id")
 	private List<ShoppingCartItem> shoppingCartItem;
 
