@@ -70,8 +70,12 @@ public class ShoppingCartController {
 //		System.out.println(items);
 		
 
+		/**
+		 * TODO:navbar login
+		 * fix page checkout
+		 */
 
-		int totale=0;
+		double totale=0;
 		for(int i=0;i<items.size();i++)
 		{			if((items.get(i).getDisabledAt() == null)) {
 			 totale+=items.get(i).getProductDetails().getProduct().getListedPrice()*items.get(i).getQuantity();

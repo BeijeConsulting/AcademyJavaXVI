@@ -27,7 +27,7 @@ public class IndexController {
 	private ProductImageRepository prodImageRepo;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getLogin(Model model) throws IOException {
+	public String getIndex(Model model) throws IOException {
 		System.out.println("GET /");
 		
 //		List<Product> products = productRepository.findAll();
