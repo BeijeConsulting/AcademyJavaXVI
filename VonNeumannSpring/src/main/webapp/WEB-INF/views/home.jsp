@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="it.beije.neumann.model.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,17 +13,18 @@
 	
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	
-		
+
+
 		<div class="header-right">
 			<c:choose>
-				<c:when test="${isFailed == false}">
+				<c:when test="${sessionScope.user != null}">
 					<div>
 						<a href="profile" class="black-link"> ${user.name} ${user.lastname}</a>
-						<button class="signin">
-							<a href="login">
-								LOG OUT
-							</a>
-						</button>
+						<form action = "./logout"  method = "post">
+							<!--  <input type="hidden" name="logOut" value="LOGOUT"> -->
+							<input class="signin" type="submit" name="logOut" value="LOG OUT">
+							
+						</form>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -44,6 +46,8 @@
 			</form>
 		</div>
 	</header>
+	
+
 
 	<section class="filter">
 		
@@ -75,7 +79,7 @@
 			  <input type="text" id="priceMax" name="maxSellingPrice">
 							 	
 			</div>
-			
+
 			<div class="gender">
 			  <label class="label-gender">SELEZIONA TIPO</label>
 			  <select name="type">
