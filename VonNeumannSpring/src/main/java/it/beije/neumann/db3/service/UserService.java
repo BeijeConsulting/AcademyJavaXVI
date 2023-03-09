@@ -2,6 +2,8 @@ package it.beije.neumann.db3.service;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,15 @@ public class UserService {
 	
 	@Autowired
 	private AddressRepository addressRepo;
+	
+	//Temp, non so se va bene metterlo qui
+	public boolean isUserLogged(HttpSession session) {
+		return (User)session.getAttribute("logged_user")!=null? true : false;
+	}
+	
+	public User getLoggedUser(HttpSession session) {
+		return (User)session.getAttribute("logged_user");
+	}
 
 	public User findByEmailAndPassword(String email, String password) {
 		return userRepo.findByEmailAndPassword(email, password);
@@ -70,12 +81,7 @@ public class UserService {
 
 	public User findById(Integer id) {
 		Optional<User> u = userRepo.findById(id);
-		return u.get(); // Essendo un logged user, non tornerà mai null (spero)
-	}
-
-	// Temp
-	public Address saveAddress(Address address) {
-		return addressRepo.save(address);
+		return u.get(); // Essendo un logged user, non tornerà mai null [eventualmente provare]
 	}
 
 }

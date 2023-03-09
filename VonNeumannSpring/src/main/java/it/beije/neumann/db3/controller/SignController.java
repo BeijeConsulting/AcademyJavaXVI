@@ -25,12 +25,12 @@ public class SignController {
 	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request) {
 		System.out.println("GET /db3/signin");
-		HttpSession session = request.getSession();
 		
 		String jsp = "db3/";
 		
-		if ((User)session.getAttribute("logged_user")!=null){
-//			jsp+="index";
+		HttpSession session = request.getSession();
+		
+		if (userService.isUserLogged(session)) {
 			jsp+="user/user_page";
 		} else {
 			jsp+="signin";
@@ -52,7 +52,6 @@ public class SignController {
 		if(user!=null) {
 			session.setAttribute("logged_user", user);
 			model.addAttribute("logged_user", user);
-//			jsp+="index";
 			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
@@ -72,7 +71,7 @@ public class SignController {
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.POST)
 	public String signupUtente(HttpServletRequest request, Model model, User userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
-		String jsp = "db3/";
+		String jsp = "";
 		
 		HttpSession session = request.getSession();
 		
@@ -84,7 +83,7 @@ public class SignController {
 		if(userPresent) {
 			model.addAttribute("signup_error", "Email già esistente!");
 			model.addAttribute("signup_user", userData);
-			jsp+="signup";
+			jsp+="db3/signup";
 		} else {
 			//Va aggiunto il carrello
 			model.addAttribute("userSignUp", userData);
@@ -93,7 +92,7 @@ public class SignController {
 			session.setAttribute("logged_user", userData);
 			model.addAttribute("logged_user", userData);
 			
-			jsp+="index";	
+			jsp+="redirect: /VonNeumannSpring/db3";	
 		}
 		return jsp;
 	}
@@ -101,10 +100,11 @@ public class SignController {
 	@RequestMapping(value = {"/db3/signout"}, method = RequestMethod.GET)
 	public String signOut(HttpServletRequest request) {
 		System.out.println("GET /db3/signout");
+		
 		HttpSession session = request.getSession();
 		session.removeAttribute("logged_user");
 		
-		return "db3/index";
+		return "redirect: /VonNeumannSpring/db3";
 	}	
 		
 }

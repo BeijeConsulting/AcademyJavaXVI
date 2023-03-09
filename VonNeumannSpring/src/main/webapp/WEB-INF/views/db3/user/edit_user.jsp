@@ -22,18 +22,18 @@
     <br>
     <h2>Inserisci i dati da modificare</h2>
     <form class="w3-container" action="./edit_user" method="post">
-      <label for="name">Nome</label><br>
-      <input class="w3-input w3-border" type="text" name="name" value="${logged_user.name}"><br>
-      <label for="surname">Cognome</label><br>
-      <input class="w3-input w3-border" type="text" name="surname" value="${logged_user.surname}"><br>
-      <label for="email">Email</label><br>
-      <input class="w3-input w3-border" type="email" name="email" value="${logged_user.email}"><br>
-      <label for="password">Password</label><br>
-      <input class="w3-input w3-border" type="password" name="password" value="${logged_user.password}"><br>
+      <label for="name">*Nome</label><br>
+      <input class="w3-input w3-border" type="text" name="name" value="${logged_user.name}" required><br>
+      <label for="surname">*Cognome</label><br>
+      <input class="w3-input w3-border" type="text" name="surname" value="${logged_user.surname}" required><br>
+      <label for="email">*Email</label><br>
+      <input class="w3-input w3-border" type="email" name="email" value="${logged_user.email}" required><br>
+      <label for="password">*Password</label><br>
+      <input class="w3-input w3-border" type="password" name="password" value="${logged_user.password}" required><br>
       <label for="telephone">Telefono</label><br>
       <input class="w3-input w3-border" type="tel" name="telephone" value="${logged_user.telephone}"><br>
-      <label for="birthdate">Data di nascita</label><br>
-      <input class="w3-input w3-border" type="date" name="birthdate" value="${logged_user.birthDate}"><br><br>
+      <label for="birthdate">*Data di nascita</label><br>
+      <input class="w3-input w3-border" type="date" name="birthdate" value="${logged_user.birthDate}" required><br><br>
       <input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Salva le modifiche">
     </form>
     <br>

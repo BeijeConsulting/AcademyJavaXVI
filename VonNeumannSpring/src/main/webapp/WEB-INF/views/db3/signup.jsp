@@ -6,8 +6,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>SignUp</title>
-<!-- Import W3.CSS stylesheet -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -27,27 +30,19 @@
 
 			<form class="w3-container" action="./signup" method="post">
 				<label class="w3-text-black" for="name"><b>*Nome:</b></label><br>
-				<input class="w3-input w3-border" type="text" name="name" required
-					value="${signup_user.name}"><br> <label
-					class="w3-text-black" for="surname"><b>*Cognome:</b></label><br>
-				<input class="w3-input w3-border" type="text" name="surname"
-					required value="${signup_user.surname}"><br> <label
-					class="w3-text-black" for="email"><b>*Email:</b></label><br> <input
-					class="w3-input w3-border" type="email" name="email" required
-					value="${signup_user.email}"><br> <label
-					class="w3-text-black" for="password"><b>*Password:</b></label><br>
-				<input class="w3-input w3-border" type="password" name="password"
-					required><br> <label class="w3-text-black"
-					for="birthdate"><b>*Data di nascita:</b></label><br> <input
-					class="w3-input w3-border" type="date" name="birthdate" required
-					value="${signup_user.birthDate}"><br> <label
-					class="w3-text-black" for="telephone"><b>Telefono:</b></label><br>
-				<input class="w3-input w3-border" type="text" name="telephone"
-					value="${signup_user.telephone}"><br>
-				<br> <input class="w3-button w3-deep-orange w3-hover-black"
-					type="submit" value="Sign-Up"> <input
-					class="w3-button w3-deep-orange w3-hover-black" type="reset"
-					value="ANNULLA">
+				<input class="w3-input w3-border" type="text" name="name" required><br>
+				<label class="w3-text-black" for="surname"><b>*Cognome:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="surname"><br>
+				<label class="w3-text-black" for="email"><b>*Email:</b></label><br>
+				<input class="w3-input w3-border" type="email" name="email" required><br>
+				<label class="w3-text-black" for="password"><b>*Password:</b></label><br>
+				<input class="w3-input w3-border" type="password" name="password" required><br>
+				<label class="w3-text-black" for="birthdate"><b>*Data di nascita:</b></label><br>
+				<input class="w3-input w3-border" type="date" name="birthdate" required><br>
+				<label class="w3-text-black" for="telephone"><b>Telefono:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="telephone"><br><br>
+				<input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Sign-Up">
+				<input class="w3-button w3-deep-orange w3-hover-black" type="reset" value="Annulla">
 			</form>
 			<br>
 			<c:choose>
