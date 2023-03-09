@@ -24,32 +24,45 @@ public class LoginController {
     private LoginService loginService;
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGet(Model model,HttpSession session, HttpServletRequest request,  HttpServletResponse response) {
+    public String loginGet(Model model,HttpSession session) {
     	
     	System.out.println("login");
-    	if(((String) model.getAttribute("logOut")).equals("on")) {
-    		session.removeAttribute("user");
-    	}
+
     	
     	System.out.println("pre Auth " + (Boolean) model.getAttribute("isFailed"));
     	return "login";
     }
-    
-    
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String formUser (@RequestParam(value = "email") String email,@RequestParam(value = "password") String password, Model model,
-    		HttpSession session, HttpServletRequest request,  HttpServletResponse response) {
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(Model model,HttpSession session, @RequestParam(value = "logOut", required=false) String logOut) {
     	
+    	System.out.println("logout");
+
+    	if(logOut != null) {
+    		session.removeAttribute("user");
+    		System.out.println("entrato nell if");
+    	}
+    	
+
+    	return "login";
+    }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String formUser (@RequestParam(value = "email", required=false) String email,@RequestParam(value = "password", required=false) String password,
+    Model model, HttpSession session, HttpServletRequest request) {
+    	
+    	
+
     	
     	Boolean isFailed = false;
     	System.out.println("pre Auth " +isFailed);
+    	
     	if(loginService.isAuthenticated(email, password)) {
     		
     		User user = loginService.findByEmailAndPassword(email, password);
     		
     		session = request.getSession();
     		session.setAttribute("user", user);
-
+    		
     		System.out.println("user: " + user);
     		System.out.println("user: " + (User) session.getAttribute("user"));
     		

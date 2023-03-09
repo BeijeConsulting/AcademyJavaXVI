@@ -20,11 +20,10 @@
 				<c:when test="${sessionScope.user != null}">
 					<div>
 						<a href="profile" class="black-link"> ${user.name} ${user.lastname}</a>
-						<form action = "./login"  method = "get">
-							<button class="signin" type="submit" name="logOut" value="on">
-								LOG OUT 
-							</button>
-					
+						<form action = "./logout"  method = "post">
+							<!--  <input type="hidden" name="logOut" value="LOGOUT"> -->
+							<input class="signin" type="submit" name="logOut" value="LOG OUT">
+							
 						</form>
 					</div>
 				</c:when>
@@ -80,7 +79,7 @@
 			  <input type="text" id="priceMax" name="maxSellingPrice">
 							 	
 			</div>
-			
+
 			<div class="gender">
 			  <label class="label-gender">SELEZIONA TIPO</label>
 			  <select name="type">
