@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +17,17 @@
 		<h2>STORICO ORDINI</h2>
 		
 		<div class="orders">
-	
+			<c:forEach var="order" items="${orders}">
 			<div class="order">
 				<div class="order_header">
-					<div class="order_id">ID Ordine: #001</div>
-					<div class="order_date">Data transazione: 01/01/2023</div>
+					<div class="order_id">ID Ordine: ${order.id }</div>
+					<div class="order_date">Data transazione: ${order.transactionDate }</div>
 				</div>
-				<div class="order_price">Prezzo totale: 50,00 &euro;</div>
-				<div class="order_status">Stato pagamento: Pagato</div>
+				<div class="order_price">Prezzo totale: ${order.totalPrice } &euro;</div>
+				<div class="order_status">Stato pagamento: ${order.paymentStatus}</div>
 				<div class="order_link"><a href="order">Dettagli Ordine</a></div>
 			</div>
-
+			</c:forEach>
     	</div>	
 	
 	</div>
