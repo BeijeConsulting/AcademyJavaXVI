@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.User;
-//import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.UserService;
 
 @Controller
@@ -84,10 +83,12 @@ public class UserController {
 		HttpSession session = request.getSession();
 		
 		User loggedUser = (User) session.getAttribute("logged_user");
+		//DA INSERIRE
 		//OrderD order = orderService.findByUserId(loggedUser.getId());
 		
 		if (loggedUser!=null) {
 			model.addAttribute("logged_user", loggedUser);
+			//DA INSERIRE
 			//model.addAttribute("order", order);
 			jsp+="user/my_order";
 		} else {
