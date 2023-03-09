@@ -52,7 +52,7 @@ public class ProductController {
 			List<String> categories = productService.getCategories();
 			List<String> types = productService.getTypes();
 			List<String> brands = productService.getBrands();
-			 products = productService.find( name,category, color, type, brand,minPricel, maxPricel );
+			products = productService.find( name,category, color, type, brand,minPricel, maxPricel );
 			 
 			model.addAttribute("brands", brands);
 			model.addAttribute("types", types);
@@ -75,23 +75,15 @@ public class ProductController {
 		System.out.println("id " + id);
 
 		Product product = productService.findById(Integer.valueOf(id));
-		
-		
 		List<String> sizes = new ArrayList<>();
-		
 		for( int i = 0; i < product.getProductDetails().size(); i++  ) {
 			sizes.add( product.getProductDetails().get(i).getSize() );
 		}
-		
-		//List<String> sizes = productService.getSizes();
 		System.out.println(sizes );
 		
 		model.addAttribute("product", product);
 		model.addAttribute("sizes", sizes);
-		
-
-		
-		
+	
 		return "dettagli_prodotto";
 	}
 

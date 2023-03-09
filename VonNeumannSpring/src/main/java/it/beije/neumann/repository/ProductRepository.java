@@ -13,7 +13,7 @@ import it.beije.neumann.model.ProductDetails;
 
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 
-	@Query(value = "select  p from Product p  where p.name like :name AND p.category like :category AND p.color like :color AND p.type like :type AND p.brand like :brand AND p.listedPrice  BETWEEN :minPricel AND :maxPricel  group by p.id ")
+	@Query(value = "select  p from Product p  where p.name like :name AND p.category like :category AND p.color like :color AND p.type like :type AND p.brand like :brand AND p.isListed = 1 AND p.listedPrice  BETWEEN :minPricel AND :maxPricel  group by p.id ")
 ////	@Query(value = "select  p from Product p INNER JOIN ProductDetails pd on p.id = pd. productId where p.name like :name AND p.category like :category AND p.color like :color AND p.type like :type AND p.brand like :brand AND pd.sellingPrice  BETWEEN :minPricel AND :maxPricel  group by p.id ")
 	public List<Product> find(@Param("name") String name, @Param("category") String category, @Param("color") String color,  @Param("type") String type, @Param("brand") String brand, @Param("minPricel") Double minPricel,@Param("maxPricel") Double maxPricel );
 	

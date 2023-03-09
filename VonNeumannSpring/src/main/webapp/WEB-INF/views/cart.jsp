@@ -51,7 +51,11 @@
 						<span class="product-discount">&euro;  ${cartItem.productDetails.sellingPrice}</span>
 					</div>
 				</div>
-				<button class="product-remove">Rimuovi</button>
+				<form method="get" action="remove_from_cart">
+					<input type="hidden" name="id" value="${cartItem.id}">
+					<input type="submit" class="product-remove" value="Rimuovi">
+				</form>
+				
 			</div>
 			</c:forEach>
 		</div>
