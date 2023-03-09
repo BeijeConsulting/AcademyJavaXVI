@@ -71,7 +71,7 @@ public class SignController {
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.POST)
 	public String signupUtente(HttpServletRequest request, Model model, User userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
-		String jsp = "db3/";
+		String jsp = "";
 		
 		HttpSession session = request.getSession();
 		
@@ -83,7 +83,7 @@ public class SignController {
 		if(userPresent) {
 			model.addAttribute("signup_error", "Email già esistente!");
 			model.addAttribute("signup_user", userData);
-			jsp+="signup";
+			jsp+="db3/signup";
 		} else {
 			//Va aggiunto il carrello
 			model.addAttribute("userSignUp", userData);
@@ -92,7 +92,7 @@ public class SignController {
 			session.setAttribute("logged_user", userData);
 			model.addAttribute("logged_user", userData);
 			
-			jsp+="index";	
+			jsp+="redirect: /VonNeumannSpring/db3";	
 		}
 		return jsp;
 	}
@@ -104,7 +104,7 @@ public class SignController {
 		HttpSession session = request.getSession();
 		session.removeAttribute("logged_user");
 		
-		return "db3/index";
+		return "redirect: /VonNeumannSpring/db3";
 	}	
 		
 }
