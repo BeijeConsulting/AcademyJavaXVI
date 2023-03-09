@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.User;
+//import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.UserService;
 
 @Controller
@@ -21,6 +22,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	//@Autowired
+	//private OrderServiceD orderService;
 
 	@RequestMapping(value = { "/db3/user_page" }, method = RequestMethod.GET)
 	public String userPage(HttpServletRequest request, Model model) {
@@ -70,6 +74,27 @@ public class UserController {
 		model.addAttribute("logged_user", toEdit);
 
 		return "db3/user/user_page";
+	}
+	
+	@RequestMapping(value = { "/db3/my_order" }, method = RequestMethod.GET)
+	public String myOrder(HttpServletRequest request, Model model) {
+		System.out.println("GET /db3/my_order");
+		
+		String jsp = "db3/";
+		HttpSession session = request.getSession();
+		
+		User loggedUser = (User) session.getAttribute("logged_user");
+		//OrderD order = orderService.findByUserId(loggedUser.getId());
+		
+		if (loggedUser!=null) {
+			model.addAttribute("logged_user", loggedUser);
+			//model.addAttribute("order", order);
+			jsp+="user/my_order";
+		} else {
+			jsp+="signin";
+		}
+		
+		return jsp;
 	}
 
 }
