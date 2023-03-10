@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -81,25 +82,50 @@ public class OrderControllerD {
 	    	orderItems.add(orderItem);
 	    }
 	    order.setTotalPrice(totalPrice);
-	    model.addAttribute("orderItems", orderItems);
+//	    model.addAttribute("orderItems", orderItems); //Prova Mary
+	    order.setOrderItems(orderItems); //Prova Mary
 	    model.addAttribute("order", order);
         
-        return "db3/user/order"; //deve esserci order.jsp nella cartella user che prende e stampa questi dati in hiddenform che vengono poi presi da add_order
-    }
-
-	@RequestMapping(value = "/db3/add_order", method = RequestMethod.POST)
-	public String addOrder(HttpServletRequest request, Model model, @ModelAttribute("order") OrderD order, @ModelAttribute("orderItems") List<OrderItemD> orderItems) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
-	    model.addAttribute("logged_user", user);
-	    if (user != null) {
-		    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
-		    orderService.saveOrder(order, orderItems); //da passare anche l'user e i dati eventualmente mancanti dal form perchÃ¨ impossibili da incapsulare su una post
-		    shoppingCartService.emptyShoppingCart(shoppingCart.getId());
-		}
-		else {
-			return "db3/signin";
-		}
-	    return "db3/index";
+//        return "db3/user/order"; //deve esserci order.jsp nella cartella user che prende e stampa questi dati in hiddenform che vengono poi presi da add_order
+	    return "db3/user/order2"; //Prova Mary
 	}
+
+//	@RequestMapping(value = "/db3/add_order", method = RequestMethod.POST)
+//	public String addOrder(HttpServletRequest request, Model model, @ModelAttribute("order") OrderD order, @ModelAttribute("orderItems") List<OrderItemD> orderItems) {
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("logged_user");
+//	    model.addAttribute("logged_user", user);
+//	    if (user != null) {
+//		    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
+//		    orderService.saveOrder(order, orderItems); //da passare anche l'user e i dati eventualmente mancanti dal form perchÃ¨ impossibili da incapsulare su una post
+//		    shoppingCartService.emptyShoppingCart(shoppingCart.getId());
+//		}
+//		else {
+//			return "db3/signin";
+//		}
+//	    return "db3/index";
+//	}
+	
+	@PostMapping("/db3/add_order")
+	public String addOrder(List<OrderItemD> orderItems) {
+		System.out.println("POST add_order");
+//		System.out.println(order);
+		for(OrderItemD od : orderItems) {
+			System.out.println(od);
+		}
+		
+	    return "db3";
+	}
+	
+	//Commentalo per non usarlo, ma non eliminarlo
+//	@PostMapping("/db3/add_order")
+//	public String addOrderMary(List<OrderItemD> orderItems) {
+//		System.out.println("POST add_order");
+////		System.out.println(order);
+//		for(OrderItemD od : orderItems) {
+//			System.out.println(od);
+//		}
+//		
+//	    return "db3";
+//	}
 }
