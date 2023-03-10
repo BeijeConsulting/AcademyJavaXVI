@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%--@ taglib prefix="form" uri="http://www.springframework.org/tags/form"--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +15,17 @@
 
 	</header>
 	
+
 	<section>
-	
-		<form action="" method="post">
+
+		<form action="./create_account" method="post">
 			
-			<label for="username">NOME: </label>
+			<label for="name">NOME: </label>
 			<input type="text" id="name" name="name"><br>
 		
 		
-			<label for="username">COGNOME:</label>
-			<input type="text" id="surname" name="surname"><br>
+			<label for="lastname">COGNOME:</label>
+			<input type="text" id="lastname" name="lastname"><br>
 			
 			
 			<label for="email">EMAIL:</label>
@@ -35,13 +37,39 @@
 			<label for="telephone">NUMERO DI TELEFONO:</label>
 			<input type="text" id="telephone" name="telephone"><br>
 			
-			<label for="birth_date">DATA DI NASCITA:</label>
-			<input type="date" id="birth_date" name="birth_date"><br>
-			
+			<label for="date">DATA DI NASCITA:</label>
+			<input type="date" id="birthDate" name="birthDate"><br> 
+				
+
+			<input type="hidden" id="createdAt" name="createdAt"><br> 
 			
 	
 			<input class="registrati-submit" type="submit" value="REGISTRATI">
-		</form>
+		</form> 
+		
+		<%-- 		<form:form  method="post" action = "./create_account" modelAttribute = "user" >
+
+			<form:label path="name">Name</form:label>
+			<form:input path="name"/> <br>
+			
+			<form:label path="lastname">Surname</form:label>
+			<form:input path="lastname"/> <br>
+			
+			<form:label path="email">Email</form:label>
+			<form:input path="email"/> <br>
+			
+			<form:label path="password">Password</form:label>
+			<form:input path="password"/> <br>
+			
+			<form:label path="telephone">Phone</form:label>
+			<form:input path="telephone"/> <br>
+			
+			<form:label path="birthDate">Birth date</form:label>
+			<form:input path="birthDate"/> <br>
+			
+			<input class="registrati-submit" type="submit" value="REGISTRATI"/>
+
+		</form:form> --%>
 	</section>
 
 

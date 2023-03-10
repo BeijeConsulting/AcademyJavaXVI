@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "products")
@@ -22,6 +23,7 @@ public class Product {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
+
 	
 	@Column
 	private String name;
@@ -73,6 +75,7 @@ public class Product {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getName() {
 		return name;
@@ -144,6 +147,7 @@ public class Product {
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
+		
 		this.createdAt = createdAt;
 	}
 	

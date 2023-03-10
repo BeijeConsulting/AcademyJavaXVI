@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,32 +15,38 @@
 	<div class="container">
 	
 		<h2>INDIRIZZI</h2>
-		<div class="address-list">
-			<div class="address">
-				<input type="radio" name="address" value="1">
-				<h2>Nome Cognome</h2>
-				<p><label>Paese:</label> Italia</p>
-				<p><label>Indirizzo:</label> Via Taccagni 90</p>
-				<p><label>Telefono:</label> 0123456789</p>
-				<p><label>CAP:</label> 00100</p>
-				<p><label>Istruzioni:</label> Nessuna istruzione</p>
-			</div>
-		</div>
-	
-		<form action="" method="post">
+		<c:choose>
+		<c:when test="${empty addresses}"> Nessun indirizzo, aggiungine uno ;)</c:when>
+		<c:otherwise>
+			<c:forEach var="address" items="${addresses}">
+				<div class="address-list">
+					<div class="address">
+						<input type="radio" name="address" value="1">
+						<h2>${address.nameSurname}</h2>
+						<p><label>Paese:</label>${address.country}</p>
+						<p><label>Indirizzo:</label>${address.streetAddress}</p>
+						<p><label>Telefono:</label>${address.telephone}</p>
+						<p><label>CAP:</label>${address.zipcode}</p>
+						<p><label>Istruzioni:</label>${address.instructions}</p>
+					</div>
+				</div>
+			</c:forEach>
+		</c:otherwise>
+		</c:choose>
+		<form action="./address" method="post">
 			
 			<label for="label">Tipo indirizzo: </label>
 			<input type="text" name="label"><br>
 			
 		
 			<label for="name_surname">Nome e Cognome:</label>
-			<input type="text" name="name_surname"><br>
+			<input type="text" name="nameSurname"><br>
 			
 			<label for="country">Paese:</label>
 			<input type="text" name="country"><br>
 			
 			<label for="street_address">Indirizzo:</label>
-			<input type="text" name="street_address"><br>
+			<input type="text" name="streetAddress"><br>
 			
 			<label for="telephone">Telefono:</label>
 			<input type="text" name="telephone"><br>

@@ -24,7 +24,7 @@
 					<p class="item-color">Color: Black</p>
 				</div>
 				<div class="item-quantity">
-					<p class="item-quantity-label">Quantità:</p>
+					<p class="item-quantity-label">Quantita':</p>
 					<p class="item-quantity-value">1</p>
 				</div>
 				<div class="item-price">
@@ -68,7 +68,7 @@
 		height: 100px;
 		align-items: center;
 		padding: 20px;
-		background-color: black;
+		color: black;
 	}
 
 	.container{

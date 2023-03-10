@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,18 +12,18 @@
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	</header>
 	
-	<div class="container">
+<!--  	<div class="container">
 		<h2>CARRELLO</h2>
 		<div class="products">
 			<div class="product">
 				<img src="https://picsum.photos/200/300?grayscale">
 				<div>
-					<div class="product-name">Nome prodotto</div>
-					<div class="product-brand">Brand</div>
-					<div class="product-size">Taglia: 43</div>
+					<div class="product-name">${productDetail.product.name}</div>
+					<div class="product-brand">${productDetail.product.brand}</div>
+					<div class="product-size">Taglia:${productDetail.size}</div>
 					<div>
-						<span class="product-price">&euro; 50</span>
-						<span class="product-discount">&euro; 40</span>
+						<span class="product-price">&euro;${productDetail.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${productDetail.sellingPrice}</span>
 					</div>
 				</div>
 				<button class="product-remove">Rimuovi</button>
@@ -31,12 +31,42 @@
 		</div>
 		<div class="total">Totale: &euro; 40</div>
 		<button class="checkout">CHECKOUT</button>
-	</div>
+	</div> -->
 	
+	
+	
+	
+	<div class="container">
+		<h2>CARRELLO</h2>
+		<div class="products">
+	 <c:forEach var="cartItem" items="${shoppingCartItemsList}">
+			<div class="product">
+				<img src="https://picsum.photos/200/300?grayscale">
+				<div>
+					<div class="product-name">${cartItem.productDetails.product.name}</div>
+					<div class="product-brand">${cartItem.productDetails.product.brand}</div>
+					<div class="product-size">Taglia:${cartItem.productDetails.size}</div>
+					<div>
+						<span class="product-price">&euro; ${cartItem.productDetails.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${cartItem.productDetails.sellingPrice}</span>
+					</div>
+				</div>
+				<form method="get" action="remove_from_cart">
+					<input type="hidden" name="id" value="${cartItem.id}">
+					<input type="submit" class="product-remove" value="Rimuovi">
+				</form>
+				
+			</div>
+			</c:forEach>
+		</div>
+		
+		<div class="total">Totale: &euro; ${totale}</div>
+		<button class="checkout">CHECKOUT</button>
+	</div> 
+
 </body>
 
 <style>
-
 	body{
 		margin: 0;
 	}
@@ -59,11 +89,9 @@
 		padding: 20px;
 		background-color: black;
 	}
-
 	.container{
 		margin: 20px 100px;
 	}
-
 	.product {
 		display: flex;
 		align-items: center;
@@ -76,13 +104,11 @@
 		width: 100px;
 		margin-right: 20px;
 	}
-
 	.product-name {
 		font-size: 18px;
 		font-weight: bold;
 		margin-bottom: 5px;
 	}
-
 	.product-brand {
 		font-size: 14px;
 		margin-bottom: 5px;
@@ -93,7 +119,6 @@
 		font-weight: bold;
 		margin-bottom: 5px;
 	}
-
 	.product-price {
 		font-size: 16px;
 		color: lightgray;
@@ -108,7 +133,6 @@
 		margin-bottom: 10px;
 		margin-left: 5px;
 	}
-
 	.product-remove {
 		background-color: red;
 		color: white;
@@ -118,13 +142,11 @@
 		cursor: pointer;
 		margin-left: auto;
 	}
-
 	.total {
 		font-size: 24px;
 		font-weight: bold;
 		margin-top: 20px;
 	}
-
 	.checkout {
 		background-color: black;
 		color: white;
@@ -134,7 +156,6 @@
 		cursor: pointer;
 		margin-top: 20px;
 	}
-
 </style>
 
 </html>

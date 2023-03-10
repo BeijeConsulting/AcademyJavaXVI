@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"   pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,33 +20,30 @@
 				<img src="https://picsum.photos/200/300?grayscale" alt="">
 			</div>
 			<div class="product-info">
-				<h2 class="product-name">Nome Prodotto</h2>
-				<div class="product-brand">Brand</div>
-				<div class="product-category">Categoria</div>
-				<div class="product-type">Tipo</div>
+			
+			<form action="add_to_cart" method="get">
+				<h2 class="product-name">${product.name}</h2>
+				<div class="product-brand">${product.brand}</div>
+				<div class="product-category">${product.category}</div>
+				<div class="product-type">${product.type}</div>
+				
 				<div class="product-price">&euro; 99,99 <span>&euro; 119,99</span></div>
 				<div class="product-sizes">
 					<label for="size">Size:</label>
 					<select id="size" name="size">
-					<option value="35">35</option>
-					<option value="36">36</option>
-					<option value="37">37</option>
-					<option value="38">38</option>
-					<option value="39">39</option>
-					<option value="40">40</option>
-					<option value="41">41</option>
-					<option value="42">42</option>
-					<option value="43">43</option>
-					<option value="44">44</option>
-					<option value="45">45</option>
-					<option value="46">46</option>
-					<option value="47">47</option>
-					<option value="48">48</option>
+					<c:forEach var="size" items="${sizes}">
+			    		<option value="${size}">${size}</option>
+			    	</c:forEach>		
 					</select>
 				</div>
 				<div class="product-description">Descrizione</div>
+				<input type="text" name="quantity">
+				<input type="hidden" name="id" value="${product.id}">
+						<input type="submit" value="Aggiungi al carrello">	
+				</form>
 			</div>
 		</div>
+
 	</section>
 </body>
 

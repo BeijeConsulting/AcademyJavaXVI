@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="it.beije.neumann.model.User"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,74 +13,83 @@
 	
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	
-		
+
+
 		<div class="header-right">
-				
-			<button class="signin">
-				<a href="login">
-					SIGN IN
-				</a>
-			</button>
-		
-		
+			<c:choose>
+				<c:when test="${sessionScope.user != null}">
+					<div>
+						<a href="profile" class="black-link"> ${user.name} ${user.lastname}</a>
+						<form action = "./logout"  method = "post">
+							<!--  <input type="hidden" name="logOut" value="LOGOUT"> -->
+							<input class="signin" type="submit" name="logOut" value="LOG OUT">
+							
+						</form>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<button class="signin">
+						<a href="login">
+							SIGN IN
+						</a>
+					</button>
+				</c:otherwise>
+			</c:choose>	
 			<form id="searchForm" method="get">
 				<div class="searchProductName">
-					<label class="label-search-product" for="productName">CERCA PRODOTTO</label>
-					
 					<div>
-						<input type="text" id="productName" name="productName">
-						<button id="button-search-product" type="submit">Cerca</button>
+						<button class="signin">
+						<a href="show_cart">
+							Carrello
+						</a>
+					</button>
+						
 					</div>
-					
 				</div>
 			</form>
-		
 		</div>
-
-	
 	</header>
+	
+
 
 	<section class="filter">
 		
-		<form class="filter-form" method="GET" action="filtro">
+		<form class="filter-form" method="GET" action="products_filtred">
+			<div class="searchProductName">
+			<input type="text" id="productName" name="name">
+		</div>
+		
 			<div class="brand">
 			  <label class="label-brand" for="brandName">CERCA BRAND</label>
-			  <input type="text" id="brandName" name="brandName">
+			  <select name="brand">
+			    <option value="">Tutti</option>
+			    <c:forEach var="b" items="${brands}">
+			    	<option value="${b}">${b}</option>
+			    </c:forEach>
+			  </select>
 			</div>
 			
 			<div class="color">
 			  <label class="label-price" for="color">SELEZIONA COLORE</label>
-			  <select name="color">
-			    <option value="">Tutti</option>
-			    <option value="nero">Nero</option>
-			    <option value="bianco">Bianco</option>
-			    <option value="blu">Blu</option>
-			    <option value="verde">Verde</option>
-			    <option value="rosso">Rosso</option>
-			    <option value="giallo">Giallo</option>
-			  </select>
+			   <input type="text" name="color">
 			</div>
 			
 			<div class="price">
-			  <label class="label-price">SELEZIONA FASCIA PREZZI</label>
-			  <select name="price_range">
-			    <option value="">Tutti</option>
-			    <option value="0-49.99">0 - 49.99</option>
-			    <option value="50-99.99">50 - 99.99</option>
-			    <option value="100-149.99">100 - 149.99</option>
-			    <option value="150-199.99">150 - 199.99</option>
-			    <option value="200-249.99">200 - 249.99</option>
-			    <option value="250+">250 &lt;</option>
-			  </select>
+			  <label class="label-price">PREZZO MINIMO</label>
+			  <input type="text" id="priceMin" name="minSellingPrice">
+							 	
+			  <label class="label-price">PREZZO MASSIMO</label>
+			  <input type="text" id="priceMax" name="maxSellingPrice">
+							 	
 			</div>
-			
+
 			<div class="gender">
 			  <label class="label-gender">SELEZIONA TIPO</label>
 			  <select name="type">
 			    <option value="">Tutti</option>
-			    <option value="uomo">Uomo</option>
-			    <option value="donna">Donna</option>
-			    <option value="unisex">Unisex</option>
+			    <c:forEach var="t" items="${types}">
+			    	<option value="${t}">${t}</option>
+			    </c:forEach>
 			  </select>
 			</div>
 			
@@ -87,32 +97,32 @@
 			  <label class="label-category">SELEZIONA CATEGORIA</label>
 			  <select name="category">
 			    <option value="">Tutti</option>
-			    <option value="sneakers">Sneakers</option>
-			    <option value="fashion">Fashion</option>
-			    <option value="calcio">Calcio</option>
-			    <option value="basket">Basket</option>
+			    <c:forEach var="c" items="${categories}">
+			    	<option value="${c}">${c}</option>
+			    </c:forEach>
 			  </select>
 			</div>
-			
 			<input id="button-filtra" type="submit" value="Filtra">
 		</form>
 	</section>
 	
 	<section class="products">
-	
+	 <c:forEach var="p" items="${products}">
 		<div class="product-card">
 		  <img src="https://picsum.photos/200/300?grayscale" alt="">
-		  <h2 class="product-name">Nike Dunk Low</h2>
-		  <p class="product-price">$19.99</p>
-		  <p class="product-brand">Nike</p>
-		  <p class="product-color">Red</p>
+		  <h2 class="product-name">${p.name}</h2>
+		  <p class="product-price">$ ${p.listedPrice}</p>
+		  <p class="product-brand">${p.brand}</p>
+		  <p class="product-color">${p.color}</p>
 		  <p class="product-description">Descrizione del prodotto</p>
-		  <a href="dettagli_prodotto">DETTAGLI PRODOTTO</a>
-		  
+		  <form action="./show_detail" method="get">
+		  	<input type="submit" value="visualizza dettagli">
+		  	<input type="hidden" name="id" value="${p.id}">
+		  </form>
 		</div>
-		
+	</c:forEach>
 	</section>
-	
+
 
 </body>
 
@@ -144,6 +154,11 @@
 	
 	.header-right{
 		display: flex;
+	}
+	
+	.black-link {
+	
+		color: white;
 	}
 	
 	.signin{

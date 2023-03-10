@@ -1,6 +1,7 @@
 package it.beije.neumann.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 
 @Entity
@@ -31,18 +34,47 @@ public class ProductDetails {
 	@Column
 	private Integer quantity;
 	
-//	@OneToOne(targetEntity = ConversionSizes.class, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "size_id")
-	private Integer size;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
+
+	@Transactional
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public LocalDateTime getDisabledAt() {
+		return disabledAt;
+	}
+
+	public void setDisabledAt(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
+	}
+
+
+	private String size;
 	
-	@Column(name="product_id")
-	private Integer productId;
-	
+//	@Column(name="product_id")
+//	private Integer productId;
+//	
+//	public Integer getProductId() {
+//		return productId;
+//	}
+//
+//	public void setProductId(Integer productId) {
+//		this.productId = productId;
+//	}
+
+
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
 	
 	@Column(name="disabled_at")
-	private LocalDateTime disabled_at;
+	private LocalDateTime disabledAt;
 
 	public Integer getId() {
 		return id;
@@ -76,23 +108,15 @@ public class ProductDetails {
 		this.quantity = quantity;
 	}
 
-	
-
-	public Integer getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Integer size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
-	public Integer getProductId() {
-		return productId;
-	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -103,14 +127,28 @@ public class ProductDetails {
 	}
 
 	public LocalDateTime getDisabled_at() {
-		return disabled_at;
+		return disabledAt;
 	}
 
-	public void setDisabled_at(LocalDateTime disabled_at) {
-		this.disabled_at = disabled_at;
+	public void setDisabled_at(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
 	}
 
 	
+	public String toString() {
+		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
+				.append(", isListed: ").append(isListed)
+				.append(", selling Price: ").append(sellingPrice)
+				.append(", quantity: ").append(quantity)
+				.append(", size: ").append(size)
+				.append(", product ").append(product)
+				.append(", created at: ").append(createdAt)
+				.append(", disabled at: ").append(disabledAt)
+				.append("}");
+
+		return builder.toString();
+	}
 }
 
 
