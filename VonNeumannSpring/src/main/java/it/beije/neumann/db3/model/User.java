@@ -57,8 +57,9 @@ public class User {
 	
 
 	@OneToOne(targetEntity = ShoppingCart.class, fetch = FetchType.LAZY)
-		@JoinColumn(name = "id")
+	@JoinColumn(name = "id")
 	private ShoppingCart shoppingCart;
+	
 	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private List<Address> addresses;

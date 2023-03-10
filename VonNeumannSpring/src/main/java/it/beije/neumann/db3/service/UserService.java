@@ -30,9 +30,6 @@ public class UserService {
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
 	
-	@Autowired
-	private AddressRepository addressRepo;
-	
 	//Temp, non so se va bene metterlo qui
 	public boolean isUserLogged(HttpSession session) {
 		return (User)session.getAttribute("logged_user")!=null? true : false;

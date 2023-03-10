@@ -1,7 +1,7 @@
 package it.beije.neumann.db3.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import it.beije.neumann.model.OrderItem;
 
@@ -31,7 +34,7 @@ public class OrderD {
     private String transaction;
     
     @Column(name = "transaction_date")
-    private Date transactionDate;
+    private LocalDate transactionDate;
     
     @Column(name = "payment_status")
     private String paymentStatus;
@@ -42,11 +45,12 @@ public class OrderD {
     @Column(name = "total_price")
     private double totalPrice;
     
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "created_at", nullable = false)
+	@Generated(value=GenerationTime.INSERT)
+    private LocalDate createdAt;
     
     @Column(name = "disabled_at")
-    private Date disabledAt;
+    private LocalDate disabledAt;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -56,7 +60,8 @@ public class OrderD {
     @JoinColumn(name = "address_id")
     private Address address;
     
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = OrderItemD.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "order_id")
     private List<OrderItemD> orderItems = new ArrayList<>();
     
     public OrderD() {
@@ -84,11 +89,11 @@ public class OrderD {
 		this.transaction = transaction;
 	}
 
-	public Date getTransactionDate() {
+	public LocalDate getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Date transactionDate) {
+	public void setTransactionDate(LocalDate transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 
@@ -116,19 +121,19 @@ public class OrderD {
 		this.totalPrice = totalPrice;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDate getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDate createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getDisabledAt() {
+	public LocalDate getDisabledAt() {
 		return disabledAt;
 	}
 
-	public void setDisabledAt(Date disabledAt) {
+	public void setDisabledAt(LocalDate disabledAt) {
 		this.disabledAt = disabledAt;
 	}
 

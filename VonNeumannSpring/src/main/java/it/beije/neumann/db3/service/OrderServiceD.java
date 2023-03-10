@@ -32,10 +32,16 @@ public class OrderServiceD {
     
     @Transactional
     public void saveOrder(OrderD order, List<OrderItemD> orderItems) {
-        orderRepository.save(order);
+    	orderRepository.save(order);
+    	
         for (OrderItemD orderItem : orderItems) { //decrease quantità altrimenti torna -1 
-            orderItem.setOrder(order);
+            orderItem.setOrder(order.getId());
+            orderItem.setProductDetailsId((orderItem.getProductDetails()).getId());
+            
+            System.out.println("Order Item in saveOrder: "+orderItem);
+            
             orderItemRepository.save(orderItem);
         }
+        
     }
 }

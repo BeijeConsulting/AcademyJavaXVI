@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.Address;
 import it.beije.neumann.db3.model.OrderD;
@@ -25,6 +26,7 @@ import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
 import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.service.AddressService;
 import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
@@ -44,6 +46,8 @@ public class OrderControllerD {
 	private ProductDetailsService productDetailsService;
 	@Autowired
 	private OrderServiceD orderService;
+	@Autowired
+	private AddressService addressService;
 	
 	@GetMapping("/db3/order")
     public String getProduct(Model model, HttpServletRequest request) {
@@ -86,11 +90,11 @@ public class OrderControllerD {
 	    order.setTotalPrice(totalPrice);
 //	    model.addAttribute("orderItems", orderItems); //Prova Mary
 	    order.setOrderItems(orderItems); //Prova Mary
+	    session.setAttribute("loading_order", order);
 	    model.addAttribute("order", order);
 	    model.addAttribute("addresses", addresses);
         
-//        return "db3/user/order"; //deve esserci order.jsp nella cartella user che prende e stampa questi dati in hiddenform che vengono poi presi da add_order
-	    return "db3/user/order2"; //Prova Mary
+        return "db3/user/order";
 	}
 
 //	@RequestMapping(value = "/db3/add_order", method = RequestMethod.POST)
@@ -109,26 +113,34 @@ public class OrderControllerD {
 //	    return "db3/index";
 //	}
 	
+	//Youness
+//	@PostMapping("/db3/add_order")
+//	public String addOrder(@ModelAttribute("orderItems") ArrayList<OrderItemD> orderItems, String transaction, Integer address) {
+//		System.out.println("POST add_order");
+//		System.out.println(transaction+address);
+//		
+//		
+//	    return "/db3";
+//	}
+	
+	//Marianna
 	@PostMapping("/db3/add_order")
-	public String addOrder(@ModelAttribute("orderItems") ArrayList<OrderItemD> orderItems, String transaction, Integer address) {
+	public String addOrder(HttpServletRequest request, @RequestParam String transaction, @RequestParam Integer address) {
 		System.out.println("POST add_order");
 		System.out.println(transaction+address);
-		for(OrderItemD od : orderItems) {
-			System.out.println(od);
-		}
 		
-	    return "/db3";
+		HttpSession session = request.getSession();
+		
+		OrderD loadingOrder = (OrderD) session.getAttribute("loading_order");
+		loadingOrder.setId(0);
+		loadingOrder.setTransaction(transaction);
+		loadingOrder.setPaymentStatus("Completed");
+		loadingOrder.setStatus("Shipped");
+		loadingOrder.setAddress(addressService.findById(address));
+		loadingOrder.setUser(userService.getLoggedUser(session));
+		
+		orderService.saveOrder(loadingOrder, loadingOrder.getOrderItems());
+		
+	    return "db3/user/user_page";
 	}
-	
-	//Commentalo per non usarlo, ma non eliminarlo
-//	@PostMapping("/db3/add_order")
-//	public String addOrderMary(List<OrderItemD> orderItems) {
-//		System.out.println("POST add_order");
-////		System.out.println(order);
-//		for(OrderItemD od : orderItems) {
-//			System.out.println(od);
-//		}
-//		
-//	    return "db3";
-//	}
 }

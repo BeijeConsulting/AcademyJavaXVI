@@ -7,69 +7,92 @@
 <head>
 <meta charset="UTF-8">
 <title>View Order</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <h1>Order Details</h1>
-    <c:set var="order" value="${order}" />
+
+	<!-- Header da mettere ovunque -->
+	<div class="w3-bar w3-deep-orange w3-padding w3-card">
+		<a class="w3-bar-item w3-button w3-hover-white"
+			href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+		<div class="w3-right">
+			<a class="w3-bar-item w3-button w3-hover-white"
+				href="/VonNeumannSpring/db3/user_page">User page</a>
+		</div>
+	</div>
+	<!-- Header da mettere ovunque -->
+
+    <h3>I dettagli del tuo ordine:</h3>
     <form action="/VonNeumannSpring/db3/add_order" method="post">
-        <input type="text" name="id" value="${order.id}" />
-        <input type="text" name="transaction" value="${order.transaction}" />
-        <input type="text" name="transactionDate" value="${order.transactionDate}" />
-        <input type="text" name="paymentStatus" value="${order.paymentStatus}" />
-        <input type="text" name="status" value="${order.status}" />
-        <input type="text" name="totalPrice" value="${order.totalPrice}" />
-        <input type="text" name="user" value="${order.user}" />
-        <input type="text" name="address" value="${order.address}" />
-        <c:forEach items="${orderItems}" var="item">
-            <input type="text" name="id" value="${item.id}" />
-            <input type="text" name="quantity" value="${item.quantity}" />
-            <input type="text" name="price" value="${item.price}" />
-            <input type="text" name="size" value="${item.size}" />
-            <input type="text" name="name" value="${item.name}" />
-            <input type="text" name="color" value="${item.color}" />
-            <input type="text" name="createdAt" value="${item.createdAt}" />
-            <input type="text" name="disabledAt" value="${item.disabledAt}" />
-            <input type="text" name="productDetails" value="${item.productDetails.id}" />
-        </c:forEach>
-        <button type="submit">Add Order</button>
+    <table class="w3-table-all w3-hoverable">
+			<thead>
+				<tr class="w3-deep-orange">
+					<th>Codice ordine</th>
+					<th>Transazione</th>
+					<th>Data Transazione</th>
+					<th>Stato pagamento</th>
+					<th>Stato ordine</th>
+					<th>Prezzo totale</th>
+				</tr>
+			</thead>
+			
+			<tr>
+				<td>${order.id}</td>
+				<td><input type="text" name="transaction" value="${order.transaction}" /></td>
+				<td>${order.transactionDate}</td>
+				<td>${order.paymentStatus}</td>
+				<td>${order.status}</td>
+				<td>${order.totalPrice}</td>
+			</tr>
+    </table>
+    <br>
+    <table class="w3-table-all w3-hoverable">
+			<thead>
+				<tr class="w3-deep-orange">
+					<th>Elementi</th>
+				</tr>
+			</thead>
+    </table>
+    
+    <table class="w3-table-all w3-hoverable">
+			<thead>
+				<tr class="w3-deep-orange">
+					<th>Codice item</th>
+					<th>Nome</th>
+					<th>Colore</th>
+					<th>Quantità</th>
+					<th>Taglia</th>
+					<th>Prezzo</th>
+				</tr>
+			</thead>
+			
+			<c:forEach items="${order.orderItems}" var="item" varStatus="loop">
+			<tr>
+				<td><input type="text" name="orderItems[${loop.index}].id" value="${item.id}" readonly/></td>
+				<td><input type="text" name="orderItems[${loop.index}].name" value="${item.name}" readonly/></td>
+				<td><input type="text" name="orderItems[${loop.index}].color" value="${item.color}" readonly/></td>
+				<td><input type="text" name="orderItems[${loop.index}].quantity" value="${item.quantity}" readonly/></td>
+				<td><input type="text" name="orderItems[${loop.index}].size" value="${item.size}" readonly/></td>
+				<td><input type="text" name="orderItems[${loop.index}].price" value="${item.price}" readonly/></td>
+			</tr>
+			</c:forEach>
+    </table>
+
+	<p>Spedisci a:</p>
+    	<select name="address">
+    		<c:forEach items="${addresses}" var="address">
+    		<c:choose>
+    		<c:when test="${empty address.disabledAt}">
+        		<option value="${address.id}">${address.label}</option>
+        	</c:when>
+        	</c:choose>
+   	 		</c:forEach>
+		</select>
+        <button type="submit">Ordina</button>
     </form>
 </body>
 </html>
-<!-- 
-<!DOCTYPE html>
-<html>
-<head>
- <title>Insert Order Form</title>
-</head>
-<body>
-
- <h2>Insert Order</h2>
-
- <form action="insert_order" method="post">
-
-  <label for="transaction">Transaction:</label>
-  <input type="text" id="transaction" name="transaction"><br><br>
-
-  <label for="transaction_date">Transaction Date:</label>
-  <input type="datetime-local" id="transaction_date" name="transaction_date"><br><br>
-
-  <label for="payment_status">Payment Status:</label>
-  <input type="text" id="payment_status" name="payment_status"><br><br>
-
-  <label for="status">Status:</label>
-  <input type="text" id="status" name="status"><br><br>
-
-  <label for="total_price">Total Price:</label>
-  <input type="number" id="total_price" name="total_price"><br><br>
-
-  <label for="user_id">User ID:</label>
-  <input type="number" id="user_id" name="user_id"><br><br>
-
-  <input type="submit" value="Insert Order">
-
- </form>
-
-</body>
-</html> 
-
- -->

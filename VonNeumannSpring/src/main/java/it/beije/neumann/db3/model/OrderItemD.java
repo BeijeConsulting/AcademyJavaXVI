@@ -1,6 +1,6 @@
 package it.beije.neumann.db3.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 @Entity
 @Table(name = "order_items")
@@ -36,18 +40,26 @@ public class OrderItemD {
     @Column(name = "color")
     private String color;
     
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "created_at", nullable = false)
+	@Generated(value=GenerationTime.INSERT)
+    private LocalDate createdAt;
     
     @Column(name = "disabled_at")
-    private Date disabledAt;
+    private LocalDate disabledAt;
     
-    @ManyToOne(targetEntity = OrderD.class,fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private OrderD order;
+//    @ManyToOne(targetEntity = OrderD.class,fetch = FetchType.LAZY)
+//    @JoinColumn(name = "order_id")
+//    private OrderD order;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_details_id")
+    @Column(name = "order_id", nullable = false)
+    private Integer orderId;
+    
+    @Column(name = "product_details_id", nullable = false)
+    private Integer productDetailsId;
+    
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_details_id")
+    @Transient
     private ProductDetails productDetails;
     
     public OrderItemD() {
@@ -57,7 +69,7 @@ public class OrderItemD {
 	public String toString() {
 		return "OrderItem [id=" + id + ", quantity=" + quantity + ", price=" + price + ", size=" + size + ", name="
 				+ name + ", color=" + color + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", order="
-				+ order + ", productDetails=" + productDetails + "]";
+				+ orderId + ", productDetailsId=" + productDetailsId + "]";
 	}
 
 	public int getId() {
@@ -108,38 +120,44 @@ public class OrderItemD {
 		this.color = color;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDate getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDate createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getDisabledAt() {
+	public LocalDate getDisabledAt() {
 		return disabledAt;
 	}
 
-	public void setDisabledAt(Date disabledAt) {
+	public void setDisabledAt(LocalDate disabledAt) {
 		this.disabledAt = disabledAt;
 	}
 
-	public OrderD getOrder() {
-		return order;
+	public Integer getOrder() {
+		return orderId;
 	}
 
-	public void setOrder(OrderD order) {
-		this.order = order;
+	public void setOrder(Integer order) {
+		this.orderId = order;
 	}
 
 	public ProductDetails getProductDetails() {
 		return productDetails;
 	}
+	
+	public Integer getProductDetailsId() {
+		return productDetailsId;
+	}
+
+	public void setProductDetailsId(Integer productDetails) {
+		this.productDetailsId = productDetails;
+	}
 
 	public void setProductDetails(ProductDetails productDetails) {
 		this.productDetails = productDetails;
 	}
-
-    
     
 }
