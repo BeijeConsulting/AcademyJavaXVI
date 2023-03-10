@@ -1,5 +1,6 @@
 package it.beije.neumann.db3.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +18,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.Address;
-import it.beije.neumann.db3.model.OrderD;
-import it.beije.neumann.db3.model.OrderItemD;
 import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
+import it.beije.neumann.db3.model.TryOrder;
+import it.beije.neumann.db3.model.TryOrderItem;
 import it.beije.neumann.db3.model.User;
 import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
@@ -32,7 +35,7 @@ import it.beije.neumann.db3.service.ShoppingCartService;
 import it.beije.neumann.db3.service.UserService;
 
 @Controller
-public class OrderControllerD {
+public class TryOrderController {
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
@@ -45,52 +48,63 @@ public class OrderControllerD {
 	@Autowired
 	private OrderServiceD orderService;
 	
-	@GetMapping("/db3/order")
+	@GetMapping("/db3/try_order")
     public String getProduct(Model model, HttpServletRequest request) {
-    	//prende carrello da utente in sessione 
-		
-		//List<ProductDetails> pd = productService.getProductDetails(id);
-        //model.addAttribute("productDetails", pd);
+		System.out.println("GET /db3/try_order");
         HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
-		
-		if (user == null) return "db3/signin";
-		
-	    model.addAttribute("logged_user", user);
-	    List<OrderItemD> orderItems = new ArrayList<>();
-	    OrderD order = new OrderD();
-	    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
-	    List<ShoppingCartItem> shoppingCartItems = shoppingCartService.getShoppingCartItems(shoppingCart.getId());
-	    
-	    if (shoppingCartItems.size() < 1) return "db3";
-	    double totalPrice=0.0;
-	    order.setStatus("Pending");
-	    order.setUser(user);
-	    
-	    for(ShoppingCartItem shoppingCartItem: shoppingCartItems) {
-	    	ProductDetails productDetails = shoppingCartService.getProduct(shoppingCartItem.getId()); 
-	    	Product product = productDetailsService.getProduct(productDetails.getId());
-	    	Double price = productDetails.getSellingPrice();
-	    	price*=shoppingCartItem.getQuantity();
-	    	OrderItemD orderItem = new OrderItemD();
-	    	orderItem.setColor(product.getColor());
-	    	orderItem.setName(product.getName());
-	    	orderItem.setPrice(price);
-	    	orderItem.setProductDetails(productDetails); //metti hiddenform con solo id di product details
-	    	orderItem.setQuantity(shoppingCartItem.getQuantity());
-	    	orderItem.setSize(productDetails.getSize().getEu());
-	    	totalPrice+=price;
-	    	orderItems.add(orderItem);
-	    }
-	    List<Address> addresses = user.getAddresses();
-	    order.setTotalPrice(totalPrice);
-//	    model.addAttribute("orderItems", orderItems); //Prova Mary
-	    order.setOrderItems(orderItems); //Prova Mary
-	    model.addAttribute("order", order);
-	    model.addAttribute("addresses", addresses);
         
-//        return "db3/user/order"; //deve esserci order.jsp nella cartella user che prende e stampa questi dati in hiddenform che vengono poi presi da add_order
-	    return "db3/user/order2"; //Prova Mary
+        if(!userService.isUserLogged(session)) return "db3/signin";
+
+        //else
+        User loggedUser = userService.getLoggedUser(session);
+//      model.addAttribute("logged_user", loggedUser);
+        
+        //Prendo il carrello e il suo contenuto
+        ShoppingCart shoppingCart = userService.getShoppingCart(loggedUser.getId());
+        
+        shoppingCart.setShoppingCartItem(shoppingCartService.getShoppingCartItems(shoppingCart.getId()));
+        
+        System.out.println("\nIn get:\n" + shoppingCart);
+        
+        //Setting order
+	    TryOrder order = new TryOrder();
+	    
+    	order.setStatus("Pending");
+    	order.setUserId(loggedUser.getId());
+    	
+    	Double tot = 0.0;
+	    
+    	//Creating orderItems
+	    List<TryOrderItem> orderItems = new ArrayList<>();
+	    
+	    if (shoppingCart.getShoppingCartItem().isEmpty()) return "db3/index";
+	    
+	    for (ShoppingCartItem item : shoppingCart.getShoppingCartItem()) {
+	    	TryOrderItem orItem = new TryOrderItem();
+	    	
+	    	ProductDetails details = shoppingCartService.getProduct(item.getId());
+	    	Product product = productDetailsService.getProduct(details.getId());
+	    	
+	    	double price = details.getSellingPrice()*item.getQuantity();
+	    	tot+=price;
+	    	
+	    	orItem.setColor(product.getColor());
+	    	orItem.setName(product.getName());
+	    	orItem.setProductDetails(details); //metti hiddenform con solo id di product details
+	    	orItem.setPrice(price);
+	    	orItem.setSize(details.getSize().getEu());
+	    	orItem.setQuantity(item.getQuantity());
+	    	
+	    	orderItems.add(orItem);
+	    }
+	    
+	    order.setTotalPrice(tot);
+	    order.setOrderItems(orderItems);
+
+	    session.setAttribute("loading_order", order);
+	    model.addAttribute("order", order);
+	    
+	    return "db3/user/order2";
 	}
 
 //	@RequestMapping(value = "/db3/add_order", method = RequestMethod.POST)
@@ -109,20 +123,8 @@ public class OrderControllerD {
 //	    return "db3/index";
 //	}
 	
-	@PostMapping("/db3/add_order")
-	public String addOrder(@ModelAttribute("orderItems") ArrayList<OrderItemD> orderItems, String transaction, Integer address) {
-		System.out.println("POST add_order");
-		System.out.println(transaction+address);
-		for(OrderItemD od : orderItems) {
-			System.out.println(od);
-		}
-		
-	    return "/db3";
-	}
-	
-	//Commentalo per non usarlo, ma non eliminarlo
 //	@PostMapping("/db3/add_order")
-//	public String addOrderMary(List<OrderItemD> orderItems) {
+//	public String addOrder(List<OrderItemD> orderItems) {
 //		System.out.println("POST add_order");
 ////		System.out.println(order);
 //		for(OrderItemD od : orderItems) {
@@ -131,4 +133,14 @@ public class OrderControllerD {
 //		
 //	    return "db3";
 //	}
+	
+	//Commentalo per non usarlo, ma non eliminarlo
+	@PostMapping("/db3/try_add_order")
+	public String addOrderMary(@RequestParam(required=false)TryOrderItem item) {
+		System.out.println("POST add_order");
+		
+		System.out.println("OrderItems: " + item);
+		
+	    return "db3";
+	}
 }

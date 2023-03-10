@@ -21,6 +21,8 @@
 		<class>it.beije.neumann.db3.model.Address</class>
 		<class>it.beije.neumann.db3.model.OrderD</class>
 		<class>it.beije.neumann.db3.model.OrderItemD</class>
+		<class>it.beije.neumann.db3.model.TryOrder</class>
+		<class>it.beije.neumann.db3.model.TryOrderItem</class>
 		<!-- /Marianna -->
 		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

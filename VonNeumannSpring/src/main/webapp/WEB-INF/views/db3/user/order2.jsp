@@ -20,17 +20,22 @@
     	Order User Surname : ${order.user.surname}<br>
     	Order Address : ${order.address}<br>
     <form action="/VonNeumannSpring/db3/add_order" method="post">
-        <c:forEach items="${order.orderItems}" var="item">
-            <input type="text" name="id" value="${item.id}" />
-            <input type="text" name="quantity" value="${item.quantity}" />
-            <input type="text" name="price" value="${item.price}" />
-            <input type="text" name="size" value="${item.size}" />
-            <input type="text" name="name" value="${item.name}" />
-            <input type="text" name="color" value="${item.color}" />
-            <input type="text" name="createdAt" value="${item.createdAt}" />
-            <input type="text" name="disabledAt" value="${item.disabledAt}" />
-            <input type="text" name="productDetails" value="${item.productDetails.id}" />
-        </c:forEach>
+        <c:forEach items="${order.orderItems}" var="item" varStatus="loop">
+    <input type="text" name="orderItems[${loop.index}].id" value="${item.id}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].quantity" value="${item.quantity}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].size" value="${item.size}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].name" value="${item.name}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].color" value="${item.color}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].productDetails.id" value="${item.productDetails.id}" readonly/>
+    <input type="text" name="orderItems[${loop.index}].price" value="${item.price}" readonly/>
+</c:forEach>
+
+    	<input type="text" name="transaction" value="${order.transaction}" />
+    	<select name="address">
+    		<c:forEach items="${addresses}" var="address">
+        	<option value="${address.id}">${address.label}</option>
+   	 		</c:forEach>
+		</select>
         <button type="submit">Add Order</button>
     </form>
 </body>
