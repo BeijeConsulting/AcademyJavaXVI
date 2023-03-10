@@ -40,6 +40,27 @@
   </div>
 </nav>
 
+<!-- Filtri di ricerca -->
+<div class="py-5 container">
+	<form action="./">
+	<div class="input-group mb-3">
+	  <select name="type" class="form-select" id="categoriaSel">
+	  	<option selected disabled>Seleziona Genere</option>
+	    <option value="M">Maschi</option>
+	    <option value="W">Femmine</option>
+	  </select>
+	  <button class="btn btn-outline-secondary" type="submit">Filtra</button>
+	</div>
+	</form>
+	<c:choose>
+		<c:when test="${ not empty filter }">
+			<div class="p-2 mb-1 bg-secondary text-white">Stai visualizzando solo le scarpe di ${ filter }</div>
+			<a href="./" class="btn btn-primary">Resetta</a>
+		</c:when>
+	</c:choose>
+</div>
+
+
 <!-- Card Container  -->
 <div class="py-5 container">
 	<div class="row">

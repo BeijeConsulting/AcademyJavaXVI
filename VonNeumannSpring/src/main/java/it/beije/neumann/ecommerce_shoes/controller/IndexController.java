@@ -1,6 +1,7 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.ecommerce_shoes.model.Product;
 import it.beije.neumann.ecommerce_shoes.model.ProductImage;
@@ -27,15 +29,28 @@ public class IndexController {
 	private ProductImageRepository prodImageRepo;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String getLogin(Model model) throws IOException {
+	public String getIndex(Model model, @RequestParam(required = false) String type) throws IOException {
 		System.out.println("GET /");
+
+		List<ProductImage> allProd = prodImageRepo.findAll();
+		List<ProductImage> prodImg;
+		if (type == null) {
+			prodImg = allProd;
+		}
+		else {
+			prodImg = new ArrayList<ProductImage>();
+			for(ProductImage p : allProd) {
+				if (p.getProduct().getType().equals(type)) {
+					prodImg.add(p);
+				}
+			}
+			if (type.equals("M"))
+				model.addAttribute("filter", "maschi");
+			else if (type.equals("W"))
+				model.addAttribute("filter", "femmine");
+		}
 		
-//		List<Product> products = productRepository.findAll();
-//		System.out.println(products);
-//		model.addAttribute("products", products);
-		
-		List<ProductImage> productsImages=prodImageRepo.findAll();
-		model.addAttribute("images", productsImages);
+		model.addAttribute("images", prodImg);
 		
 		return "index";
 	}
