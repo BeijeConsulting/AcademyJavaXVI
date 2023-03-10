@@ -49,6 +49,7 @@
 			<h1><c:out value="${product.brand }"></c:out></h1>
 			<h2><c:out value="${product.name }"></c:out></h2>
 			<h4>Color: <c:out value="${product.color }"></c:out></h4>
+			<h4>Price: <c:out value="${product.listedPrice}€"></c:out></h4>
 			
 			<div>
 			<form action="./addItem" method="post">

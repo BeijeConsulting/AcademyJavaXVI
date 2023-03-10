@@ -42,10 +42,8 @@
 <div class="container">
            <div class="d-flex  py-3">
                <h3>Your Orders</h3>
-           </div>
- </div>
+          </div>
  <table class="table table-loght">
- 
       <thead>
            <tr>   
                <th scope="col">    </th>  
@@ -77,7 +75,7 @@
         </tbody>
                
  </table>   
- 
+ </div>
 
 </body>
 </html>
