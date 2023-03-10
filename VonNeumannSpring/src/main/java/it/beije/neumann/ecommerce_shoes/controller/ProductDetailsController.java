@@ -1,6 +1,7 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,19 @@ public class ProductDetailsController {
         }
 		
 		ProductImage img = prodImageRepo.findByProductId(intId);
+		List<ProductDetails> detailsToShare=new ArrayList<>();
+		
+		
 		
 		List<ProductDetails> productDetails = productDetailsRepository.findByProductId(intId);
+		
+		//Dettagli con quantity>0
+		for(ProductDetails p : productDetails) {
+			if(p.getQuantity()!=0) detailsToShare.add(p);
+		}
+		
+		
+		
 		Optional<Product> product = productRepository.findById(intId);
 		Product p = product.get();
 //		System.out.println(p);
@@ -53,7 +65,7 @@ public class ProductDetailsController {
 
 		model.addAttribute("product", p);
 		model.addAttribute("image", img);
-		model.addAttribute("details", productDetails);
+		model.addAttribute("details", detailsToShare);
 		return "productDetails";
 	}
 }

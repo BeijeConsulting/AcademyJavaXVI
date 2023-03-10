@@ -1,5 +1,6 @@
 package it.beije.neumann.ecommerce_shoes.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,20 +33,17 @@ public class OrdersController {
 	private OrdersRepository ordersRepo;
 	
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String getOrders(Model model,HttpServletRequest request, HttpServletResponse response) {
-
+	public String getOrders(Model model,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("GET / orders");
 		HttpSession session = request.getSession();
 		User user=(User) session.getAttribute("user");
 		
-		List<Orders> orders=ordersRepo.findAll();
+		if (user == null) {
+			response.sendRedirect("./login");
+			return "index";
+		}
 		
-		//Raggruppo gli items in base
-		
-		
-		
-		System.out.println("GET / orders");
-		
-//		System.out.println(ordersItems.size());
+		List<Orders> orders=ordersRepo.findByUserId(user.getId());
 		
 		model.addAttribute("orders",orders);
 		return"/orders";

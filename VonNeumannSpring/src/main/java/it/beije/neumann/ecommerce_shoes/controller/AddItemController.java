@@ -3,6 +3,7 @@ package it.beije.neumann.ecommerce_shoes.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,10 +48,24 @@ public class AddItemController {
 						  @RequestParam(required = true) String quantity) throws IOException {
 		System.out.println("POST /addItem");
 		HttpSession session = request.getSession();		
-		User user = (User)session.getAttribute("user");
+		User user = (User)session.getAttribute("user");		
+		if (user == null) {
+			response.sendRedirect("./login");
+			return "index";
+		}
+		
+		if (Integer.parseInt(quantity) <= 0) {
+			model.addAttribute("error", "Per favore seleziona una quantita' positiva");
+			return "error";
+		}
 		
 		ShoppingCart cart = shoppingCartRepository.findByUserId(user.getId());
-		ProductDetails prodDetails = productDetailsRepository.findById(Integer.parseInt(productDetails)).get();
+		Optional<ProductDetails> optProdDetails = productDetailsRepository.findById(Integer.parseInt(productDetails));
+		if (optProdDetails.isEmpty()) {
+			model.addAttribute("error", "Item non trovato!");
+			return "error";
+		}
+		ProductDetails prodDetails = optProdDetails.get();
 		ShoppingCartItem cartItem = shoppingCartItemRepository.findExistingItem(cart.getId(), prodDetails.getId());
 		if (cartItem == null) {
 			cartItem = new ShoppingCartItem();
@@ -62,9 +77,14 @@ public class AddItemController {
 		else {
 			cartItem.setQuantity(cartItem.getQuantity() + Integer.parseInt(quantity));
 		}
+		
+		if (cartItem.getQuantity() > prodDetails.getQuantity()) {
+			model.addAttribute("error", "La quantita' selezionata e' maggiore di quella in stock");
+			return "error";
+		}
 		shoppingCartItemRepository.save(cartItem);
 		
-		response.sendRedirect("./");		
+		response.sendRedirect("./");
 		return "index";
 	}
 }

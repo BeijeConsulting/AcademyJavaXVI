@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String postLogin(HttpServletRequest request,
+	public String postLogin(HttpServletRequest request, HttpServletResponse response,
 							Model model,
 							@RequestParam(required = true) String name,
 							@RequestParam(required = true) String surname,
@@ -69,6 +70,7 @@ public class RegisterController {
 		
 		session.setAttribute("user", u);
 		
+		response.sendRedirect("./");
 		return "index";
 	}
 }

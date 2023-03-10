@@ -89,8 +89,9 @@
                 </c:out>
                
                </h3>
-                 
-               <a class="mx-3 btn-primary" href="#"> Checkout</a>
+               <c:choose>  
+               	<c:when test="${totale != 0}"> <a class="mx-3 btn-primary" href="./checkout"> Checkout</a> </c:when>
+               </c:choose>
            </div>
        </div>
 </div>

@@ -2,13 +2,13 @@ package it.beije.neumann.ecommerce_shoes.controller;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.jni.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,7 @@ import it.beije.neumann.ecommerce_shoes.model.User;
 import it.beije.neumann.ecommerce_shoes.repository.AddressesRepository;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersItemsRepository;
 import it.beije.neumann.ecommerce_shoes.repository.OrdersRepository;
+import it.beije.neumann.ecommerce_shoes.repository.ProductDetailsRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartItemRepository;
 import it.beije.neumann.ecommerce_shoes.repository.ShoppingCartRepository;
 import it.beije.neumann.ecommerce_shoes.repository.UserRepository;
@@ -44,22 +45,24 @@ public class CheckoutController {
 	private OrdersRepository ordersRepo;
 	@Autowired
 	private OrdersItemsRepository ordersItemsRepo;
+	@Autowired
+	private ProductDetailsRepository productDetailsRepo;
 
 
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
 	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "new",  required = false) String newAddress) throws IOException {
-		
-		
-		
-		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		if (user == null) {
 			response.sendRedirect("./login");
 			return "index";
-		}
-		
+		}		
 		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
+		double totale = calcoloTotale(userCart.getId());
+		if (totale == 0) {
+			model.addAttribute("error", "Il carrello è vuoto. Non e' possibile effettuare il checkout");
+			return "error";
+		}
 		model.addAttribute("totale", calcoloTotale(userCart.getId()));
 		List<Addresses> addresses = addressesRepo.findByUserId(user.getId());
 		System.out.println(addresses);
@@ -107,16 +110,19 @@ public class CheckoutController {
 		//Creazione ordine
 		Orders order = new Orders();
 		order.setCreatedAt(LocalDateTime.now());
-		order.setPaymentStatus("Complete");
-		order.setStatus("Complete");
+		order.setPaymentStatus("Pending");
+		order.setStatus("Pending");
 		order.setTotalPrice(calcoloTotale(userCart.getId()));
 		order.setUser(user);
 		order = ordersRepo.save(order); //la save dovrebbe ritornare l'order che ha creato con il suo id?
 		//Creazione orderItems
 		List<Integer> itemsId = cartItemRepo.findByCartId(userCart.getId());
 		List<ShoppingCartItem> cartItems = cartItemRepo.findAllById(itemsId);
+		boolean error = false;
+		List<OrdersItems> listOrdItems = new ArrayList<OrdersItems>();
 		for (ShoppingCartItem i : cartItems) {
 			if (i.getDisabledAt() == null) {
+				//Creo l'Order Item
 				OrdersItems ordItem = new OrdersItems();
 				ordItem.setCreatedAt(LocalDateTime.now());
 				ordItem.setOrder(order);
@@ -125,14 +131,36 @@ public class CheckoutController {
 				ordItem.setPrice(i.getProductDetails().getProduct().getListedPrice());
 				ordItem.setProductDetails(i.getProductDetails());
 				ordItem.setQuantity(i.getQuantity());
+				if (i.getQuantity() > i.getProductDetails().getQuantity()) {
+					error = true;
+				}
 				ordItem.setSize(i.getProductDetails().getSize());
-				ordersItemsRepo.save(ordItem);
+				listOrdItems.add(ordItem);
+				//disabilito il shopping cart item (IN OGNI CASO, ANCHE SE CANCELLO L'ORDINE)
 				i.setDisabledAt(LocalDateTime.now());
 				cartItemRepo.save(i);
 			}
 		}
-		response.sendRedirect("./");
-		return "index";
+		//dopo aver creato gli order items in locale, li carico sui database solo se non ci sono errori
+		if (error) {
+			order.setPaymentStatus("Cancelled");
+			order.setStatus("Cancelled");
+			ordersRepo.save(order);
+			model.addAttribute("error", "Errore durante la processazione dell'ordine. Il carrello è stato svuotato.");
+			return "error";
+		}
+		else {
+			for (OrdersItems o : listOrdItems) {
+				ordersItemsRepo.save(o);
+				o.getProductDetails().setQuantity(o.getProductDetails().getQuantity() - o.getQuantity());
+				productDetailsRepo.save(o.getProductDetails());
+			}
+			order.setPaymentStatus("Complete");
+			order.setStatus("Complete");
+			ordersRepo.save(order);
+			response.sendRedirect("./");
+			return "index";
+		}
 	}
 	
 	private double calcoloTotale(int cartId) {
