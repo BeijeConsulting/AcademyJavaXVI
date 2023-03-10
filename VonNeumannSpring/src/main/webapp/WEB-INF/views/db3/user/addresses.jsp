@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>I tuoi indirizzi</title>
+<title>Your Addresses</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto">
