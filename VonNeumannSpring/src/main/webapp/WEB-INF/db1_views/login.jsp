@@ -50,8 +50,8 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password">
               </div>
-              <a href="./register">Registrati</a>
-              <button type="submit" class="btn btn-primary">Login</button>
+              <a href="./register" class="btn btn-secondary my-3">Registrati</a>
+              <button type="submit" class="btn btn-primary my-3">Login</button>
             </form>
           </div>
         </div>
