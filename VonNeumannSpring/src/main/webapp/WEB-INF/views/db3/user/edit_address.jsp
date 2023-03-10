@@ -23,24 +23,24 @@
   
   <div class="w3-container">
     <br>
-    <h2>Inserisci i dati da modificare</h2>
+    <h2> Edit Address: </h2>
     <form class="w3-container" action="../edit_address/${address.id}" method="post">
-      <label for="label">Etichetta:</label><br>
+      <label for="label">Label:</label><br>
       <input class="w3-input w3-border" type="text" name="label" value="${address.label}"><br>
-      <label for="fullName">*Nome Completo</label><br>
+      <label for="fullName">*FullName</label><br>
       <input class="w3-input w3-border" type="text" name="fullName" value="${address.fullName}" required><br>
-      <label for="country">*Paese:</label><br>
+      <label for="country">*Country:</label><br>
       <input class="w3-input w3-border" type="text" name="country" value="${address.country}" required><br>
-      <label for="streetAddress">*Indirizzo:</label><br>
+      <label for="streetAddress">*Address:</label><br>
       <input class="w3-input w3-border" type="text" name="streetAddress" value="${address.streetAddress}" required><br>
-      <label for="telephone">*Telefono:</label><br>
+      <label for="telephone">*Telephone:</label><br>
       <input class="w3-input w3-border" type="tel" name="telephone" value="${address.telephone}"><br>
-      <label for="zipcode">*CAP (Zipcode):</label><br>
+      <label for="zipcode">*Zipcode:</label><br>
       <input class="w3-input w3-border" type="text" name="zipcode" value="${address.zipcode}" required><br>
-      <label for="instructions">Istruzioni:</label><br>
+      <label for="instructions">Instructions:</label><br>
       <input class="w3-input w3-border" type="text" name="instructions" value="${address.instructions}"><br><br>
       <input type="hidden" name="userId" value="${address.userId}">
-      <input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Salva le modifiche">
+      <input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Save">
     </form>
     <br>
   </div>

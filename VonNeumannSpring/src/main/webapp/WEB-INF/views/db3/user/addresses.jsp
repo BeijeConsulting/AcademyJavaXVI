@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>I tuoi indirizzi</title>
+<title>Your Addresses</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto">
@@ -26,7 +26,7 @@
 	<!-- Header da mettere ovunque -->
 
 	<div class="w3-container w3-card-4">
-		<h3>${logged_user.name}&nbsp;${logged_user.surname}, ecco i tuoi indirizzi</h3>
+		<h3>${logged_user.name}&nbsp;${logged_user.surname}, Your Addresses are:</h3>
 		<table class="w3-table-all w3-hoverable">
 			<thead>
 				<tr class="w3-deep-orange">
@@ -54,10 +54,10 @@
 							<td>${address.instructions}</td>
 							<td><a
 								href="<c:url value='/db3/edit_address/${address.id}'/>"
-								class="w3-button w3-block w3-deep-orange">Modifica</a></td>
+								class="w3-button w3-block w3-deep-orange">Edit</a></td>
 							<td><a
 								href="<c:url value='/db3/delete_address/${address.id}'/>"
-								class="w3-button w3-block w3-deep-orange">Elimina</a></td>
+								class="w3-button w3-block w3-deep-orange">Delete</a></td>
 						</tr>
 					</c:when>
 				</c:choose>
@@ -68,7 +68,7 @@
 		<div class="w3-container">
 			<form action="./add_address" method="get">
 				<input class="w3-button w3-deep-orange w3-hover-black" type="submit"
-					value="Aggiungi indirizzo">
+					value="Add Address">
 			</form>
 			<br>
 		</div>

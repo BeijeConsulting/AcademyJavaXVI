@@ -52,6 +52,7 @@
 			        <th>Status</th>
 			        <th>Total price</th>
 			        <th>Created at</th>
+			        <th></th>
       			</tr>
    			</thead>
     		<c:forEach var="o" items="${order}">

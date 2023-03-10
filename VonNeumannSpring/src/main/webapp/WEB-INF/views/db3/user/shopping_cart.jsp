@@ -45,8 +45,10 @@
             	<c:if test="${empty item.disabledAt}">
                 <div class="w3-card-4 w3-margin">
                     <div class="w3-container">
-                        <h3><c:out value="${item.productDetailsId}"/></h3>
+                        <h3> Id: <c:out value="${item.productDetailsId}"/></h3>
                         <p>Quantity: <c:out value="${item.quantity}"/></p>
+                        <a class="w3-bar-item w3-button w3-red w3-hover-black w3-margin"
+			href="/VonNeumannSpring/db3/remove_cart_item/${item.id}">Remove Item</a>
                     </div>
                 </div>
                  </c:if>

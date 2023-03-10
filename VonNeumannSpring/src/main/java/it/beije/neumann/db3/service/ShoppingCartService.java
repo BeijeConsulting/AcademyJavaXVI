@@ -90,4 +90,25 @@ public class ShoppingCartService {
 			shoppingCartItemRepository.save(item);
 		}
 	}
+	@Transactional
+	public void removeShoppingCartItem(Integer shoppingCartId, Integer shoppingCartItemId) {
+
+		List<ShoppingCartItem> items = getShoppingCartItems(shoppingCartId);
+		for(ShoppingCartItem i: items) {
+			if(i.getId().intValue()==shoppingCartItemId.intValue()) {
+				i.setDisableAt(LocalDateTime.now());
+			}
+		}
+	}
+
+	@Transactional
+	public void editShoppingCartQuantity(Integer shoppingCartId, Integer shoppingCartItemId, Integer quantity) {
+
+		List<ShoppingCartItem> items = getShoppingCartItems(shoppingCartId);
+		for(ShoppingCartItem i: items) {
+			if(i.getId().intValue()==shoppingCartItemId.intValue()) {
+				i.setQuantity(quantity);
+			}
+		}
+	}
 }
