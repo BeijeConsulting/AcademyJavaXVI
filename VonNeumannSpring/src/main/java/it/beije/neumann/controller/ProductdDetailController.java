@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import it.beije.neumann.model.Product;
 import it.beije.neumann.model.ProductDetails;
 import it.beije.neumann.model.ShoppingCart;
 import it.beije.neumann.model.ShoppingCartItem;
+import it.beije.neumann.model.User;
 import it.beije.neumann.repository.CartItemRepository;
 import it.beije.neumann.repository.ShoppingCartReposistory;
 import it.beije.neumann.service.ProductDetailSerivce;
@@ -36,10 +39,8 @@ public class ProductdDetailController {
 	@Autowired
 	CartItemRepository cartItemRepository;
 
-
-
 	@RequestMapping(value = "/add_to_cart", method = RequestMethod.GET)
-	public String addToCart( Model model, @RequestParam(name="id") String idProduct, @RequestParam String size, @RequestParam String quantity){
+	public String addToCart( HttpSession session, Model model, @RequestParam(name="id") String idProduct, @RequestParam String size, @RequestParam String quantity){
 		
 
 		try {
@@ -49,10 +50,11 @@ public class ProductdDetailController {
 
 			System.out.println( "product Detail Id " + productDetail.getId()  );
 			System.out.println( "product  " + productDetail.getProduct().getName()  );
-	
-			Optional<ShoppingCart> sc = shoppingCartRepository.findById(1);
-			ShoppingCart cart = sc.get();
 			
+			User user =(User)session.getAttribute("user");
+			
+			Optional<ShoppingCart> sc = shoppingCartRepository.findById(user.getId());
+			ShoppingCart cart = sc.get();
 
 			ShoppingCartItem cartItem = new ShoppingCartItem();
 		
@@ -83,7 +85,12 @@ public class ProductdDetailController {
 			System.out.println(message + iaEX);
 			model.addAttribute("message", message);
 		}
-	
+//		catch( NullPointerException npEX ) {
+//			String message = "Loggati per acquistare";
+//			System.out.println(message + npEX);
+//			model.addAttribute("message", message);
+//		}
+//	
 		
 		
 		return "redirect: home";

@@ -37,10 +37,13 @@
 			</c:choose>	
 			<form id="searchForm" method="get">
 				<div class="searchProductName">
-					<label class="label-search-product" for="productName">CERCA PRODOTTO</label>
 					<div>
-						<input type="text" id="productName" name="productName">
-						<button id="button-search-product" type="submit">Cerca</button>
+						<button class="signin">
+						<a href="show_cart">
+							Carrello
+						</a>
+					</button>
+						
 					</div>
 				</div>
 			</form>
