@@ -78,7 +78,7 @@ public class LoginController {
     	System.out.println(isFailed);
     	model.addAttribute("isFailed", isFailed);
     	
-    	return "home";
+    	return "login";
     //	return "/login";
     }
 

@@ -18,7 +18,7 @@
 		<div class="header-right">
 			<c:choose>
 				<c:when test="${sessionScope.user != null}">
-					<div>
+					<div class="name-log-container">
 						<a href="profile" class="black-link"> ${user.name} ${user.lastname}</a>
 						<form action = "./logout"  method = "post">
 							<!--  <input type="hidden" name="logOut" value="LOGOUT"> -->
@@ -56,6 +56,7 @@
 		
 		<form class="filter-form" method="GET" action="products_filtred">
 			<div class="searchProductName">
+			<label for="name">NOME PRODOTTO</label>
 			<input type="text" id="productName" name="name">
 		</div>
 		
@@ -106,23 +107,16 @@
 		</form>
 	</section>
 	
-	<c:choose>
-		<c:when test= "${ !empty message}">
-			<label class = "wrong">${message}</label> <br><br>
-		</c:when>
-	</c:choose>
-	
 	<section class="products">
 	 <c:forEach var="p" items="${products}">
 		<div class="product-card">
 		  <img src="https://picsum.photos/200/300?grayscale" alt="">
 		  <h2 class="product-name">${p.name}</h2>
-		  <p class="product-price">$ ${p.listedPrice}</p>
 		  <p class="product-brand">${p.brand}</p>
 		  <p class="product-color">${p.color}</p>
 		  <p class="product-description">Descrizione del prodotto</p>
 		  <form action="./show_detail" method="get">
-		  	<input type="submit" value="visualizza dettagli">
+		  	<input type="submit" class="btn-details" value="visualizza dettagli">
 		  	<input type="hidden" name="id" value="${p.id}">
 		  </form>
 		</div>
@@ -136,6 +130,7 @@
 	
 	body{
 		margin: 0;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	
 	h1 {
@@ -171,6 +166,7 @@
 		background-color: white;
 		margin-right: 10px;
 		border-radius: 5px;
+		padding: 10px;
 	}
 	
 	.signin:hover {
@@ -194,6 +190,12 @@
 		
 	}
 	
+	.name-log-container{
+		display: flex;
+		gap: 10px;
+		align-items: center;
+	}
+	
 	.label-brand , .label-price , .label-search-product , .label-category , .label-gender {
 		margin-bottom: 5px;
 	}
@@ -210,7 +212,24 @@
 		background-color: black;
 		width: 50px;
 		border-radius: 5px;
+		height: 50px;
+		width: 100px;
 	
+	}
+	
+	.btn-details{
+	
+		background-color: black;
+		color: white;
+		border: 1px solid white;
+		padding: 10px;
+	}
+	
+	.btn-details:hover{
+		background-color: white;
+		color: black;
+		border: 1px solid black;
+		cursor: pointer;
 	}
 	
 	#button-filtra:hover {
@@ -266,6 +285,8 @@
 	.product-card p.product-description {
 		font-size: 14px;
 	}
+	
+	
 	
 </style>
 </html>

@@ -27,7 +27,7 @@
 				<div class="product-category">${product.category}</div>
 				<div class="product-type">${product.type}</div>
 				
-				<div class="product-price">&euro; 99,99 <span>&euro; 119,99</span></div>
+				<div class="product-price">&euro; ${product.listedPrice } <span>&euro; 250</span></div>
 				<div class="product-sizes">
 					<label for="size">Size:</label>
 					<select id="size" name="size">

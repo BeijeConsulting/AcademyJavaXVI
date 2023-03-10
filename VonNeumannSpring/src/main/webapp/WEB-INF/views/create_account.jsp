@@ -88,6 +88,7 @@
 	}
 	body{
 		margin: 0;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 	
 	h1 {
