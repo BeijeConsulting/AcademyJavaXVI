@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <title>Product List</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -20,10 +21,6 @@
 		<a class="w3-bar-item w3-button w3-hover-white"
 			href="/VonNeumannSpring/db3">Beije - Shoes First</a>
 		<div class="w3-right">
-			<a href="/VonNeumannSpring/db3/shopping_cart"
-				class="w3-button w3-deep-orange w3-hover-black"> 
-				<i class="fa fa-shopping-cart"></i> Shopping Cart
-			</a>
 			<c:choose>
 				<c:when test="${empty logged_user}">
 					<a class="w3-bar-item w3-button w3-hover-white"
@@ -32,6 +29,10 @@
 						href="/VonNeumannSpring/db3/signup">Sign-Up</a>
 				</c:when>
 				<c:otherwise>
+					<a href="/VonNeumannSpring/db3/shopping_cart"
+						class="w3-button w3-deep-orange w3-hover-black"> <i
+						class="fa fa-shopping-cart"></i> Shopping Cart
+					</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
 						href="/VonNeumannSpring/db3/user_page">User page</a>
 					<a class="w3-bar-item w3-button w3-hover-white"

@@ -39,7 +39,7 @@
         
         <c:if test="${not empty order}">
         <div class="w3-container">
-        <h3>$Hi {logged_user.name} ${logged_user.surname}, Your orders are:</h3>
+        <h3>Hi ${logged_user.name} ${logged_user.surname}, Your orders are:</h3>
         
 		<table class="w3-table-all w3-hoverable">
     		<thead>
@@ -52,6 +52,7 @@
 			        <th>Status</th>
 			        <th>Total price</th>
 			        <th>Created at</th>
+			        <th></th>
       			</tr>
    			</thead>
     		<c:forEach var="o" items="${order}">

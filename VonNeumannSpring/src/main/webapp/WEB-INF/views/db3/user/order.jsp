@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
-
+	<div class="w3-container">
     <h3>Order Details:</h3>
     <form action="/VonNeumannSpring/db3/add_order" method="post">
     <table class="w3-table-all w3-hoverable">
@@ -50,13 +50,8 @@
 			</tr>
     </table>
     <br>
-    <table class="w3-table-all w3-hoverable">
-			<thead>
-				<tr class="w3-deep-orange">
-					<th>Ordered Product details:</th>
-				</tr>
-			</thead>
-    </table>
+    
+					<h3>Ordered Product details:</h3>
     
     <table class="w3-table-all w3-hoverable">
 			<thead>
@@ -82,8 +77,8 @@
 			</c:forEach>
     </table>
 
-	<p>Spedisci a:</p>
-    	<select name="address">
+	<p>Send to:</p>
+    	<select name="address" class="w3-input">
     		<c:forEach items="${addresses}" var="address">
     		<c:choose>
     		<c:when test="${empty address.disabledAt}">
@@ -92,7 +87,9 @@
         	</c:choose>
    	 		</c:forEach>
 		</select>
-        <button type="submit">Confirm Order</button>
+		<br>
+        <button class="w3-button w3-orange" type="submit">Confirm Order</button>
     </form>
+    </div>
 </body>
 </html>

@@ -39,7 +39,7 @@
 	</div>
 	<!-- Header da mettere ovunque -->
   <div class="w3-container">
-    <h2>Ciao ${logged_user.name}!</h2>
+    <h2>Hi ${logged_user.name}!</h2>
   </div>
   <br>
   <div class="w3-container">
@@ -62,18 +62,18 @@
   </div>
   <br>
   <div class="w3-container">
-    <h4>Cosa vuoi fare?</h4>
+    <h4>Settings:</h4>
     <br>
     <form action="./edit_user" method="get">
-      <button class="w3-button w3-orange w3-hover-black">Modifica dettagli</button>
+      <button class="w3-button w3-orange w3-hover-black">Edit User</button>
     </form>
     <br>
     <form action="./my_order" method="get">
-      <button class="w3-button w3-orange w3-hover-black">Visualizza i miei ordini</button>
+      <button class="w3-button w3-orange w3-hover-black">My Orders</button>
     </form>
     <br>
     <form action="./addresses" method="get">
-      <button class="w3-button w3-orange w3-hover-black">Visualizza i miei indirizzi</button>
+      <button class="w3-button w3-orange w3-hover-black">My Addresses</button>
     </form>
   </div>
 </body>

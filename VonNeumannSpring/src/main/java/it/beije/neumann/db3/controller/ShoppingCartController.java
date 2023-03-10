@@ -59,5 +59,22 @@ public class ShoppingCartController {
 			return "db3/signin";
 		}
 	  }
+	  
+		@GetMapping("/db3/remove_cart_item/{cartItemId}")
+		public String removeShoppingCart(HttpServletRequest request, Model model, @PathVariable int cartItemId) {
+			
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("logged_user");
+			String referrer = request.getHeader("referer");
+	        model.addAttribute("logged_user", user);
+			if (user != null) {
+				ShoppingCart s = userService.getShoppingCart(user.getId());
+				if(s != null) { 
+					shoppingCartService.removeShoppingCartItem(s.getId(), cartItemId);
+				    return "redirect:" + referrer;
+				}
+			}
+		    return "redirect:" + "/db3/shopping_cart";
+		}
 	
 }
