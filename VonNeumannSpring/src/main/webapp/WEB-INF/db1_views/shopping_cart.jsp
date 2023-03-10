@@ -43,7 +43,7 @@
            <div class="d-flex  py-3">
                <h3>Shopping Cart</h3>
            </div>
- </div>
+ 
 
  <table class="table table-loght">
  
@@ -89,10 +89,11 @@
                 </c:out>
                
                </h3>
-                 
-               <a class="mx-3 btn-primary" href="./checkout"> Checkout</a>
+               <c:choose>  
+               	<c:when test="${totale != 0}"> <a class="mx-3 btn-primary" href="./checkout"> Checkout</a> </c:when>
+               </c:choose>
            </div>
        </div>
-
+</div>
 </body>
 </html>

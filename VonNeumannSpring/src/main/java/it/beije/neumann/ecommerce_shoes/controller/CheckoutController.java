@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.jni.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -52,18 +51,18 @@ public class CheckoutController {
 
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
 	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "new",  required = false) String newAddress) throws IOException {
-		
-		
-		
-		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		if (user == null) {
 			response.sendRedirect("./login");
 			return "index";
-		}
-		
+		}		
 		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
+		double totale = calcoloTotale(userCart.getId());
+		if (totale == 0) {
+			model.addAttribute("error", "Il carrello è vuoto. Non e' possibile effettuare il checkout");
+			return "error";
+		}
 		model.addAttribute("totale", calcoloTotale(userCart.getId()));
 		List<Addresses> addresses = addressesRepo.findByUserId(user.getId());
 		System.out.println(addresses);
