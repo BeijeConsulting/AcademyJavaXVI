@@ -39,7 +39,7 @@
         
         <c:if test="${not empty order}">
         <div class="w3-container">
-        <h3>${logged_user.name} ${logged_user.surname}, ecco i tuoi ordini</h3>
+        <h3>$Hi {logged_user.name} ${logged_user.surname}, Your orders are:</h3>
         
 		<table class="w3-table-all w3-hoverable">
     		<thead>
@@ -59,13 +59,13 @@
 			        <td>${o.transaction}</td>
 			        <td>${o.transactionDate}</td>
 			        <td>${o.paymentStatus}</td>
-			        <td>${address.label}</td>
-			        <td>${address.streetAddress}</td>
+			        <td>${o.address.label}</td>
+			        <td>${o.address.streetAddress}</td>
 			        <td>${o.status}</td>
 			        <td>${o.totalPrice}</td>
 			        <td>${o.createdAt}</td>
 			        <td><a href="<c:url value='/db3/order_item/${o.id}'/>"
-					class="w3-button w3-block w3-deep-orange">Visualizza</a></td>
+					class="w3-button w3-block w3-deep-orange">Open Details</a></td>
       			</tr>
     		</c:forEach>
   		</table>

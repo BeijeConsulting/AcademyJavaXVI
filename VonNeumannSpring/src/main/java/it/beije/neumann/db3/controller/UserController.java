@@ -101,9 +101,7 @@ public class UserController {
 		if (loggedUser!=null) {
 			model.addAttribute("logged_user", loggedUser);
 			List<OrderD> order = orderService.findByUserId(loggedUser.getId());
-			Address address = addressService.findById(loggedUser.getId());
 			model.addAttribute("order", order);
-			model.addAttribute("address", address);
 			jsp+="user/my_order";
 		} else {
 			jsp+="signin";

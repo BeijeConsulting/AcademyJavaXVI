@@ -27,6 +27,7 @@ import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
 import it.beije.neumann.db3.model.User;
 import it.beije.neumann.db3.service.AddressService;
+
 import it.beije.neumann.db3.service.OrderItemServiceD;
 import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
@@ -49,6 +50,7 @@ public class OrderControllerD {
 	private OrderServiceD orderService;
 	@Autowired
 	private AddressService addressService;
+	@Autowired
 	private OrderItemServiceD orderItemService;
 	
 	@GetMapping("/db3/order")
