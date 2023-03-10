@@ -51,6 +51,10 @@
                 </div>
                  </c:if>
             </c:forEach>
+            <c:if test="${not empty shoppingCart.shoppingCartItem}">
+		        <a class="w3-bar-item w3-button w3-orange w3-hover-black w3-margin"
+			href="/VonNeumannSpring/db3/order">Buy</a>
+		    </c:if>
         </div>
     </c:if>
 

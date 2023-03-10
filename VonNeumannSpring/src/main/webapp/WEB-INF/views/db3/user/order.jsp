@@ -26,17 +26,17 @@
 	</div>
 	<!-- Header da mettere ovunque -->
 
-    <h3>I dettagli del tuo ordine:</h3>
+    <h3>Order Details:</h3>
     <form action="/VonNeumannSpring/db3/add_order" method="post">
     <table class="w3-table-all w3-hoverable">
 			<thead>
 				<tr class="w3-deep-orange">
-					<th>Codice ordine</th>
-					<th>Transazione</th>
-					<th>Data Transazione</th>
-					<th>Stato pagamento</th>
-					<th>Stato ordine</th>
-					<th>Prezzo totale</th>
+					<th>Order Code</th>
+					<th>Transaction</th>
+					<th>Transaction Date</th>
+					<th>Payment Status</th>
+					<th>Order Status</th>
+					<th>Total Price</th>
 				</tr>
 			</thead>
 			
@@ -53,7 +53,7 @@
     <table class="w3-table-all w3-hoverable">
 			<thead>
 				<tr class="w3-deep-orange">
-					<th>Elementi</th>
+					<th>Ordered Product details:</th>
 				</tr>
 			</thead>
     </table>
@@ -61,12 +61,12 @@
     <table class="w3-table-all w3-hoverable">
 			<thead>
 				<tr class="w3-deep-orange">
-					<th>Codice item</th>
-					<th>Nome</th>
-					<th>Colore</th>
-					<th>Quantità</th>
-					<th>Taglia</th>
-					<th>Prezzo</th>
+					<th>Item code</th>
+					<th>Name</th>
+					<th>Color</th>
+					<th>Quantity</th>
+					<th>Size</th>
+					<th>Price</th>
 				</tr>
 			</thead>
 			
@@ -92,7 +92,7 @@
         	</c:choose>
    	 		</c:forEach>
 		</select>
-        <button type="submit">Ordina</button>
+        <button type="submit">Confirm Order</button>
     </form>
 </body>
 </html>
