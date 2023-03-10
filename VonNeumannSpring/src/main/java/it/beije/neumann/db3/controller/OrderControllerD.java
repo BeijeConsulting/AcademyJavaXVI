@@ -27,6 +27,7 @@ import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
 import it.beije.neumann.db3.model.User;
 import it.beije.neumann.db3.service.AddressService;
+import it.beije.neumann.db3.service.OrderItemServiceD;
 import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
@@ -48,6 +49,7 @@ public class OrderControllerD {
 	private OrderServiceD orderService;
 	@Autowired
 	private AddressService addressService;
+	private OrderItemServiceD orderItemService;
 	
 	@GetMapping("/db3/order")
     public String getProduct(Model model, HttpServletRequest request) {
@@ -153,4 +155,35 @@ public class OrderControllerD {
 		
 	    return "db3/user/user_page";
 	}
+	
+	//Commentalo per non usarlo, ma non eliminarlo
+//	@PostMapping("/db3/add_order")
+//	public String addOrderMary(List<OrderItemD> orderItems) {
+//		System.out.println("POST add_order");
+////		System.out.println(order);
+//		for(OrderItemD od : orderItems) {
+//			System.out.println(od);
+//		}
+//		
+//	    return "db3";
+//	}
+	
+	@GetMapping("/db3/order_item/{id}")
+	public String viewOrder(HttpServletRequest request, @PathVariable int id, Model model) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("logged_user");
+		String jsp = "db3/";
+		
+		if (user != null) {
+			List<OrderItemD> items = orderItemService.findByOrderId(id);
+			model.addAttribute("items", items);
+			jsp += "user/order_detail";
+		} else {
+			return "db3/signin";
+		}
+		
+		return jsp;
+		
+	}
+	
 }
