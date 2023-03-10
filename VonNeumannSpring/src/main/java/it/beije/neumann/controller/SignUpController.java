@@ -36,7 +36,11 @@ public class SignUpController {
 	    
 //	    System.out.println(date);
 //	    System.out.println(user);
-	    loginService.addAccount(user);
+	    if (loginService.addAccount(user) == -1) {
+	    	
+	    	model.addAttribute("emailExists", true);
+	    	return "create_account";
+	    }
 	
 	    return "redirect:/login";
 	}

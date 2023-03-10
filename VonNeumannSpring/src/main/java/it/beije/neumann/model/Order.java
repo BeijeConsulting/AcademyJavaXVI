@@ -45,11 +45,11 @@ public class Order {
     @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
 	public Long getId() {

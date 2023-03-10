@@ -39,14 +39,19 @@ public class LoginService {
 	}
 	
 	
-	public void addAccount (User user) {
+	public int addAccount (User user) {
 		
-		userRepository.save(user);
-		ShoppingCart cart = new ShoppingCart();
+		if (userRepository.findByEmail(user.getEmail()).size() == 0) {
+			userRepository.save(user);
+			ShoppingCart cart = new ShoppingCart();
+			
+			cart.setCreatedAt(null);
+			cart.setUserId(user.getId());
+			cartRepository.save(cart);
+		} else return -1;
 		
-		cart.setCreatedAt(null);
-		cart.setUserId(user.getId());
-		cartRepository.save(cart);
+		return 0;
+				
 	}
 	
 }

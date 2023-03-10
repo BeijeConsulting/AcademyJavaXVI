@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--@ taglib prefix="form" uri="http://www.springframework.org/tags/form"--%>
 <!DOCTYPE html>
 <html>
@@ -14,9 +15,13 @@
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 
 	</header>
-	
+
 
 	<section>
+	
+		<c:choose>
+			<c:when test="${!empty emailExists}"><h3 class="wrong">email gia' esistente</h3></c:when>
+		</c:choose>
 
 		<form action="./create_account" method="post">
 			
@@ -76,7 +81,11 @@
 </body>
 
 <style>
+	.wrong {
 
+		color: red;
+	
+	}
 	body{
 		margin: 0;
 	}

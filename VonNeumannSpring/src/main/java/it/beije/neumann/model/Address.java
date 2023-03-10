@@ -39,9 +39,9 @@ public class Address {
     @Column(name = "instructions")
     private String instructions;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+
+    @Column(name = "user_id")
+    private Integer user;
 
     public Integer getId() {
         return id;
@@ -52,10 +52,12 @@ public class Address {
     }
 
     public LocalDateTime getCreatedAt() {
+    	
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
+    	createdAt = LocalDateTime.now();
         this.createdAt = createdAt;
     }
 
@@ -123,11 +125,11 @@ public class Address {
         this.instructions = instructions;
     }
 
-    public User getUser() {
+    public Integer getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Integer user) {
         this.user = user;
     }
 
@@ -136,7 +138,7 @@ public class Address {
 		return "Address [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", label=" + label
 				+ ", nameSurname=" + nameSurname + ", country=" + country + ", streetAddress=" + streetAddress
 				+ ", telephone=" + telephone + ", zipcode=" + zipcode + ", instructions=" + instructions + ", user="
-				+ user + "]";
+				+ "]";
 	}
 
     
