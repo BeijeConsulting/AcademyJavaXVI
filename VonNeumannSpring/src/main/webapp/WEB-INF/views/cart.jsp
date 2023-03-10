@@ -12,31 +12,78 @@
 		<h1><a href="home">ECOMMERCE SHOES</a></h1>
 	</header>
 	
-<!--  	<div class="container">
+	
+	
+	<c:choose>
+	<c:when test="${sessionScope.user == null}">
+		<div class="container">
 		<h2>CARRELLO</h2>
 		<div class="products">
+	 <c:forEach var="cartItem" items="${sessionScope.shoppingCartItemsList}">
 			<div class="product">
 				<img src="https://picsum.photos/200/300?grayscale">
 				<div>
-					<div class="product-name">${productDetail.product.name}</div>
-					<div class="product-brand">${productDetail.product.brand}</div>
-					<div class="product-size">Taglia:${productDetail.size}</div>
+					<div class="product-name">${cartItem.productDetails.product.name}</div>
+					<div class="product-brand">${cartItem.productDetails.product.brand}</div>
+					<div class="product-size">Taglia:${cartItem.productDetails.size}</div>
+					<div class="product-size">Quantita: ${cartItem.quantity}</div>
 					<div>
-						<span class="product-price">&euro;${productDetail.product.listedPrice} </span>
-						<span class="product-discount">&euro;  ${productDetail.sellingPrice}</span>
+						<span class="product-price">&euro; ${cartItem.productDetails.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${cartItem.productDetails.sellingPrice}</span>
 					</div>
 				</div>
-				<button class="product-remove">Rimuovi</button>
+				<form method="get" action="remove_from_cart">
+					<input type="hidden" name="id" value="${cartItem.id}">
+					<input type="submit" class="product-remove" value="Rimuovi">
+				</form>
+				
 			</div>
+			</c:forEach>
 		</div>
-		<div class="total">Totale: &euro; 40</div>
+		
+		<div class="total">Totale: &euro; ${sessionScope.totale}</div>
 		<button class="checkout">CHECKOUT</button>
-	</div> -->
-	
-	
-	
+	</div> 
+	</c:when>
+	<c:otherwise>
 	
 	<div class="container">
+		<h2>CARRELLO</h2>
+		<div class="products">
+	 <c:forEach var="cartItem" items="${shoppingCartItemsList}">
+			<div class="product">
+				<img src="https://picsum.photos/200/300?grayscale">
+				<div>
+					<div class="product-name">${cartItem.productDetails.product.name}</div>
+					<div class="product-brand">${cartItem.productDetails.product.brand}</div>
+					<div class="product-size">Taglia:${cartItem.productDetails.size}</div>
+					<div class="product-size">Quantita: ${cartItem.quantity}</div>
+					<div>
+						<span class="product-price">&euro; ${cartItem.productDetails.product.listedPrice} </span>
+						<span class="product-discount">&euro;  ${cartItem.productDetails.sellingPrice}</span>
+					</div>
+				</div>
+				<form method="get" action="remove_from_cart">
+					<input type="hidden" name="id" value="${cartItem.id}">
+					<input type="submit" class="product-remove" value="Rimuovi">
+				</form>
+				
+			</div>
+			</c:forEach>
+		</div>
+		
+		<div class="total">Totale: &euro; ${totale}</div>
+		<button class="checkout">CHECKOUT</button>
+	</div> 
+	
+	</c:otherwise>
+			</c:choose>	
+	
+	
+	
+	
+	
+<!--  	<div class="container">
 		<h2>CARRELLO</h2>
 		<div class="products">
 	 <c:forEach var="cartItem" items="${shoppingCartItemsList}">
@@ -62,7 +109,7 @@
 		
 		<div class="total">Totale: &euro; ${totale}</div>
 		<button class="checkout">CHECKOUT</button>
-	</div> 
+	</div> -->
 
 </body>
 

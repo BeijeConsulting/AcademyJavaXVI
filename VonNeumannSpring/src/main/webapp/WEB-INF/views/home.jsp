@@ -106,6 +106,12 @@
 		</form>
 	</section>
 	
+	<c:choose>
+		<c:when test= "${ !empty message}">
+			<label class = "wrong">${message}</label> <br><br>
+		</c:when>
+	</c:choose>
+	
 	<section class="products">
 	 <c:forEach var="p" items="${products}">
 		<div class="product-card">
