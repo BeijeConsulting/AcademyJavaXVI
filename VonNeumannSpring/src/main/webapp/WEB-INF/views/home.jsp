@@ -207,14 +207,12 @@
 	}
 	
 	#button-filtra{
-		
 		color: white;
 		background-color: black;
 		width: 50px;
 		border-radius: 5px;
 		height: 50px;
 		width: 100px;
-	
 	}
 	
 	.btn-details{
