@@ -10,6 +10,7 @@ import it.beije.neumann.db3.model.OrderD;
 import it.beije.neumann.db3.model.OrderItemD;
 import it.beije.neumann.db3.repository.OrderItemRepositoryD;
 import it.beije.neumann.db3.repository.OrderRepositoryD;
+import it.beije.neumann.model.Order;
 
 @Service
 public class OrderServiceD {
@@ -19,6 +20,14 @@ public class OrderServiceD {
     
     @Autowired
     private OrderItemRepositoryD orderItemRepository;
+    
+	public List<OrderD> findByUserId(Integer userId) {
+		if(userId!=null) {
+			return orderRepository.findByUserId(userId);
+		} else {
+			return null;
+		}
+	}
     
     @Transactional
     public void saveOrder(OrderD order, List<OrderItemD> orderItems) {
