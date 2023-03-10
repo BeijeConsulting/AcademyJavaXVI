@@ -79,6 +79,7 @@ public class CheckoutController {
 			 @RequestParam(name = "country", required = false) String country,
 			 @RequestParam(name = "street", required = false) String street,
 			 @RequestParam(name = "zipcode", required = false) String zipcode,
+			 @RequestParam(name = "telephone", required = false) String telephone,
 			 @RequestParam(name = "instructions", required = false) String instructions
 			) throws IOException {
 		HttpSession session = request.getSession();
@@ -91,11 +92,14 @@ public class CheckoutController {
 		if(label != null) {
 			Addresses address = new Addresses();
 			address.setLabel(label);
+			address.setUser(user);
 			address.setNameSurname(name);
 			address.setCountry(country);
 			address.setStreetAddress(street);
 			address.setZipcode(zipcode);
+			address.setTelephone(telephone);
 			address.setInstructions(instructions);
+			address.setCreatedAt(LocalDateTime.now());
 			addressesRepo.save(address);
 		}
 		
