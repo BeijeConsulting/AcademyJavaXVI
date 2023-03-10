@@ -21,6 +21,7 @@ public class OrderServiceD {
     @Autowired
     private OrderItemRepositoryD orderItemRepository;
     
+    @Transactional
 	public List<OrderD> findByUserId(Integer userId) {
 		if(userId!=null) {
 			return orderRepository.findByUserId(userId);

@@ -1,6 +1,7 @@
 package it.beije.neumann.db3.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -94,8 +95,8 @@ public class UserController {
 		
 		if (loggedUser!=null) {
 			model.addAttribute("logged_user", loggedUser);
-			//OrderD order = (OrderD) orderService.findByUserId(loggedUser.getId());
-			//model.addAttribute("order", order);
+			List<OrderD> order = orderService.findByUserId(loggedUser.getId());
+			model.addAttribute("order", order);
 			jsp+="user/my_order";
 		} else {
 			jsp+="signin";
