@@ -53,47 +53,70 @@ public class ProductdDetailController {
 			
 			User user =(User)session.getAttribute("user");
 			
-			Optional<ShoppingCart> sc = shoppingCartRepository.findById(user.getId());
-			ShoppingCart cart = sc.get();
+			Optional<ShoppingCart> sc = null;
+			ShoppingCart cart = null;
+			
+			
+			if( user == null ) {
+				if(  session.getAttribute("cart") == null ) {
+					sc = shoppingCartRepository.findById(1);
+					cart = sc.get();
+				}else {
+					cart = (ShoppingCart) session.getAttribute("cart");
+				}
 
+			}else {
+				 sc = shoppingCartRepository.findById(user.getId());
+				 cart = sc.get();
+			}
+			
 			ShoppingCartItem cartItem = new ShoppingCartItem();
 		
 			cartItem.setCreatedAt();
 			cartItem.setQuantity(Integer.valueOf(quantity));
 
-//			cartItem.setQuantity(Integer.valueOf(quantity));
-//			cartItem.setProductDetailsId(productDetail.getId());
 			cartItem.setShoppingCartId(cart.getId());
 			
 			cartItem.setProductDetails(productDetail);
+			List<ShoppingCartItem> cartItems = null;
+			if( user == null ) {
+				System.out.println("AGGIUNTO AL NON UTENTE " + cart.getId());
+				session.setAttribute("cart", cart);
+				session.setAttribute("productDetail", productDetail);
+			}else {
+				cartItemRepository.save(cartItem);
+				model.addAttribute("productDetail", productDetail);
+				model.addAttribute("cart", cart);
+			}
 			
-			List<ShoppingCartItem> cartItems = new ArrayList<>();
+			
+			
+			if( ((ShoppingCart)session.getAttribute("cart")).getShoppingCartItem() == null  ) {
+				 cartItems = new ArrayList<>();
+			}else {
+				cartItems = ((ShoppingCart)session.getAttribute("cart")).getShoppingCartItem();
+			}
+			
 			cartItems.add(cartItem);
 			cart.setShoppingCartItem(cartItems);
-			
-			cartItemRepository.save(cartItem);
-			
-			model.addAttribute("productDetail", productDetail);
-			model.addAttribute("cart", cart);
+
+
 		}catch( NotEnoughQuantityException neqEX ) {
 			String message = "Non ci sono abbastanza prodotti";
 			System.out.println(message + neqEX);
 			model.addAttribute("message", message);
+			return "home";
 		
 		}catch( IllegalArgumentException iaEX ) {
 			String message = "Inserisci correttamente la quantità";
 			System.out.println(message + iaEX);
 			model.addAttribute("message", message);
+			return "home";
 		}
-//		catch( NullPointerException npEX ) {
-//			String message = "Loggati per acquistare";
-//			System.out.println(message + npEX);
-//			model.addAttribute("message", message);
-//		}
-//	
+
 		
 		
-		return "redirect: home";
+		return "redirect:home";
 	
 	
 	}

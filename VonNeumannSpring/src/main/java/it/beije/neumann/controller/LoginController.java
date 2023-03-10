@@ -69,7 +69,7 @@ public class LoginController {
     		model.addAttribute("user", user);
     		model.addAttribute("isFailed", isFailed);
     		
-    		return "home";
+    		return "redirect: home";
     	}
     	
     	
@@ -78,7 +78,8 @@ public class LoginController {
     	System.out.println(isFailed);
     	model.addAttribute("isFailed", isFailed);
     	
-    	return "/login";
+    	return "home";
+    //	return "/login";
     }
 
 

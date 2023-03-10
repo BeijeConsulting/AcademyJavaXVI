@@ -41,11 +41,19 @@ public class CartController {
 	public String showCart( HttpSession session, Model model ){
 	
 		try {
+			ShoppingCart shoppingCart = null;
+			User user =(User)session.getAttribute("user");
+		
+			if( user == null) {
+				shoppingCart = (ShoppingCart) session.getAttribute("cart");
+			}else {
+				shoppingCart = shoppingCartService.findShoppingCart(user.getId());
+			}
 			
-		User user =(User)session.getAttribute("user");
-		ShoppingCart shoppingCart = shoppingCartService.findShoppingCart(user.getId());
+
 		List<ShoppingCartItem> shoppingCartItemsList = shoppingCart.getShoppingCartItem();
 		List<ShoppingCartItem> shoppingCartItemsListAvaibe =  new ArrayList<ShoppingCartItem>();
+		
 		double totale = 0 ;
 
 		for( int i = 0; i < shoppingCartItemsList.size(); i++ ) {
@@ -55,18 +63,28 @@ public class CartController {
 			}
 		}
 		for( int i = 0; i < shoppingCartItemsListAvaibe.size(); i++ ) {
-			totale += shoppingCartItemsListAvaibe.get(i).getProductDetails().getSellingPrice();
-		}		
-		model.addAttribute("totale",totale);
-		model.addAttribute("shoppingCart", shoppingCart);
-		model.addAttribute("shoppingCartItemsList", shoppingCartItemsListAvaibe);
+			totale += shoppingCartItemsListAvaibe.get(i).getProductDetails().getSellingPrice() * shoppingCartItemsListAvaibe.get(i).getQuantity();
 		
+		}		
+		
+	
+		if( user == null ) {
+			session.setAttribute("totale",totale);
+			session.setAttribute("shoppingCart", shoppingCart);
+			session.setAttribute("shoppingCartItemsList", shoppingCartItemsListAvaibe);
+			
+		}else {
+			model.addAttribute("totale",totale);
+			model.addAttribute("shoppingCart", shoppingCart);
+			model.addAttribute("shoppingCartItemsList", shoppingCartItemsListAvaibe);
+		}
+			
 		}catch( IndexOutOfBoundsException iofEX ) {
 			String message = "Carrello vuoto";
 			System.out.println(message + iofEX);
 			model.addAttribute("message", message);
 		}catch( NullPointerException npEX ) {
-			String message = "Loggati per vedere il carrello";
+			String message = "Nulla";
 			System.out.println(message + npEX);
 			model.addAttribute("message", message);
 		}
@@ -76,15 +94,31 @@ public class CartController {
 	}
 	
 	@RequestMapping(value = "/remove_from_cart", method = RequestMethod.GET)
-	public String removeFromCart( Model model, @RequestParam(required=false) String id  ){
-		
-		System.out.println("ID da rimuovere " +id);
-		
-		ShoppingCartItem shoppingCartItem = shoppingCartItemService.findById(Integer.valueOf(id));
-		shoppingCartItem.setDisabledAt(LocalDateTime.now());
-		shoppingCartItemRepository.save(shoppingCartItem);
-	
-		return "redirect: home";
+	public String removeFromCart( HttpSession session, Model model, @RequestParam(required=false) String id  ){
+		try {
+			System.out.println("ID da rimuovere " +id);
+			User user =(User)session.getAttribute("user");
+			
+			if( user == null ) {
+				ShoppingCartItem shoppingCartItem = shoppingCartItemService.findById(1);
+				shoppingCartItem.setDisabledAt(LocalDateTime.now());
+
+			}else {
+				ShoppingCartItem shoppingCartItem = shoppingCartItemService.findById(Integer.valueOf(id));
+				shoppingCartItem.setDisabledAt(LocalDateTime.now());
+				shoppingCartItemRepository.save(shoppingCartItem);
+			}
+				
+		}catch( IndexOutOfBoundsException iofEX ) {
+			String message = "Carrello vuoto";
+			System.out.println(message + iofEX);
+			model.addAttribute("message", message);
+		}catch( NullPointerException npEX ) {
+			String message = "Nulla";
+			System.out.println(message + npEX);
+			model.addAttribute("message", message);
+		}
+			return "redirect: home";
 	}
 	
 	
