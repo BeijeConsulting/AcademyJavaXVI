@@ -47,7 +47,8 @@
 			        <th>Transaction</th>
 			        <th>Transaction date</th>
 			        <th>Payment status</th>
-			        <th>Address</th>
+			        <th>Address name</th>
+			        <th>Street address</th>
 			        <th>Status</th>
 			        <th>Total price</th>
 			        <th>Created at</th>
