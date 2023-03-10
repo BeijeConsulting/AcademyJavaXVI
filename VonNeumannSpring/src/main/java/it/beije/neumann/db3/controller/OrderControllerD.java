@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.beije.neumann.db3.model.Address;
 import it.beije.neumann.db3.model.OrderD;
 import it.beije.neumann.db3.model.OrderItemD;
 import it.beije.neumann.db3.model.Product;
@@ -81,10 +82,12 @@ public class OrderControllerD {
 	    	totalPrice+=price;
 	    	orderItems.add(orderItem);
 	    }
+	    List<Address> addresses = user.getAddresses();
 	    order.setTotalPrice(totalPrice);
 //	    model.addAttribute("orderItems", orderItems); //Prova Mary
 	    order.setOrderItems(orderItems); //Prova Mary
 	    model.addAttribute("order", order);
+	    model.addAttribute("addresses", addresses);
         
 //        return "db3/user/order"; //deve esserci order.jsp nella cartella user che prende e stampa questi dati in hiddenform che vengono poi presi da add_order
 	    return "db3/user/order2"; //Prova Mary
@@ -107,14 +110,14 @@ public class OrderControllerD {
 //	}
 	
 	@PostMapping("/db3/add_order")
-	public String addOrder(List<OrderItemD> orderItems) {
+	public String addOrder(@ModelAttribute("orderItems") ArrayList<OrderItemD> orderItems, String transaction, Integer address) {
 		System.out.println("POST add_order");
-//		System.out.println(order);
+		System.out.println(transaction+address);
 		for(OrderItemD od : orderItems) {
 			System.out.println(od);
 		}
 		
-	    return "db3";
+	    return "/db3";
 	}
 	
 	//Commentalo per non usarlo, ma non eliminarlo

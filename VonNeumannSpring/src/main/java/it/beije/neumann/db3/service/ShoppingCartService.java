@@ -45,8 +45,9 @@ public class ShoppingCartService {
 	@Transactional
 	public List<ShoppingCartItem> getShoppingCartItems(Integer shoppingCartId) {
 		ShoppingCart s = findShoppingCart(shoppingCartId);
+		System.out.println("service getShoppingCartItems ShoppingCart: "+s);
 		List<ShoppingCartItem> items = s.getShoppingCartItem();
-		System.out.println(s);
+		System.out.println("unlazy "+s);
 		if(items == null)
 			items = new ArrayList<ShoppingCartItem>();
 		return items;
