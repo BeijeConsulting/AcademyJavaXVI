@@ -37,19 +37,22 @@
 
 <div class="container py-5">
 	<div class="row">
-		<div class="col">
+		<div class="col-6">
 			<form action="./checkout" method="post">
-			  <c:choose>
-	           <c:when test="${ not empty addresses }">
-			   			 <label for="addresses">Size: </label>
+			   			 <label for="addresses">Address: </label>
 			             <select name="addresses" id="addresses"  class="form-control">
-							<option value="" selected disabled>Seleziona un indirizzo</option>
+							<option value="" selected disabled>Select Address</option>
 			    		  <c:forEach var="d" items="${ addresses }">
    					       <option value="${ d }"><c:out value="${d.label }"></c:out></option>
    					      </c:forEach>
 				         </select>
-	           </c:when>
-	           <c:otherwise>
+				        <div class="form-check my-3">
+  							<input class="form-check-input" type="checkbox" value="" name="newAddress">
+  							<label class="form-check-label" for="flexCheckDefault">
+   								 Send to new address
+							 </label>
+						</div>
+
 	           		<h3>Add new address</h3>
 	           		
 	           			<div class="mt-2">
@@ -81,10 +84,9 @@
 							<input name="instructions" id="instructions" type="text" class="form-control" placeholder="Instructions">
 						</div>
 	           		
-	           </c:otherwise>
-             </c:choose> 
+	           		<h3>Payments</h3>
                   <div class="mt-2">
-					<label for="card" class="form-label">Card</label>
+					<label for="card" class="form-label">Card Number</label>
 					<input name="card" id="card" type="number" class="form-control" placeholder="Card">
 				 </div>
              

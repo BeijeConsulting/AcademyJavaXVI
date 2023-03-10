@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.jni.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -44,9 +45,12 @@ public class CheckoutController {
 	@Autowired
 	private OrdersItemsRepository ordersItemsRepo;
 
+
 	@RequestMapping(value = "/checkout", method = RequestMethod.GET)
-	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("GET /checkout");
+	public String getCheckout(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "new",  required = false) String newAddress) throws IOException {
+		
+		
+		
 		
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
@@ -59,17 +63,40 @@ public class CheckoutController {
 		model.addAttribute("totale", calcoloTotale(userCart.getId()));
 		List<Addresses> addresses = addressesRepo.findByUserId(user.getId());
 		System.out.println(addresses);
+		if(newAddress != null && newAddress.equals("true")) {
+			model.addAttribute("new", "true");
+		} else {
+			model.addAttribute("new");
+		}
 		model.addAttribute("addresses", addresses);
 		return "checkout";
 	}
 	
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
-	public String postCheckout(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String postCheckout(Model model, HttpServletRequest request, HttpServletResponse response,
+			 @RequestParam(name = "label", required = false) String label,
+			 @RequestParam(name = "name", required = false) String name,
+			 @RequestParam(name = "country", required = false) String country,
+			 @RequestParam(name = "street", required = false) String street,
+			 @RequestParam(name = "zipcode", required = false) String zipcode,
+			 @RequestParam(name = "instructions", required = false) String instructions
+			) throws IOException {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		if (user == null) {
 			response.sendRedirect("./login");
 			return "index";
+		}
+		
+		if(label != null) {
+			Addresses address = new Addresses();
+			address.setLabel(label);
+			address.setNameSurname(name);
+			address.setCountry(country);
+			address.setStreetAddress(street);
+			address.setZipcode(zipcode);
+			address.setInstructions(instructions);
+			addressesRepo.save(address);
 		}
 		
 		ShoppingCart userCart = shoppingCartRepo.findByUserId(user.getId());
