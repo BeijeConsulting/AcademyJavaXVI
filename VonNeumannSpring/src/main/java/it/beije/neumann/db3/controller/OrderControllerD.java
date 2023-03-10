@@ -131,15 +131,25 @@ public class OrderControllerD {
 		
 		HttpSession session = request.getSession();
 		
+		User loggedUser = userService.getLoggedUser(session);
+		
 		OrderD loadingOrder = (OrderD) session.getAttribute("loading_order");
 		loadingOrder.setId(0);
 		loadingOrder.setTransaction(transaction);
 		loadingOrder.setPaymentStatus("Completed");
 		loadingOrder.setStatus("Shipped");
 		loadingOrder.setAddress(addressService.findById(address));
-		loadingOrder.setUser(userService.getLoggedUser(session));
+		loadingOrder.setUser(loggedUser);
 		
 		orderService.saveOrder(loadingOrder, loadingOrder.getOrderItems());
+		
+		loggedUser = userService.findById(loggedUser.getId());
+		session.setAttribute("logged_user", loggedUser);
+		
+		System.out.println("Shopping cart id: "+loggedUser.getShoppingCart().getId());
+//		shoppingCartService.findShoppingCart(loggedUser.getShoppingCart().getId());
+		shoppingCartService.emptyShoppingCart(loggedUser.getShoppingCart().getId());
+		
 		
 	    return "db3/user/user_page";
 	}

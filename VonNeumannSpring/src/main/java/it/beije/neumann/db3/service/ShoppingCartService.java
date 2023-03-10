@@ -50,18 +50,29 @@ public class ShoppingCartService {
 		System.out.println("unlazy "+s);
 		if(items == null)
 			items = new ArrayList<ShoppingCartItem>();
-		return items;
+		
+		List<ShoppingCartItem> items2 = new ArrayList<>();
+		
+		for(ShoppingCartItem item : items) {
+			if(item.getDisabledAt()==null) {
+				items2.add(item);
+			}
+		}
+		
+		return items2;
 	}
 	
 	@Transactional
 	public ShoppingCart emptyShoppingCart(Integer shoppingCartId) {
 		ShoppingCart s = findShoppingCart(shoppingCartId);
+		System.out.println("emptyShoppingCart/ s -> "+s);
 		List<ShoppingCartItem> items = getShoppingCartItems(shoppingCartId);
+		System.out.println("emptyShoppingCart/ items -> "+items);
 		for(ShoppingCartItem item: items) {
 			item.setDisableAt(LocalDateTime.now());
-			item.setShoppingCartId(null); //todo in realtà non bisogna farlo e nel getShoppingCart items e service controller di shopping cart va controllata la deletedat
+//			item.setShoppingCartId(null); //todo in realtà non bisogna farlo e nel getShoppingCart items e service controller di shopping cart va controllata la deletedat
 		}
-		s.setShoppingCartItem(null);
+//		s.setShoppingCartItem(null);
 		return s;
 	}
 

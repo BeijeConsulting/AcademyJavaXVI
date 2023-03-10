@@ -42,12 +42,14 @@
     <c:if test="${not empty shoppingCart}">
         <div class="w3-container">
             <c:forEach items="${shoppingCart.shoppingCartItem}" var="item">
+            	<c:if test="${empty item.disabledAt}">
                 <div class="w3-card-4 w3-margin">
                     <div class="w3-container">
                         <h3><c:out value="${item.productDetailsId}"/></h3>
                         <p>Quantity: <c:out value="${item.quantity}"/></p>
                     </div>
                 </div>
+                 </c:if>
             </c:forEach>
         </div>
     </c:if>

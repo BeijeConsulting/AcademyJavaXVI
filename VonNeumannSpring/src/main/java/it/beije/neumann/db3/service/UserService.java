@@ -76,8 +76,10 @@ public class UserService {
 		return s;
 	}
 
+	@Transactional
 	public User findById(Integer id) {
 		Optional<User> u = userRepo.findById(id);
+		System.out.println(u);
 		return u.get(); // Essendo un logged user, non tornerà mai null [eventualmente provare]
 	}
 
