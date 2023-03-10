@@ -43,7 +43,7 @@
            <div class="d-flex  py-3">
                <h3>Shopping Cart</h3>
            </div>
- </div>
+ 
 
  <table class="table table-loght">
  
@@ -93,6 +93,6 @@
                <a class="mx-3 btn-primary" href="#"> Checkout</a>
            </div>
        </div>
-
+</div>
 </body>
 </html>
