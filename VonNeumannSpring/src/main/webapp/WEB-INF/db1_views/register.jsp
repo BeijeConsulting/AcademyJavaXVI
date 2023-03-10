@@ -42,7 +42,7 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password">
               </div>
-              <a href="./register">Login page</a>
+              <a href="./login">Login page</a>
               <button type="submit" class="btn btn-primary">Registrati</button>
             </form>
           </div>
