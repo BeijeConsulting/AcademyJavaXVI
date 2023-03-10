@@ -50,7 +50,7 @@ public class User {
     @Column(name = "birth_date")
     private String birthDate;
     
-	@OneToMany(targetEntity = Address.class, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private List<Address> addresses;
 
@@ -141,7 +141,7 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", name=" + name
                 + ", lastname=" + lastname + ", email=" + email + ", password=" + password + ", telephone=" + telephone
-                + ", birthDate=" + birthDate + "]";
+                + ", birthDate=" + birthDate + ", addresses" + addresses + "]";
     }
     
 }
