@@ -59,6 +59,8 @@
 			        <td>${o.transaction}</td>
 			        <td>${o.transactionDate}</td>
 			        <td>${o.paymentStatus}</td>
+			        <td>${address.label}</td>
+			        <td>${address.streetAddress}</td>
 			        <td>${o.totalPrice}</td>
 			        <td>${o.createdAt}</td>
       			</tr>
