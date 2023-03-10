@@ -47,32 +47,5 @@ public class HomeController {
 		}
 		return "home";
 	}
- 
-    
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String cart(Model model) {
-    	return "cart";
-    }
-    
-    @RequestMapping(value = "/address", method = RequestMethod.GET)
-    public String address(Model model) {
-    	return "address";
-    }
-
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String order(Model model) {
-    	return "order";
-    }
-    
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile(Model model) {
-    	return "profile";
-    }
-    
-    @RequestMapping(value = "/order_history", method = RequestMethod.GET)
-    public String order_history(Model model) {
-    	return "order_history";
-    }
-
 
 }

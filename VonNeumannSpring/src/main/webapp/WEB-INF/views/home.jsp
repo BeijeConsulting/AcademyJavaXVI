@@ -106,7 +106,11 @@
 		</form>
 	</section>
 	
+	
 	<section class="products">
+	<c:choose>
+		<c:when test="${empty products}"> <h3>Nessun prodotto disponibile.</h3></c:when>
+		<c:otherwise>
 	 <c:forEach var="p" items="${products}">
 		<div class="product-card">
 		  <img src="https://picsum.photos/200/300?grayscale" alt="">
@@ -121,6 +125,8 @@
 		  </form>
 		</div>
 	</c:forEach>
+	</c:otherwise>
+	</c:choose>
 	</section>
 
 
