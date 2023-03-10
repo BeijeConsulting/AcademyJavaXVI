@@ -68,7 +68,7 @@
       <button class="w3-button w3-orange w3-hover-black">Modifica dettagli</button>
     </form>
     <br>
-    <form action="./" method="get">
+    <form action="./my_order" method="get">
       <button class="w3-button w3-orange w3-hover-black">Visualizza i miei ordini</button>
     </form>
     <br>
