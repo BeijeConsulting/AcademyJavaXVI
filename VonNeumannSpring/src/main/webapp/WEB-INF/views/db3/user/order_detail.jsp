@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Order</title>
+<title>Order detail</title>
 <!-- include the w3.css stylesheet -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
@@ -35,47 +35,33 @@
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
-	<div><h1> &nbsp; My Order</h1></div>
-        
-        <c:if test="${not empty order}">
-        <div class="w3-container">
-        <h3>${logged_user.name} ${logged_user.surname}, ecco i tuoi ordini</h3>
-        
+	<div><h1> &nbsp; Order detail</h1></div>
+	
+	    <div class="w3-container">
+        <h3>${logged_user.name} ${logged_user.surname}, ecco i dettagli dell'ordine</h3>
+
 		<table class="w3-table-all w3-hoverable">
     		<thead>
       			<tr class="w3-deep-orange">
-			        <th>Transaction</th>
-			        <th>Transaction date</th>
-			        <th>Payment status</th>
-			        <th>Address name</th>
-			        <th>Street address</th>
-			        <th>Status</th>
-			        <th>Total price</th>
-			        <th>Created at</th>
+			        <th>Quantity</th>
+			        <th>Price</th>
+			        <th>Size</th>
+			        <th>Name</th>
+			        <th>Color</th>
       			</tr>
    			</thead>
-    		<c:forEach var="o" items="${order}">
+    		<c:forEach var="it" items="${items}">
       			<tr>
-			        <td>${o.transaction}</td>
-			        <td>${o.transactionDate}</td>
-			        <td>${o.paymentStatus}</td>
-			        <td>${address.label}</td>
-			        <td>${address.streetAddress}</td>
-			        <td>${o.status}</td>
-			        <td>${o.totalPrice}</td>
-			        <td>${o.createdAt}</td>
-			        <td><a href="<c:url value='/db3/order_item/${o.id}'/>"
-					class="w3-button w3-block w3-deep-orange">Visualizza</a></td>
+			        <td>${it.quantity}</td>
+			        <td>${it.price}</td>
+			        <td>${it.size}</td>
+			        <td>${it.name}</td>
+			        <td>${it.color}</td>
       			</tr>
     		</c:forEach>
   		</table>
-  		
+
         </div>
-    </c:if>
-
-    <c:if test="${empty order}">
-        <p class="w3-container">You have not placed any orders yet.</p>
-    </c:if>
-
+	
 </body>
 </html>
