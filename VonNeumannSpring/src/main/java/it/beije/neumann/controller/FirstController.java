@@ -1,4 +1,4 @@
-/*
+
 package it.beije.neumann.controller;
 
 import java.util.List;
@@ -92,4 +92,3 @@ public class FirstController {
 		return "form_contatto";
 	}
 }
-*/

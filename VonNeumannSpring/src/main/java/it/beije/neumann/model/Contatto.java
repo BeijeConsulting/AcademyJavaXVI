@@ -1,4 +1,4 @@
-/*
+
 package it.beije.neumann.model;
 
 import javax.persistence.Column;
@@ -7,10 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
 @Entity
 @Table(name = "contatti")
+@JsonInclude(Include.NON_NULL)
 public class Contatto {
 
 	@Id
@@ -32,6 +37,9 @@ public class Contatto {
 	
 	@Column(name = "note", columnDefinition="text")
 	private String note;
+	
+	@Transient
+	private String completeName;
 	
 	public Integer getId() {
 		return id;
@@ -75,9 +83,9 @@ public class Contatto {
 		this.note = note;
 	}
 	
-	public String getCompleteName() {
-		return name + " " + surname;
-	}
+//	public String getCompleteName() {
+//		return name + " " + surname;
+//	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{")
@@ -91,4 +99,4 @@ public class Contatto {
 
 		return builder.toString();
 	}
-} */
+} 
