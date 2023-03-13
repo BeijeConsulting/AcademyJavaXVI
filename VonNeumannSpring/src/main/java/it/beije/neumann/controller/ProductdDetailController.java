@@ -83,10 +83,12 @@ public class ProductdDetailController {
 				System.out.println("AGGIUNTO AL NON UTENTE " + cart.getId());
 				session.setAttribute("cart", cart);
 				session.setAttribute("productDetail", productDetail);
+				
 			}else {
 				cartItemRepository.save(cartItem);
 				model.addAttribute("productDetail", productDetail);
 				model.addAttribute("cart", cart);
+				
 			}
 			
 			

@@ -71,7 +71,7 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/show_detail", method = RequestMethod.GET)
-	public String showDetails( Model model, @RequestParam String id){
+	public String showDetails( Model model, @RequestParam String id,  @RequestParam(required = false) String size){
 		System.out.println("id " + id);
 
 		Product product = productService.findById(Integer.valueOf(id));
