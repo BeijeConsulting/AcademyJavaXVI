@@ -19,7 +19,7 @@
 			<!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/neumann"/>-->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce_shoes"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value="beije2023"/>
+			<property name="javax.persistence.jdbc.password" value="2rUHwahOyZkicfaW3TIU"/>
 		</properties>
 	</persistence-unit>
 </persistence>
