@@ -35,6 +35,7 @@ public class Order {
 	@Column(name = "discount")
 	private Double discount;
 
+//	@OneToMany(targetEntity = OrderItem.class, fetch = FetchType.LAZY)
 	@OneToMany(targetEntity = OrderItem.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "orders_id")
 	private List<OrderItem> items;
