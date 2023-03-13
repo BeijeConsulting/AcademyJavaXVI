@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.nidospring.model.MyUser;
-import it.beije.neumann.nidospring.repository.UserRepository;
+import it.beije.neumann.nidospring.repository.MyUserRepository;
 
 @Controller
-public class UserController {
+public class MyUserController {
 	
 	@Autowired
-	private UserRepository userRepo;
+	private MyUserRepository userRepo;
 	
 	@RequestMapping(value = {"/nidospring/login"}, method = RequestMethod.GET)
 	public String login() {

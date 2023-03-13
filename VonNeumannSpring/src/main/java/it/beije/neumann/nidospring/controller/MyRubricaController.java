@@ -14,7 +14,7 @@ import it.beije.neumann.nidospring.model.Contact;
 import it.beije.neumann.nidospring.repository.ContactRepository;
 
 @Controller
-public class RubricaController {
+public class MyRubricaController {
 
 	@Autowired
 	private ContactRepository contactRepository;

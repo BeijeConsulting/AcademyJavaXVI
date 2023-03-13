@@ -16,7 +16,7 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 
 	@Column(name = "surname")
 	private String surname;
@@ -33,11 +33,11 @@ public class Contact {
 	@Column(name = "note", columnDefinition = "text")
 	private String note;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
