@@ -57,8 +57,6 @@ public class OrderControllerD {
     public String getProduct(Model model, HttpServletRequest request) {
     	//prende carrello da utente in sessione 
 		
-		//List<ProductDetails> pd = productService.getProductDetails(id);
-        //model.addAttribute("productDetails", pd);
         HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("logged_user");
 		
@@ -101,33 +99,6 @@ public class OrderControllerD {
         return "db3/user/order";
 	}
 
-//	@RequestMapping(value = "/db3/add_order", method = RequestMethod.POST)
-//	public String addOrder(HttpServletRequest request, Model model, @ModelAttribute("order") OrderD order, @ModelAttribute("orderItems") List<OrderItemD> orderItems) {
-//		HttpSession session = request.getSession();
-//		User user = (User) session.getAttribute("logged_user");
-//	    model.addAttribute("logged_user", user);
-//	    if (user != null) {
-//		    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
-//		    orderService.saveOrder(order, orderItems); //da passare anche l'user e i dati eventualmente mancanti dal form perchÃ¨ impossibili da incapsulare su una post
-//		    shoppingCartService.emptyShoppingCart(shoppingCart.getId());
-//		}
-//		else {
-//			return "db3/signin";
-//		}
-//	    return "db3/index";
-//	}
-	
-	//Youness
-//	@PostMapping("/db3/add_order")
-//	public String addOrder(@ModelAttribute("orderItems") ArrayList<OrderItemD> orderItems, String transaction, Integer address) {
-//		System.out.println("POST add_order");
-//		System.out.println(transaction+address);
-//		
-//		
-//	    return "/db3";
-//	}
-	
-	//Marianna
 	@PostMapping("/db3/add_order")
 	public String addOrder(HttpServletRequest request, @RequestParam String transaction, @RequestParam Integer address) {
 		System.out.println("POST add_order");
@@ -151,24 +122,13 @@ public class OrderControllerD {
 		session.setAttribute("logged_user", loggedUser);
 		
 		System.out.println("Shopping cart id: "+loggedUser.getShoppingCart().getId());
-//		shoppingCartService.findShoppingCart(loggedUser.getShoppingCart().getId());
 		shoppingCartService.emptyShoppingCart(loggedUser.getShoppingCart().getId());
 		
 		
 	    return "db3/user/user_page";
 	}
 	
-	//Commentalo per non usarlo, ma non eliminarlo
-//	@PostMapping("/db3/add_order")
-//	public String addOrderMary(List<OrderItemD> orderItems) {
-//		System.out.println("POST add_order");
-////		System.out.println(order);
-//		for(OrderItemD od : orderItems) {
-//			System.out.println(od);
-//		}
-//		
-//	    return "db3";
-//	}
+
 	
 	@GetMapping("/db3/order_item/{id}")
 	public String viewOrder(HttpServletRequest request, @PathVariable int id, Model model) {

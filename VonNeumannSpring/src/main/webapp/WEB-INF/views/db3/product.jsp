@@ -51,21 +51,25 @@
 					<div class="w3-card w3-padding">
 						<h3>${productDetail.size}</h3>
 						<p>${productDetail.sellingPrice}</p>
-						<label for="quantitySel-${productDetail.id}">Available quantity:</label>
+						<label for="quantitySel-${productDetail.id}">Available
+							quantity:</label>
 						<p>${productDetail.quantity}</p>
-						<select name="quantity">
-							<c:forEach var="i" begin="1" end="${productDetail.quantity}">
-								<option value="${i}">${i}</option>
-							</c:forEach>
-						</select> <br>
 						<c:choose>
-							<c:when test="${not empty logged_user}">
 
-								<a
-									href="<c:url value='/db3/add_shopping_cart/${productDetail.id}'/>"
-									class="w3-button w3-block w3-deep-orange">Add to
-									Shopping-cart</a>
-								<br>
+							<c:when test="${not empty logged_user}">
+								<form class="w3-container"
+									action="../add_shopping_cart"
+									method="post">
+									<select name="quantity">
+										<c:forEach var="i" begin="1" end="${productDetail.quantity}">
+											<option value="${i}">${i}</option>
+										</c:forEach>
+									</select> <br> <input name="productItemId" type="hidden" value="${productDetail.id}"> 
+									<input
+										class="w3-button w3-deep-orange w3-hover-black" type="submit"
+										value="Add to
+										Shopping-cart">  <br>
+								</form>
 							</c:when>
 						</c:choose>
 					</div>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Aggiungi nuovo indirizzo</title>
+<title>Add new Address</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto">
@@ -25,25 +25,25 @@
   <div class="w3-container">
 		<br>
 		<div class="w3-container w3-card-4">
-				<h3>Aggiungi indirizzo</h3>
+				<h3>Add Address</h3>
 
 			<form class="w3-container" action="./add_address" method="post">
-				<label class="w3-text-black" for="label"><b>Etichetta:</b></label><br>
+				<label class="w3-text-black" for="label"><b>Label:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="label"><br>
-				<label class="w3-text-black" for="fullName"><b>*Nome completo:</b></label><br>
+				<label class="w3-text-black" for="fullName"><b>*Full Name:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="fullName" required><br>
-				<label class="w3-text-black" for="country"><b>*Paese:</b></label><br>
+				<label class="w3-text-black" for="country"><b>*Country:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="country" required><br>
-				<label class="w3-text-black" for="streetAddress"><b>*Indirizzo:</b></label><br>
+				<label class="w3-text-black" for="streetAddress"><b>*Address:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="streetAddress"required><br>
-				<label class="w3-text-black" for="telephone"><b>*Telefono:</b></label><br>
+				<label class="w3-text-black" for="telephone"><b>*Telephone:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="telephone"required><br>
 				<label class="w3-text-black" for="zipcode"><b>*Zipcode (CAP):</b></label><br>
 				<input class="w3-input w3-border" type="text" name="zipcode" required><br>
-				<label class="w3-text-black" for="instructions"><b>Istruzioni:</b></label><br>
+				<label class="w3-text-black" for="instructions"><b>Instructions:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="instructions"><br><br>
-				<input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Aggiungi">
-				<input class="w3-button w3-deep-orange w3-hover-black" type="reset" value="Cancella">
+				<input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Add">
+				<input class="w3-button w3-deep-orange w3-hover-black" type="reset" value="Delete">
 			</form>
 			<br>
 			<br>

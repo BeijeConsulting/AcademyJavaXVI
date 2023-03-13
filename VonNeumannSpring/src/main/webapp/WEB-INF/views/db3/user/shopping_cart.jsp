@@ -41,12 +41,17 @@
         
     <c:if test="${not empty shoppingCart}">
         <div class="w3-container">
-            <c:forEach items="${shoppingCart.shoppingCartItem}" var="item">
+            <c:forEach items="${shoppingCart.shoppingCartItem}" var="item" varStatus="loop">
             	<c:if test="${empty item.disabledAt}">
                 <div class="w3-card-4 w3-margin">
                     <div class="w3-container">
-                        <h3> Id: <c:out value="${item.productDetailsId}"/></h3>
-                        <p>Quantity: <c:out value="${item.quantity}"/></p>
+                    
+                        <h3> ${products.get(loop.index).brand} - ${products.get(loop.index).name}</h3>
+                        <p> Id: <c:out value="${item.productDetailsId}"/> </p> 
+                        <p> Size: <c:out value="${productsDetails.get(loop.index).size}"/> </p> 
+                        <p> Price per unit: <c:out value="${productsDetails.get(loop.index).sellingPrice}"/> </p> 
+                        <p> Quantity: <c:out value="${item.quantity}"/></p>
+                        <p> Total Price: <c:out value="${productsDetails.get(loop.index).sellingPrice * item.quantity}"/> </p> 
                         <a class="w3-bar-item w3-button w3-red w3-hover-black w3-margin"
 			href="/VonNeumannSpring/db3/remove_cart_item/${item.id}">Remove Item</a>
                     </div>
