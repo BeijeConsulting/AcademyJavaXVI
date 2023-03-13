@@ -29,9 +29,13 @@ public class OrderItem {
     @Column(name = "price")
     private Double price;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Order order;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_details_id")
@@ -44,5 +48,61 @@ public class OrderItem {
     @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getDisabledAt() {
+		return disabledAt;
+	}
+
+	public void setDisabledAt(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderItem [id=" + id + ", quantity=" + quantity + ", price=" + price + ", order=" + order
+				+ ", productDetails=" + productDetails + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt
+				+ "]";
+	}
+
+    
     
 }

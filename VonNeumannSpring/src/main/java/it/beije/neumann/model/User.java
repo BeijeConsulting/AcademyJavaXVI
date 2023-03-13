@@ -1,14 +1,19 @@
 package it.beije.neumann.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "users")
@@ -40,8 +45,21 @@ public class User {
     @Column(name = "telephone")
     private String telephone;
     
+
     @Column(name = "birth_date")
-    private LocalDate birthDate;
+    private String birthDate;
+    
+	@OneToMany(targetEntity = Address.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private List<Address> addresses;
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
 
     public Integer getId() {
         return id;
@@ -56,6 +74,8 @@ public class User {
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
+    	
+    	createdAt = LocalDateTime.now();
         this.createdAt = createdAt;
     }
 
@@ -107,11 +127,12 @@ public class User {
         this.telephone = telephone;
     }
 
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
+    	
         this.birthDate = birthDate;
     }
 
@@ -119,7 +140,7 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", name=" + name
                 + ", lastname=" + lastname + ", email=" + email + ", password=" + password + ", telephone=" + telephone
-                + ", birthDate=" + birthDate + "]";
+                + ", birthDate=" + birthDate + ", addresses" + addresses + "]";
     }
     
 }

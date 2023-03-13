@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "shopping_cart_item")
@@ -29,15 +31,34 @@ public class ShoppingCartItem {
     @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
 
-    @ManyToOne
-    @JoinColumn(name = "shopping_cart_id")
-    private ShoppingCart shoppingCart;
-
-    @ManyToOne
+    @OneToOne(fetch= FetchType.EAGER)
     @JoinColumn(name = "product_details_id")
     private ProductDetails productDetails;
 
-    public Integer getId() {
+    @Transactional
+    public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
+	}
+
+//	@Column(name="product_details_id")
+//    private Integer productDetailsId;
+    
+    @Column(name="shopping_cart_id")
+    private Integer shoppingCartId;
+    
+    public Integer getShoppingCartId() {
+		return shoppingCartId;
+	}
+
+	public void setShoppingCartId(Integer shoppingCartId) {
+		this.shoppingCartId = shoppingCartId;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -57,8 +78,8 @@ public class ShoppingCartItem {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt() {
+    	createdAt = LocalDateTime.now();
     }
 
     public LocalDateTime getDisabledAt() {
@@ -69,25 +90,43 @@ public class ShoppingCartItem {
         this.disabledAt = disabledAt;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
+//    public ShoppingCart getShoppingCart() {
+//        return shoppingCart;
+//    }
+//
+//    public void setShoppingCart(ShoppingCart shoppingCart) {
+//        this.shoppingCart = shoppingCart;
+//    }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
+//    public ProductDetails getProductDetails() {
+//        return productDetails;
+//    }
+//
+//    public void setProductDetails(ProductDetails productDetails) {
+//        this.productDetails = productDetails;
+//    }
 
-    public ProductDetails getProductDetails() {
-        return productDetails;
-    }
-
-    public void setProductDetails(ProductDetails productDetails) {
-        this.productDetails = productDetails;
-    }
+//	@Override
+//	public String toString() {
+//		return "ShoppingCartItem [id=" + id + ", quantity=" + quantity + ", createdAt=" + createdAt + ", disabledAt="
+//				+ disabledAt + ", shoppingCart=" + shoppingCart + ", productDetails=" + productDetails + "]";
+//	}
     
-    @Override
+//	public Integer getProductDetailsId() {
+//		return productDetailsId;
+//	}
+//
+//	public void setProductDetailsId( Integer productDetailsId) {
+//		this.productDetailsId = productDetailsId;
+//	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@Override
 	public String toString() {
 		return "ShoppingCartItem [id=" + id + ", quantity=" + quantity + ", createdAt=" + createdAt + ", disabledAt="
-				+ disabledAt + ", shoppingCart=" + shoppingCart + ", productDetails=" + productDetails + "]";
+				+ disabledAt + ", productDetailsID=" + productDetails + "]";
 	}
 }

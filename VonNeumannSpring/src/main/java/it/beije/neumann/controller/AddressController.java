@@ -1,6 +1,6 @@
 package it.beije.neumann.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,23 +9,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.neumann.model.Address;
-import it.beije.neumann.repository.AddressRepository;
+import it.beije.neumann.model.User;
+import it.beije.neumann.service.AddressService;
 
 @Controller
 public class AddressController {
-
-	@Autowired
-	private AddressRepository addressRepository;
 	
-	@RequestMapping(value = "/lista_address", method = RequestMethod.GET)
-	public String listaAddress(Model model) {
-		System.out.println("GET /lista_address");
+	@Autowired
+	private AddressService addressService;
+
+	
+	@RequestMapping(value = {"/address"}, method = RequestMethod.GET)
+	public String address(Model model,HttpSession session) {
 		
-		List<Address> addresses = addressRepository.findAll();
-		System.out.println(addresses);
 		
-		model.addAttribute("addresses", addresses);
-		
-		return "lista_address";
+		addressService.getAddresses(model, session);
+		return "address";
+
 	}
+	
+	@RequestMapping(value = {"/address"}, method = RequestMethod.POST)
+	public String addressPost(Address address, Model model, HttpSession session) {
+		
+		address.setCreatedAt(null);
+		address.setUser(((User)session.getAttribute("user")).getId());
+		addressService.addAddress(address);
+		return "address";
+
+	}
+
 }

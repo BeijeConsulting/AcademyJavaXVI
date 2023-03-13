@@ -11,54 +11,37 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 
 @Entity
 @Table(name = "product_details")
 public class ProductDetails {
-
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	
+	@Column(name="is_listed")
+	private boolean isListed;
+	
+	@Column(name="selling_price")
+	private Double sellingPrice;
+	
+	@Column
+	private Integer quantity;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-	@Column(name = "disabled_at")
-    private LocalDateTime disabledAt;
-
-    @Column(name = "is_listed")
-    private Boolean isListed;
-
-    @Column(name = "selling_price")
-    private Double sellingPrice;
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "size_id")
-    private ConversionSizes size;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Product product;
-    
-    public Integer getId() {
-		return id;
+	@Transactional
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public LocalDateTime getDisabledAt() {
@@ -69,11 +52,40 @@ public class ProductDetails {
 		this.disabledAt = disabledAt;
 	}
 
-	public Boolean getIsListed() {
+
+	private String size;
+	
+//	@Column(name="product_id")
+//	private Integer productId;
+//	
+//	public Integer getProductId() {
+//		return productId;
+//	}
+//
+//	public void setProductId(Integer productId) {
+//		this.productId = productId;
+//	}
+
+
+	@Column(name="created_at")
+	private LocalDateTime createdAt;
+	
+	@Column(name="disabled_at")
+	private LocalDateTime disabledAt;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public boolean isListed() {
 		return isListed;
 	}
 
-	public void setIsListed(Boolean isListed) {
+	public void setListed(boolean isListed) {
 		this.isListed = isListed;
 	}
 
@@ -93,29 +105,47 @@ public class ProductDetails {
 		this.quantity = quantity;
 	}
 
-	public ConversionSizes getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(ConversionSizes size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
-	public Product getProduct() {
-		return product;
+
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
+
+	public LocalDateTime getDisabled_at() {
+		return disabledAt;
+	}
+
+	public void setDisabled_at(LocalDateTime disabledAt) {
+		this.disabledAt = disabledAt;
+	}
+
 	
-	@Override
 	public String toString() {
-		return "ProductDetails [id=" + id + ", createdAt=" + createdAt + ", disabledAt=" + disabledAt + ", isListed="
-				+ isListed + ", sellingPrice=" + sellingPrice + ", quantity=" + quantity + ", size=" + size
-				+ ", product=" + product + "]";
-	}
+		StringBuilder builder = new StringBuilder("{")
+				.append(" id: ").append(id)
+				.append(", isListed: ").append(isListed)
+				.append(", selling Price: ").append(sellingPrice)
+				.append(", quantity: ").append(quantity)
+				.append(", size: ").append(size)
+				.append(", product ").append(product)
+				.append(", created at: ").append(createdAt)
+				.append(", disabled at: ").append(disabledAt)
+				.append("}");
 
+		return builder.toString();
+	}
 }
 
 

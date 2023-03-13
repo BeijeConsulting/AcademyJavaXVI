@@ -137,7 +137,7 @@ public class Address {
 				+ ", nameSurname=" + nameSurname + ", country=" + country + ", streetAddress=" + streetAddress
 				+ ", telephone=" + telephone + ", zipcode=" + zipcode + ", instructions=" + instructions + ", user="
 				+ user + "]";
-	}
 
-    
+
+	}    
 }
