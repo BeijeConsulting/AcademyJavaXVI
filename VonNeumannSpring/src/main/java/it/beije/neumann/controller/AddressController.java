@@ -12,6 +12,7 @@ import it.beije.neumann.model.Address;
 import it.beije.neumann.model.User;
 import it.beije.neumann.service.AddressService;
 
+
 @Controller
 public class AddressController {
 	

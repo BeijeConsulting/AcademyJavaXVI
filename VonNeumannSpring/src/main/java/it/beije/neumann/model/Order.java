@@ -45,12 +45,17 @@ public class Order {
     @Column(name = "disabled_at")
     private LocalDateTime disabledAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}

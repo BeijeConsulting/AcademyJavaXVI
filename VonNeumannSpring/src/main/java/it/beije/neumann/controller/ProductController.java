@@ -85,4 +85,3 @@ public class ProductController {
 
 	
 }
->>>>>>> refs/remotes/origin/team-2-ecommerceshoes
