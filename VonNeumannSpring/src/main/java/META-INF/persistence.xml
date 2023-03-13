@@ -4,8 +4,10 @@
 		<class>it.beije.neumann.model.Contatto</class>
 		<class>it.beije.neumann.model.Order</class>
 		<class>it.beije.neumann.model.OrderItem</class>
+		
 		<class>it.beije.neumann.nidospring.model.Contact</class>
 		
+		<!-- 
 		<class>it.beije.neumann.nidospring.model.Address</class>
 		<class>it.beije.neumann.nidospring.model.ConversionSize</class>
 		<class>it.beije.neumann.nidospring.model.MyOrderItem</class>
@@ -16,6 +18,24 @@
 		<class>it.beije.neumann.nidospring.model.ShoppingCart</class>
 		<class>it.beije.neumann.nidospring.model.ShoppingCartItem</class>
 		<class>it.beije.neumann.nidospring.model.User</class>
+		-->
+		<!-- Youness -->
+		<class>it.beije.neumann.db3.model.Product</class>
+		<class>it.beije.neumann.db3.model.ProductDetails</class>
+		<class>it.beije.neumann.db3.model.ConversionSize</class>
+		<!-- /Youness -->
+		
+		<!-- Gianfranco -->
+		<class>it.beije.neumann.db3.model.ShoppingCart</class>
+		<class>it.beije.neumann.db3.model.ShoppingCartItem</class>
+		<!-- /Gianfranco -->
+		
+		<!-- Marianna -->
+		<class>it.beije.neumann.db3.model.User</class>
+		<class>it.beije.neumann.db3.model.Address</class>
+		<class>it.beije.neumann.db3.model.OrderD</class>
+		<class>it.beije.neumann.db3.model.OrderItemD</class>
+		<!-- /Marianna -->
 
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
@@ -25,6 +45,10 @@
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce_shoes"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="Mary23BeijeSQL"/>
+			<!--property name="javax.persistence.jdbc.url" value="jdbc:mysql://ecommerce3.cvzu4xrxvkdz.eu-south-1.rds.amazonaws.com:3306/ecommerce_shoes"/-->
+			<!--property name="javax.persistence.jdbc.user" value="admin"/-->
+			<!--property name="javax.persistence.jdbc.password" value="2rUHwahOyZkicfaW3TIU"/-->
+
 		</properties>
 	</persistence-unit>
 </persistence>
