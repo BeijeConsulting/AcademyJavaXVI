@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action ="./insertProduct" method="get" ><input type="submit" value="inseisci Prodotto"></form>
-<a href="./insertProduct">Inserisci prodotto</a><br>
-<a href="./insertProductDetail">Inserisci il dettaglio del prodotto</a>
+
+<a href="mongiello/insertProduct">Inserisci prodotto</a><br>
+<a href="mongiello/insertProductDetail">Inserisci il dettaglio del prodotto</a>
 </body>
 </html>

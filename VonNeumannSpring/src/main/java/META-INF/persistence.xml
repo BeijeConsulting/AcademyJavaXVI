@@ -2,8 +2,8 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="VonNeumann">
 		<class>it.beije.neumann.model.Contatto</class>
-		<!-- <class>it.beije.neumann.model.Order</class> -->
-		<!-- <class>it.beije.neumann.model.OrderItem</class>  -->
+	<!--  	<class>it.beije.neumann.model.Order</class> 
+		 <class>it.beije.neumann.model.OrderItem</class>  -->
 		
 		<class>it.beije.neumann.mongiello.model.User</class>
 		<class>it.beije.neumann.mongiello.model.Product</class>
@@ -11,8 +11,8 @@
 		<class>it.beije.neumann.mongiello.model.ShoppingCart</class>
 		<class>it.beije.neumann.mongiello.model.ProductImage</class>
 		<class>it.beije.neumann.mongiello.model.ProductDetail</class>
-		<class>it.beije.neumann.mongiello.model.Order</class>
-		<class>it.beije.neumann.mongiello.model.OrderItem</class>
+		<class>it.beije.neumann.mongiello.model.OrderM</class>
+		<class>it.beije.neumann.mongiello.model.OrderItemM</class>
 		<class>it.beije.neumann.mongiello.model.ConversionSize</class>
 		<class>it.beije.neumann.mongiello.model.Adress</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

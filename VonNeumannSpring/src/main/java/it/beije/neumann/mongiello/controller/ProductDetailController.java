@@ -11,8 +11,8 @@ import it.beije.neumann.mongiello.repository.ProductDetailRepository;
 @Controller
 public class ProductDetailController {
 	
-	@Autowired
-	private ProductDetailRepository productDetailRepository;
+//	@Autowired
+//	private ProductDetailRepository productDetailRepository;
 	
 	@RequestMapping(value = "/mongiello/insertProductDetail", method = RequestMethod.GET)
 	public String insertProductDetail() {

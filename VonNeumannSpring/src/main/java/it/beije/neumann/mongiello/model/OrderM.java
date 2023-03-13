@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="orders")
-public class Order {
+public class OrderM {
 //	public enum PayStatus {payed,not_payed }
 //	public enum OrderStatus {pending,confirmed,shipped,completed }
 
