@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class MyAddress {
 
 	// Properties mapping
 	@Id

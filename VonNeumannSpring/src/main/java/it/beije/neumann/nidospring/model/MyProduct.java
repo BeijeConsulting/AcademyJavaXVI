@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class MyProduct {
 
 	// Properties mapping
 	@Id

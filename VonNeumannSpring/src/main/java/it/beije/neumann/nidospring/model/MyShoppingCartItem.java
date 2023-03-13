@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product_images")
-public class ProductImage {
+@Table(name = "shopping_cart_item")
+public class MyShoppingCartItem {
 
 	// Properties mapping
 	@Id
@@ -19,8 +19,8 @@ public class ProductImage {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "image_path")
-	private String imagePath;
+	@Column(name = "quantity")
+	private Integer quantity;
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -28,8 +28,11 @@ public class ProductImage {
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 
-	@Column(name = "product_id")
-	private Integer productId;
+	@Column(name = "shopping_cart_id")
+	private Integer shoppingCartId;
+
+	@Column(name = "product_details_id")
+	private Integer productDetailsId;
 
 	// Getters-Setters
 	public Integer getId() {
@@ -40,12 +43,12 @@ public class ProductImage {
 		this.id = id;
 	}
 
-	public String getImagePath() {
-		return imagePath;
+	public Integer getQuantity() {
+		return quantity;
 	}
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -64,23 +67,32 @@ public class ProductImage {
 		this.disabledAt = disabledAt;
 	}
 
-	public Integer getProductId() {
-		return productId;
+	public Integer getShoppingCartId() {
+		return shoppingCartId;
 	}
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
+	public void setShoppingCartId(Integer shoppingCartId) {
+		this.shoppingCartId = shoppingCartId;
+	}
+
+	public Integer getProductDetailsId() {
+		return productDetailsId;
+	}
+
+	public void setProductDetailsId(Integer productDetailsId) {
+		this.productDetailsId = productDetailsId;
 	}
 	
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder()
-				.append(" Image Id: ").append(id).append(",<br>")
-				.append(" Image Path: ").append(imagePath).append(",<br>")
+				.append(" Cart Item Id: ").append(id).append(",<br>")
+				.append(" Quantity: ").append(quantity).append(",<br>")
 				.append(" Created At: ").append(createdAt).append(",<br>")
 				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" Product Id: ").append(productId).append("<br>");
+				.append(" Shopping Cart Id: ").append(productDetailsId).append(",<br>")
+				.append(" Product Details Id: ").append(productDetailsId).append("<br>");
 		
 		return builder.toString();
 	}
@@ -90,10 +102,11 @@ public class ProductImage {
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
-				.append(", Image Path: ").append(imagePath)
+				.append(", Quantity: ").append(quantity)
 				.append(", Created At: ").append(createdAt)
 				.append(", Disabled At: ").append(disabledAt)
-				.append(", Product Id: ").append(productId)
+				.append(", Shopping Cart Id: ").append(productDetailsId)
+				.append(", Product Details Id: ").append(productDetailsId)
 				.append("}");
 		
 		return builder.toString();

@@ -14,8 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "shopping_cart")
-public class ShoppingCart {
+@Table(name = "product_details")
+public class MyProductDetail {
 
 	// Properties mapping
 	@Id
@@ -23,18 +23,26 @@ public class ShoppingCart {
 	@Column(name = "id")
 	private Integer id;
 
+	@Column(name = "is_listed")
+	private boolean isListed;
+
+	@Column(name = "selling_price")
+	private Double sellingPrice;
+
+	@Column(name = "quantity")
+	private Integer quantity;
+
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 
-	@Column(name = "user_id")
-	private Integer userId;
-	
-	@OneToMany(targetEntity = ShoppingCartItem.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "shopping_cart_id")
-	private List<ShoppingCartItem> cartItems;
+	@Column(name = "size_id")
+	private Integer sizeId;
+
+	@Column(name = "product_id")
+	private Integer productId;
 
 	// Getters-Setters
 	public Integer getId() {
@@ -43,6 +51,30 @@ public class ShoppingCart {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isListed() {
+		return isListed;
+	}
+
+	public void setListed(boolean isListed) {
+		this.isListed = isListed;
+	}
+
+	public Double getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(Double sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -61,30 +93,34 @@ public class ShoppingCart {
 		this.disabledAt = disabledAt;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getSizeId() {
+		return sizeId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-	
-	public List<ShoppingCartItem> getCartItems() {
-		return cartItems;
+	public void setSizeId(Integer sizeId) {
+		this.sizeId = sizeId;
 	}
 
-	public void setCartItems(List<ShoppingCartItem> cartItems) {
-		this.cartItems = cartItems;
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder()
-				.append(" Shopping Cart Id: ").append(id).append(",<br>")
+		StringBuilder builder = new StringBuilder("{")
+				.append(" Product Details Id: ").append(id).append(",<br>")
+				.append(" Is Listed: ").append(isListed).append(",<br>")
+				.append(" Selling Price: ").append(sellingPrice).append(",<br>")
+				.append(" Quantity: ").append(quantity).append(",<br>")
 				.append(" Created At: ").append(createdAt).append(",<br>")
 				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" User Id: ").append(userId).append("<br>");
+				.append(" Size Id: ").append(sizeId).append(",<br>")
+				.append(" Product Id: ").append(productId).append("<br>");
 		
 		return builder.toString();
 	}
@@ -94,9 +130,13 @@ public class ShoppingCart {
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
+				.append(", Is Listed: ").append(isListed)
+				.append(", Selling Price: ").append(sellingPrice)
+				.append(", Quantity: ").append(quantity)
 				.append(", Created At: ").append(createdAt)
 				.append(", Disabled At: ").append(disabledAt)
-				.append(", User Id: ").append(userId)
+				.append(", Size Id: ").append(sizeId)
+				.append(", Product Id: ").append(productId)
 				.append("}");
 		
 		return builder.toString();

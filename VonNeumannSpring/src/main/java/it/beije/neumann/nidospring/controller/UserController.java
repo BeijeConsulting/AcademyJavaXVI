@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.nidospring.model.User;
+import it.beije.neumann.nidospring.model.MyUser;
 import it.beije.neumann.nidospring.repository.UserRepository;
 
 @Controller
@@ -28,7 +28,7 @@ public class UserController {
 	public String userDetails(Model model, @RequestParam(required = false) String email, @RequestParam(required=false) String password) {
 		System.out.println("GET /user_details");
 		
-		User user = userRepo.findByEmailAndPassword(email, password);
+		MyUser user = userRepo.findByEmailAndPassword(email, password);
 		
 		model.addAttribute("logged_user", user);
 		

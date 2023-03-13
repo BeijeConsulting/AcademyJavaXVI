@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "conversion_sizes")
-public class ConversionSize {
+public class MyConversionSize {
 
 	// Properties mapping
 	@Id

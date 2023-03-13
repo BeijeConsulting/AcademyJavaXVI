@@ -7,18 +7,17 @@
 		
 		<class>it.beije.neumann.nidospring.model.Contact</class>
 		
-		<!-- 
-		<class>it.beije.neumann.nidospring.model.Address</class>
-		<class>it.beije.neumann.nidospring.model.ConversionSize</class>
+		<class>it.beije.neumann.nidospring.model.MyAddress</class>
+		<class>it.beije.neumann.nidospring.model.MyConversionSize</class>
 		<class>it.beije.neumann.nidospring.model.MyOrderItem</class>
 		<class>it.beije.neumann.nidospring.model.MyOrder</class>
-		<class>it.beije.neumann.nidospring.model.ProductDetail</class>
-		<class>it.beije.neumann.nidospring.model.ProductImage</class>
-		<class>it.beije.neumann.nidospring.model.Product</class>
-		<class>it.beije.neumann.nidospring.model.ShoppingCart</class>
-		<class>it.beije.neumann.nidospring.model.ShoppingCartItem</class>
-		<class>it.beije.neumann.nidospring.model.User</class>
-		-->
+		<class>it.beije.neumann.nidospring.model.MyProductDetail</class>
+		<class>it.beije.neumann.nidospring.model.MyProductImage</class>
+		<class>it.beije.neumann.nidospring.model.MyProduct</class>
+		<class>it.beije.neumann.nidospring.model.MyShoppingCart</class>
+		<class>it.beije.neumann.nidospring.model.MyShoppingCartItem</class>
+		<class>it.beije.neumann.nidospring.model.MyUser</class>
+		
 		<!-- Youness -->
 		<class>it.beije.neumann.db3.model.Product</class>
 		<class>it.beije.neumann.db3.model.ProductDetails</class>

@@ -1,17 +1,21 @@
 package it.beije.neumann.nidospring.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "shopping_cart_item")
-public class ShoppingCartItem {
+@Table(name = "shopping_cart")
+public class MyShoppingCart {
 
 	// Properties mapping
 	@Id
@@ -19,20 +23,18 @@ public class ShoppingCartItem {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "quantity")
-	private Integer quantity;
-
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
 
-	@Column(name = "shopping_cart_id")
-	private Integer shoppingCartId;
-
-	@Column(name = "product_details_id")
-	private Integer productDetailsId;
+	@Column(name = "user_id")
+	private Integer userId;
+	
+	@OneToMany(targetEntity = MyShoppingCartItem.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "shopping_cart_id")
+	private List<MyShoppingCartItem> cartItems;
 
 	// Getters-Setters
 	public Integer getId() {
@@ -41,14 +43,6 @@ public class ShoppingCartItem {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -67,32 +61,30 @@ public class ShoppingCartItem {
 		this.disabledAt = disabledAt;
 	}
 
-	public Integer getShoppingCartId() {
-		return shoppingCartId;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setShoppingCartId(Integer shoppingCartId) {
-		this.shoppingCartId = shoppingCartId;
-	}
-
-	public Integer getProductDetailsId() {
-		return productDetailsId;
-	}
-
-	public void setProductDetailsId(Integer productDetailsId) {
-		this.productDetailsId = productDetailsId;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	
+	public List<MyShoppingCartItem> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(List<MyShoppingCartItem> cartItems) {
+		this.cartItems = cartItems;
+	}
+
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder()
-				.append(" Cart Item Id: ").append(id).append(",<br>")
-				.append(" Quantity: ").append(quantity).append(",<br>")
+				.append(" Shopping Cart Id: ").append(id).append(",<br>")
 				.append(" Created At: ").append(createdAt).append(",<br>")
 				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" Shopping Cart Id: ").append(productDetailsId).append(",<br>")
-				.append(" Product Details Id: ").append(productDetailsId).append("<br>");
+				.append(" User Id: ").append(userId).append("<br>");
 		
 		return builder.toString();
 	}
@@ -102,11 +94,9 @@ public class ShoppingCartItem {
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
-				.append(", Quantity: ").append(quantity)
 				.append(", Created At: ").append(createdAt)
 				.append(", Disabled At: ").append(disabledAt)
-				.append(", Shopping Cart Id: ").append(productDetailsId)
-				.append(", Product Details Id: ").append(productDetailsId)
+				.append(", User Id: ").append(userId)
 				.append("}");
 		
 		return builder.toString();

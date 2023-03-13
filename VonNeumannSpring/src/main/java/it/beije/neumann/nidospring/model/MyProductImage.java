@@ -1,21 +1,17 @@
 package it.beije.neumann.nidospring.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "product_details")
-public class ProductDetail {
+@Table(name = "product_images")
+public class MyProductImage {
 
 	// Properties mapping
 	@Id
@@ -23,23 +19,14 @@ public class ProductDetail {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "is_listed")
-	private boolean isListed;
-
-	@Column(name = "selling_price")
-	private Double sellingPrice;
-
-	@Column(name = "quantity")
-	private Integer quantity;
+	@Column(name = "image_path")
+	private String imagePath;
 
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
 	@Column(name = "disabled_at")
 	private LocalDateTime disabledAt;
-
-	@Column(name = "size_id")
-	private Integer sizeId;
 
 	@Column(name = "product_id")
 	private Integer productId;
@@ -53,28 +40,12 @@ public class ProductDetail {
 		this.id = id;
 	}
 
-	public boolean isListed() {
-		return isListed;
+	public String getImagePath() {
+		return imagePath;
 	}
 
-	public void setListed(boolean isListed) {
-		this.isListed = isListed;
-	}
-
-	public Double getSellingPrice() {
-		return sellingPrice;
-	}
-
-	public void setSellingPrice(Double sellingPrice) {
-		this.sellingPrice = sellingPrice;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -93,14 +64,6 @@ public class ProductDetail {
 		this.disabledAt = disabledAt;
 	}
 
-	public Integer getSizeId() {
-		return sizeId;
-	}
-
-	public void setSizeId(Integer sizeId) {
-		this.sizeId = sizeId;
-	}
-
 	public Integer getProductId() {
 		return productId;
 	}
@@ -108,18 +71,15 @@ public class ProductDetail {
 	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
-
+	
 	//Other methods
 	@Override
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
-		StringBuilder builder = new StringBuilder("{")
-				.append(" Product Details Id: ").append(id).append(",<br>")
-				.append(" Is Listed: ").append(isListed).append(",<br>")
-				.append(" Selling Price: ").append(sellingPrice).append(",<br>")
-				.append(" Quantity: ").append(quantity).append(",<br>")
+		StringBuilder builder = new StringBuilder()
+				.append(" Image Id: ").append(id).append(",<br>")
+				.append(" Image Path: ").append(imagePath).append(",<br>")
 				.append(" Created At: ").append(createdAt).append(",<br>")
 				.append(" Disabled At: ").append(disabledAt).append(",<br>")
-				.append(" Size Id: ").append(sizeId).append(",<br>")
 				.append(" Product Id: ").append(productId).append("<br>");
 		
 		return builder.toString();
@@ -130,12 +90,9 @@ public class ProductDetail {
 	public String toString() { //Completo di tutto, alcuni attributi si possono togliere
 		StringBuilder builder = new StringBuilder("{")
 				.append(" Id: ").append(id)
-				.append(", Is Listed: ").append(isListed)
-				.append(", Selling Price: ").append(sellingPrice)
-				.append(", Quantity: ").append(quantity)
+				.append(", Image Path: ").append(imagePath)
 				.append(", Created At: ").append(createdAt)
 				.append(", Disabled At: ").append(disabledAt)
-				.append(", Size Id: ").append(sizeId)
 				.append(", Product Id: ").append(productId)
 				.append("}");
 		
