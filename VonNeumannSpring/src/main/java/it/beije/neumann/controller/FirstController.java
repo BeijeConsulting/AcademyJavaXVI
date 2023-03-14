@@ -36,7 +36,7 @@ public class FirstController {
 		List<Contatto> contatti;
 		Integer totale = null;
 		if (surname != null) {
-			contatti = contattoRepository.findBySurname(surname);
+			contatti = contattoRepository.findByCognome(surname);
 			totale = contattoRepository.countBySurname(surname);
 			System.out.println("totale : " + totale);
 		} else {

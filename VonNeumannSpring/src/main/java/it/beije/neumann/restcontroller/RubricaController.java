@@ -38,7 +38,7 @@ public class RubricaController {
 		List<Contatto> contatti;
 		Integer totale = null;
 		if (surname != null) {
-			contatti = contattoRepository.findBySurname(surname);
+			contatti = contattoRepository.findByCognome(surname);
 			totale = contattoRepository.countBySurname(surname);
 			System.out.println("totale : " + totale);
 		} else {
@@ -91,7 +91,7 @@ public class RubricaController {
 		if (!c.isPresent()) throw new IdNotFoundException("id errato");
 		
 		Contatto contatto = c.get();		
-		if (newValues.getName() != null) contatto.setName(newValues.getName());
+		if (newValues.getNome() != null) contatto.setNome(newValues.getNome());
 		//...
 		
 		BeanUtils.copyProperties(newValues, contatto, "id");		
