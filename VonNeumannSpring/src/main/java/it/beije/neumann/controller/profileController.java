@@ -1,3 +1,4 @@
+/*
 package it.beije.neumann.controller;
 
 import javax.servlet.http.HttpSession;
@@ -23,3 +24,4 @@ public class profileController {
     	return "profile";
     }
 }
+*/
