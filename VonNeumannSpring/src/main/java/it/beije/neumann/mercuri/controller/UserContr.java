@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.mercuri.model.User;
+import it.beije.neumann.mercuri.model.MyUser;
 import it.beije.neumann.mercuri.repository.UserRepo;
 
 
@@ -24,7 +24,7 @@ public class UserContr {
 	public String prova(Model model, @RequestParam(required = false) String name) {
 		System.out.println("GET mercuri/lista_utenti");
 		
-		List<User> utenti = userRepo.findAll();
+		List<MyUser> utenti = userRepo.findAll();
 		System.out.println(utenti);
 		
 		model.addAttribute("users", utenti);
