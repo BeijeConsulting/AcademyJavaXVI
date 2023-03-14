@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mysql.cj.protocol.x.ReusableOutputStream;
 
 import it.beije.neumann.model.Order;
 import it.beije.neumann.repository.OrderRepository;

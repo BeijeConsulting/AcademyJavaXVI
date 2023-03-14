@@ -17,7 +17,7 @@ import it.beije.neumann.model.Contatto;
 
 
 @Controller
-public class RubricaController {
+public class OldRubricaController {
 	
 	@Autowired
 	private MyContattoRepository contattoRepository;
