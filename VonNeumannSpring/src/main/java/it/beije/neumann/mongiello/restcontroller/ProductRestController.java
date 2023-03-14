@@ -59,7 +59,7 @@ public class ProductRestController {
 		Product product = p.get();		
 		
 		BeanUtils.copyProperties(newValues, product, "id");		
-		
+	
 		System.out.println(product.getBrand());
 		productRepository.save(product);
 		
