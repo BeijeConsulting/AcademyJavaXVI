@@ -1,12 +1,10 @@
 package it.beije.neumann.nidospring.controllerREST;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.beije.neumann.exception.ForbiddenException;
+import it.beije.neumann.exception.InvalidJSONException;
 import it.beije.neumann.nidospring.model.Contact;
 import it.beije.neumann.nidospring.service.ContactService;
 
@@ -61,7 +61,7 @@ public class RubricaRESTController {
 		System.out.println("POST "+request.getRequestURL());
 		
 		System.out.println(data);
-		if (data.getId()!=null) throw new IllegalArgumentException("Non è possibile aggiungere un contatto con ID avvalorato");
+		if (data.getId()!=null) throw new InvalidJSONException("Non è possibile aggiungere un contatto con ID avvalorato");
 
 		return contactService.saveContact(data);
 	}
@@ -70,7 +70,7 @@ public class RubricaRESTController {
 	public Contact updateContact(HttpServletRequest request, @PathVariable Integer id, @RequestBody Contact edit) {
 		System.out.println("PUT "+request.getRequestURL());
 		
-		if(id.compareTo(edit.getId()) !=0) throw new IllegalArgumentException("Attenzione, gli ID inseriti non corrispondono!");
+		if(id.compareTo(edit.getId()) !=0) throw new InvalidJSONException("Attenzione, gli ID inseriti non corrispondono!");
 		
 		contactService.updateContact(id, edit);
 		

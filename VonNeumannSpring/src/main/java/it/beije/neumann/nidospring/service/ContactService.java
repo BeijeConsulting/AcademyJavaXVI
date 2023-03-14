@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import it.beije.neumann.exception.IdNotFoundException;
 import it.beije.neumann.nidospring.model.Contact;
 import it.beije.neumann.nidospring.repository.ContactRepository;
 
@@ -53,7 +54,10 @@ public class ContactService {
 	
 	public Contact findContactById(Integer id) {
 		Optional<Contact> c = contactRepo.findById(id);
-		return c.isPresent() ? c.get() : null;
+		
+		if (!c.isPresent()) throw new IdNotFoundException("Nessun contatto con ID inserito...");
+		
+		return c.get();
 	}
 	
 	public Contact saveContact(Contact toSave) {
@@ -61,22 +65,19 @@ public class ContactService {
 	}
 	
 	public Contact updateContact(Integer id, Contact data) {
-		Optional<Contact> c = contactRepo.findById(id);
 		
-		if (!c.isPresent()) throw new IllegalArgumentException("Nessun contatto con ID inserito...");
-		
-		Contact toSave = c.get();
+		Contact toSave = findContactById(id);
 		
 		BeanUtils.copyProperties(data, toSave, "id");
 		
-		return contactRepo.save(toSave);
+		return saveContact(toSave);
 		
 	}
 	
 	public Boolean deleteContact(Integer id) {
 		Optional<Contact> c = contactRepo.findById(id);
 		
-		if (!c.isPresent()) throw new IllegalArgumentException("Nessun contatto con ID inserito...");
+		if (!c.isPresent()) throw new IdNotFoundException("Nessun contatto con ID inserito...");
 		
 		contactRepo.deleteById(id);
 		
