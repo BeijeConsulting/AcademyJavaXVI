@@ -54,7 +54,7 @@ public class RubricaController {
 	@GetMapping(value = "/contatto/{id}")
 	public Contatto dettaglioContatto(@PathVariable(name = "id") Integer id) {
 		System.out.println("GET /contatto/"+id);
-		
+
 		Optional<Contatto> contatto = contattoRepository.findById(id);
 		
 		return contatto.isPresent() ? contatto.get() : null;

@@ -18,7 +18,6 @@ LISTA CONTATTI<br><br>
 		<c:forEach var="contatto" items="${lista}">
 			${contatto.name}<br>
 			${contatto.surname}<br>
-			${contatto.completeName}<br>
 			${contatto.telephone}<br><br>
 		</c:forEach>
 	</c:otherwise>
