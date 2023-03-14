@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import it.beije.neumann.exception.IdNotFoundException;
+import it.beije.neumann.exception.InvalidJSONException;
 import it.beije.neumann.model.Contatto;
 import it.beije.neumann.repository.ContattoRepository;
 
@@ -87,11 +90,11 @@ public class RubricaController {
 	public Contatto dettaglioContatto(@PathVariable(name = "id") Integer id, @RequestBody Contatto newValues) {
 		System.out.println("PUT /contatto/"+id);
 		
-		if (id.compareTo(newValues.getId()) != 0) throw new IllegalArgumentException("id non corrispondenti");
+		if (id.compareTo(newValues.getId()) != 0) throw new InvalidJSONException("id non corrispondenti");
 		
 		//TODO dovrebbe stare in un ContattoService...
 		Optional<Contatto> c = contattoRepository.findById(id);
-		if (!c.isPresent()) throw new IllegalArgumentException("id errato");
+		if (!c.isPresent()) throw new IdNotFoundException("id errato");
 		
 		Contatto contatto = c.get();		
 		if (newValues.getName() != null) contatto.setName(newValues.getName());
