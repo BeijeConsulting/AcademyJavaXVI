@@ -34,7 +34,7 @@ public class ProductController {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); 
 		
 		LocalDateTime now = LocalDateTime.now();  
-		product.setCreatedAt(now);
+	//	product.setCreatedAt(now);
 		
 //		productRepository.save(product);
 

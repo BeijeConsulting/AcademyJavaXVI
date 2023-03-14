@@ -12,4 +12,6 @@ import it.beije.neumann.mongiello.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	public List<Product> findByName(String name);
+	
+	
 }

@@ -1,6 +1,8 @@
 package it.beije.neumann.mongiello.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 @Entity
 @Table(name = "products")
@@ -126,16 +131,43 @@ public class Product {
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
+	
+	@JsonGetter(value = "createdAt")
+	public String getCreatedAtString() {
+		return createdAt.toString();
+	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedAt() {
+		LocalDateTime now = LocalDateTime.now();
+		this.createdAt = now;
+	}
+
+//	@JsonSetter(value = "createdAt")
+//	public void setCreated() {
+//		LocalDateTime now = LocalDateTime.now();
+//		//this.createdAt = now;
+//		this.createdAt = (LocalDateTime) DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).parse(now.toString());
+//	}
+													
+	@JsonGetter(value = "disabledAt")
+	public String getDisabledAtString() {
+		if(disabledAt == null  ) return null;
+		return disabledAt.toString();
 	}
 	
 	public LocalDateTime getDisabledAt() {
+		
 		return disabledAt;
 	}
 
+	@JsonSetter(value = "disabledAt")
+	public void setDisable(String date) {
+
+		this.disabledAt =(LocalDateTime) DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).parse(date);
+	}
+	
 	public void setDisabledAt(LocalDateTime disabledAt) {
+		System.out.println("ENtrato");
 		this.disabledAt = disabledAt;
 	}
 
@@ -154,7 +186,7 @@ public class Product {
 				.append(", category: ").append(category)
 				.append(", type: ").append(type)
 				.append(", brand: ").append(brand)
-				.append(", created at: ").append(createdAt)
+//				.append(", created at: ").append(createdAt)
 				.append(", disabled at: ").append(disabledAt)
 				.append("}");
 
