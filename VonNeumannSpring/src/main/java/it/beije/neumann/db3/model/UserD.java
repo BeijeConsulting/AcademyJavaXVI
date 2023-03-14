@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenerationTime;
 @Entity
 @Cacheable(false)
 @Table(name = "users")
-public class User {
+public class UserD {
 
 	//Properties mapping
 	@Id
@@ -174,7 +174,7 @@ public class User {
 	}
 	
 	//Utilità
-	public void copyValuesOf(User other) {
+	public void copyValuesOf(UserD other) {
 		this.setName(other.getName());
 		this.setSurname(other.getSurname());
 		this.setEmail(other.getEmail());

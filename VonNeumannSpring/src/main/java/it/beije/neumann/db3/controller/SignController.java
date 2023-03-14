@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.UserService;
 
 @Controller
@@ -47,7 +47,7 @@ public class SignController {
 		
 		HttpSession session = request.getSession();
 		
-		User user = userService.findByEmailAndPassword(email, password);
+		UserD user = userService.findByEmailAndPassword(email, password);
 		
 		if(user!=null) {
 			session.setAttribute("logged_user", user);
@@ -70,7 +70,7 @@ public class SignController {
 	}
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.POST)
-	public String signupUtente(HttpServletRequest request, Model model, User userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
+	public String signupUtente(HttpServletRequest request, Model model, UserD userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
 		String jsp = "";
 		
 		HttpSession session = request.getSession();

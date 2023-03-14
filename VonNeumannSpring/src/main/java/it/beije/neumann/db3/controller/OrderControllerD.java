@@ -25,7 +25,7 @@ import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.AddressService;
 
 import it.beije.neumann.db3.service.OrderItemServiceD;
@@ -58,7 +58,7 @@ public class OrderControllerD {
     	//prende carrello da utente in sessione 
 		
         HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD user = (UserD) session.getAttribute("logged_user");
 		
 		if (user == null) return "db3/signin";
 		
@@ -106,7 +106,7 @@ public class OrderControllerD {
 		
 		HttpSession session = request.getSession();
 		
-		User loggedUser = userService.getLoggedUser(session);
+		UserD loggedUser = userService.getLoggedUser(session);
 		
 		OrderD loadingOrder = (OrderD) session.getAttribute("loading_order");
 		loadingOrder.setId(0);
@@ -133,7 +133,7 @@ public class OrderControllerD {
 	@GetMapping("/db3/order_item/{id}")
 	public String viewOrder(HttpServletRequest request, @PathVariable int id, Model model) {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD user = (UserD) session.getAttribute("logged_user");
 		String jsp = "db3/";
 		
 		if (user != null) {

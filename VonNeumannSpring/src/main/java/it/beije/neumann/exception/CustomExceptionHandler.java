@@ -30,38 +30,38 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 
-//	@ExceptionHandler(value = {UsernameNotFoundException.class})
-//	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(UsernameNotFoundException ex, WebRequest request) {
-//		int errorCode = 401;
-//		ErrorMessage re = new ErrorMessage();
-//		re.setMessage(ex.getLocalizedMessage());
-//		re.setStatus(errorCode);
-//		re.setTime(LocalDateTime.now());
-//		log.error(re.getMessage());
-//		return ResponseEntity.status(errorCode).body(re);
-//	}
+	@ExceptionHandler(value = {UsernameNotFoundException.class})
+	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(UsernameNotFoundException ex, WebRequest request) {
+		int errorCode = 401;
+		ErrorMessage re = new ErrorMessage();
+		re.setMessage(ex.getLocalizedMessage());
+		re.setStatus(errorCode);
+		re.setTime(LocalDateTime.now());
+		log.error(re.getMessage());
+		return ResponseEntity.status(errorCode).body(re);
+	}
 	
-//	@ExceptionHandler(value = {InvalidJwtAuthenticationException.class})
-//	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(InvalidJwtAuthenticationException ex, WebRequest request) {
-//		int errorCode = ex.getCode();
-//		ErrorMessage re = new ErrorMessage();
-//		re.setMessage(ex.getLocalizedMessage());
-//		re.setStatus(errorCode);
-//		re.setTime(LocalDateTime.now());
-//		log.error(re.getMessage());
-//		return ResponseEntity.status(errorCode).body(re);
-//	}
+	@ExceptionHandler(value = {InvalidJwtAuthenticationException.class})
+	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(InvalidJwtAuthenticationException ex, WebRequest request) {
+		int errorCode = ex.getCode();
+		ErrorMessage re = new ErrorMessage();
+		re.setMessage(ex.getLocalizedMessage());
+		re.setStatus(errorCode);
+		re.setTime(LocalDateTime.now());
+		log.error(re.getMessage());
+		return ResponseEntity.status(errorCode).body(re);
+	}
 	
-//	@ExceptionHandler(value = {BadCredentialsException.class})
-//	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(BadCredentialsException ex, WebRequest request) {
-//		int errorCode = 401;
-//		ErrorMessage re = new ErrorMessage();
-//		re.setMessage(ex.getLocalizedMessage());
-//		re.setStatus(errorCode);
-//		re.setTime(LocalDateTime.now());
-//		log.error(re.getMessage());
-//		return ResponseEntity.status(errorCode).body(re);
-//	}
+	@ExceptionHandler(value = {BadCredentialsException.class})
+	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(BadCredentialsException ex, WebRequest request) {
+		int errorCode = 401;
+		ErrorMessage re = new ErrorMessage();
+		re.setMessage(ex.getLocalizedMessage());
+		re.setStatus(errorCode);
+		re.setTime(LocalDateTime.now());
+		log.error(re.getMessage());
+		return ResponseEntity.status(errorCode).body(re);
+	}
 
 	@ExceptionHandler(value = {NeumannException.class})
 	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(NeumannException ex, WebRequest request) {

@@ -20,7 +20,7 @@ import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
@@ -40,7 +40,7 @@ public class ShoppingCartController {
 	public String addCartItem(HttpServletRequest request, Model model,  @RequestParam int quantity, @RequestParam  int productItemId) {
 		
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD user = (UserD) session.getAttribute("logged_user");
 		String referrer = request.getHeader("referer");
         model.addAttribute("logged_user", user);
 		if (user != null) {
@@ -58,7 +58,7 @@ public class ShoppingCartController {
 	  public String showShoppingCart(HttpServletRequest request, Model model) {
 		System.out.println("GET: /db3/shopping_cart");
 	    HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD user = (UserD) session.getAttribute("logged_user");
 		
 		if (user != null) {
 
@@ -88,7 +88,7 @@ public class ShoppingCartController {
 		public String removeShoppingCart(HttpServletRequest request, Model model, @PathVariable int cartItemId) {
 			
 			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute("logged_user");
+			UserD user = (UserD) session.getAttribute("logged_user");
 			String referrer = request.getHeader("referer");
 	        model.addAttribute("logged_user", user);
 			if (user != null) {

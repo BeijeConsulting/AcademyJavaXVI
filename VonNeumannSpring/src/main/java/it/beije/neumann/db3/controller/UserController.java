@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.Address;
 import it.beije.neumann.db3.model.OrderD;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.AddressService;
 import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.UserService;
@@ -69,13 +69,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/db3/edit_user" }, method = RequestMethod.POST)
-	public String editUserPost(HttpServletRequest request, Model model, User userData,
+	public String editUserPost(HttpServletRequest request, Model model, UserD userData,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthdate) {
 		System.out.println("POST /db3/edit_user");
 
 		HttpSession session = request.getSession();
 
-		User toEdit = userService.findById((userService.getLoggedUser(session)).getId());
+		UserD toEdit = userService.findById((userService.getLoggedUser(session)).getId());
 
 		userData.setBirthDate(birthdate);
 
@@ -96,7 +96,7 @@ public class UserController {
 		String jsp = "db3/";
 		HttpSession session = request.getSession();
 		
-		User loggedUser = (User) session.getAttribute("logged_user");
+		UserD loggedUser = (UserD) session.getAttribute("logged_user");
 		
 		if (loggedUser!=null) {
 			model.addAttribute("logged_user", loggedUser);

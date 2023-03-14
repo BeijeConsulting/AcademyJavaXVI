@@ -54,7 +54,7 @@ public class OrderD {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserD user;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
@@ -137,11 +137,11 @@ public class OrderD {
 		this.disabledAt = disabledAt;
 	}
 
-	public User getUser() {
+	public UserD getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserD user) {
 		this.user = user;
 	}
 
