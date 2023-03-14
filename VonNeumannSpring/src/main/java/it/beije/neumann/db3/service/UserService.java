@@ -66,7 +66,7 @@ public class UserService {
 			else {
 				s = new ShoppingCart();
 				s.setUserId(user_id);
-				s.setId(0);
+				//s.setId(0);
 				System.out.println("ShoppingCart: " + s);
 				shoppingCartRepository.save(s);
 			}
