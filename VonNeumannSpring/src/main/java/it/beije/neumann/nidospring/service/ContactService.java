@@ -1,5 +1,6 @@
 package it.beije.neumann.nidospring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import it.beije.neumann.exception.IdNotFoundException;
+import it.beije.neumann.nidospring.dto.ContactDTO;
 import it.beije.neumann.nidospring.model.Contact;
 import it.beije.neumann.nidospring.repository.ContactRepository;
 
@@ -18,19 +20,19 @@ public class ContactService {
 	@Autowired
 	private ContactRepository contactRepo;
 	
-	public List<Contact> findContactByName(String name){
-		return contactRepo.findByName(name);
+	public List<ContactDTO> findContactByName(String name){
+		return transferInDTO(contactRepo.findByName(name));
 	}
 	
-	public List<Contact> findContactBySurname(String surname){
-		return contactRepo.findBySurname(surname);
+	public List<ContactDTO> findContactBySurname(String surname){
+		return transferInDTO(contactRepo.findBySurname(surname));
 	}
 	
-	public List<Contact> findContactByFullName(String surname, String name){
-		return contactRepo.findBySurnameAndName(surname, name);
+	public List<ContactDTO> findContactByFullName(String surname, String name){
+		return transferInDTO(contactRepo.findBySurnameAndName(surname, name));
 	}
 	
-	public List<Contact> findBySorted(String onWhat, String orderBy){
+	public List<ContactDTO> findBySorted(String onWhat, String orderBy){
 		List<Contact> contacts;
 		
 		//onWhat può essere name, surname, null = id
@@ -49,7 +51,7 @@ public class ContactService {
 			break;
 		}
 		
-		return contacts;
+		return transferInDTO(contacts);
 	}
 	
 	public Contact findContactById(Integer id) {
@@ -82,5 +84,18 @@ public class ContactService {
 		contactRepo.deleteById(id);
 		
 		return true;
+	}
+	
+	private List<ContactDTO> transferInDTO(List<Contact> source){
+		List<ContactDTO> contactDTOs = new ArrayList<>();
+		
+		ContactDTO dto;
+		for (Contact c : source) {
+			dto = new ContactDTO();
+			BeanUtils.copyProperties(c, dto);
+			contactDTOs.add(dto);
+		}
+		
+		return contactDTOs;
 	}
 }

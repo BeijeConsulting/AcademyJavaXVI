@@ -19,13 +19,13 @@ import it.beije.neumann.db3.model.OrderD;
 import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.AddressService;
 import it.beije.neumann.db3.service.OrderServiceD;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceD userService;
 	
 	@Autowired
 	private OrderServiceD orderService;

@@ -24,14 +24,14 @@ import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
-	private UserService userService;
+	private UserServiceD userService;
 	@Autowired
 	private ProductDetailsService productDetailsService;
 	

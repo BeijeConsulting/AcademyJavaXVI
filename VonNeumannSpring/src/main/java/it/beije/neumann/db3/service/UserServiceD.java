@@ -19,13 +19,13 @@ import it.beije.neumann.db3.repository.ShoppingCartRepository;
 
 import it.beije.neumann.db3.repository.AddressRepository;
 
-import it.beije.neumann.db3.repository.UserRepository;
+import it.beije.neumann.db3.repository.UserRepositoryD;
 
 @Service
-public class UserService {
+public class UserServiceD {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepositoryD userRepo;
 
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;

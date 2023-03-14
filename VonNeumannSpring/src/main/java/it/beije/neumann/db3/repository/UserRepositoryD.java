@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import it.beije.neumann.db3.model.UserD;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserD, Integer>{
+public interface UserRepositoryD extends JpaRepository<UserD, Integer>{
 
 	public UserD findByEmailAndPassword(String email, String password);
 	

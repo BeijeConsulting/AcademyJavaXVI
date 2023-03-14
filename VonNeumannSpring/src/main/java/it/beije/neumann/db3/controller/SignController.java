@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.beije.neumann.db3.model.UserD;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class SignController {
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceD userService;
 	
 	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request) {

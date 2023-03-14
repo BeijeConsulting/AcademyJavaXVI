@@ -33,7 +33,7 @@ import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class OrderControllerD {
@@ -41,7 +41,7 @@ public class OrderControllerD {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
-	private UserService userService;
+	private UserServiceD userService;
 	@Autowired
 	private ProductService productService;
 	@Autowired
