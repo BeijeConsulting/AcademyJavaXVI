@@ -27,7 +27,7 @@ public class AddressService {
 		User user = (User) session.getAttribute("user");
 		
 //		System.out.println(user);
-		model.addAttribute("addresses",user.getAddresses());
+//		model.addAttribute("addresses",user.getAddresses());
 		
 		System.out.println((List<Address>)model.getAttribute("addresses"));
 	}
