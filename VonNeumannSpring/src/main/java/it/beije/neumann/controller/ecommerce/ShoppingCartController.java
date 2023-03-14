@@ -17,7 +17,7 @@ public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
 
-	@RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista_carts", method = RequestMethod.GET)
 	public String listaOrdini(Model model) {
 		System.out.println("GET /lista_carts");
 		

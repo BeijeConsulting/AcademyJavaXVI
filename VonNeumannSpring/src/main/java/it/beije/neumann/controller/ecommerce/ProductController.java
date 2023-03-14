@@ -19,7 +19,7 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista_prodotti", method = RequestMethod.GET)
 	public String listaOrdini(Model model) {
 		System.out.println("GET /lista_prodotti");
 		

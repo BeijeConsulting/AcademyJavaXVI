@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@RequestMapping(value = "/lista_ordini", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista_users", method = RequestMethod.GET)
 	public String listaOrdini(Model model) {
 		System.out.println("GET /lista_users");
 		
