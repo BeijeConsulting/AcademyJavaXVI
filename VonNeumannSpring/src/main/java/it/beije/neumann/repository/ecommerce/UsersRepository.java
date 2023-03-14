@@ -7,6 +7,6 @@ import it.beije.neumann.model.ecommerce.OrdersItems;
 import it.beije.neumann.model.ecommerce.Users;
 
 @Repository
-public interface UserRepository  extends JpaRepository<Users, Integer>{
+public interface UsersRepository  extends JpaRepository<Users, Integer>{
 
 }

@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.neumann.model.ecommerce.Users;
-import it.beije.neumann.repository.ecommerce.UserRepository;
+import it.beije.neumann.repository.ecommerce.UsersRepository;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UsersRepository userRepository;
 
 	@RequestMapping(value = "/lista_users", method = RequestMethod.GET)
 	public String listaOrdini(Model model) {
