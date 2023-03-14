@@ -83,6 +83,15 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.8.0</version>
 		</dependency>
-		
-	 </dependencies>  
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>VonNeumannWeb</groupId>
+			<artifactId>VonNeumannWeb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+    </dependencies>  
 </project>
