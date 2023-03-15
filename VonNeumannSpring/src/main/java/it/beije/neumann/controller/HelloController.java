@@ -16,10 +16,4 @@ public class HelloController {
 		return "hello"; // /WEB-INF/views/hello.jsp
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index() {
-		System.out.println("GET / ");
-		return "index";
-	}
-
 }

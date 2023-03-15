@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.beije.neumann.db3.model.User;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.model.UserD;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class SignController {
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceD userServiceD;
 	
 	@RequestMapping(value = {"/db3/signin"}, method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request) {
@@ -30,7 +30,7 @@ public class SignController {
 		
 		HttpSession session = request.getSession();
 		
-		if (userService.isUserLogged(session)) {
+		if (userServiceD.isUserLogged(session)) {
 			jsp+="user/user_page";
 		} else {
 			jsp+="signin";
@@ -47,11 +47,11 @@ public class SignController {
 		
 		HttpSession session = request.getSession();
 		
-		User user = userService.findByEmailAndPassword(email, password);
+		UserD userD = userServiceD.findByEmailAndPassword(email, password);
 		
-		if(user!=null) {
-			session.setAttribute("logged_user", user);
-			model.addAttribute("logged_user", user);
+		if(userD!=null) {
+			session.setAttribute("logged_user", userD);
+			model.addAttribute("logged_user", userD);
 			jsp+="user/user_page";
 		} else {
 			model.addAttribute("signin_error", "Email o password errati :(");
@@ -59,7 +59,7 @@ public class SignController {
 			jsp+="signin";
 		}
 		
-		model.addAttribute("logged_user", user);
+		model.addAttribute("logged_user", userD);
 		
 		return jsp;
 	}
@@ -70,7 +70,7 @@ public class SignController {
 	}
 
 	@RequestMapping(value = "/db3/signup", method = RequestMethod.POST)
-	public String signupUtente(HttpServletRequest request, Model model, User userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
+	public String signupUtente(HttpServletRequest request, Model model, UserD userData, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthdate) {
 		String jsp = "";
 		
 		HttpSession session = request.getSession();
@@ -78,7 +78,7 @@ public class SignController {
 		userData.setBirthDate(birthdate);
 		System.out.println(userData);
 		
-		boolean userPresent = userService.userAlreadyPresent(userData.getEmail());
+		boolean userPresent = userServiceD.userAlreadyPresent(userData.getEmail());
 
 		if(userPresent) {
 			model.addAttribute("signup_error", "Email già esistente!");
@@ -87,7 +87,7 @@ public class SignController {
 		} else {
 			//Va aggiunto il carrello
 			model.addAttribute("userSignUp", userData);
-			userService.saveUser(userData);
+			userServiceD.saveUser(userData);
 			
 			session.setAttribute("logged_user", userData);
 			model.addAttribute("logged_user", userData);

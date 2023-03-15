@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.ProductService;
 
 @Controller
@@ -26,7 +26,7 @@ public class ProductController {
     public String getAllProducts(Model model, HttpServletRequest request) {
         model.addAttribute("products", productService.getAllProducts());
         HttpSession session = request.getSession();
-        model.addAttribute("logged_user", (User) session.getAttribute("logged_user"));
+        model.addAttribute("logged_user", (UserD) session.getAttribute("logged_user"));
         return "db3/index";
     }
     @GetMapping("/db3/product/{id}")
@@ -34,7 +34,7 @@ public class ProductController {
     	List<ProductDetails> pd = productService.getProductDetails(id);
         model.addAttribute("productDetails", pd);
         HttpSession session = request.getSession();
-        model.addAttribute("logged_user", (User) session.getAttribute("logged_user"));
+        model.addAttribute("logged_user", (UserD) session.getAttribute("logged_user"));
         return "db3/product";
     }
 }

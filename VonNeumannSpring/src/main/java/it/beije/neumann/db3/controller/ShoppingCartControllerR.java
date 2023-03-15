@@ -22,11 +22,11 @@ import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @RestController
 @RequestMapping("/rest/shopping_cart")
@@ -35,14 +35,14 @@ public class ShoppingCartControllerR {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
-	private UserService userService;
+	private UserServiceD userServiceD;
 	@Autowired
 	private ProductDetailsService productDetailsService;
 
 	@PostMapping("/add")
 	public ShoppingCart addItem(@RequestBody ShoppingCartItemDTO itemDTO) {
 
-		ShoppingCart s = userService.getShoppingCart(1);
+		ShoppingCart s = userServiceD.getShoppingCart(1);
 
 		if (s != null) {
 			shoppingCartService.addShoppingCartItem(s.getId(), itemDTO.getProductItemId(), itemDTO.getQuantity());
@@ -53,7 +53,7 @@ public class ShoppingCartControllerR {
 
 	@GetMapping
 	public ShoppingCart showShoppingCart() {
-		ShoppingCart shoppingCart = userService.getShoppingCart(1);
+		ShoppingCart shoppingCart = userServiceD.getShoppingCart(1);
 		List<ShoppingCartItem> items = shoppingCart.getShoppingCartItem();
 		List<ProductDetails> productsDetails = new ArrayList<>();
 		List<Product> products = new ArrayList<>();
@@ -74,7 +74,7 @@ public class ShoppingCartControllerR {
 	@DeleteMapping("/remove_item/{cartItemId}")
 	public ShoppingCart removeShoppingCartItem(@PathVariable int cartItemId) {
 
-		ShoppingCart s = userService.getShoppingCart(1);
+		ShoppingCart s = userServiceD.getShoppingCart(1);
 
 		if (s != null) {
 			shoppingCartService.removeShoppingCartItem(s.getId(), cartItemId);

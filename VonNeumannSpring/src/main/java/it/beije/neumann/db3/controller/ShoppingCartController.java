@@ -20,18 +20,18 @@ import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
-	private UserService userService;
+	private UserServiceD userServiceD;
 	@Autowired
 	private ProductDetailsService productDetailsService;
 	
@@ -40,11 +40,11 @@ public class ShoppingCartController {
 	public String addCartItem(HttpServletRequest request, Model model,  @RequestParam int quantity, @RequestParam  int productItemId) {
 		
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD userD = (UserD) session.getAttribute("logged_user");
 		String referrer = request.getHeader("referer");
-        model.addAttribute("logged_user", user);
-		if (user != null) {
-			ShoppingCart s = userService.getShoppingCart(user.getId());
+        model.addAttribute("logged_user", userD);
+		if (userD != null) {
+			ShoppingCart s = userServiceD.getShoppingCart(userD.getId());
 			if(s != null) { //check
 				shoppingCartService.addShoppingCartItem(s.getId(), productItemId, quantity);
 				System.out.println(s);
@@ -58,11 +58,11 @@ public class ShoppingCartController {
 	  public String showShoppingCart(HttpServletRequest request, Model model) {
 		System.out.println("GET: /db3/shopping_cart");
 	    HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD userD = (UserD) session.getAttribute("logged_user");
 		
-		if (user != null) {
+		if (userD != null) {
 
-		    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
+		    ShoppingCart shoppingCart = userServiceD.getShoppingCart(userD.getId());
 		    List<ShoppingCartItem> items = shoppingCart.getShoppingCartItem();
 		    List<ProductDetails> productsDetails = new ArrayList<>();
 		    List<Product> products = new ArrayList<>();
@@ -88,11 +88,11 @@ public class ShoppingCartController {
 		public String removeShoppingCart(HttpServletRequest request, Model model, @PathVariable int cartItemId) {
 			
 			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute("logged_user");
+			UserD userD = (UserD) session.getAttribute("logged_user");
 			String referrer = request.getHeader("referer");
-	        model.addAttribute("logged_user", user);
-			if (user != null) {
-				ShoppingCart s = userService.getShoppingCart(user.getId());
+	        model.addAttribute("logged_user", userD);
+			if (userD != null) {
+				ShoppingCart s = userServiceD.getShoppingCart(userD.getId());
 				if(s != null) { 
 					shoppingCartService.removeShoppingCartItem(s.getId(), cartItemId);
 				    return "redirect:" + referrer;

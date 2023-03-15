@@ -25,7 +25,7 @@ import it.beije.neumann.db3.model.Product;
 import it.beije.neumann.db3.model.ProductDetails;
 import it.beije.neumann.db3.model.ShoppingCart;
 import it.beije.neumann.db3.model.ShoppingCartItem;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.AddressService;
 
 import it.beije.neumann.db3.service.OrderItemServiceD;
@@ -33,7 +33,7 @@ import it.beije.neumann.db3.service.OrderServiceD;
 import it.beije.neumann.db3.service.ProductDetailsService;
 import it.beije.neumann.db3.service.ProductService;
 import it.beije.neumann.db3.service.ShoppingCartService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class OrderControllerD {
@@ -41,7 +41,7 @@ public class OrderControllerD {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
-	private UserService userService;
+	private UserServiceD userServiceD;
 	@Autowired
 	private ProductService productService;
 	@Autowired
@@ -58,20 +58,20 @@ public class OrderControllerD {
     	//prende carrello da utente in sessione 
 		
         HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD userD = (UserD) session.getAttribute("logged_user");
 		
-		if (user == null) return "db3/signin";
+		if (userD == null) return "db3/signin";
 		
-	    model.addAttribute("logged_user", user);
+	    model.addAttribute("logged_user", userD);
 	    List<OrderItemD> orderItems = new ArrayList<>();
 	    OrderD order = new OrderD();
-	    ShoppingCart shoppingCart = userService.getShoppingCart(user.getId());
+	    ShoppingCart shoppingCart = userServiceD.getShoppingCart(userD.getId());
 	    List<ShoppingCartItem> shoppingCartItems = shoppingCartService.getShoppingCartItems(shoppingCart.getId());
 	    
 	    if (shoppingCartItems.size() < 1) return "db3";
 	    double totalPrice=0.0;
 	    order.setStatus("Pending");
-	    order.setUser(user);
+	    order.setUser(userD);
 	    
 	    for(ShoppingCartItem shoppingCartItem: shoppingCartItems) {
 	    	ProductDetails productDetails = shoppingCartService.getProduct(shoppingCartItem.getId()); 
@@ -88,7 +88,7 @@ public class OrderControllerD {
 	    	totalPrice+=price;
 	    	orderItems.add(orderItem);
 	    }
-	    List<Address> addresses = user.getAddresses();
+	    List<Address> addresses = userD.getAddresses();
 	    order.setTotalPrice(totalPrice);
 //	    model.addAttribute("orderItems", orderItems); //Prova Mary
 	    order.setOrderItems(orderItems); //Prova Mary
@@ -106,7 +106,7 @@ public class OrderControllerD {
 		
 		HttpSession session = request.getSession();
 		
-		User loggedUser = userService.getLoggedUser(session);
+		UserD loggedUser = userServiceD.getLoggedUser(session);
 		
 		OrderD loadingOrder = (OrderD) session.getAttribute("loading_order");
 		loadingOrder.setId(0);
@@ -118,7 +118,7 @@ public class OrderControllerD {
 		
 		orderService.saveOrder(loadingOrder, loadingOrder.getOrderItems());
 		
-		loggedUser = userService.findById(loggedUser.getId());
+		loggedUser = userServiceD.findById(loggedUser.getId());
 		session.setAttribute("logged_user", loggedUser);
 		
 		System.out.println("Shopping cart id: "+loggedUser.getShoppingCart().getId());
@@ -133,10 +133,10 @@ public class OrderControllerD {
 	@GetMapping("/db3/order_item/{id}")
 	public String viewOrder(HttpServletRequest request, @PathVariable int id, Model model) {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("logged_user");
+		UserD userD = (UserD) session.getAttribute("logged_user");
 		String jsp = "db3/";
 		
-		if (user != null) {
+		if (userD != null) {
 			List<OrderItemD> items = orderItemService.findByOrderId(id);
 			model.addAttribute("items", items);
 			jsp += "user/order_detail";

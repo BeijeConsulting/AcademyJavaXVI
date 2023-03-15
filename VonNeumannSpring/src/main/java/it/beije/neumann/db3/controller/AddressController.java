@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.beije.neumann.db3.model.Address;
-import it.beije.neumann.db3.model.User;
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.db3.service.AddressService;
-import it.beije.neumann.db3.service.UserService;
+import it.beije.neumann.db3.service.UserServiceD;
 
 @Controller
 public class AddressController {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceD userServiceD;
 
 	@Autowired
 	private AddressService addressService;
@@ -35,8 +35,8 @@ public class AddressController {
 
 		HttpSession session = request.getSession();
 
-		if (userService.isUserLogged(session)) {
-			model.addAttribute("logged_user", userService.getLoggedUser(session));
+		if (userServiceD.isUserLogged(session)) {
+			model.addAttribute("logged_user", userServiceD.getLoggedUser(session));
 			jsp += "user/addresses";
 		} else {
 			jsp += "signin";
@@ -52,7 +52,7 @@ public class AddressController {
 		String jsp = "db3/";
 		HttpSession session = request.getSession();
 
-		if (userService.isUserLogged(session)) {
+		if (userServiceD.isUserLogged(session)) {
 			jsp += "user/add_address";
 		} else {
 			jsp += "signin";
@@ -66,12 +66,12 @@ public class AddressController {
 		System.out.println("POST /db3/add_address");
 
 		HttpSession session = request.getSession();
-		addressData.setUserId((userService.getLoggedUser(session)).getId());
+		addressData.setUserId((userServiceD.getLoggedUser(session)).getId());
 		System.out.println(addressData);
 
 		addressService.saveAddress(addressData);
 
-		session.setAttribute("logged_user", userService.findById(addressData.getUserId()));
+		session.setAttribute("logged_user", userServiceD.findById(addressData.getUserId()));
 
 		return "db3/user/addresses";
 	}
@@ -83,8 +83,8 @@ public class AddressController {
 		String jsp = "db3/";
 		HttpSession session = request.getSession();
 
-		if (userService.isUserLogged(session)) {
-			List<Address> addresses = (userService.getLoggedUser(session)).getAddresses();
+		if (userServiceD.isUserLogged(session)) {
+			List<Address> addresses = (userServiceD.getLoggedUser(session)).getAddresses();
 			Address toEdit = null;
 
 			for (Address a : addresses) {
@@ -117,7 +117,7 @@ public class AddressController {
 
 		addressService.saveAddress(fromDBtoEdit);
 
-		session.setAttribute("logged_user", userService.findById(fromDBtoEdit.getUserId()));
+		session.setAttribute("logged_user", userServiceD.findById(fromDBtoEdit.getUserId()));
 
 		return "db3/user/addresses";
 	}
@@ -130,8 +130,8 @@ public class AddressController {
 
 		HttpSession session = request.getSession();
 
-		if (userService.isUserLogged(session)) {
-			List<Address> addresses = userService.getLoggedUser(request.getSession()).getAddresses();
+		if (userServiceD.isUserLogged(session)) {
+			List<Address> addresses = userServiceD.getLoggedUser(request.getSession()).getAddresses();
 			Address toDelete = null;
 			
 			for (Address a : addresses) {
@@ -166,7 +166,7 @@ public class AddressController {
 
 		addressService.saveAddress(toDisable);
 
-		session.setAttribute("logged_user", userService.findById(toDisable.getUserId()));
+		session.setAttribute("logged_user", userServiceD.findById(toDisable.getUserId()));
 
 		return "db3/user/addresses";
 	}

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
+import it.beije.neumann.db3.model.UserD;
 import it.beije.neumann.model.OrderItem;
 
 @Entity
@@ -54,7 +55,7 @@ public class OrderD {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserD user;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
@@ -137,12 +138,12 @@ public class OrderD {
 		this.disabledAt = disabledAt;
 	}
 
-	public User getUser() {
+	public UserD getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(UserD userD) {
+		this.user = userD;
 	}
 
 	public List<OrderItemD> getOrderItems() {
