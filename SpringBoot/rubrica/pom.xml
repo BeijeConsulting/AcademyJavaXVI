@@ -53,14 +53,15 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-			<plugin>
+			<!--plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0</version>
+				
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<goals>
@@ -74,11 +75,11 @@
 						<include>*.wsdl</include>
 					</schemaIncludes>
 				</configuration>
-			</plugin>
+			</plugin-->
 		
 			
 		</plugins>
 	</build>
-	
+</project>	
 
-</project>
+

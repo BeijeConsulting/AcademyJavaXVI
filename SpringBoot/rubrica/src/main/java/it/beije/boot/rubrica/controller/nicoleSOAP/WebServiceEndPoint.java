@@ -19,7 +19,7 @@ public class WebServiceEndPoint {
 
 		ObjectFactory factory = new ObjectFactory();
 		GetNamesResponse response = new GetNamesResponse();
-		response.setCountry(FakeContactRepository.findContactsByName(request.getNames()));
+		response.getReturn();
 		
 		return response;
 	}

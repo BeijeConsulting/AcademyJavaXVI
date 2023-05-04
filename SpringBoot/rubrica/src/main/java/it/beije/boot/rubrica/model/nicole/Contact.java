@@ -1,5 +1,6 @@
 package it.beije.boot.rubrica.model.nicole;
 
+
 public class Contact {
 	
 	private String name;

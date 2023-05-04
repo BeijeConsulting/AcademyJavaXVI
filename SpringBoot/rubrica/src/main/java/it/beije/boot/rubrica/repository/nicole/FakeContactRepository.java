@@ -40,6 +40,8 @@ public static String[] nameArray = {"Mario", "Carlo", "Piero"};
 		return contacts;
 	}
 
-	
+	public static void print() {
+		System.out.print("repo");
+	}
 
 }

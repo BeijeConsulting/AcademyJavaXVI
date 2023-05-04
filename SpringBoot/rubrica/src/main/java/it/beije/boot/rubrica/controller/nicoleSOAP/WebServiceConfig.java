@@ -10,6 +10,9 @@ import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
+
+import it.beije.boot.rubrica.model.nicole.Contact;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 
 @EnableWs
@@ -17,16 +20,16 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 public class WebServiceConfig extends WsConfigurerAdapter{
 
 	@Bean
-	public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
+	public ServletRegistrationBean messageDispatcherServlet(Contact applicationContext) {
 		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
 		servlet.setApplicationContext((org.springframework.context.ApplicationContext) applicationContext);
 
-		return new ServletRegistrationBean(servlet, "/javainuse/ws/*");
+		return new ServletRegistrationBean(servlet, "it.beije.boot.rubrica.model.nicole");
 	}
-	@Bean(name="helloworld")
+	@Bean(name="Contact")
 	public Wsdl11Definition defaultWsdl11Definition() {
 		SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-		wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/helloworld.wsdl"));
+		wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/Contact.wsdl"));
 
 		return wsdl11Definition;
 	}
