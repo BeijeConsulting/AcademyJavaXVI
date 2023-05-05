@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import esercizioPizzeria.Ristorante;
+import esercizioPizzeria.TipoRistorante;
+
 public class Demo1 {
 	public static void main(String args[]) throws IOException {
 		
@@ -60,14 +63,14 @@ public class Demo1 {
 		
 		//Da lista a mappa
 		System.out.println("\nDa lista a mappa");
-		//Map<Integer, String> map = persons.stream().collect(Collectors.toMap(Person::getAge, Person::getName,(name1, name2) -> name1 + ";" + name2));
-		Map<String, Integer> map2 = persons.stream().collect(Collectors.toMap(Person::getName, Person::getAge));
-		//System.out.println(map);
+		Map<String, Integer> map = persons.stream().collect(Collectors.toMap(Person::getName, Person::getAge));
+		System.out.println(map);
+		Map<String, List<Person>> map2 = persons.stream().collect(Collectors.groupingBy(Person::getName));
 		System.out.println(map2);
 		
 		//No ripetizioni
 		System.out.println("\nSenza ripetizioni");
-		List<Integer> listaNumerica2 = listaNumerica.stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
 		System.out.println(listaNumerica2);
 		
 		//Somma di tutti gli elementi
