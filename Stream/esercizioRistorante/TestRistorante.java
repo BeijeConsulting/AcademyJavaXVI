@@ -36,7 +36,10 @@ public class TestRistorante {
 		 * 7)Data la lista dei ristoranti,scrivere un metodo che restituisca il massimo, il minimo e la media 
 		 *   dei coperti.
 		 * 
-		 * 8)Data la lista dei ristoranti, stampare il numero dei ristoranti con nome che inizia con "d".
+		 * 8)Data la lista dei ristoranti, stampare la lista dei ristoranti con nome che inizia con D e
+		 *   lunghi almeno 7 lettere.
+		 *   
+		 * 9)Calcolare la somma del doppio dei valori pari dei coperti dei ristorsnti della lista.
 		 */
 
 	}
