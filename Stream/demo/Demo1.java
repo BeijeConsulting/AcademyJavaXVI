@@ -3,6 +3,7 @@ package demo;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,7 +90,8 @@ public class Demo1 {
 		l.stream().map(String::toUpperCase).sorted(Comparator.<String>naturalOrder().reversed()).forEach(System.out::println);
 		
 		//Files
-//		long numberOfLines=Files.lines(Paths.get("CiaoVonNeumann!.txt")).count();
-//		System.out.println(numberOfLines);
+		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
+		Stream<String> lines = strList.stream();
+		lines.forEach(System.out::println);
 	}
 }
