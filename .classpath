@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Esercizi/src"/>
+	<classpathentry kind="src" path="SpringBoot/rubrica/src/main/java"/>
+	<classpathentry kind="src" path="SpringBoot/rubrica/src/test/java"/>
+	<classpathentry kind="src" path="VonNeumann/src"/>
+	<classpathentry kind="src" path="VonNeumannSpring/src/main/java"/>
+	<classpathentry kind="src" path="VonNeumannWeb/src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
