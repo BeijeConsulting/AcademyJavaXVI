@@ -1,7 +1,10 @@
 package esercizioRistorante;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestRistorante {
 
@@ -38,6 +41,31 @@ public class TestRistorante {
 		 * 
 		 */
 
+		//Stream1
+		  risto.stream().sorted(Comparator.comparing(Ristorante::getCoperti).reversed()).forEach(r->System.out.println(r.getNome()+":"+r.getCoperti()));
+
+		  //Stream2
+		  System.out.println(risto.stream().filter(r->r.getCoperti()>=45).collect(Collectors.toList()));
+		  
+		  //Stream3
+		  System.out.println(risto.stream().collect(Collectors.groupingBy(Ristorante::getTipo)));
+		  
+		  //Stream4
+		  System.out.println(risto.stream().sorted(Comparator.comparing(Ristorante::getCoperti)).collect(Collectors
+		    .groupingBy(Ristorante::getTipo)));
+		  
+		  //Stream5
+		  System.out.println(risto.stream().map(r->r.getNome()).sorted().collect(Collectors.joining(",")));
+
+		  //Stream6
+		  System.out.println(risto.stream().map(r->r.getCoperti()).reduce(0, Integer::sum));
+		  
+		  //Stream7
+		  IntSummaryStatistics stats = risto.stream().mapToInt(x -> x.getCoperti()).summaryStatistics();
+			System.out.println("Min " + stats.getMin());
+			System.out.println("Max " +stats.getMax());
+			System.out.println("Media " + stats.getAverage());
+			
 	}
 
 }
