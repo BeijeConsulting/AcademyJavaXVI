@@ -38,6 +38,9 @@ public class TestRistorante {
 		 *   
 		 * 7)Data la lista dei ristoranti,scrivere un metodo che restituisca il massimo, il minimo e la media 
 		 *   dei coperti.
+		 *   
+		 * 8)Data la lista dei ristoranti, stampare il numero dei ristoranti con nome che inizia con "D" e 
+		 *   con lunghezza di almeno 7 lettere.
 		 * 
 		 */
 
@@ -65,6 +68,9 @@ public class TestRistorante {
 			System.out.println("Min " + stats.getMin());
 			System.out.println("Max " +stats.getMax());
 			System.out.println("Media " + stats.getAverage());
+			
+	     //Stream8
+			System.out.println(risto.stream().filter(r->r.getNome().startsWith("D")&&r.getNome().length()>=7).collect(Collectors.toList()));
 			
 	}
 
