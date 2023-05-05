@@ -36,6 +36,7 @@ public class TestRistorante {
 		 * 7)Data la lista dei ristoranti,scrivere un metodo che restituisca il massimo, il minimo e la media 
 		 *   dei coperti.
 		 * 
+		 * 8)Data la lista dei ristoranti, stampare il numero dei ristoranti con nome che inizia con "d".
 		 */
 
 	}
