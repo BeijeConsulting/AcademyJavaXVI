@@ -25,6 +25,13 @@ public class Person {
 		this.age = age;
 	}
 	
+	@Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 	
 
 }

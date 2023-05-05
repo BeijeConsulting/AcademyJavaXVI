@@ -1,19 +1,21 @@
 package demo;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-<<<<<<< HEAD
 import java.util.Comparator;
-=======
 import java.util.IntSummaryStatistics;
->>>>>>> refs/remotes/origin/stream
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -87,11 +89,36 @@ public class Demo1 {
 		numbers.limit(6).skip(1).forEach(System.out::println);;
 
 		
-		List<String> l=Arrays.asList("da","ab","ac","bb");
-		l.stream().map(String::toUpperCase).sorted(Comparator.<String>naturalOrder().reversed()).forEach(System.out::println);
+		//Filesdemo
+//		File file = new File("demo/CiaoVonNeumann!.txt");
+//		FileReader fileReader = new FileReader(file);
+//		BufferedReader bufferedReader = new BufferedReader(fileReader);
+//		String r = null;
+//		while( bufferedReader.ready() ) {
+//			r = bufferedReader.readLine();
+//			System.out.println(r);
+//		}	
+
+		System.out.println("\nFILE");
+		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.csv"));
+		Stream<String> streamFile = strList.stream();
+		streamFile.skip(1).forEach(System.out::println);
 		
-		//Files
-//		long numberOfLines=Files.lines(Paths.get("CiaoVonNeumann!.txt")).count();
-//		System.out.println(numberOfLines);
+		System.out.println("\nDa File a lista");
+		try (Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"))) {
+		    List<Person> people = lines
+		            .skip(1)
+		            .map(line -> {
+		                String[] fields = line.split(",");
+		                String name = fields[0];
+		                Integer age = Integer.valueOf( fields[1].trim() );   
+		                return new Person(name, age);
+		            })
+		            .collect(Collectors.toList());
+		    people.forEach(System.out::println);
+		   
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 	}
 }

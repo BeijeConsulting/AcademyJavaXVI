@@ -75,6 +75,10 @@ public class TestRistorante {
 		System.out.println("\n8)------------");
 		System.out.println( risto.stream().map(Ristorante::getCoperti).filter(e->e%2 == 0).map(e -> e*2).reduce(0,Integer::sum)  );
 
+//	 9)Data la lista dei ristoranti, stampare la lista dei ristoranti con nome che inizia con D e lunghi almeno 7 lettere
+		System.out.println("\n9)------------");
+		System.out.println( risto.stream().filter(s-> s.getNome().startsWith("D") && s.getNome().length()>=7 ).collect(Collectors.toList()) );
+		
 
 
 	}
