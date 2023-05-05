@@ -3,6 +3,7 @@ package demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,6 +64,19 @@ public class Demo1 {
 		//Somma di tutti gli elementi
 		System.out.println("\nSomma di tutta la lista");
 		System.out.println(listaNumerica.stream().reduce(0, (x,y)->x+y));
+		
+		//Summary static
+		System.out.println("\nSummary static");
+		IntSummaryStatistics stats = listaNumerica.stream().mapToInt(x -> x).summaryStatistics();
+		System.out.println("Min " + stats.getMin());
+		System.out.println("Max " +stats.getMax());
+		System.out.println("Media " + stats.getAverage());
+		System.out.println("Count "+stats.getCount());
+		
+		//Iterate
+		System.out.println("\nPrimi 10 numeri");
+		Stream<Integer> numbers = Stream.iterate(0, n -> n+10);
+		numbers.limit(6).skip(1).forEach(System.out::println);;
 		
 		
 	}
