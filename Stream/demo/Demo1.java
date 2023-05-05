@@ -1,8 +1,12 @@
 package demo;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Demo1 {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		
 		List<Integer> listaNumerica = Arrays.asList(5,6,87,45,12,36,98,120,120);
 		List<String> listaString = Arrays.asList("ciao", "benvenuto", "casa");
@@ -64,6 +68,13 @@ public class Demo1 {
 		System.out.println("\nSomma di tutta la lista");
 		System.out.println(listaNumerica.stream().reduce(0, (x,y)->x+y));
 		
+		//Stampa gli elementi di una lista toUpperCase e li ordina
 		
+		List<String> l=Arrays.asList("da","ab","ac","bb");
+		l.stream().map(String::toUpperCase).sorted(Comparator.<String>naturalOrder().reversed()).forEach(System.out::println);
+		
+		//Files
+//		long numberOfLines=Files.lines(Paths.get("CiaoVonNeumann!.txt")).count();
+//		System.out.println(numberOfLines);
 	}
 }
