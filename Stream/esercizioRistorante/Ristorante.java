@@ -1,4 +1,4 @@
-package esercizioPizzeria;
+package esercizioRistorante;
 
 public class Ristorante {
 

@@ -1,4 +1,4 @@
-package esercizioPizzeria;
+package esercizioRistorante;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 public class TestRistorante {
 
 	public static void main(String[] args) {
-		List<Ristorante> risto=Arrays.asList(new Ristorante("La pergola",TipoRistorante.RISTO,55),
+		List<Ristorante> risto=Arrays.asList(new Ristorante("Zi Pietro",TipoRistorante.RISTO,45),
 				new Ristorante("La pergola",TipoRistorante.RISTO,55),
 				new Ristorante("Da Ivo",TipoRistorante.PIZZERIA,9),
 				new Ristorante("Spazio Pizza",TipoRistorante.PIZZERIA,150),
@@ -33,6 +33,8 @@ public class TestRistorante {
 		 * 6)Data la lista dei ristoranti,scrivere un metodo che restituisca la somma totale di tutti i coperti
 		 *   dei ristorsnti della lista.
 		 *   
+		 * 7)Data la lista dei ristoranti,scrivere un metodo che restituisca il massimo, il minimo e la media 
+		 *   dei coperti.
 		 * 
 		 */
 
