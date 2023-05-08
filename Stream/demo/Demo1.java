@@ -13,14 +13,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
+
 public class Demo1 {
 	public static void main(String args[]) throws IOException {
+		
+		Stream<Integer> streamInt = Stream.of(1,2,3,6,4,5);
+		Stream<String> streamBuilder = Stream.<String>builder().add("Lunedi").build();
 		
 		List<Integer> listaNumerica = Arrays.asList(5,6,87,45,12,36,98,120,120);
 		List<String> listaString = Arrays.asList("ciao", "benvenuto", "casa");
 		
 		//max di una lista
-		System.out.println("Massimo " + listaNumerica.stream().max(Integer::compare));
+		System.out.println("Massimo " + listaNumerica.stream().max(Integer::compare).get());
 	
 		//minimo
 		Optional<Integer> min = listaNumerica.stream().min(Integer::compare);
@@ -43,26 +47,32 @@ public class Demo1 {
 		System.out.println("\nLista con virgola");
 		System.out.println(listaString.stream().map(e -> e.toUpperCase()).collect(Collectors.joining(", ")));
 		
+		//Lista ordinata
+		System.out.println("\nLista ordinata");
+		listaString.stream().sorted().forEach( e -> System.out.print(e + " " ));
+		
+		//No ripetizioni
+		System.out.println("\n\nSenza ripetizioni");
+		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
+		System.out.println(listaNumerica2);
+		
 		Person p1 = new Person("Marco", 23);
 		Person p2 = new Person("Sebastiano", 41);
 		Person p3 = new Person("Roberto", 15);
+		
 		
 		List<Person> persons = new ArrayList<>();
 		persons.add(p1);
 		persons.add(p2);
 		persons.add(p3);
-		
+	
 		//Da lista a mappa
-		System.out.println("\nDa lista a mappa");
+		System.out.println("\n\nDa lista a mappa");
 		Map<String, Integer> map = persons.stream().collect(Collectors.toMap(Person::getName, Person::getAge));
 		System.out.println(map);
 		Map<String, List<Person>> map2 = persons.stream().collect(Collectors.groupingBy(Person::getName));
 		System.out.println(map2);
 		
-		//No ripetizioni
-		System.out.println("\nSenza ripetizioni");
-		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
-		System.out.println(listaNumerica2);
 		
 		//Somma di tutti gli elementi
 		System.out.println("\nSomma di tutta la lista");
@@ -81,7 +91,15 @@ public class Demo1 {
 		System.out.println("\nPrimi 10 numeri");
 		Stream<Integer> numbers = Stream.iterate(0, n -> n+10);
 		numbers.limit(6).skip(1).forEach(System.out::println);;
-
+		
+		//boolenai
+		System.out.println("\nBoolean");
+		boolean anyStartsWithA = listaString.stream().anyMatch(s -> s.startsWith("c"));
+		System.out.println("Qualcosa inizia con 'c' ? " + anyStartsWithA); // true
+		boolean allStartsWithA = listaString.stream().allMatch(s -> s.startsWith("c"));
+		System.out.println("Tutti iniziano con 'c' ? " + allStartsWithA); // false
+		boolean noneStartsWithZ = listaString.stream().noneMatch(s -> s.startsWith("f"));
+		System.out.println("Nessunp inizia con 'f' ? " + noneStartsWithZ); // true
 		
 		//Filesdemo
 //		File file = new File("demo/CiaoVonNeumann!.txt");
@@ -99,8 +117,6 @@ public class Demo1 {
 		streamFile.skip(1).forEach(System.out::println);
 		
 		System.out.println("\nDa File a lista");
-		
-		
 		try{
 			Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
 		    List<Person> people = lines
@@ -117,11 +133,16 @@ public class Demo1 {
 		    e.printStackTrace();
 		}    
 		
+		//FlatMap
+		System.out.println("\nFlat map");
 		Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
 		lines
 		.skip(1)
 		.map(line -> line.split(",")) // Stream<String[]>
 		    .flatMap(Arrays::stream) // Stream<String>
 		    .forEach(System.out::println);
+		
+
+		
 	}	
 }
