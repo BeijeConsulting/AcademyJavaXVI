@@ -1,26 +1,17 @@
 package demo;
 
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import esercizioPizzeria.Ristorante;
-import esercizioPizzeria.TipoRistorante;
 
 public class Demo1 {
 	public static void main(String args[]) throws IOException {
@@ -108,7 +99,10 @@ public class Demo1 {
 		streamFile.skip(1).forEach(System.out::println);
 		
 		System.out.println("\nDa File a lista");
-		try (Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"))) {
+		
+		
+		try{
+			Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
 		    List<Person> people = lines
 		            .skip(1)
 		            .map(line -> {
@@ -119,9 +113,15 @@ public class Demo1 {
 		            })
 		            .collect(Collectors.toList());
 		    people.forEach(System.out::println);
-		   
 		} catch (IOException e) {
 		    e.printStackTrace();
-		}
-	}
+		}    
+		
+		Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
+		lines
+		.skip(1)
+		.map(line -> line.split(",")) // Stream<String[]>
+		    .flatMap(Arrays::stream) // Stream<String>
+		    .forEach(System.out::println);
+	}	
 }
