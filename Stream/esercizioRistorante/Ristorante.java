@@ -13,6 +13,13 @@ public class Ristorante {
 		
 	}
 
+	public Ristorante(String nome,int coperti) {
+		this.nome=nome; 
+		
+		this.coperti=coperti;
+		
+	}
+
 	public String getNome() {
 		return nome;
 	}

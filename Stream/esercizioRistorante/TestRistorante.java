@@ -1,7 +1,14 @@
 package esercizioRistorante;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import demo.Person;
 
 public class TestRistorante {
 
@@ -40,8 +47,11 @@ public class TestRistorante {
 		 *   lunghi almeno 7 lettere.
 		 *   
 		 * 9)Calcolare la somma del doppio dei valori pari dei coperti dei ristorsnti della lista.
+		 * 
+		 * 10)Il file Ristorante.csv indica il nome e il numero di coperti di alcuni ristoranti. Dato questo file
+		 *    stampare per ciascuna riga "nome:numero_coperti".
+		 *    Ad esempio, per la prima riga -> "Zi Pietro:45".
 		 */
 
-	}
 
 }
