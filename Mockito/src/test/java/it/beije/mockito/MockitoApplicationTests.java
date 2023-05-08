@@ -34,14 +34,20 @@ class MockitoApplicationTests {
 	@Test
 	@DisplayName("Boh")
 	public void shouldDummy() throws Exception {
-		
-		ProvaDTO user = new ProvaDTO(1, "Pinco", "Pallino");
-        Mockito.when(service.findUser(1)).thenReturn(user);
+        Mockito.when(service.findUser(1)).thenReturn(new ProvaDTO(1, "Pinco", "Pallino"));
+        Mockito.when(service.findUser(2)).thenReturn(new ProvaDTO(2, "Mario2", "Rossi"));
 
 		mockMvc.perform(get("http://localhost:8080/1").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().is(200))
 				.andExpect(content().contentTypeCompatibleWith("application/json"))
 				.andExpect(jsonPath("$.id", Matchers.is(1)));
+		
+
+		mockMvc.perform(get("http://localhost:8080/2").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().is(200))
+				.andExpect(content().contentTypeCompatibleWith("application/json"))
+				.andExpect(jsonPath("$.id", Matchers.is(2)))
+				.andExpect(jsonPath("$.name", Matchers.is("Mario2")));
 
 	}
 
