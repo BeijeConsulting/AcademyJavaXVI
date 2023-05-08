@@ -1,12 +1,17 @@
 package demo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +70,7 @@ public class Demo1 {
 		System.out.println("\nSenza ripetizioni");
 		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
 		System.out.println(listaNumerica2);
+		listaNumerica2.stream().ta
 		
 		//Somma di tutti gli elementi
 		System.out.println("\nSomma di tutta la lista");
@@ -105,7 +111,7 @@ public class Demo1 {
 //		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
 //		Stream<String> lines = strList.stream();
 //		lines.forEach(System.out::println);
-		System.out.println(Files.lines(Paths.get("demo/CiaoVonNeumann!.txt")));
+//		System.out.println(Files.lines(Paths.get("demo/CiaoVonNeumann!.txt")));
 	
 	
 		System.out.println("\nDa File a lista");
@@ -133,6 +139,12 @@ public class Demo1 {
 		.map(line -> line.split(",")) // Stream<String[]>
 		    .flatMap(Arrays::stream) // Stream<String>
 		    .forEach(System.out::println);
+	
 	}	
+	
+	
+	
+	
+	
 }
 
