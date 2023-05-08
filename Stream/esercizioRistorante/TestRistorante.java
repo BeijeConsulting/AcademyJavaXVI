@@ -1,11 +1,14 @@
 package esercizioRistorante;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestRistorante {
 
@@ -74,6 +77,27 @@ public class TestRistorante {
 	     //Stream8
 			System.out.println(risto.stream().filter(r->r.getNome().startsWith("D")&&r.getNome().length()>=7).collect(Collectors.toList()));
 			
+		//Stream10
+
+			try{
+			   Stream<String> lines = Files.lines(Paths.get("esercizioRistorante/Ristorante.csv"));   
+			      List<String> people = lines
+			              .skip(1)
+			              .map(line -> {
+			                  String[] fields = line.split(",");
+			                  String name = fields[0];
+			                  Integer coperti = Integer.valueOf( fields[1].trim() );
+			                  Ristorante r=new Ristorante(name,(int)coperti);
+			                  return r.getNome()+":"+r.getCoperti();
+			              })
+			              .collect(Collectors.toList());
+			      people.forEach(System.out::println);
+			      
+			  } catch (IOException e) {
+			      e.printStackTrace();
+			  }
+			
+		}
 	}
 
 }
