@@ -20,6 +20,9 @@ public class Demo1 {
 		Stream<Integer> streamInt = Stream.of(1,2,3,6,4,5);
 		Stream<String> streamBuilder = Stream.<String>builder().add("Lunedi").build();
 		
+		Integer[] array = new Integer[]{5,6,9,7,2};
+		Stream<Integer> toStreamFromArray = Arrays.stream(array);
+		
 		List<Integer> listaNumerica = Arrays.asList(5,6,87,45,12,36,98,120,120);
 		List<String> listaString = Arrays.asList("ciao", "benvenuto", "casa");
 		
@@ -55,7 +58,7 @@ public class Demo1 {
 		System.out.println("\n\nSenza ripetizioni");
 		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
 		System.out.println(listaNumerica2);
-		
+				
 		Person p1 = new Person("Marco", 23);
 		Person p2 = new Person("Sebastiano", 41);
 		Person p3 = new Person("Roberto", 15);
@@ -112,26 +115,29 @@ public class Demo1 {
 //		}	
 
 		System.out.println("\nFILE");
-		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.csv"));
-		Stream<String> streamFile = strList.stream();
-		streamFile.skip(1).forEach(System.out::println);
-		
-		System.out.println("\nDa File a lista");
 		try{
-			Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
-		    List<Person> people = lines
-		            .skip(1)
-		            .map(line -> {
-		                String[] fields = line.split(",");
-		                String name = fields[0];
-		                Integer age = Integer.valueOf( fields[1].trim() );   
-		                return new Person(name, age);
-		            })
-		            .collect(Collectors.toList());
-		    people.forEach(System.out::println);
+			Stream<String> strList = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
+			strList.skip(1).forEach(System.out::println);
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}    
+		
+//		System.out.println("\nDa File a lista");
+//		try{
+//			Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));			
+//		    List<Person> people = lines
+//		            .skip(1)
+//		            .map(line -> {
+//		                String[] fields = line.split(",");
+//		                String name = fields[0];
+//		                Integer age = Integer.valueOf( fields[1].trim() );   
+//		                return new Person(name, age);
+//		            })
+//		            .collect(Collectors.toList());
+//		    people.forEach(System.out::println);
+//		} catch (IOException e) {
+//		    e.printStackTrace();
+//		}    
 		
 		//FlatMap
 		System.out.println("\nFlat map");
