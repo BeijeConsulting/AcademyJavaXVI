@@ -15,10 +15,7 @@ public class ServiceTest {
 	public ProvaDTO findUser(Integer id) {
 		ProvaDTO u;
 		if(id==1) {
-			u = new ProvaDTO();
-			u.setId(id);
-			u.setName("Pinco");
-			u.setSurname("Pallino");
+			u = new ProvaDTO(id, "Pinco", "Pallino");
 		} else {
 			u = null;
 		}

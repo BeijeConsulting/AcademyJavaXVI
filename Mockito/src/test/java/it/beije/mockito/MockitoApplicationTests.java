@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import it.beije.mockito.controller.ControllerTest;
+import it.beije.mockito.dto.ProvaDTO;
 import it.beije.mockito.service.ServiceTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,34 +24,25 @@ import org.hamcrest.Matchers;
 @AutoConfigureMockMvc
 //@WebMvcTest(controllers = ControllerTest.class)
 class MockitoApplicationTests {
-	
+
 	@MockBean
 	private ServiceTest service;
 
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	@Test
 	@DisplayName("Boh")
-    public void shouldDummy() throws Exception {
+	public void shouldDummy() throws Exception {
+		
+		ProvaDTO user = new ProvaDTO(1, "Pinco", "Pallino");
+        Mockito.when(service.findUser(1)).thenReturn(user);
 
-//        System.out.println(Mockito.when(service.dummyService(2)).thenReturn("Okay"));
+		mockMvc.perform(get("http://localhost:8080/1").contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(status().is(200))
+				.andExpect(content().contentTypeCompatibleWith("application/json"))
+				.andExpect(jsonPath("$.id", Matchers.is(1)));
 
-        
-        mockMvc.perform(get("/1"))
-                .andExpect(status().is(200))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", Matchers.is(1)))
-                ;
-        /*
-        mockMvc.perform(get("/api/posts/"))
-        .andExpect(status().is(200))
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//        .andExpect(jsonPath("$.size()", Matchers.is(2)))
-        .andExpect(jsonPath("$[0].id", Matchers.is(1)))
-        .andExpect(jsonPath("$[0].name", Matchers.is("Pinco")))
-        .andExpect(jsonPath("$[0].surname", Matchers.is("Pallino")));*/
-
-    }
+	}
 
 }

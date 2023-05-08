@@ -7,6 +7,12 @@ public class ProvaDTO {
 	private String name;
 	
 	private String surname;
+	
+	public ProvaDTO(Integer id, String name, String surname) {
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+	}
 
 	public Integer getId() {
 		return id;
