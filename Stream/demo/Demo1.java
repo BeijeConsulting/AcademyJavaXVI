@@ -1,6 +1,9 @@
 package demo;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
@@ -11,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Demo1 {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		
 		List<Integer> listaNumerica = Arrays.asList(5,6,87,45,12,36,98,120,120);
 		List<String> listaString = Arrays.asList("ciao", "benvenuto", "casa");
@@ -77,6 +80,11 @@ public class Demo1 {
 		System.out.println("\nPrimi 10 numeri");
 		Stream<Integer> numbers = Stream.iterate(0, n -> n+10);
 		numbers.limit(6).skip(1).forEach(System.out::println);;
+
+		// Files
+		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
+		Stream<String> lines = strList.stream();
+		lines.forEach(System.out::println);
 		
 		
 	}
