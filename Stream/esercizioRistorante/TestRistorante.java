@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TestRistorante {
@@ -62,6 +63,7 @@ public class TestRistorante {
 
 		  //Stream6
 		  System.out.println(risto.stream().map(r->r.getCoperti()).reduce(0, Integer::sum));
+		  Integer pt=risto.stream().map(r->r.getCoperti()).reduce(0, Integer::sum);
 		  
 		  //Stream7
 		  IntSummaryStatistics stats = risto.stream().mapToInt(x -> x.getCoperti()).summaryStatistics();

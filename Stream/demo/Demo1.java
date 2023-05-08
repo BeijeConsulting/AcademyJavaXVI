@@ -90,8 +90,11 @@ public class Demo1 {
 		l.stream().map(String::toUpperCase).sorted(Comparator.<String>naturalOrder().reversed()).forEach(System.out::println);
 		
 		//Files
-		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
-		Stream<String> lines = strList.stream();
-		lines.forEach(System.out::println);
+//		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
+//		Stream<String> lines = strList.stream();
+//		lines.forEach(System.out::println);
+		System.out.println(Files.lines(Paths.get("demo/CiaoVonNeumann!.txt")));
+	
+	
 	}
 }
