@@ -78,8 +78,7 @@ public class Demo1 {
 		
 		//Iterate
 		System.out.println("\nPrimi 10 numeri");
-		Stream<Integer> numbers = Stream.iterate(0, n -> n+10);
-		numbers.limit(6).skip(1).forEach(System.out::println);;
+		Stream<Integer> numbers = Stream.iterate(0, n -> n+10).limit(6).skip(1).forEach(System.out::println);
 
 		// Files
 		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
