@@ -81,9 +81,9 @@ public class Demo1 {
 		Stream<Integer> numbers = Stream.iterate(0, n -> n+10).limit(6).skip(1).forEach(System.out::println);
 
 		// Files
-		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
-		Stream<String> lines = strList.stream();
-		lines.forEach(System.out::println);
+	    Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"))
+				.forEach(System.out::println);
+		
 		
 		
 	}
