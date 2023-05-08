@@ -1,6 +1,5 @@
 package demo;
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 public class Demo1 {
 	public static void main(String args[]) throws IOException {
@@ -57,14 +56,14 @@ public class Demo1 {
 		
 		//Da lista a mappa
 		System.out.println("\nDa lista a mappa");
-		//Map<Integer, String> map = persons.stream().collect(Collectors.toMap(Person::getAge, Person::getName,(name1, name2) -> name1 + ";" + name2));
-		Map<String, Integer> map2 = persons.stream().collect(Collectors.toMap(Person::getName, Person::getAge));
-		//System.out.println(map);
+		Map<String, Integer> map = persons.stream().collect(Collectors.toMap(Person::getName, Person::getAge));
+		System.out.println(map);
+		Map<String, List<Person>> map2 = persons.stream().collect(Collectors.groupingBy(Person::getName));
 		System.out.println(map2);
 		
 		//No ripetizioni
 		System.out.println("\nSenza ripetizioni");
-		List<Integer> listaNumerica2 = listaNumerica.stream().collect(Collectors.toCollection(ArrayList::new));
+		List<Integer> listaNumerica2 = listaNumerica.stream().distinct().collect(Collectors.toCollection(ArrayList::new));
 		System.out.println(listaNumerica2);
 		
 		//Somma di tutti gli elementi
@@ -86,9 +85,22 @@ public class Demo1 {
 		numbers.limit(6).skip(1).forEach(System.out::println);;
 
 		
-		List<String> l=Arrays.asList("da","ab","ac","bb");
-		l.stream().map(String::toUpperCase).sorted(Comparator.<String>naturalOrder().reversed()).forEach(System.out::println);
+		//Filesdemo
+//		File file = new File("demo/CiaoVonNeumann!.txt");
+//		FileReader fileReader = new FileReader(file);
+//		BufferedReader bufferedReader = new BufferedReader(fileReader);
+//		String r = null;
+//		while( bufferedReader.ready() ) {
+//			r = bufferedReader.readLine();
+//			System.out.println(r);
+//		}	
+
+		System.out.println("\nFILE");
+		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.csv"));
+		Stream<String> streamFile = strList.stream();
+		streamFile.skip(1).forEach(System.out::println);
 		
+
 		//Files
 //		List<String> strList = Files.readAllLines(Paths.get("demo/CiaoVonNeumann!.txt"));
 //		Stream<String> lines = strList.stream();
@@ -96,5 +108,31 @@ public class Demo1 {
 		System.out.println(Files.lines(Paths.get("demo/CiaoVonNeumann!.txt")));
 	
 	
-	}
+		System.out.println("\nDa File a lista");
+		
+		
+		try{
+			Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
+		    List<Person> people = lines
+		            .skip(1)
+		            .map(line -> {
+		                String[] fields = line.split(",");
+		                String name = fields[0];
+		                Integer age = Integer.valueOf( fields[1].trim() );   
+		                return new Person(name, age);
+		            })
+		            .collect(Collectors.toList());
+		    people.forEach(System.out::println);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}    
+		
+		Stream<String> lines = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
+		lines
+		.skip(1)
+		.map(line -> line.split(",")) // Stream<String[]>
+		    .flatMap(Arrays::stream) // Stream<String>
+		    .forEach(System.out::println);
+	}	
 }
+
