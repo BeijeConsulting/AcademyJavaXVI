@@ -14,20 +14,16 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class DataSourceConfig {
 	
-//	@Autowired
-//    private Environment env;
-	
-	private final String JDBC_CONNECTION_STRING = "jdbc:mysql://localhost:3306/demo"; //env.getProperty("JDBC_CONNECTION_STRING")
-	private final String JDBC_USERNAME = "root"; //env.getProperty("JDBC_USERNAME")
-	private final String JDBC_PASSWORD = "password123"; //env.getProperty("JDBC_PASSWORD")
+	@Autowired
+    private Environment env;
 	
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl(JDBC_CONNECTION_STRING);
-        dataSource.setUsername(JDBC_USERNAME);
-        dataSource.setPassword(JDBC_PASSWORD);
+        dataSource.setUrl(env.getProperty("JDBC_CONNECTION_STRING"));
+        dataSource.setUsername(env.getProperty("JDBC_USERNAME"));
+        dataSource.setPassword(env.getProperty("JDBC_PASSWORD"));
         
         return dataSource;
     }

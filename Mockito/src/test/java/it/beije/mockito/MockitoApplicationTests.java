@@ -75,13 +75,6 @@ class MockitoApplicationTests {
 				.andExpect(jsonPath("$.notes", Matchers.is(todoList.getNotes())));
 	}
 
-	/*
-	 * This is a sample code that tests the creation of a user using the POST
-	 * method. The code uses the Spring Framework’s MockMvcRequestBuilders.post()
-	 * method to create a POST request. The request is then sent to the server using
-	 * the mockMvc.perform() method. The response is then checked for correctness
-	 * using the status() and jsonPath() methods.
-	 */
 	@Test
 	@DisplayName("To Do List demo: simple post")
 	public void toDoPostDemo() throws Exception {
@@ -96,7 +89,7 @@ class MockitoApplicationTests {
 		response.setNotes(asList(todoList.getNote()));
 		
 		Mockito.when(service.addNote(todoList)).thenReturn(response);
-//		Mockito.when(service.addNote(Mockito.any(ToDoList.class))).thenReturn(response);
+//		Mockito.when(service.addNote(Mockito.any(ToDoList.class))).thenReturn(Mockito.any(TodoListDTO.class));
 
 		String json = new ObjectMapper().writeValueAsString(todoList);
 
@@ -108,13 +101,5 @@ class MockitoApplicationTests {
 //		String response = mvc.getResponse().getContentAsString();
 //		Assertions.assertThat(response).isEmpty();
 
-		/*
-		 * 
-1. `shouldDummy`: questo test esegue una chiamata GET a `/user` con ID 1 e 2 e verifica che i risultati siano corretti. In particolare, utilizza il framework Mockito per simulare la risposta del servizio `ServiceTest` e verifica che il risultato della chiamata contenga i valori attesi.
-2. `toDoGetDemo`: questo test esegue una chiamata GET a `/notes` con il parametro `username` impostato su "Luigi". Anche in questo caso, utilizza Mockito per simulare la risposta del servizio e verifica che il risultato della chiamata contenga i valori attesi.
-3. `toDoPostDemo`: questo test esegue una chiamata POST a `/add` con un oggetto `ToDoList` e verifica che la chiamata restituisca uno stato 200. Anche in questo caso, utilizza Mockito per simulare la risposta del servizio.
-
-Le annotazioni `@SpringBootTest` e `@AutoConfigureMockMvc` vengono utilizzate per configurare l'applicazione Spring Boot e il framework MVC per i test. La classe `ServiceTest` viene simulata utilizzando l'annotazione `@MockBean`. Viene inoltre utilizzata la classe `MockMvc` per simulare le chiamate HTTP. Infine, ogni test è annotato con `@Disabled` per evitare che vengano eseguiti durante la demo.
-		 */
 	}
 }
