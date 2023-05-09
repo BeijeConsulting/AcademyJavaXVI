@@ -80,7 +80,7 @@ public class Demo1 {
 		//Somma di tutti gli elementi
 		System.out.println("\nSomma di tutta la lista");
 		System.out.println(listaNumerica.stream().reduce(0, (x,y)->x+y));
-		
+//FINO QUA		
 
 		//Summary static
 		System.out.println("\nSummary static");
