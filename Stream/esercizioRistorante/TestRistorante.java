@@ -25,7 +25,7 @@ public class TestRistorante {
 				new Ristorante("Da Francesco", TipoRistorante.BISTRO, 80),
 				new Ristorante("Giggetto", TipoRistorante.RISTO, 40),
 				new Ristorante("La terrazza", TipoRistorante.BISTRO, 42));
-		// 1
+		// 1 TODO controlla
 		risto.stream().forEach(x -> System.out.println(x.getNome() + " " + x.getCoperti()));
 		// 2
 		List<Ristorante> risto45 = risto.stream().filter(x -> x.getCoperti() >= 45)
