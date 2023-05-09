@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,18 +46,24 @@ public class TestRistorante {
 		risto.stream().skip(0).sorted(Comparator.comparing(Ristorante::getNome)).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
 		
 		//ESERCIZIO 6
-		System.out.println("\nRistoranti in ordini decrescente: ");
-		risto.stream().skip(0).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
+		System.out.println("\nSomma coperti ristoranti: ");
+		int somma = risto.stream().mapToInt(Ristorante::getCoperti).sum();
+		System.out.println("La somma dei coperti di tutti i ristoranti è: " + somma);
 		
 		//ESERCIZIO 7
-		
+		IntSummaryStatistics stats = risto.stream().mapToInt(r -> r.getCoperti()).summaryStatistics();
+		System.out.println("Min " + stats.getMin());
+		System.out.println("Max " +stats.getMax());
+		System.out.println("Media " + stats.getAverage());
 		
 		//ESERCIZIO 8
-		
+		System.out.println("\nLista ristoranti D");
+		System.out.println(risto.stream().filter(r-> r.getNome().startsWith("D") && r.getNome().length()>=7 ).collect(Collectors.toList()) );
 		
 		//ESERCIZIO 9
-		
-		
+		System.out.println("\nSomma doppio del valore");
+		System.out.println(risto.stream().map(Ristorante::getCoperti).filter(r->r%2 == 0).map(r -> r*2).reduce(0,Integer::sum)  );
+
 		//ESERCIZIO 10
 		
 		
