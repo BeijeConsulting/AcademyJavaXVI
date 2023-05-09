@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,6 +23,24 @@ public class TestRistorante {
 				new Ristorante("Da Francesco",TipoRistorante.BISTRO,80),
 				new Ristorante("Giggetto",TipoRistorante.RISTO,40),
 				new Ristorante("La terrazza",TipoRistorante.BISTRO,42));
+		
+		//ESERCIZIO 1
+		System.out.println("\nRistoranti in ordini decrescente: ");
+		risto.stream().skip(0).sorted(Comparator.comparingInt(Ristorante::getCoperti).reversed()).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
+		
+		//ESERCIZIO 2
+		System.out.println("\nRistoranti con almeno 45 coperti: ");
+		risto.stream().skip(0).filter( r -> r.getCoperti() > 45 ).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
+		
+		//ESERCIZIO 3
+		System.out.println("\nMappa ristoranti chiave-valore: ");
+		Map<String, TipoRistorante> map1 = risto.stream().collect(Collectors.toMap(Ristorante::getNome, Ristorante::getTipo));
+		System.out.println(map1);
+		
+		//ESERCIZIO 4
+		System.out.println("\nMappa ristoranti chiave-valore: ");
+		//Map<String, TipoRistorante, int> map2 = risto.stream().sorted(Comparator.comparingInt(Ristorante::getCoperti)).collect(Collectors.toMap(Ristorante::getNome, Ristorante::getTipo, Ristorante::getCoperti));
+		//System.out.println(map2);
 		
 		/**
 		 * 1)Scrivere un metodo che stampi una riga per ogni ristorante con nome e numero coperti,
