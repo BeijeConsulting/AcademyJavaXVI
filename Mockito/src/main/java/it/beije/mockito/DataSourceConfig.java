@@ -19,7 +19,7 @@ public class DataSourceConfig {
 	
 	private final String JDBC_CONNECTION_STRING = "jdbc:mysql://localhost:3306/demo"; //env.getProperty("JDBC_CONNECTION_STRING")
 	private final String JDBC_USERNAME = "root"; //env.getProperty("JDBC_USERNAME")
-	private final String JDBC_PASSWORD = "Mary23BeijeSQL"; //env.getProperty("JDBC_PASSWORD")
+	private final String JDBC_PASSWORD = "password123"; //env.getProperty("JDBC_PASSWORD")
 	
     @Bean
     public DataSource dataSource() {
