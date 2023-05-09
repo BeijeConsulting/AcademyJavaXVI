@@ -34,13 +34,31 @@ public class TestRistorante {
 		
 		//ESERCIZIO 3
 		System.out.println("\nMappa ristoranti chiave-valore: ");
-		Map<String, TipoRistorante> map1 = risto.stream().collect(Collectors.toMap(Ristorante::getNome, Ristorante::getTipo));
-		System.out.println(map1);
+		System.out.println(risto.stream().collect(Collectors.groupingBy(Ristorante::getTipo)));
 		
 		//ESERCIZIO 4
-		System.out.println("\nMappa ristoranti chiave-valore: ");
-		//Map<String, TipoRistorante, int> map2 = risto.stream().sorted(Comparator.comparingInt(Ristorante::getCoperti)).collect(Collectors.toMap(Ristorante::getNome, Ristorante::getTipo, Ristorante::getCoperti));
-		//System.out.println(map2);
+		System.out.println("\nMappa ristoranti chiave-valore con coperti: ");
+		System.out.println(risto.stream().sorted(Comparator.comparing(Ristorante::getCoperti)).collect(Collectors.groupingBy(Ristorante::getTipo)));
+		
+		//ESERCIZIO 5
+		System.out.println("\nRistoranti in ordini alfabetico: ");
+		risto.stream().skip(0).sorted(Comparator.comparing(Ristorante::getNome)).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
+		
+		//ESERCIZIO 6
+		System.out.println("\nRistoranti in ordini decrescente: ");
+		risto.stream().skip(0).forEach(r -> System.out.println(r.getNome() + " " + r.getCoperti()));
+		
+		//ESERCIZIO 7
+		
+		
+		//ESERCIZIO 8
+		
+		
+		//ESERCIZIO 9
+		
+		
+		//ESERCIZIO 10
+		
 		
 		/**
 		 * 1)Scrivere un metodo che stampi una riga per ogni ristorante con nome e numero coperti,
