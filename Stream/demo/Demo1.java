@@ -75,7 +75,14 @@ public class Demo1 {
 		System.out.println("Max " +stats.getMax());
 		System.out.println("Media " + stats.getAverage());
 		System.out.println("Count "+stats.getCount());
-		
+		//boolenai
+				System.out.println("\nBoolean");
+				boolean anyStartsWithA = listaString.stream().anyMatch(s -> s.startsWith("c"));
+				System.out.println("Qualcosa inizia con 'c' ? " + anyStartsWithA); // true
+				boolean allStartsWithA = listaString.stream().allMatch(s -> s.startsWith("c"));
+				System.out.println("Tutti iniziano con 'c' ? " + allStartsWithA); // false
+				boolean noneStartsWithZ = listaString.stream().noneMatch(s -> s.startsWith("f"));
+				System.out.println("Nessunp inizia con 'f' ? " + noneStartsWithZ); // true
 		//Iterate
 		System.out.println("\nPrimi 10 numeri");
 		Stream<Integer> numbers = Stream.iterate(0, n -> n+10);
