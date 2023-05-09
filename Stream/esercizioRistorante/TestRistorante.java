@@ -1,17 +1,50 @@
 package esercizioRistorante;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import demo.Person;
 
 public class TestRistorante {
 
+	public static void stampaRistorantiPerCoperti(List<Ristorante> ristoranti) {
+	    ristoranti.stream()
+	        .sorted(Comparator.comparingInt(Ristorante::getCoperti).reversed())
+	        .forEach(r -> System.out.println(r.getNome() + ": " + r.getCoperti() + " coperti"));
+	}
+	
+	public static void stampaRistorantiMaggioreCoperti(List<Ristorante> ristoranti) {
+	    ristoranti.stream()
+	        .filter(r -> r.getCoperti() >= 45)
+	        .forEach(r -> System.out.println(r.getNome()));
+	}
+	
+	public static Map<TipoRistorante, List<Ristorante>> creaMappaRistorantiPerTipo(List<Ristorante> ristoranti) {
+	    return ristoranti.stream()
+	        .collect(Collectors.groupingBy(Ristorante::getTipo));
+	}
+
+	public static void stampaRistorantiInOrdineAlfabetico(List<Ristorante> ristoranti) {
+	    String nomiRistoranti = ristoranti.stream()
+	                                      .map(Ristorante::getNome)
+	                                      .sorted()
+	                                      .collect(Collectors.joining(", "));
+	    System.out.println(nomiRistoranti);
+	}
+	
+	public static int sommaCoperti(List<Ristorante> ristoranti) {
+	    return ristoranti.stream()
+	                     .mapToInt(Ristorante::getCoperti)
+	                     .sum();
+	}
+	
+	public static void stampaRistorantiConNomeD(List<Ristorante> ristoranti) {
+	    ristoranti.stream()
+	              .filter(r -> r.getNome().startsWith("D") && r.getNome().length() >= 7)
+	              .forEach(System.out::println);
+	}
+	
 	public static void main(String[] args) {
 		List<Ristorante> risto=Arrays.asList(new Ristorante("Zi Pietro",TipoRistorante.RISTO,45),
 				new Ristorante("La pergola",TipoRistorante.RISTO,55),
@@ -53,5 +86,6 @@ public class TestRistorante {
 		 *    Ad esempio, per la prima riga -> "Zi Pietro:45".
 		 */
 
+		stampaRistorantiConNomeD(risto);
 	}
 }
