@@ -1,0 +1,7 @@
+1. Scrivi una classe JUnit per testare un metodo che verifica se una data stringa è un palindromo (cioè se può essere letta nello stesso modo da sinistra a destra e viceversa). Il test dovrebbe coprire almeno due casi di input validi e uno non valido.
+
+2. Scrivi una classe JUnit per testare un metodo che verifica se un numero è primo o no. Il test dovrebbe coprire almeno due casi di input validi e uno non valido.
+
+3. Scrivi una classe JUnit per testare un metodo che calcola il fattoriale di un numero intero positivo. Il test dovrebbe coprire almeno due casi di input validi e uno non valido.
+
+4. Scrivi una classe JUnit per testare un metodo che cerca una stringa all'interno di un'altra stringa e restituisce la posizione della prima occorrenza. Se la stringa cercata non viene trovata, il metodo restituisce null. Il test dovrebbe includere almeno un caso in cui la stringa cercata viene trovata e un caso in cui la stringa cercata non viene trovata.

@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import demo.Person;
 
 public class TestRistorante {
 
@@ -120,5 +119,6 @@ public class TestRistorante {
 		Files.lines(Paths.get("esercizioRistorante/Ristorante.csv")).skip(1).forEach(line -> System.out.println(line.replace(",", ":")));
 		System.out.println("------------------------------------");
 
+	   }
 	}
-}
+
