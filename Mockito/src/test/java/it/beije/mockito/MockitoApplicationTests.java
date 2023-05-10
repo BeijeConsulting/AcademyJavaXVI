@@ -7,8 +7,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.beije.mockito.dto.ProvaDTO;
 import it.beije.mockito.dto.TodoListDTO;
 import it.beije.mockito.model.ToDoList;
+import it.beije.mockito.repository.ToDoListRepository;
 import it.beije.mockito.service.ServiceTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,7 +32,7 @@ import static java.util.Arrays.asList;
 
 import org.hamcrest.Matchers;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 class MockitoApplicationTests {
 
@@ -38,8 +41,30 @@ class MockitoApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private ToDoListRepository realRepo;
+	
+//	@Disabled
+	@Test
+	@DisplayName("With Mockito.mock()")
+	public void countNoteTest() throws Exception{
+		
+	    ToDoListRepository localMockRepository = Mockito.mock(ToDoListRepository.class);
+	    Mockito.when(localMockRepository.count()).thenReturn(15L);
 
-	@Disabled
+	    long noteCount = localMockRepository.count();
+	    long realCount = realRepo.count();
+	    
+	    System.out.println("noteCount -> "+noteCount);
+	    System.out.println("realCount -> "+realCount);
+
+	    Assertions.assertThat(15L == noteCount);
+//	    Mockito.verify(localMockRepository, Mockito.times(1)).count();
+	    Mockito.verify(localMockRepository).count();
+	}
+
+//	@Disabled
 	@Test
 	@DisplayName("Get test")
 	public void shouldDummy() throws Exception {
@@ -56,7 +81,7 @@ class MockitoApplicationTests {
 
 	}
 
-	@Disabled
+//	@Disabled
 	@Test
 	@DisplayName("To Do List demo: simple get")
 	public void toDoGetDemo() throws Exception {
@@ -102,4 +127,5 @@ class MockitoApplicationTests {
 //		Assertions.assertThat(response).isEmpty();
 
 	}
+	
 }
