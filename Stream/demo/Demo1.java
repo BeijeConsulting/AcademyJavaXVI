@@ -197,7 +197,8 @@ public class Demo1 {
 				+ "11)Iterate\n"
 				+ "12)Contorlli booleani\n"
 				+ "13)Lettura file\n"
-				+ "14)Flat Map\n\n");
+				+ "14)Flat Map\n"
+				+ "15)Fine\n\n");
 
 		System.out.println(menu);
 	}
