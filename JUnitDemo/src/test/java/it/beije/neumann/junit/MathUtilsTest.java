@@ -30,6 +30,7 @@ class MathUtilsTest {
 	@Test
 	void testSubtraction2() {
 		int expected = 50;
+		
 		int actual;
 		
 		actual = MathUtils.subtraction(2, 1);
