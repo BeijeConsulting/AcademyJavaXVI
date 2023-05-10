@@ -41,7 +41,7 @@ public class TestRistorante {
 		System.out.println("\n3)------------");
 		Map<TipoRistorante, List<Ristorante>> mapRistoranti = risto.stream().collect(Collectors.groupingBy(Ristorante::getTipo));
 		System.out.println(mapRistoranti);
-		
+		Map<String, TipoRistorante> mappatura = risto.stream().collect(Collectors.toMap(Ristorante::getNome, Ristorante::getTipo));
 		
 //		 4)Come nell'esercizio precedente, ma con ciascuna lista di ristoranti ordinata per nuemro di coperti.
 		System.out.println("\n4)------------");
