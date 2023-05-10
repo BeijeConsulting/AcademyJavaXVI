@@ -152,6 +152,8 @@ public class Demo1 {
 				System.out.println("Input non valido.");
 			}
 		}while(input != 15);
+		
+		scanner.close();
 		//Filesdemo
 		//		File file = new File("demo/CiaoVonNeumann!.txt");
 		//		FileReader fileReader = new FileReader(file);
