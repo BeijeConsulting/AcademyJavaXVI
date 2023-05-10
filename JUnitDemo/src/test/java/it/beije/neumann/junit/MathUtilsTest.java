@@ -68,7 +68,7 @@ class MathUtilsTest {
 		int expected[] = {8, 15, 12};
 		int actual[] = MathUtils.arraySum(a, b);
 		
-		assertArrayEquals(expected, actual);
+		assertArrayEquals(expected, actual); // NON esiste assertArrayNotEquals!
 	}
 	
 	// --- assertNull ---	
@@ -100,6 +100,17 @@ class MathUtilsTest {
 		fail();
 	}
 
+	// Error e failures sono due cose diverse...
+	@Test
+	void divisionTest() {
+		float expected = 0;
+		float actual;
+		
+		actual = MathUtils.division(10, 0);
+		
+		assertEquals(expected, actual);
+	}
+	
 	@Disabled
 	@Test
 	void disabledTest() {
