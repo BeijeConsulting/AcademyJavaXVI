@@ -128,6 +128,8 @@ public class Demo1 {
 				try{
 					Stream<String> strList = Files.lines(Paths.get("demo/CiaoVonNeumann!.csv"));
 					strList.skip(1).forEach(System.out::println);
+					strList.close();
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}  
