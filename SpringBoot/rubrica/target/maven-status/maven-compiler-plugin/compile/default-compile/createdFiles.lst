@@ -1,0 +1,8 @@
+it\beije\boot\rubrica\RubricaApplication.class
+it\beije\boot\rubrica\controller\Test.class
+it\beije\boot\rubrica\service\nicole\ContactService.class
+it\beije\boot\rubrica\WebConfiguration.class
+it\beije\boot\rubrica\repository\nicole\FakeContactRepository.class
+it\beije\boot\rubrica\controller\nicoleREST\ContactController.class
+it\beije\boot\rubrica\DTO\nicole\ContactDTO.class
+it\beije\boot\rubrica\model\nicole\Contact.class
