@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import demo.Person;
 
 public class TestRistorante {
 
@@ -53,5 +54,57 @@ public class TestRistorante {
 		 *    Ad esempio, per la prima riga -> "Zi Pietro:45".
 		 */
 
+		//Stream1
+		  risto.stream().sorted(Comparator.comparing(Ristorante::getCoperti).reversed()).forEach(r->System.out.println(r.getNome()+":"+r.getCoperti()));
+
+		  //Stream2
+		  System.out.println(risto.stream().filter(r->r.getCoperti()>=45).collect(Collectors.toList()));
+		  
+		  //Stream3
+		  System.out.println(risto.stream().collect(Collectors.groupingBy(Ristorante::getTipo)));
+		  System.out.println("****prova****");
+		  System.out.println(risto.stream().collect(Collectors.partitioningBy(null, null) ));
+		  
+		  //Stream4
+		  System.out.println(risto.stream().sorted(Comparator.comparing(Ristorante::getCoperti)).collect(Collectors
+		    .groupingBy(Ristorante::getTipo)));
+		  
+		  //Stream5
+		  System.out.println(risto.stream().map(r->r.getNome()).sorted().collect(Collectors.joining(",")));
+
+		  //Stream6
+		  System.out.println(risto.stream().map(r->r.getCoperti()).reduce(0, Integer::sum));
+		  Integer pt=risto.stream().map(r->r.getCoperti()).reduce(0, Integer::sum);
+		  
+		  //Stream7
+		  IntSummaryStatistics stats = risto.stream().mapToInt(x -> x.getCoperti()).summaryStatistics();
+			System.out.println("Min " + stats.getMin());
+			System.out.println("Max " +stats.getMax());
+			System.out.println("Media " + stats.getAverage());
+			
+	     //Stream8
+			System.out.println(risto.stream().filter(r->r.getNome().startsWith("D")&&r.getNome().length()>=7).collect(Collectors.toList()));
+			
+		//Stream10
+
+			try{
+			   Stream<String> lines = Files.lines(Paths.get("esercizioRistorante/Ristorante.csv"));   
+			      List<String> people = lines
+			              .skip(1)
+			              .map(line -> {
+			                  String[] fields = line.split(",");
+			                  String name = fields[0];
+			                  Integer coperti = Integer.valueOf( fields[1].trim() );
+			                  Ristorante r=new Ristorante(name,(int)coperti);
+			                  return r.getNome()+":"+r.getCoperti();
+			              })
+			              .collect(Collectors.toList());
+			      people.forEach(System.out::println);
+			      
+			  } catch (IOException e) {
+			      e.printStackTrace();
+			  }
+			
+		}
 	}
-}
+
