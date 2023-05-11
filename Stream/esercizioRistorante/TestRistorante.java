@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import demo.Person;
 
 public class TestRistorante {
 
@@ -95,5 +94,6 @@ public class TestRistorante {
 		 * "nome:numero_coperti". Ad esempio, per la prima riga -> "Zi Pietro:45".
 		 */
 
+	   }
 	}
-}
+
