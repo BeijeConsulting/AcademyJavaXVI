@@ -26,14 +26,14 @@ public class TestJunit {
 	}
 
 	@Test
-	public void testPalindrome() {
+	public void testPalindromo() {
 		assertEquals(true, isPalindromo("pippo"));
 		assertEquals(true, isPalindromo("abba"));
 		assertEquals(false, isPalindromo("prova"));
 	}
 
 	@Test
-	public void testPrimeNumber() {
+	public void testPrimo() {
 		assertEquals(true, isPrimo(7));
 		assertEquals(true, isPrimo(31));
 		assertEquals(false, isPrimo(10));
