@@ -13,7 +13,7 @@ import it.beije.beijeJet.dto.ReqFlightsDTO;
 public class SearchController {
 	
 	
-	//@ApiOperation(value = "Get a specific address by ID", response = AddressDTO.class)
+	//@ApiOperation(value = "Get a specific address by ID", response = AddressDTO.class) swagger
 	@GetMapping("/flights")
 	public String getFlights(@RequestBody ReqFlightsDTO req) {
 		//servizio search flights
@@ -21,4 +21,6 @@ public class SearchController {
 		return null;
 	
 	}
+	//api get per ottenere aereoporti
+	//
 }
