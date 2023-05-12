@@ -3,8 +3,8 @@ package it.beije.shoes.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.authentication.BadCredentialsException;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * BadCredentialsException  			401
  * ForbiddenException					403
  */
-
+/*
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -117,3 +117,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 }
+*/
