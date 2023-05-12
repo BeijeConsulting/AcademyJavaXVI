@@ -99,5 +99,21 @@ public class Voli {
 	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
+
+	public Citta getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(Citta cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
+	}
+
+	public Citta getCittaArrivo() {
+		return cittaArrivo;
+	}
+
+	public void setCittaArrivo(Citta cittaArrivo) {
+		this.cittaArrivo = cittaArrivo;
+	}
 	
 }
