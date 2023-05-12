@@ -60,4 +60,11 @@ public class City {
 		public void setAirports(List<Airport> airports) {
 			this.airports = airports;
 		}
+		
+		@Override
+		public String toString() {
+			return "Flight [id_city=" + idCity + ", name=" + name + ", country=" + country + ", airports=" + airports 
+					 +"]";
+		}
+
 }

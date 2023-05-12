@@ -75,5 +75,11 @@ public class Airport {
 		this.flightsArrival = flightsArrival;
 	}
 
+	@Override
+	public String toString() {
+		return "Flight [id_airport=" + idAirport + ", name=" + name + ", id_city=" + city + ", flights_departure=" + flightsDeparture 
+				 + ", flights_arrival=" + flightsArrival + ", max_capacity="+"]";
+	}
+
     
 }
