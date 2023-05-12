@@ -25,5 +25,10 @@ public class VoliController {
 	    model.addAttribute("voli", voli);
 	    return "voli";
 	}
+	
+	@GetMapping(value="/")
+	public String getIndex() {
+	    return "index";
+	}
 
 }
