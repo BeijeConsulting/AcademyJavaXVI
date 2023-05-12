@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Voli</title>
+</head>
+<body>
+    <h1>Lista di Voli</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Citta Partenza</th>
+                <th>Citta Arrivo</th>
+                <th>Data Partenza</th>
+                <th>Data Arrivo</th>
+                <th>Capienza</th>
+                <th>Prezzo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="voli : ${voli}">
+                <td th:text="${voli.id}"></td>
+                <td th:text="${voli.cittaPartenza.citta}"></td>
+                <td th:text="${voli.cittaArrivo.citta}"></td>
+                <td th:text="${voli.dataPartenza}"></td>
+                <td th:text="${voli.dataArrivo}"></td>
+                <td th:text="${voli.capienza}"></td>
+                <td th:text="${voli.prezzo}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -21,11 +21,11 @@ public class Voli {
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "citta_partenza", nullable = false)
 	private Citta cittaPartenza;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "citta_arrivo", nullable = false)
 	private Citta cittaArrivo;
 	
@@ -87,6 +87,14 @@ public class Voli {
 
 	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public Citta getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public Citta getCittaArrivo() {
+		return cittaArrivo;
 	}
 	
 	
