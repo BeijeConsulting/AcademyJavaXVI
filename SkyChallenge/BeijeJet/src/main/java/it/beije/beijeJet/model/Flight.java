@@ -32,8 +32,8 @@ public class Flight {
     @Column(name = "time_departure")
     private LocalDateTime timeDeparture;
 
-    @Column(name = "duration")
-    private String duration;
+    @Column(name = "arrival")
+    private String arrival;
 
     @Column(name = "cost")
     private BigDecimal cost;
@@ -76,12 +76,12 @@ public class Flight {
 		this.timeDeparture = timeDeparture;
 	}
 
-	public String getDuration() {
-		return duration;
+	public String getArrival() {
+		return arrival;
 	}
 
-	public void setDuration(String duration) {
-		this.duration = duration;
+	public void setArrival(String arrival) {
+		this.arrival = arrival;
 	}
 
 	public BigDecimal getCost() {
