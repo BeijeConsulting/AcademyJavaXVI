@@ -21,21 +21,13 @@ public class Voli {
 	@Column(name = "id")
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "citta_partenza", nullable = false)
 	private Citta cittaPartenza;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "citta_arrivo", nullable = false)
 	private Citta cittaArrivo;
-	
-	public void setCittaPartenza(Citta cittaPartenza) {
-		this.cittaPartenza = cittaPartenza;
-	}
-
-	public void setCittaArrivo(Citta cittaArrivo) {
-		this.cittaArrivo = cittaArrivo;
-	}
 
 	@Column(name="data_partenza")
 	private LocalDateTime dataPartenza;
@@ -55,6 +47,22 @@ public class Voli {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Citta getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(Citta cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
+	}
+
+	public Citta getCittaArrivo() {
+		return cittaArrivo;
+	}
+
+	public void setCittaArrivo(Citta cittaArrivo) {
+		this.cittaArrivo = cittaArrivo;
 	}
 
 	public LocalDateTime getDataPartenza() {
@@ -88,6 +96,8 @@ public class Voli {
 	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
+
+	
 	
 	
 }
