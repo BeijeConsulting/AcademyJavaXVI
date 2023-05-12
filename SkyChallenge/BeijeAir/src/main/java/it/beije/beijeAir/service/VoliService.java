@@ -1,5 +1,6 @@
 package it.beije.beijeAir.service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +26,14 @@ public class VoliService {
 		return voli;
 	}
 	
-	public List<Voli> find(SearchDto searchDto) {
+	public List<Voli> find(SearchDto searchDto, boolean andataRitorno, LocalDateTime dataPartenza) {
 		
-		List<Voli> voli = voliRepository.find( searchDto.getCittaPartenza(), searchDto.getCittaArrivo() );
+		List<Voli> voli  = voliRepository.find( searchDto.getCittaPartenza(), searchDto.getCittaArrivo(), dataPartenza );
+	
+		if( andataRitorno ) {
+			voli.addAll(voliRepository.find( searchDto.getCittaArrivo(), searchDto.getCittaPartenza(), dataPartenza));
+		}
+		 
 
 		
 		return voli;

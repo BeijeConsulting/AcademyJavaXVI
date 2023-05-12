@@ -1,6 +1,8 @@
 package it.beije.beijeAir.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "voli")
@@ -65,6 +70,7 @@ public class Voli {
 		this.cittaArrivo = cittaArrivo;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getDataPartenza() {
 		return dataPartenza;
 	}
@@ -72,11 +78,24 @@ public class Voli {
 	public void setDataPartenza(LocalDateTime dataPartenza) {
 		this.dataPartenza = dataPartenza;
 	}
-
+	
+		
+	@JsonGetter(value = "data_arrivo")
+	public String getDataArrivoAsAstring() {
+		return dataArrivo.toString();
+	}
+	
+	@JsonGetter(value = "data_partenza")
+	public String getDataPartenzaAsAstring() {
+		return dataPartenza.toString();
+	}
+	
+	
+	@JsonIgnore
 	public LocalDateTime getDataArrivo() {
 		return dataArrivo;
 	}
-
+	
 	public void setDataArrivo(LocalDateTime dataArrivo) {
 		this.dataArrivo = dataArrivo;
 	}

@@ -10,6 +10,7 @@ public class SearchDto {
 	@JsonProperty(value = "citta_arrivo")
 	private String cittaArrivo;
 
+	
 	public String getCittaPartenza() {
 		return cittaPartenza;
 	}

@@ -1,10 +1,13 @@
 package it.beije.beijeAir.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.beijeAir.dto.SearchDto;
@@ -31,12 +34,22 @@ public class VoliController {
 		return voli;
 	}
 	
-	
+	/*
+	 * TODO: dataRitorno
+	 * TODO: Scali
+	 * TODO: Durata( voli + scali)
+	 * TODO: PREGA 
+	 * */
 	@GetMapping(value="/find")
-	public List<Voli> findVoli( @RequestBody SearchDto searchDto  ){
-		System.out.println("GET /find");
+	public List<Voli> findVoli( 
+			@RequestBody SearchDto searchDto,
+			@RequestParam(required=false) boolean andataRitorno,
+			@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime dataPartenza
+			){
 		
-		List<Voli> voli = voliService.find(searchDto);
+		System.out.println("GET /find");
+				
+		List<Voli> voli = voliService.find(searchDto, andataRitorno, dataPartenza);
 		
 		return voli;
 	}

@@ -1,5 +1,6 @@
 package it.beije.beijeAir.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,13 @@ public interface VoliRepository extends JpaRepository<Voli, Integer> {
 			+ "join v.cittaPartenza cp "
 			+ "join v.cittaArrivo ca "
 			+ "where (cp.citta = :cittaPartenza OR :cittaPartenza is null) "
-			+ "AND (ca.citta = :cittaArrivo OR :cittaArrivo is null) ")
-	public List<Voli> find(@Param("cittaPartenza") String cittaPartenza, @Param("cittaArrivo") String cittaArrivo );
+			+ "AND (ca.citta = :cittaArrivo OR :cittaArrivo is null) "
+			+ "AND (v.dataPartenza > :dataPartenza OR :dataPartenza is null)"
+			)
+	public List<Voli> find(@Param("cittaPartenza") String cittaPartenza, 
+			@Param("cittaArrivo") String cittaArrivo, 
+			@Param("dataPartenza") LocalDateTime dataPartenza 
+			
+			);
 
 }
