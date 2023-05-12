@@ -1,4 +1,4 @@
-package it.beike.beijeAir.controller;
+package it.beije.beijeAir.controller;
 
 import java.util.List;
 
@@ -14,9 +14,10 @@ import it.beije.beijeAir.service.VoliService;
 @RestController
 public class VoliController {
 	
-@Autowired VoliService voliService;
+	@Autowired 
+	private VoliService voliService;
 	
-	@GetMapping("/")
+	@GetMapping(value="/")
 	public List<Voli> getAllVoli(){
 		System.out.println("GET /voli");
 		List<Voli> voli = voliService.findAll();
