@@ -14,26 +14,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "flight")
+@Table(name = "Flight")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_flight")
     private Integer idFlight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    
     @JoinColumn(name = "id_airport_departure", nullable = false)
-    private Airport airportDeparture;
+    private Integer airportDeparture;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    
     @JoinColumn(name = "id_airport_arrival", nullable = false)
-    private Airport airportArrival;
+    private Integer airportArrival;
 
     @Column(name = "time_departure")
     private LocalDateTime timeDeparture;
 
     @Column(name = "time_arrival")
-    private String timeArrival;
+    private LocalDateTime timeArrival;
 
     @Column(name = "cost")
     private BigDecimal cost;
@@ -52,19 +52,19 @@ public class Flight {
 		this.idFlight = idFlight;
 	}
 
-	public Airport getAirportDeparture() {
+	public Integer getAirportDeparture() {
 		return airportDeparture;
 	}
 
-	public void setAirportDeparture(Airport airportDeparture) {
+	public void setAirportDeparture(Integer airportDeparture) {
 		this.airportDeparture = airportDeparture;
 	}
 
-	public Airport getAirportArrival() {
+	public Integer getAirportArrival() {
 		return airportArrival;
 	}
 
-	public void setAirportArrival(Airport airportArrival) {
+	public void setAirportArrival(Integer airportArrival) {
 		this.airportArrival = airportArrival;
 	}
 
@@ -76,11 +76,11 @@ public class Flight {
 		this.timeDeparture = timeDeparture;
 	}
 
-	public String getTimeArrival() {
+	public LocalDateTime getTimeArrival() {
 		return timeArrival;
 	}
 
-	public void setArrival(String arrival) {
+	public void setArrival(LocalDateTime arrival) {
 		this.timeArrival = arrival;
 	}
 
