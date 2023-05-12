@@ -1,13 +1,14 @@
 package it.beije.beijeAir.service;
 
+import java.util.Collections;
 import java.util.List;
-
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.beije.beijeAir.dto.SearchDto;
 import it.beije.beijeAir.model.Voli;
 import it.beije.beijeAir.repository.VoliRepository;
 
@@ -23,4 +24,17 @@ public class VoliService {
 		voli.stream().forEach(e -> e.getCittaArrivo().getCitta());
 		return voli;
 	}
+	
+	public List<Voli> find(SearchDto searchDto) {
+		
+		List<Voli> voli = voliRepository.find( searchDto.getCittaPartenza(), searchDto.getCittaArrivo() );
+
+		
+		return voli;
+	}
+	
+	
+	
+	
+	
 }
