@@ -14,9 +14,10 @@ public class SearchController {
 	
 	
 	//@ApiOperation(value = "Get a specific address by ID", response = AddressDTO.class)
-	@GetMapping("/address/{id}")
+	@GetMapping("/flights")
 	public String getFlights(@RequestBody ReqFlightsDTO req) {
 		//servizio search flights
+		
 		return null;
 	
 	}
