@@ -16,8 +16,8 @@ public class Citta {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column
-	private String citta;
+	@Column(name = "citta")
+	private String nome;
 	
 	@Column
 	private String nazione;
@@ -30,12 +30,12 @@ public class Citta {
 		this.id = id;
 	}
 
-	public String getCitta() {
-		return citta;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setCitta(String citta) {
-		this.citta = citta;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getNazione() {

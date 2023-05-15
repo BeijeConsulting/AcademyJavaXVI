@@ -53,20 +53,20 @@ public class VoliController {
 	 * TODO: Durata( voli + scali)
 	 * TODO: sistema pom e configurazione import e metodo, togli restController
 	 * */
-	@GetMapping(value="/find")
-	public @ResponseBody List<RouteDto> findRotte( 
-			@RequestBody SearchDto searchDto,
-			@RequestParam(required=false) boolean andataRitorno,
-			@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime dataPartenza
-			){
-		
+	@PostMapping(value="/ricercaVoli")
+	public @ResponseBody List<RouteDto> findRotte(@RequestBody SearchDto searchDto) {		
 		System.out.println("GET /find");
 				
-		List<RouteDto> rotte = voliService.find(searchDto, andataRitorno, dataPartenza);
+		List<RouteDto> rotte = voliService.find(searchDto);
 		
+		System.out.println(rotte);
 		return rotte;
+		/*
+		model.addAttribute("flightResults", flightResults);
+	    return "ricercaVoli";*/
 	}
 
+	/*
 	@PostMapping("/ricercaVoli")
 	public String searchFlights(@ModelAttribute("SearchDTO") SearchDto searchDTO, Model model) {
 
@@ -78,5 +78,5 @@ public class VoliController {
 		
 	    return "ricercaVoli";
 	}
-
+*/
 }

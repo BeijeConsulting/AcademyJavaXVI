@@ -1,6 +1,5 @@
 package it.beije.beijeAir.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import it.beije.beijeAir.dto.RottaConIdDto;
 import it.beije.beijeAir.dto.RouteDto;
 import it.beije.beijeAir.dto.SearchDto;
 import it.beije.beijeAir.model.Voli;
+import it.beije.beijeAir.repository.CittaRepository;
 import it.beije.beijeAir.repository.VoliRepository;
 
 @Service
@@ -19,10 +19,13 @@ public class VoliService {
 	@Autowired 
 	VoliRepository voliRepository;
 	
+	@Autowired 
+	CittaRepository cittaRepository;
+	
 	
 	public List<Voli> findAll() {
 		List<Voli> voli = voliRepository.findAll();
-		voli.stream().forEach(e -> e.getCittaArrivo().getCitta());
+		voli.stream().forEach(e -> e.getCittaArrivo().getNome());
 		return voli;
 	}
 	
@@ -30,7 +33,7 @@ public class VoliService {
 		
 		List<RouteDto> rotte  = new ArrayList<RouteDto>();
 				
-		for (String s : searchDto.scali) {
+		for (String s : searchDto.getScali()) {
 			if(s.equals("0")) {
 				List<Voli> diretti = voliRepository.find(searchDto.getCittaPartenza(), 
 														 searchDto.getCittaArrivo(),
@@ -46,10 +49,11 @@ public class VoliService {
 			}
 			else {
 				List<RottaConIdDto> scaliId = new ArrayList<RottaConIdDto>();
-						
+				Integer idPartenza = cittaRepository.findByNome(searchDto.getCittaPartenza()).getId();
+				Integer idArrivo = cittaRepository.findByNome(searchDto.getCittaArrivo()).getId();
 				if (s.equals("1")) {
-					scaliId = voliRepository.findUnoScalo(searchDto.getCittaPartenza(), 
-														  searchDto.getCittaArrivo(),
+					scaliId = voliRepository.findUnoScalo(idPartenza, 
+														  idArrivo,
 														  searchDto.getDataPartenza());
 				}
 				else {
@@ -73,11 +77,14 @@ public class VoliService {
 			}
 		}
 		
-		if(searchDto.getAndataRitorno()) {
+		if(searchDto.isAndataRitorno()) {
 			searchDto.setAndataRitorno(false);
-			rotte.add(null)			
-		}
-		
+			String appo = searchDto.getCittaArrivo();
+			searchDto.setCittaArrivo(searchDto.getCittaPartenza());
+			searchDto.setCittaPartenza(appo);
+			// TODO: data di arrivo metterla in data di partenza
+			rotte.addAll(find(searchDto));
+		}		
 				
 		return rotte;
 	}

@@ -19,7 +19,7 @@ public class SearchDto {
 	private LocalDateTime dataPartenza;
 	
 	@JsonProperty(value = "andata_ritorno")
-	private boolean andataRitorno;
+	private Boolean andataRitorno;
 	
 //	@JsonIgnore
 	private List<String> scali;
