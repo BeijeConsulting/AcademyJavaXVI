@@ -62,7 +62,7 @@ public class SearchService {
 	    	 listaAndata.add(flightDto);
 	    	 
 			}
-			voli.put("outward flights", listaAndata);
+			voli.put("outward_flights", listaAndata);
 			
 	    	if(!Objects.isNull(dto.getReturnDate())) {
 	    		
@@ -88,7 +88,7 @@ public class SearchService {
 		    	 listaRitorno.add(flightDto);
 		    	 
 				}
-				voli.put("return flights", listaRitorno);
+				voli.put("return_flights", listaRitorno);
 	    	}
 		
 			
