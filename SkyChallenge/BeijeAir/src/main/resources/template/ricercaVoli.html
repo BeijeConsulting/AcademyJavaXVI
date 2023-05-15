@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Risultati ricerca</title>
+</head>
+<body>
+    <h1>Risultati ricerca</h1>
+    <table>
+        <thead>
+            <tr>
+	            <th>Città Partenza</th>
+	            <th>Città Arrivo</th>
+	        </tr>
+	        
+        </thead>
+        <tbody>
+            <tr th:each="voli : ${flightResults}">
+	            <td th:text="${voli.cittaPartenza}"></td>
+	            <td th:text="${voli.cittaArrivo}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

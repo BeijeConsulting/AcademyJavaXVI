@@ -1,24 +1,17 @@
 package it.beije.beijeAir.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import it.beije.beijeAir.model.Voli;
-import it.beije.beijeAir.service.VoliService;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.beijeAir.dto.SearchDto;
 import it.beije.beijeAir.model.Voli;
@@ -39,7 +32,8 @@ public class VoliController {
 	}
 	
 	@GetMapping(value="/")
-	public String getIndex() {
+	public String getIndex(Model model) {
+		model.addAttribute("SearchDTO", new SearchDto());
 	    return "index";
 	}
 	
@@ -69,6 +63,18 @@ public class VoliController {
 		List<Voli> voli = voliService.find(searchDto, andataRitorno, dataPartenza);
 		
 		return voli;
+	}
+
+	@PostMapping("/ricercaVoli")
+	public String searchFlights(@ModelAttribute("SearchDTO") SearchDto searchDTO, Model model) {
+
+		//TODO ricerca utilizzando i dati del DTO
+		String flightResults = null; //TODO: Da cambiare
+		
+		//aggiunge i risultati alla model per passarli alla pagina dei risultati
+		model.addAttribute("flightResults", flightResults);
+		
+	    return "ricercaVoli";
 	}
 
 }
