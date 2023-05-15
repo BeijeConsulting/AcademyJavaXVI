@@ -143,6 +143,7 @@ public class Voli {
 		this.prezzo = prezzo;
 	}
 
+	@JsonIgnore
 	public Citta getCittaPartenza() {
 		return cittaPartenza;
 	}
@@ -151,12 +152,23 @@ public class Voli {
 		this.cittaPartenza = cittaPartenza;
 	}
 
+	@JsonIgnore
 	public Citta getCittaArrivo() {
 		return cittaArrivo;
 	}
 
 	public void setCittaArrivo(Citta cittaArrivo) {
 		this.cittaArrivo = cittaArrivo;
+	}
+	
+	@JsonGetter(value = "citta_partenza")
+	public String getCittaPartenzaAsAstring() {
+		return cittaPartenza.getNome() + " - " + cittaPartenza.getNazione();
+	}
+	
+	@JsonGetter(value = "citta_arrivo")
+	public String getCittaArrivoAsAstring() {
+		return cittaArrivo.getNome() + " - " + cittaArrivo.getNazione();
 	}
 	
 }

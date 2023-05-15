@@ -44,6 +44,7 @@ public class VoliService {
 					List<Voli> listVoli = new ArrayList<Voli>();
 					listVoli.add(v);
 					r.setVoli(listVoli);
+					r.setCostoTotale(costoTotaleRotta(r));
 					rotte.add(r);
 				}
 			}
@@ -72,6 +73,7 @@ public class VoliService {
 						listVoli.add(voliRepository.findById(rId.getVolo3_id()).get());
 					}
 					r.setVoli(listVoli);
+					r.setCostoTotale(costoTotaleRotta(r));
 					rotte.add(r);
 				}
 			}
@@ -118,5 +120,16 @@ public class VoliService {
         //se voli è vuoto richiama ricerca e passa parametri di liste 
         return voli;
     }
+	
+	private double costoTotaleRotta(RouteDto rotta) {
+		List<Voli> voli = rotta.getVoli();
+		double tot = 0;
+		
+		for(Voli v : voli) {
+			tot += v.getPrezzo();
+		}
+		
+		return tot;
+	}
 	
 }

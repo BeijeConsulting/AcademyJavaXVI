@@ -9,6 +9,8 @@ import it.beije.beijeAir.model.Voli;
 public class RouteDto {
 	@JsonProperty(value = "voli")
 	private List<Voli> voli;
+	
+	private Double costoTotale;
 
 	public List<Voli> getVoli() {
 		return voli;
@@ -17,4 +19,14 @@ public class RouteDto {
 	public void setVoli(List<Voli> voli) {
 		this.voli = voli;
 	}
+
+	public Double getCostoTotale() {
+		return costoTotale;
+	}
+
+	public void setCostoTotale(Double costoTotale) {
+		this.costoTotale = costoTotale;
+	}
+	
+	
 }

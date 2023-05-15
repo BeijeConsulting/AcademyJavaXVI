@@ -55,7 +55,7 @@ public class VoliController {
 	 * */
 	@PostMapping(value="/ricercaVoli")
 	public @ResponseBody List<RouteDto> findRotte(@RequestBody SearchDto searchDto) {		
-		System.out.println("GET /find");
+		System.out.println("POST /ricercaVoli");
 				
 		List<RouteDto> rotte = voliService.find(searchDto);
 		
@@ -65,18 +65,16 @@ public class VoliController {
 		model.addAttribute("flightResults", flightResults);
 	    return "ricercaVoli";*/
 	}
-
-	/*
-	@PostMapping("/ricercaVoli")
-	public String searchFlights(@ModelAttribute("SearchDTO") SearchDto searchDTO, Model model) {
-
-		//TODO ricerca utilizzando i dati del DTO
-		String flightResults = null; //TODO: Da cambiare
+	
+	@PostMapping(value="/ricercaVoliProva")
+	public String findRotte(SearchDto searchDto, Model model, @DateTimeFormat(pattern="yyyy-MM-dd'T'hh:mm:ss") LocalDateTime dataPartenza2) {		
+		System.out.println("POST /ricercaVoli");
 		
-		//aggiunge i risultati alla model per passarli alla pagina dei risultati
-		model.addAttribute("flightResults", flightResults);
+		System.out.println(dataPartenza2);
+		List<RouteDto> rotte = voliService.find(searchDto);
 		
+		model.addAttribute("flightResults", rotte);
 	    return "ricercaVoli";
 	}
-*/
+
 }
