@@ -1,11 +1,9 @@
 package it.beije.beijeAir.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class RottaConIdDto {
-	private int volo1_id;
-	private int volo2_id;
-	private int volo3_id;
+	private Integer volo1_id;
+	private Integer volo2_id;
+	private Integer volo3_id;
 	
 	public int getVolo1_id() {
 		return volo1_id;
@@ -23,6 +21,12 @@ public class RottaConIdDto {
 		return volo3_id;
 	}
 	public void setVolo3_id(int volo3_id) {
+		this.volo3_id = volo3_id;
+	}
+	public RottaConIdDto(Integer volo1_id, Integer volo2_id, Integer volo3_id) {
+		super();
+		this.volo1_id = volo1_id;
+		this.volo2_id = volo2_id;
 		this.volo3_id = volo3_id;
 	}
 

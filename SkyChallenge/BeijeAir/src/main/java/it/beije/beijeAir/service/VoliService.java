@@ -57,8 +57,8 @@ public class VoliService {
 														  searchDto.getDataPartenza());
 				}
 				else {
-					scaliId = voliRepository.findDueScali(searchDto.getCittaPartenza(), 
-							  							  searchDto.getCittaArrivo(),
+					scaliId = voliRepository.findDueScali(idPartenza, 
+														  idArrivo,
 							  							  searchDto.getDataPartenza());
 				}
 				
