@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import it.beije.shoes.exception.ErrorMessage;
+//import it.beije.shoes.exception.ErrorMessage;
 
 /*	RIEPILOGO GESTIONE ECCEZIONI:
  * 
@@ -27,7 +27,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-
+/*
 	@ExceptionHandler(value = { BeijeJetException.class })
 	public ResponseEntity<ErrorMessage> ControllerExceptionHandler(BeijeJetException ex, WebRequest request) {
 		int errorCode = 400;
@@ -38,7 +38,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		log.error(re.getMessage());
 		return ResponseEntity.status(errorCode).body(re);
 	}
-
+*/
 	
 
 }
