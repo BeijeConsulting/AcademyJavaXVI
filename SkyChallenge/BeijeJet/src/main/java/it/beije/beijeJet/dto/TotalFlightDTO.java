@@ -17,11 +17,11 @@ public class TotalFlightDTO {
 	@JsonProperty(value="id_flight")
 	private Integer idFlight;
 	
-	@JsonProperty(value="id_airport_departure")
-	private Integer airportDeparture;
+	@JsonProperty(value="name_airport_departure")
+	private String airportDeparture;
 	
-	@JsonProperty(value="id_airport_arrival")
-	private Integer airportArrival;
+	@JsonProperty(value="name_airport_arrival")
+	private String airportArrival;
 	
 	@JsonProperty(value="time_departure")
 	private LocalDateTime timeDeparture;
@@ -46,19 +46,19 @@ public class TotalFlightDTO {
 		this.idFlight = idFlight;
 	}
 
-	public Integer getAirportDeparture() {
+	public String getAirportDeparture() {
 		return airportDeparture;
 	}
 
-	public void setAirportDeparture(Integer airportDeparture) {
+	public void setAirportDeparture(String airportDeparture) {
 		this.airportDeparture = airportDeparture;
 	}
 
-	public Integer getAirportArrival() {
+	public String getAirportArrival() {
 		return airportArrival;
 	}
 
-	public void setAirportArrival(Integer airportArrival) {
+	public void setAirportArrival(String airportArrival) {
 		this.airportArrival = airportArrival;
 	}
 
