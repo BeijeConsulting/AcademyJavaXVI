@@ -37,4 +37,11 @@ public class SearchController {
 				return searchService.getByDate(dto);
 			
 			}
+			
+			@GetMapping("/flightsDepartureArrival")
+			public Map<String,List<TotalFlightDTO>> getFlightDepartureArrival(@RequestBody FlightDTO dto) {
+				
+				return searchService.getFlightDepartureArrival(dto);
+			
+			}
 }
