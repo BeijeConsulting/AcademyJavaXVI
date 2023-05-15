@@ -32,7 +32,7 @@ public class SearchController {
 		 * @return
 		 */
 			@GetMapping("/flightsByDate")
-			public List<TotalFlightDTO> getFlightByDate(@RequestBody FlightDTO dto) {
+			public Map<String,Object> getFlightByDate(@RequestBody FlightDTO dto) {
 				
 				return searchService.getByDate(dto);
 			

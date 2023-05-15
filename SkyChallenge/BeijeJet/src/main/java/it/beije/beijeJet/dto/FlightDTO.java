@@ -15,18 +15,23 @@ public class FlightDTO {
 	
 	private String timeDeparture;
 	
-public String getTimeDeparture() {
-		
+	private String returnDate;
+	
+	public void setReturnDate(String returnDate) {
+		this.returnDate=returnDate;
+	}
+	
+	public String getReturnDate() {
+		return returnDate;
+	}
+	
+    public String getTimeDeparture() {
 		
 		return timeDeparture;
 	}
 
 	public void setTimeDeparture(String timeDeparture) {
-		
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//	    LocalDateTime dob = LocalDateTime.parse((CharSequence)timeDeparture, formatter);
-//	    this.timeDeparture = dob;
-		
+	
 		this.timeDeparture = timeDeparture;
 	}
 

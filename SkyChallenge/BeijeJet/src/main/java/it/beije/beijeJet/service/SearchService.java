@@ -3,8 +3,12 @@ package it.beije.beijeJet.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +27,7 @@ public class SearchService {
 	@Autowired
 	private AirportRepository airportRepo;
 	
-	public List<TotalFlightDTO> getByDate(FlightDTO dto) {
+	public Map<String,Object> getByDate(FlightDTO dto) {
 		
 		String date=dto.getTimeDeparture();
 		
@@ -39,9 +43,12 @@ public class SearchService {
 		
 		System.out.println(fl);
 		
-		List<TotalFlightDTO>lista=new ArrayList<>();
+		Map<String,Object> voli=new LinkedHashMap<>();
+		List<TotalFlightDTO>listaAndata=new ArrayList<>();
+		List<TotalFlightDTO>listaRitorno=new ArrayList<>();
 		
 			for(Flight f: fl) {
+				
 			TotalFlightDTO flightDto=new TotalFlightDTO();
 	    	 flightDto.setAirportArrival(airportRepo.findNameByIdAirport(f.getAirportArrival()));
 	    	 flightDto.setIdFlight(f.getIdFlight());
@@ -51,12 +58,46 @@ public class SearchService {
 	    	 flightDto.setCost(f.getCost());
 	    	 flightDto.setMax_capacity(f.getMaxCapacity());
 	    	 flightDto.setCompany(f.getCompany());
-	    	 lista.add(flightDto);
-			}
-			
+	    	 flightDto.setAirportArrival(airportRepo.findNameByIdAirport(f.getAirportArrival()));
+	    	 listaAndata.add(flightDto);
 	    	 
-	    	 return lista;
+			}
+			voli.put("outward flights", listaAndata);
+			
+	    	if(!Objects.isNull(dto.getReturnDate())) {
+	    		
+	    		String dateReturn=dto.getReturnDate();
+	    		Integer idAirportDeparture2= dto.getIdAirportArrival();
+	    		Integer idAirportArrival2= dto.getIdAirportDeparture();
+	    		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    	    LocalDate returnDate = LocalDate.parse(dateReturn, formatter2);
+	    	    List<Flight> returnFlights=flightRepo.getFlightDate(returnDate,idAirportDeparture2,idAirportArrival2);
+	    	    
+	    		
+				for(Flight f: returnFlights) {
+					
+				TotalFlightDTO flightDto=new TotalFlightDTO();
+		    	 flightDto.setAirportArrival(airportRepo.findNameByIdAirport(f.getAirportArrival()));
+		    	 flightDto.setIdFlight(f.getIdFlight());
+		    	 flightDto.setAirportDeparture(airportRepo.findNameByIdAirport(f.getAirportDeparture()));
+		    	 flightDto.setTimeDeparture(f.getTimeDeparture());
+		    	 flightDto.setTimeArrival(f.getTimeArrival());
+		    	 flightDto.setCost(f.getCost());
+		    	 flightDto.setMax_capacity(f.getMaxCapacity());
+		    	 flightDto.setCompany(f.getCompany());
+		    	 listaRitorno.add(flightDto);
+		    	 
+				}
+				voli.put("return flights", listaRitorno);
+	    	}
+		
+			
+			return voli;
 		}
+	
+
+	
+	
 	}
 	
 
