@@ -12,10 +12,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "city")
+@Table(name = "City")
 public class City {
 
-	 @Id
+	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "id_city")
 	    private Integer idCity;
