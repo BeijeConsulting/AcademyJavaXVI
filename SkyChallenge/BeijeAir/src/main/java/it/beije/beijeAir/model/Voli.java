@@ -158,5 +158,14 @@ public class Voli {
 	public void setCittaArrivo(Citta cittaArrivo) {
 		this.cittaArrivo = cittaArrivo;
 	}
+
+	@Override
+	public String toString() {
+		return "Voli [id=" + id + ", cittaPartenza=" + cittaPartenza + ", cittaArrivo=" + cittaArrivo
+				+ ", dataPartenza=" + dataPartenza + ", dataArrivo=" + dataArrivo + ", capienza=" + capienza
+				+ ", prezzo=" + prezzo + "]";
+	}
+	
+	
 	
 }

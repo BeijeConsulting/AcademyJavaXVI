@@ -1,5 +1,6 @@
 package it.beije.beijeAir.service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class VoliService {
 					List<Voli> listVoli = new ArrayList<Voli>();
 					listVoli.add(v);
 					r.setVoli(listVoli);
+					r.setDurataVoloMinuti(r.calcolaDurata(v.getDataArrivo(), v.getDataPartenza()));
 					rotte.add(r);
 				}
 			}
@@ -72,6 +74,10 @@ public class VoliService {
 						listVoli.add(voliRepository.findById(rId.getVolo3_id()).get());
 					}
 					r.setVoli(listVoli);
+					Duration durata = Duration.ofMinutes(0);
+					durata = durata.plus( r.calcolaDurata(listVoli.get(listVoli.size()-1).getDataArrivo(), listVoli.get(0).getDataPartenza()));
+					r.setDurataVoloMinuti(durata);
+
 					rotte.add(r);
 				}
 			}
@@ -102,8 +108,7 @@ public class VoliService {
 		return scali;
 			
 	}
-	
-	
+
 	
 	private List<Voli> confrontaListeVoli(List<Voli> voliTo, List<Voli> voliFrom) {
 		List<Voli> voli = new ArrayList<>();
