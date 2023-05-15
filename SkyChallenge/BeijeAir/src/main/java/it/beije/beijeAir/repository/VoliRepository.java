@@ -26,5 +26,11 @@ public interface VoliRepository extends JpaRepository<Voli, Integer> {
 			@Param("dataPartenza") LocalDateTime dataPartenza 
 			
 			);
+	
+	public List<VoliUnoScaloDTO> findUnoScalo()
+	
+	public List<VoliDueScaliDTO> findDueScali() {
+		
+	}
 
 }

@@ -2,14 +2,13 @@ package it.beije.beijeAir.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import it.beije.beijeAir.dto.RottaConIdDto;
+import it.beije.beijeAir.dto.RouteDto;
 import it.beije.beijeAir.dto.SearchDto;
 import it.beije.beijeAir.model.Voli;
 import it.beije.beijeAir.repository.VoliRepository;
@@ -27,21 +26,60 @@ public class VoliService {
 		return voli;
 	}
 	
-	public List<Voli> find(SearchDto searchDto, boolean andataRitorno, LocalDateTime dataPartenza) {
+	public List<RouteDto> find(SearchDto searchDto) {
 		
-		List<Voli> voli  = voliRepository.find( searchDto.getCittaPartenza(), searchDto.getCittaArrivo(), dataPartenza );
-	
-		if( andataRitorno ) {
-			voli.addAll(voliRepository.find( searchDto.getCittaArrivo(), searchDto.getCittaPartenza(), dataPartenza));
+		List<RouteDto> rotte  = new ArrayList<RouteDto>();
+				
+		for (String s : searchDto.scali) {
+			if(s.equals("0")) {
+				List<Voli> diretti = voliRepository.find(searchDto.getCittaPartenza(), 
+														 searchDto.getCittaArrivo(),
+														 searchDto.getDataPartenza());
+				for (Voli v: diretti) {
+					//per ogni volo che abbiamo trovato, costruisco una rotta che contiene solo il volo diretto
+					RouteDto r = new RouteDto();
+					List<Voli> listVoli = new ArrayList<Voli>();
+					listVoli.add(v);
+					r.setVoli(listVoli);
+					rotte.add(r);
+				}
+			}
+			else {
+				List<RottaConIdDto> scaliId = new ArrayList<RottaConIdDto>();
+						
+				if (s.equals("1")) {
+					scaliId = voliRepository.findUnoScalo(searchDto.getCittaPartenza(), 
+														  searchDto.getCittaArrivo(),
+														  searchDto.getDataPartenza());
+				}
+				else {
+					scaliId = voliRepository.findDueScali(searchDto.getCittaPartenza(), 
+							  							  searchDto.getCittaArrivo(),
+							  							  searchDto.getDataPartenza());
+				}
+				
+				for (RottaConIdDto rId: scaliId) {
+					//per ogni rotta che abbiamo trovato, ci ricaviamo i singoli voli e costruiamo RouteDTO
+					RouteDto r = new RouteDto();
+					List<Voli> listVoli = new ArrayList<Voli>();
+					listVoli.add(voliRepository.findById(rId.getVolo1_id()).get());
+					listVoli.add(voliRepository.findById(rId.getVolo2_id()).get());
+					if (rId.getVolo3_id() != 0) {
+						listVoli.add(voliRepository.findById(rId.getVolo3_id()).get());
+					}
+					r.setVoli(listVoli);
+					rotte.add(r);
+				}
+			}
 		}
 		
-		if(voli.size()==0) {
-			voli = checkScali(voli,  searchDto);
+		if(searchDto.getAndataRitorno()) {
+			searchDto.setAndataRitorno(false);
+			rotte.add(null)			
 		}
-		 
-
 		
-		return voli;
+				
+		return rotte;
 	}
 
 	private List<Voli> checkScali(List<Voli> voli, SearchDto searchDto ) {
