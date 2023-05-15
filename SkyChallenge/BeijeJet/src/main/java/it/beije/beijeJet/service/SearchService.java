@@ -88,9 +88,10 @@ public class SearchService {
 		    	 listaRitorno.add(flightDto);
 		    	 
 				}
-				voli.put("return_flights", listaRitorno);
+				
 	    	}
 		
+	    	voli.put("return_flights", listaRitorno);
 			
 			return voli;
 		}
