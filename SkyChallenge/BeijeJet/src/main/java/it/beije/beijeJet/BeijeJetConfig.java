@@ -15,8 +15,7 @@ public class BeijeJetConfig {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-                        .allowedHeaders("Header1", "Header2", "Header3")
-                        .exposedHeaders("Header1", "Header2")
+                        .allowedHeaders("*")
                         .allowCredentials(true).maxAge(3600);
             }
         };
