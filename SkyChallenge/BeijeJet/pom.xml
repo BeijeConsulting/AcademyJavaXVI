@@ -24,13 +24,10 @@
 		</dependency>
 		<!--dependency>
 			<groupId>org.springframework.boot</groupId>
-<<<<<<< HEAD
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-=======
->>>>>>> refs/remotes/origin/beije_jet
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -49,14 +46,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
+
 		<!--dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency-->
-=======
->>>>>>> refs/remotes/origin/beije_jet
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
