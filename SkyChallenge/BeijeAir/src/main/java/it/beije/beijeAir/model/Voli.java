@@ -108,12 +108,12 @@ public class Voli {
 	
 		
 	@JsonGetter(value = "data_arrivo")
-	public String getDataArrivoAsAstring() {
+	public String getDataArrivoAsString() {
 		return dataArrivo.toString();
 	}
 	
 	@JsonGetter(value = "data_partenza")
-	public String getDataPartenzaAsAstring() {
+	public String getDataPartenzaAsString() {
 		return dataPartenza.toString();
 	}
 	
@@ -143,6 +143,7 @@ public class Voli {
 		this.prezzo = prezzo;
 	}
 
+	@JsonIgnore
 	public Citta getCittaPartenza() {
 		return cittaPartenza;
 	}
@@ -151,6 +152,7 @@ public class Voli {
 		this.cittaPartenza = cittaPartenza;
 	}
 
+	@JsonIgnore
 	public Citta getCittaArrivo() {
 		return cittaArrivo;
 	}
@@ -167,5 +169,15 @@ public class Voli {
 	}
 	
 	
+	
+	@JsonGetter(value = "citta_partenza")
+	public String getCittaPartenzaAsString() {
+		return cittaPartenza.getNome() + " - " + cittaPartenza.getNazione();
+	}
+	
+	@JsonGetter(value = "citta_arrivo")
+	public String getCittaArrivoAsString() {
+		return cittaArrivo.getNome() + " - " + cittaArrivo.getNazione();
+	}
 	
 }

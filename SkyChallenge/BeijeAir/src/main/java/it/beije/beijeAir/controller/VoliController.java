@@ -46,16 +46,10 @@ public class VoliController {
 		
 		return voli;
 	}
-	
-	/*
-	 * TODO: dataRitorno
-	 * TODO: Scali
-	 * TODO: Durata( voli + scali)
-	 * TODO: sistema pom e configurazione import e metodo, togli restController
-	 * */
+
 	@PostMapping(value="/ricercaVoli")
 	public @ResponseBody List<RouteDto> findRotte(@RequestBody SearchDto searchDto) {		
-		System.out.println("GET /find");
+		System.out.println("POST /ricercaVoli");
 				
 		List<RouteDto> rotte = voliService.find(searchDto);
 		
@@ -66,17 +60,4 @@ public class VoliController {
 	    return "ricercaVoli";*/
 	}
 
-	/*
-	@PostMapping("/ricercaVoli")
-	public String searchFlights(@ModelAttribute("SearchDTO") SearchDto searchDTO, Model model) {
-
-		//TODO ricerca utilizzando i dati del DTO
-		String flightResults = null; //TODO: Da cambiare
-		
-		//aggiunge i risultati alla model per passarli alla pagina dei risultati
-		model.addAttribute("flightResults", flightResults);
-		
-	    return "ricercaVoli";
-	}
-*/
 }

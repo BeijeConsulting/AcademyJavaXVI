@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchDto {
@@ -24,7 +23,6 @@ public class SearchDto {
 	@JsonProperty(value = "data_ritorno")
 	private LocalDateTime dataRitorno;
 	
-//	@JsonIgnore
 	private List<String> scali;
 
 	public String getCittaPartenza() {

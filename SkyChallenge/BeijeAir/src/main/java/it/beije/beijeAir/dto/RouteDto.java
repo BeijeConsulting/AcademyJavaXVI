@@ -12,33 +12,33 @@ import it.beije.beijeAir.model.Voli;
 public class RouteDto {
 	@JsonProperty(value = "voli")
 	private List<Voli> voli;
-	
+
 	@JsonProperty(value = "durata_volo")
 	private String durataVoloCompleta;
 
+	@JsonProperty(value = "costo_totale")
+	private Double costoTotale;
+
 	@JsonIgnore
-	private  Duration durataVolo;
-	
+	private Duration durataVolo;
+
 	@JsonIgnore
-	private  Long durataVoloMinuti;
-	
+	private Long durataVoloMinuti;
+
 	public Long getDurataVoloMinuti() {
-		System.out.println("sei qui long");
 		return durataVoloMinuti;
 	}
 
 	public void setDurataVoloMinuti(Duration durataVolo) {
 		this.durataVoloMinuti = durataVolo.toMinutes();
-		 Long giorni = durataVoloMinuti / (24 * 60); 
-	     Long ore = (durataVoloMinuti % (24 * 60)) / 60;
-	     Long minuti = (durataVoloMinuti % 60); 
-	
-	     StringBuilder durataCompleta = new StringBuilder(giorni + " " + ore +" " + minuti);
-	     this.setDurataVoloCompleta(durataCompleta.toString());
+		Long giorni = durataVoloMinuti / (24 * 60);
+		Long ore = (durataVoloMinuti % (24 * 60)) / 60;
+		Long minuti = (durataVoloMinuti % 60);
+
+		StringBuilder durataCompleta = new StringBuilder(giorni + " " + ore + " " + minuti);
+		this.setDurataVoloCompleta(durataCompleta.toString());
 	}
 
-
-	
 	public Duration getDurataVolo() {
 		return durataVolo;
 	}
@@ -47,10 +47,11 @@ public class RouteDto {
 		this.durataVolo = durataVolo;
 	}
 
-	public Duration calcolaDurata( LocalDateTime andata, LocalDateTime ritorno) {
-	   return Duration.between(ritorno, andata);
-		
+	public Duration calcolaDurata(LocalDateTime andata, LocalDateTime ritorno) {
+		return Duration.between(ritorno, andata);
+
 	}
+
 	public List<Voli> getVoli() {
 		return voli;
 	}
@@ -66,9 +67,13 @@ public class RouteDto {
 	public void setDurataVoloCompleta(String durataVoloCompleta) {
 		this.durataVoloCompleta = durataVoloCompleta;
 	}
-	
-	
-	
-	
-	
+
+	public Double getCostoTotale() {
+		return costoTotale;
+	}
+
+	public void setCostoTotale(Double costoTotale) {
+		this.costoTotale = costoTotale;
+	}
+
 }
