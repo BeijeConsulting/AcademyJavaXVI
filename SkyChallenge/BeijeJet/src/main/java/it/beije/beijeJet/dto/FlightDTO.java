@@ -15,7 +15,9 @@ public class FlightDTO {
 	
 	private String timeDeparture;
 	
-public String getTimeDeparture() {
+	private String returnDate;
+	
+	public String getTimeDeparture() {
 		
 		
 		return timeDeparture;
@@ -44,6 +46,14 @@ public String getTimeDeparture() {
 
 	public void setIdAirportArrival(Integer idAirportArrival) {
 		this.airportArrival = idAirportArrival;
+	}
+	
+	public String getReturnDate() {
+		return returnDate;
+	}
+	
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
 	}
 	
 }
