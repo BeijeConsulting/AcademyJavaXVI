@@ -1,6 +1,9 @@
 package it.beije.beijeJet.controller;
 
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,13 +31,34 @@ public class SearchController {
 		return null;
 	
 	}
-	//api get per ottenere aereoporti
-	//
+	/**
+	 * API per ottenere un volo da :
+	 *  -id aereoporto partenza
+	 *  -id aereoporto ritorno
+	 *  -data e orario partenza
+	 * @param dto
+	 * @return
+	 */
 	//@ApiOperation(value = "Get a specific address by ID", response = AddressDTO.class) swagger
-		@GetMapping("/flightsByDate")
-		public TotalFlightDTO getFlightByDate(@RequestBody FlightDTO dto) {
+		@GetMapping("/flightsByDateAndTime")
+		public TotalFlightDTO getFlightByDateAndTime(@RequestBody FlightDTO dto) {
 			
-			return searchService.getByDate(dto);
+			return searchService.getByDateAndTime(dto);
 		
 		}
+		/**
+		 * API per ottenere un volo da :
+		 *  -id aereoporto partenza
+		 *  -id aereoporto ritorno
+		 *  -data e orario partenza
+		 * @param dto
+		 * @return
+		 */
+		//@ApiOperation(value = "Get a specific address by ID", response = AddressDTO.class) swagger
+			@GetMapping("/flightsByDate")
+			public Map<String,List<TotalFlightDTO>> getFlightByDate(@RequestBody FlightDTO dto) {
+				
+				return searchService.getByDate(dto);
+			
+			}
 }

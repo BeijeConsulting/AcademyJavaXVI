@@ -1,7 +1,13 @@
 package it.beije.beijeJet.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +24,7 @@ public class SearchService {
 	@Autowired
 	private FlightRepository flightRepo;
 	
-	public TotalFlightDTO getByDate(FlightDTO dto) {
+	public TotalFlightDTO getByDateAndTime(FlightDTO dto) {
 		
 		TotalFlightDTO flightDto=new TotalFlightDTO();
 //		System.out.println(dto.getTimeDeparture());
@@ -55,10 +61,49 @@ public class SearchService {
 	    	 
 	    	 return flightDto;
 		}
-		 
-		 
-		
 		
 	}
 	
-}
+	public Map<String,List<TotalFlightDTO>> getByDate(FlightDTO dto) {
+		
+		String date=dto.getTimeDeparture();
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate dob = LocalDate.parse(date, formatter);
+	    
+//	    LocalTime time = LocalTime.of(00,00,00);
+//		LocalDateTime timeDeparture = LocalDateTime.of(dob, time);
+		
+//		System.out.println(timeDeparture);
+//		
+		Integer idAirportDeparture= dto.getIdAirportDeparture();
+		Integer idAirportArrival= dto.getIdAirportArrival();
+		System.out.println(idAirportDeparture);
+		System.out.println(idAirportArrival);
+			
+		List<Flight> fl=flightRepo.getFlightDate(dob,idAirportDeparture,idAirportArrival);
+		
+		System.out.println(fl);
+		
+		Map<String,List<TotalFlightDTO>> mappa=new LinkedHashMap<>();
+		List<TotalFlightDTO>lista=new ArrayList<>();
+		
+			for(Flight f: fl) {
+			TotalFlightDTO flightDto=new TotalFlightDTO();
+	    	 flightDto.setAirportArrival(f.getAirportArrival());
+	    	 flightDto.setIdFlight(f.getIdFlight());
+	    	 flightDto.setAirportDeparture(f.getAirportDeparture());
+	    	 flightDto.setTimeDeparture(f.getTimeDeparture());
+	    	 flightDto.setTimeArrival(f.getTimeArrival());
+	    	 flightDto.setCost(f.getCost());
+	    	 flightDto.setMax_capacity(f.getMaxCapacity());
+	    	 flightDto.setCompany(f.getCompany());
+	    	lista.add(flightDto);
+			}
+			 mappa.put("flight", lista);
+	    	 
+	    	 return mappa;
+		}
+	}
+	
+

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FlightDTO {
 	
+	
 	@JsonProperty(value="id_airport_departure")
 	private Integer airportDeparture;
 	
