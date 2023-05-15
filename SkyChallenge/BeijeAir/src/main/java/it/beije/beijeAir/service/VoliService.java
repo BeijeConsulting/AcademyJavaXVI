@@ -82,6 +82,7 @@ public class VoliService {
 			String appo = searchDto.getCittaArrivo();
 			searchDto.setCittaArrivo(searchDto.getCittaPartenza());
 			searchDto.setCittaPartenza(appo);
+			searchDto.setDataPartenza(searchDto.getDataRitorno());
 			// TODO: data di arrivo metterla in data di partenza
 			rotte.addAll(find(searchDto));
 		}		

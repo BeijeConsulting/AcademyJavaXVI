@@ -21,6 +21,9 @@ public class SearchDto {
 	@JsonProperty(value = "andata_ritorno")
 	private Boolean andataRitorno;
 	
+	@JsonProperty(value = "data_ritorno")
+	private LocalDateTime dataRitorno;
+	
 //	@JsonIgnore
 	private List<String> scali;
 
@@ -51,6 +54,20 @@ public class SearchDto {
 	@JsonGetter(value = "data_partenza")
 	public String getDataPartenzaAsString() {
 		if (dataPartenza != null) return dataPartenza.toLocalDate().toString();
+		return "";
+	}
+	
+	public LocalDateTime getDataRitorno() {
+		return dataRitorno;
+	}
+
+	public void setDataRitorno(LocalDateTime dataRitorno) {
+		this.dataRitorno = dataRitorno;
+	}
+
+	@JsonGetter(value = "data_ritorno")
+	public String getDataRitonoAsString() {
+		if (dataRitorno != null) return dataRitorno.toLocalDate().toString();
 		return "";
 	}
 
