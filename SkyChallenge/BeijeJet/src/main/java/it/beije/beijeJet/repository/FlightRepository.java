@@ -23,5 +23,5 @@ public interface FlightRepository  extends JpaRepository<Flight, Integer>{
 			@Param(value="airportArrival")Integer airportArrival,
 			@Param(value="airportDeparture")Integer airportDeparture);
 
-	
+	public Flight getById(Integer id);
 }

@@ -23,7 +23,6 @@ public class TotalFlightDTO {
 	@JsonProperty(value="id_airport_arrival")
 	private Integer airportArrival;
 	
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonProperty(value="time_departure")
 	private LocalDateTime timeDeparture;
 	
@@ -34,7 +33,7 @@ public class TotalFlightDTO {
 	private BigDecimal cost;
 	
 	@JsonProperty(value="max_capacity")
-	private Integer max_capacity;
+	private Integer maxCapacity;
 	
 	@JsonProperty(value="company")
 	private String company;
@@ -67,13 +66,9 @@ public class TotalFlightDTO {
 		return timeDeparture;
 	}
 
-	public void setTimeDeparture(String timeDeparture) {
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	    LocalDateTime dob = LocalDateTime.parse((CharSequence)timeDeparture, formatter);
-	    this.timeDeparture = dob;
-		
-		
+	
+	public void setTimeDeparture(LocalDateTime timeDeparture) {
+		this.timeDeparture=timeDeparture;
 	}
 
 	public LocalDateTime getTimeArrival() {
@@ -92,12 +87,12 @@ public class TotalFlightDTO {
 		this.cost = cost;
 	}
 
-	public Integer getMax_capacity() {
-		return max_capacity;
+	public Integer getMaxCapacity() {
+		return maxCapacity;
 	}
 
-	public void setMax_capacity(Integer max_capacity) {
-		this.max_capacity = max_capacity;
+	public void setMax_capacity(Integer maxCapacity) {
+		this.maxCapacity = maxCapacity;
 	}
 
 	public String getCompany() {
@@ -109,8 +104,14 @@ public class TotalFlightDTO {
 	}
 	
 	@JsonGetter(value = "time_departure")
-	public String getExpireDateAsString() {
+	public String getTimeDepartureAsString() {
 		if (timeDeparture != null) return timeDeparture.toString();
+		return "";
+	}
+	
+	@JsonGetter(value = "time_arrival")
+	public String getTimeArrivalAsString() {
+		if (timeArrival != null) return timeArrival.toString();
 		return "";
 	}
 	

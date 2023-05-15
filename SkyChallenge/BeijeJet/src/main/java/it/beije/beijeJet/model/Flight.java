@@ -22,11 +22,10 @@ public class Flight {
     private Integer idFlight;
 
     
-    @JoinColumn(name = "id_airport_departure", nullable = false)
+    @Column(name = "id_airport_departure", nullable = false)
     private Integer airportDeparture;
 
-    
-    @JoinColumn(name = "id_airport_arrival", nullable = false)
+    @Column(name = "id_airport_arrival", nullable = false)
     private Integer airportArrival;
 
     @Column(name = "time_departure")

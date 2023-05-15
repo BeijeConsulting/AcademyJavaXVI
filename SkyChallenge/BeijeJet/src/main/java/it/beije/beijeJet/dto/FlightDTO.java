@@ -5,12 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class FlightDTO {
-
-
+	
+	@JsonProperty(value="id_airport_departure")
+	private Integer airportDeparture;
+	
+	@JsonProperty(value="id_airport_arrival")
+	private Integer airportArrival;
 	
 	private String timeDeparture;
 	
-	public String getTimeDeparture() {
+public String getTimeDeparture() {
 		
 		
 		return timeDeparture;
@@ -25,26 +29,20 @@ public class FlightDTO {
 		this.timeDeparture = timeDeparture;
 	}
 
-	@JsonProperty(value="id_airport_departure")
-	private Integer idAirportDeparture;
-	
-	@JsonProperty(value="id_airport_arrival")
-	private Integer idAirportArrival;
-
 	public Integer getIdAirportArrival() {
-		return idAirportArrival;
+		return airportArrival;
 	}
 
 	public Integer getIdAirportDeparture() {
-		return idAirportDeparture;
+		return airportDeparture;
 	}
 
 	public void setIdAirportDeparture(Integer idAirportDeparture) {
-		this.idAirportDeparture = idAirportDeparture;
+		this.airportDeparture = idAirportDeparture;
 	}
 
 	public void setIdAirportArrival(Integer idAirportArrival) {
-		this.idAirportArrival = idAirportArrival;
+		this.airportArrival = idAirportArrival;
 	}
 	
 }
