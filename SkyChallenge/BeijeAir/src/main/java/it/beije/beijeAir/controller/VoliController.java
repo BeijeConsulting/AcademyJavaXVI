@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import it.beije.beijeAir.dto.SearchDto;
 import it.beije.beijeAir.model.Voli;
@@ -49,10 +51,10 @@ public class VoliController {
 	 * TODO: dataRitorno
 	 * TODO: Scali
 	 * TODO: Durata( voli + scali)
-	 * TODO: PREGA 
+	 * TODO: sistema pom e configurazione import e metodo, togli restController
 	 * */
 	@GetMapping(value="/find")
-	public List<Voli> findVoli( 
+	public @ResponseBody List<Voli> findVoli( 
 			@RequestBody SearchDto searchDto,
 			@RequestParam(required=false) boolean andataRitorno,
 			@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime dataPartenza
