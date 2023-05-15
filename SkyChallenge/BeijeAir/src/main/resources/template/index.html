@@ -7,13 +7,31 @@
 <body>
     <h1>BEIJEAIR</h1>
 	
-	<form th:object="${SearchDTO}" th:action="@{/ricercaVoli}" method="post">
+	<form th:object="${SearchDto}" th:action="@{/ricercaVoli}" method="post">
 		
 	    <label>Città di partenza:</label>
-	    <input type="text" th:field="*{CittaPartenza}" required />
+	    <input type="text" th:field="*{cittaPartenza}" required />
 	    
 	    <label>Città di arrivo:</label>
-	    <input type="text" th:field="*{CittaArrivo}" required />
+	    <input type="text" th:field="*{cittaArrivo}" required />
+	    
+	    <label>Data di partenza:</label>
+    	<input type="datetime-local" th:field="*{dataPartenza}" required />
+
+		<label for="scalaDiretta">Diretto</label><br>    	
+    	<input type="checkbox" id="scalaDiretta"  th:field="*{andataRitorno}" value="0">
+
+		<label for="">1 Diretto</label><br>		
+		<input type="checkbox" id="" name="scali[]" value="1">
+
+		<label for="scala2">2 scali</label><br>		
+		<input type="checkbox" id="scala2" name="scali[]" value="2">
+		
+		<label for="andataRitorno">Andata e Ritorno</label>
+		<input type="checkbox" id="andataRitorno" name="andataRitorno" value="true">
+		
+    	
+    	
 	    
 	    <button type="submit">Cerca voli</button>
 	</form>

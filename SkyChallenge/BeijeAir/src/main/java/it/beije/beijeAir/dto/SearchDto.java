@@ -3,8 +3,9 @@ package it.beije.beijeAir.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SearchDto {
@@ -15,6 +16,7 @@ public class SearchDto {
 	@JsonProperty(value = "citta_arrivo")
 	private String cittaArrivo;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	@JsonProperty(value = "data_partenza")
 	private LocalDateTime dataPartenza;
 	

@@ -8,11 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.beije.beijeAir.dto.RouteDto;
 import it.beije.beijeAir.dto.SearchDto;
@@ -35,7 +32,7 @@ public class VoliController {
 	
 	@GetMapping(value="/")
 	public String getIndex(Model model) {
-		model.addAttribute("SearchDTO", new SearchDto());
+		model.addAttribute("SearchDto", new SearchDto());
 	    return "index";
 	}
 	
@@ -54,16 +51,21 @@ public class VoliController {
 	 * TODO: sistema pom e configurazione import e metodo, togli restController
 	 * */
 	@PostMapping(value="/ricercaVoli")
-	public @ResponseBody List<RouteDto> findRotte(@RequestBody SearchDto searchDto) {		
+	public String findRotte(SearchDto searchDto, Model model, @RequestParam("dataPartenza") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") String dataPartenzaString) {		
+		LocalDateTime dataPartenza = LocalDateTime.parse(dataPartenzaString);
+	    searchDto.setDataPartenza(dataPartenza);
+		
 		System.out.println("GET /find");
-				
+		
+		System.out.println(dataPartenza);
+		searchDto.setDataPartenza(dataPartenza);
 		List<RouteDto> rotte = voliService.find(searchDto);
 		
+		
 		System.out.println(rotte);
-		return rotte;
-		/*
-		model.addAttribute("flightResults", flightResults);
-	    return "ricercaVoli";*/
+		
+		model.addAttribute("flightResults", rotte);
+	    return "ricercaVoli";
 	}
 
 	/*
