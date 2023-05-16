@@ -2,6 +2,7 @@ package it.beije.beijeAir.service;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class VoliService {
 
 		List<RouteDto> rotte = new ArrayList<RouteDto>();
 
+//		searchDto.setScali(Arrays.asList("0", "1", "2"));
+		searchDto.setAndataRitorno(false);
+				
 		for (String s : searchDto.getScali()) {
 			if (s.equals("0")) {
 				List<Voli> diretti = voliRepository.find(searchDto.getCittaPartenza(), searchDto.getCittaArrivo(),

@@ -21,8 +21,8 @@
         <tbody>
             <tr th:each="voli : ${voli}">
                 <td th:text="${voli.id}"></td>
-                <td th:text="${voli.cittaPartenza.citta}"></td>
-                <td th:text="${voli.cittaArrivo.citta}"></td>
+                <td th:text="${voli.cittaPartenza.nome}"></td>
+                <td th:text="${voli.cittaArrivo.nome}"></td>
                 <td th:text="${voli.dataPartenza}"></td>
                 <td th:text="${voli.dataArrivo}"></td>
                 <td th:text="${voli.capienza}"></td>

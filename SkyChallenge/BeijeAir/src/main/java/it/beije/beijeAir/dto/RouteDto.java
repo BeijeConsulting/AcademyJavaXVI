@@ -35,7 +35,7 @@ public class RouteDto {
 		Long ore = (durataVoloMinuti % (24 * 60)) / 60;
 		Long minuti = (durataVoloMinuti % 60);
 
-		StringBuilder durataCompleta = new StringBuilder(giorni + " " + ore + " " + minuti);
+		StringBuilder durataCompleta = new StringBuilder(giorni + " g " + ore + " h " + minuti + " m");
 		this.setDurataVoloCompleta(durataCompleta.toString());
 	}
 

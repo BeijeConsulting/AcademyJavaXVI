@@ -6,20 +6,25 @@
 </head>
 <body>
     <h1>Risultati ricerca</h1>
-    <table>
-        <thead>
-            <tr>
-	            <th>Città Partenza</th>
-	            <th>Città Arrivo</th>
-	        </tr>
-	        
-        </thead>
-        <tbody>
-            <tr th:each="voli : ${flightResults}">
-	            <td th:text="${voli.cittaPartenza}"></td>
-	            <td th:text="${voli.cittaArrivo}"></td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <ul>
+    <li th:each="rotte : ${flightResults}">
+        <h3>Rotta:</h3>
+        <p>Durata volo: <span th:text="${rotte.durataVoloCompleta}"></span></p>
+        <p>Costo volo: €<span th:text="${rotte.costoTotale}"></span></p>
+        <ul>
+            <li th:each="voli : ${rotte.voli}">
+                <h4>Volo:</h4>
+                <p>ID: <span th:text="${voli.id}"></span></p>
+                <p>Città di partenza: <span th:text="${voli.cittaPartenza.nome}"></span></p>
+                <p>Città di arrivo: <span th:text="${voli.cittaArrivo.nome}"></span></p>
+                <p>Data di partenza: <span th:text="${voli.dataPartenza}"></span></p>
+                <p>Data di arrivo: <span th:text="${voli.dataArrivo}"></span></p>
+            </li>
+        </ul>
+    </li>
+</ul>
+    
+    
 </body>
 </html>

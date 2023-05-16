@@ -8,11 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.beije.beijeAir.dto.RouteDto;
 import it.beije.beijeAir.dto.SearchDto;
@@ -27,7 +24,7 @@ public class VoliController {
 	
 	@GetMapping(value="/voli")
 	public String getAllVoli(Model model) {
-		System.out.println("GET/  voli");
+		System.out.println("GET/ voli");
 	    List<Voli> voli = voliService.findAll();
 	    model.addAttribute("voli", voli);
 	    return "voli";
@@ -35,29 +32,22 @@ public class VoliController {
 	
 	@GetMapping(value="/")
 	public String getIndex(Model model) {
-		model.addAttribute("SearchDTO", new SearchDto());
+		model.addAttribute("SearchDto", new SearchDto());
 	    return "index";
-	}
-	
-	@GetMapping(value="/all_voli")
-	public List<Voli> getAllVoli(){
-		System.out.println("GET /AllVoli");
-		List<Voli> voli = voliService.findAll();
-		
-		return voli;
 	}
 
 	@PostMapping(value="/ricercaVoli")
-	public @ResponseBody List<RouteDto> findRotte(@RequestBody SearchDto searchDto) {		
+	public String findRotte(SearchDto searchDto, Model model, @RequestParam("dataPartenza") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") String dataPartenzaString) {		
+		LocalDateTime dataPartenza = LocalDateTime.parse(dataPartenzaString);
+	    searchDto.setDataPartenza(dataPartenza);
+		
 		System.out.println("POST /ricercaVoli");
-				
+		
+		searchDto.setDataPartenza(dataPartenza);
 		List<RouteDto> rotte = voliService.find(searchDto);
 		
-		System.out.println(rotte);
-		return rotte;
-		/*
-		model.addAttribute("flightResults", flightResults);
-	    return "ricercaVoli";*/
+		model.addAttribute("flightResults", rotte);
+	    return "ricercaVoli";
 	}
 
 }
