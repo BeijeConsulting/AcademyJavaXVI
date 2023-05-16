@@ -33,7 +33,7 @@ public class VoliService {
 	public List<RouteDto> find(SearchDto searchDto) {
 		
 		List<RouteDto> rotte  = new ArrayList<RouteDto>();
-		searchDto.setScali(Arrays.asList("0", "1", "2"));
+//		searchDto.setScali(Arrays.asList("0", "1", "2"));
 		searchDto.setAndataRitorno(false);
 				
 		for (String s : searchDto.getScali()) {
