@@ -36,23 +36,26 @@ public interface VoliRepository extends JpaRepository<Voli, Integer> {
 			+ "join v.cittaArrivo ca "
 			+ "where (cp.nome = :cittaPartenza OR :cittaPartenza is null) "
 			+ "AND (ca.nome = :cittaArrivo OR :cittaArrivo is null) "
-			+ "AND (v.dataPartenza > :dataPartenza OR :dataPartenza is null)"
+			+ "AND ((v.dataPartenza BETWEEN :dataPartenza AND :dataRitorno) OR :dataPartenza is null OR :dataRitorno is null)"
 			)
 	public List<Voli> find(@Param("cittaPartenza") String cittaPartenza, 
 			@Param("cittaArrivo") String cittaArrivo, 
-			@Param("dataPartenza") LocalDateTime dataPartenza);
+			@Param("dataPartenza") LocalDateTime dataPartenza,
+			@Param("dataRitorno") LocalDateTime dataRitorno);
 	
 	
 	@Query(name = "find_route_one", nativeQuery = true)
 	public List<RottaConIdDto> findUnoScalo(@Param("cittaPartenza") Integer cittaPartenza, 
 											@Param("cittaArrivo") Integer cittaArrivo, 
-											@Param("dataPartenza") LocalDateTime dataPartenza);
+											@Param("dataPartenza") LocalDateTime dataPartenza,
+											@Param("dataRitorno") LocalDateTime dataRitorno);
 
 	
 	@Query(name = "find_route_two", nativeQuery = true)
 	public List<RottaConIdDto> findDueScali(@Param("cittaPartenza") Integer cittaPartenza, 
 											@Param("cittaArrivo") Integer cittaArrivo, 
-											@Param("dataPartenza") LocalDateTime dataPartenza);
+											@Param("dataPartenza") LocalDateTime dataPartenza,
+											@Param("dataRitorno") LocalDateTime dataRitorno);
 	
 
 }

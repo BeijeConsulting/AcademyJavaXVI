@@ -30,13 +30,17 @@ public class VoliService {
 	}
 
 	public List<RouteDto> find(SearchDto searchDto) {
+		
+		if(searchDto.getDataRitorno() == null) {
+			searchDto.setDataRitorno(searchDto.getDataPartenza().plusMonths(2));
+		}
 
 		List<RouteDto> rotte = new ArrayList<RouteDto>();
 
 		for (String s : searchDto.getScali()) {
 			if (s.equals("0")) {
 				List<Voli> diretti = voliRepository.find(searchDto.getCittaPartenza(), searchDto.getCittaArrivo(),
-						searchDto.getDataPartenza());
+						searchDto.getDataPartenza(), searchDto.getDataRitorno());
 				for (Voli v : diretti) {
 					// per ogni volo che abbiamo trovato, costruisco una rotta che contiene solo il
 					// volo diretto
@@ -53,9 +57,9 @@ public class VoliService {
 				Integer idPartenza = cittaRepository.findByNome(searchDto.getCittaPartenza()).getId();
 				Integer idArrivo = cittaRepository.findByNome(searchDto.getCittaArrivo()).getId();
 				if (s.equals("1")) {
-					scaliId = voliRepository.findUnoScalo(idPartenza, idArrivo, searchDto.getDataPartenza());
+					scaliId = voliRepository.findUnoScalo(idPartenza, idArrivo, searchDto.getDataPartenza(), searchDto.getDataRitorno());
 				} else {
-					scaliId = voliRepository.findDueScali(idPartenza, idArrivo, searchDto.getDataPartenza());
+					scaliId = voliRepository.findDueScali(idPartenza, idArrivo, searchDto.getDataPartenza(), searchDto.getDataRitorno());
 				}
 
 				for (RottaConIdDto rId : scaliId) {
@@ -85,6 +89,7 @@ public class VoliService {
 			searchDto.setCittaArrivo(searchDto.getCittaPartenza());
 			searchDto.setCittaPartenza(appo);
 			searchDto.setDataPartenza(searchDto.getDataRitorno());
+			searchDto.setDataRitorno(null);
 
 			rotte.addAll(find(searchDto));
 		}

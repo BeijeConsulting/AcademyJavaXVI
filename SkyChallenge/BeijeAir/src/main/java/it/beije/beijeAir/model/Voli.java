@@ -31,7 +31,7 @@ import it.beije.beijeAir.dto.RottaConIdDto;
 	    				+ "WHERE (v1.citta_partenza = :cittaPartenza OR :cittaPartenza is null) "
 	    				+ "AND (v2.citta_arrivo = :cittaArrivo OR :cittaArrivo is null) "
 	    				+ "AND v2.data_partenza > v1.data_arrivo "
-	    				+ "AND (v1.data_partenza > :dataPartenza OR :dataPartenza is null)",
+	    				+ "AND ((v1.data_partenza BETWEEN :dataPartenza AND :dataRitorno) OR :dataPartenza is null OR :dataRitorno is null)",
 	    resultSetMapping = "id_route_dto"
 	)
 
@@ -46,7 +46,7 @@ import it.beije.beijeAir.dto.RottaConIdDto;
 	    				+ "AND (v3.citta_arrivo = :cittaArrivo OR :cittaArrivo is null) "
 	    				+ "AND v2.data_partenza > v1.data_arrivo "
 	    				+ "AND v3.data_partenza > v2.data_arrivo "
-	    				+ "AND (v1.data_partenza > :dataPartenza OR :dataPartenza is null)",
+	    				+ "AND ((v1.data_partenza BETWEEN :dataPartenza AND :dataRitorno) OR :dataPartenza is null OR :dataRitorno is null)",
 	    resultSetMapping = "id_route_dto"
 	)
 
