@@ -45,5 +45,12 @@ public String getTimeDeparture() {
 	public void setIdAirportArrival(Integer idAirportArrival) {
 		this.airportArrival = idAirportArrival;
 	}
+
+	public FlightDTO(Integer airportDeparture, Integer airportArrival, String timeDeparture) {
+		super();
+		this.airportDeparture = airportDeparture;
+		this.airportArrival = airportArrival;
+		this.timeDeparture = timeDeparture;
+	}
 	
 }

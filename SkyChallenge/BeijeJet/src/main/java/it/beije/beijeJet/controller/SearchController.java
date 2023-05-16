@@ -36,4 +36,11 @@ public class SearchController {
 			
 			}
 			
+			
+			@PostMapping("/scaliByDate")
+			public List<List<TotalFlightDTO>> getScaliByDate(@RequestBody FlightDTO dto) {
+				
+				return searchService.getScali(dto);
+			
+			}
 }
