@@ -71,6 +71,17 @@ app.get('/users', (req, res) => {
     })
    
   })
+
+  app.get('/products', (req, res) => {
+    connection.query('SELECT * FROM products', (err, rows) => {
+        if (err) throw err
+        console.log('rows: ', rows)
+        let products = rows;
+        res.render('db3/index', { products: products })
+        //res.render('contacts', { contacts: rows })
+    })
+   
+  })
 //app.get('/addresses', (req, res) => {
 //    console.log('end connection...')
 //    //connection.end()
