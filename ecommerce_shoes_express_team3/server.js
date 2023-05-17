@@ -1,3 +1,4 @@
+/*  
 const express = require('express')
 const mysql = require('mysql')
 
@@ -15,7 +16,7 @@ app.set('view engine', 'ejs')
 app.get('/contacts', (req, res) => {
 
     connection.connect()
-/*    
+  
     connection.query('SELECT * FROM contatti', (err, rows) => {
         if (err) throw err
         console.log('rows: ', rows)
@@ -26,10 +27,12 @@ app.get('/contacts', (req, res) => {
     connection.end()
     
   })
-*/
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
 })
+
+*/

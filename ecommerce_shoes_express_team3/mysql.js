@@ -1,3 +1,4 @@
+/*
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
@@ -8,7 +9,7 @@ const connection = mysql.createConnection({
 
 //connection.connect()
 
-/*
+
 connection.query('SELECT * FROM contatti', (err, rows, fields) => {
   if (err) throw err
   console.log('The solution is: ', rows)
