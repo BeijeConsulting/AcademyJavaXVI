@@ -12,20 +12,24 @@ const connection = mysql.createConnection({
 
 app.set('view engine', 'ejs')
 
-app.get('/contacts', (req, res) => {
+app.get('/users', (req, res) => {
 
     //connection.connect()
     
-    connection.query('SELECT * FROM contatti', (err, rows) => {
+    connection.query('SELECT * FROM users', (err, rows) => {
         if (err) throw err
         console.log('rows: ', rows)
-        res.render('contacts', { contacts: rows })
+        //res.render('contacts', { contacts: rows })
     })
 
     console.log('end connection...')
     //connection.end()
     
   })
+//app.get('/addresses', (req, res) => {
+//    console.log('end connection...')
+//    //connection.end()
+//}
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
