@@ -42,6 +42,30 @@ app.get('/details/:id', (req, res) => {
 
 })
 
+app.get('/shoppingcart/:id', (req, res) => {
+  const id = req.params.id
+  connection.query('SELECT * FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, rows) => {
+      if (err) throw err
+      console.log('rows',rows);
+      res.render('shopping_cart', {  items: rows, user:{}, filter:{}})
+  
+    
+  })
+
+})
+
+app.get('/orders/:id', (req, res) => {
+  const id = req.params.id
+  connection.query('SELECT * FROM order_items as o where o.user_id= ?',[id], (err, rows) => {
+      if (err) throw err
+      console.log('rows',rows);
+      res.render('orders', {  orders: rows, user:{}, filter:{}})
+  
+    
+  })
+
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
