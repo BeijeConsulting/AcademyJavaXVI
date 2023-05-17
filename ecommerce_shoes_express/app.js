@@ -2,6 +2,11 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mysql = require('mysql')
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set('view engine', 'ejs')
 
 const connection = mysql.createConnection({
@@ -11,21 +16,44 @@ const connection = mysql.createConnection({
   database: 'ecommerce_shoes_4'
 })
 
-
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM products limit 3', (err, rows) => {
-    if (err) throw err
-    console.log('The solution is: ', rows)
-    res.render('products', { products: rows })
+
+  let user = req.cookies.user
+  let type = req.query.type;
+
+  console.log(type);
+  if(typeof type === 'undefined'){
+    type = "ogni genere"
+    connection.query('SELECT * FROM products where is_listed = 1', (err, rows) => {
+      if (err) throw err
+      if (typeof user === 'undefined') {
+        res.render('index', { products: rows , user:{}, filter:type})
+      }else{
+        res.render('index', { products: rows , user:user[0], filter:type})
+      }
   })
+  }else{
+    console.log("Il tipo " , type);
+    connection.query('SELECT * FROM products where is_listed = 1 and type = ? ' ,[type], (err, rows) => {
+      console.log("Ricerca con");
+      console.log('risultati ', rows);
+      if (err) throw err
+      if (typeof user === 'undefined') {
+        res.render('index', { products: rows , user:{}, filter:type})
+      }else{
+        res.render('index', { products: rows , user:user[0], filter:type})
+      }
+    })
+  }
+  
 
 })
 
-app.get('/index', (req, res) => {
+app.get('/', (req, res) => {
+  const user = req.cookies.user
   connection.query('SELECT * FROM products where is_listed = 1', (err, rows) => {
     if (err) throw err
-    
-    res.render('index', { products: rows , user:{}, filter:{}})
+    res.render('index', { products: rows , user:user[0], filter:{}})
   })
 
 })
@@ -35,12 +63,29 @@ app.get('/details/:id', (req, res) => {
   connection.query('SELECT * FROM products as p join product_details as pd on p.id=pd.product_id  where p.id = ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
-      res.render('product_details', {  details: rows, user:{}, filter:{}})
-  
-    
+      res.render('product_details', {  details: rows, user:{}, filter:{}})    
   })
 
 })
+
+
+app.get('/login', (req, res) => {
+  res.render('login')
+});
+
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  connection.query('SELECT * FROM users  where email = ? AND password = ?',[email, password], (err, user) => {
+    if (user.length > 0) {
+      res.cookie('user', user, { maxAge: 900000, httpOnly: true });
+      res.redirect('/');
+    }else{
+      res.send('Credenziali errate');
+    }
+  })
+});
+
 
 
 app.listen(port, () => {
