@@ -14,9 +14,11 @@ app.set('view engine', 'ejs')
 
 //Qui si mettono le costanti con i require (IMPORTANTE: nel path NON ci va .js)
 const productsRoute = require('./routes/products')
+const loginRoute = require('./routes/login')
 
 //e poi qui si chiamano gli app.use con i relativi url base
 app.use('/products', productsRoute)
+app.use('/login', loginRoute)
 
 
 app.listen(port, () => {
