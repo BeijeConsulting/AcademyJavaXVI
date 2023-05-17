@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   host: 'skychallenge.cvzu4xrxvkdz.eu-south-1.rds.amazonaws.com',
   user: 'admin',
   password: 'FJf7MWgOsW1M5AbKql9g',
-  database: 'ecommerce_shoes_2' })
+  database: 'ecommerce_shoes_3' })
 
 //connection.connect()
 
