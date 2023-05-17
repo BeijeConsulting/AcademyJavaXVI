@@ -1,8 +1,31 @@
 <html>
     <head>
         <title>Products List</title>
+        <style>
+            body {
+                margin: 0;
+            }
+
+            header {
+              background-color: #f2f2f2;
+              padding: 7px;
+              display: flex;
+              align-items: center;
+            }
+        
+            h1 {
+              margin: 0;
+              color: #333;
+            }
+          </style>
     </head>
     <body>
+        
+        <header>
+            <img src="logo.png" alt="logo">
+            <h3>Prodotti:</h3>
+        </header>
+
         <% products.forEach(product => { %>
           - <%=  product.name %> <br/>
         <% }); %>
