@@ -56,7 +56,7 @@ app.get('/shoppingcart/:id', (req, res) => {
 
 app.get('/orders/:id', (req, res) => {
   const id = req.params.id
-  connection.query('SELECT * FROM order_items as o where o.user_id= ?',[id], (err, rows) => {
+  connection.query('SELECT * FROM order_items as item JOIN orders as o ON item.order_id=o.id where o.user_id= ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
       res.render('orders', {  orders: rows, user:{}, filter:{}})
