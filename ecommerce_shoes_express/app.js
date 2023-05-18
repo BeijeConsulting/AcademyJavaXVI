@@ -222,7 +222,6 @@ app.get('/checkout', (req, res) => {
   const id = user.id
   connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
       if (err) throw err
-      console.log('rows',rows);
       res.render('checkout', {  addresses: rows, user:user, filter:{}})
   
     
@@ -231,9 +230,8 @@ app.get('/checkout', (req, res) => {
 })
 
 app.post('/checkout', async(req, res) => {
-
+  //console.log(req.body);
   let user = req.cookies.user
-
   const name=req.body.name;
   const label=req.body.label;
   const country=req.body.country;
@@ -244,29 +242,37 @@ app.post('/checkout', async(req, res) => {
   }else{
     user = user[0]
   }
-  const id = user.id;
+  const userId = user.id;
   const telephone=user.telephone;
-  const address_id=null;
+  let address_id;
   
 
-  if(typeof req.body.name=='undefined') address_id=req.body.addresses.id;
-  else  address_id= await addAddress(name,label,country,street,telephone,id)
-  console.log("address",address_id);
+  if( req.body.name ===  ''){
+    console.log("VUOTOs");
+    address_id=req.body.addresses;
+  } else{
+    address_id= await addAddress(name,label,country,street,telephone,userId)
+    address_id = address_id.insertId
+  }  
+  
+  let totalCheckout = await getTotalCheckout(userId);
+  totalCheckout = totalCheckout[0].somma
 
-    connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[id], (err, sum) => {
-      if (err) throw err
-      console.log('sum',sum); 
-
-      
-      connection.query('INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)',[sum,id,address_id], (err, order) => {
+// let addOrderV  =await addOrder(totalCheckout,userId,address_id);
+// console.log(addOrderV);
+    // connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[id], (err, sum) => {
+    //   if (err) throw err
+    //   console.log('sum',sum); 
+  connection.query('INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)',[totalCheckout,userId,address_id], (err, order) => {
         if (err) throw err
         console.log('order',order); 
-
-       
+    connection.query(`delete from shopping_cart_item WHERE user_id=?`, [userId] ,(err) =>{
+      if (err) throw err
     })
-  })
+     })
+ // })
 
-  res.send('Ordine effettuato con successo!');
+  res.redirect('/checkout');
 })
 
 function addAddress(name,label,country,street,telephone,id) {
@@ -274,7 +280,25 @@ function addAddress(name,label,country,street,telephone,id) {
     connection.query('INSERT INTO addresses(created_at,disabled_at,label,name_surname,country,street_address,telephone,zipcode,instructions,user_id) VALUES (localtime(),null,?,?,?,?,?,0000,null,?)',[name,label,country,street,telephone,id],(err, rows) => {
       if (err)  throw err;
       resolve(rows);
-      console.log("address",rows.insertId);
+    });
+  });
+}
+
+function getTotalCheckout(userId) {
+  return new Promise((resolve) => {
+    connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[userId], (err, sum) => {
+      if (err)  throw err;
+      resolve(sum);
+    });
+  });
+}
+
+function addOrder(totalCheckout,userId,address_id) {
+  return new Promise((resolve) => {
+    console.log(totalCheckout,parseInt(userId),address_id);
+    connection.query(`INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)`,[(parseInt(totalCheckout), parseInt(userId),address_id)], (err, order) => {
+      if(err) throw err
+      resolve(order);
     });
   });
 }
