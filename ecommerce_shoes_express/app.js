@@ -113,7 +113,7 @@ app.get('/orders', (req, res) => {
 
 
 app.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login',{message:''})
 });
 
 
@@ -128,6 +128,35 @@ app.post('/login', (req, res) => {
     }
   })
 });
+
+app.get('/register', (req, res) => {
+  res.render('register')
+})
+
+app.post('/register', (req,res)=>{
+  console.log("/register POST");
+
+  const { name,surname,telephone,birthdate,email, password } = req.body;
+  if (name === '' || surname === '' || telephone === '' || birthdate === '' || email === '' || password === '') {
+    
+    res.render('login', { message: 'Registrazione non avvenuta, campi obbligatori' });
+    return
+  } 
+  const values = [name, surname, telephone, birthdate, email, password];
+  connection.query(`INSERT INTO users (name, surname, telephone, birth_date, email, password)  VALUES (?, ?, ?, ?, ?, ?)`, values,(err, userInsert) =>{
+    if (err){
+      res.render('login', { message: 'Registrazione non avvenuta' });
+      throw err
+    } 
+console.log(userInsert.insertId);
+    connection.query(`INSERT INTO user_authority (user_id, authority_id) VALUES (?,1) `,[userInsert.insertId], (errSelect) =>{
+      if (errSelect) throw errSelect
+
+    })
+    res.render('login', { message: 'Registrazione avvenuta con successo' });
+ });
+
+})
 
 app.get("/logout", (req,res) =>{
   console.log("/logout GET");
