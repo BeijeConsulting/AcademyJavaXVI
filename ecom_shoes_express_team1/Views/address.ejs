@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Address</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1>Indirizzi</h1>
+        <% addresses.forEach((item) => { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><%= item.label %></h5>
+                    <p class="card-text"><strong>Nome e Cognome: </strong> <%= item.name_surname %></p>
+                    <p class="card-text"><strong>Paese: </strong> <%= item.country %></p>
+                    <p class="card-text"><strong>Via: </strong> <%= item.street_address %></p>
+                    <p class="card-text"><strong>Telefono: </strong> <%= item.telephone %></p>
+                    <p class="card-text"><strong>ZIPCODE: </strong> <%= item.zipcode %></p>
+                    <p class="card-text"><strong>Istruzioni: </strong> <%= item.instructions %></p>
+                </div>
+                <button class="btn btn-primary"><a href="/address/edit/<%= item.id %>">Modifica</a></button>
+                
+                <form action="/address/delete/<%= item.id %>" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Elimina</button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+
+</body>
+</html>

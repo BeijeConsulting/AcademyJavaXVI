@@ -5,6 +5,7 @@ const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
 const signupRoutes = require('./routes/signupRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const addressRoutes = require('./routes/addressRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,6 +32,7 @@ app.use('/products', productRoutes);
 app.use('/login', authRoutes);
 app.use('/signup', signupRoutes);
 app.use('/profile', profileRoutes);
+app.use('/address', addressRoutes);
 
 // Home route
 app.get('/', (req, res) => {
