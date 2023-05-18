@@ -1,5 +1,15 @@
 const db = require('../db');
 
+// Funzione per formattare la data
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+  
+    return `${day}/${month}/${year}`;
+}
+
 exports.profile = (req, res) => {
   const userId = req.session.userId;
 
@@ -18,7 +28,7 @@ exports.profile = (req, res) => {
     }
 
     const user = results[0];
-
+    user.birthDateFormatted = formatDate(user.birth_date);
     res.render('profile', { user });
   });
 };
