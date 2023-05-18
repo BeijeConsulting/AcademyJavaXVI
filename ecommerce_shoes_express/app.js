@@ -75,6 +75,23 @@ app.post('/details/addItem' , (req,res) =>{
    } 
 })
 
+let users = null;
+
+app.get('/test', async (req, res) => {
+  let id = 7
+    users = await getUser(id);
+    console.log("pulito ", users);
+});
+
+function getUser(id) {
+  return new Promise((resolve) => {
+    connection.query('SELECT * FROM users where id = ?',[id] ,(err, rows) => {
+      if (err)  throw err
+      resolve(rows);
+    });
+  });
+}
+
 app.get('/shoppingcart', (req, res) => {
 
   let user = req.cookies.user
