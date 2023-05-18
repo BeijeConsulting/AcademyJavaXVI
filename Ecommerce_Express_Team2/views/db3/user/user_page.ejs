@@ -14,24 +14,22 @@
 
 	<div class="w3-bar w3-deep-orange w3-padding w3-card">
 		<a class="w3-bar-item w3-button w3-hover-white"
-			href="/products">Beije - Shoes First</a>
+			href="/product/all">Beije - Shoes First</a>
 		<div class="w3-right">
 			<a href="/VonNeumannSpring/db3/shopping_cart"
 				class="w3-button w3-deep-orange w3-hover-black"> 
 				<i class="fa fa-shopping-cart"></i> Shopping Cart
 			</a>
-			<c:choose>
-				<c:when test="${empty logged_user}">
+
+				<%if (!user) {%>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signin">Sign-In</a>
+						href="/signin">Sign-In</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signup">Sign-Up</a>
-				</c:when>
-				<c:otherwise>
+						href="/signup">Sign-Up</a>
+            <%} else {%>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signout">Sign-Out</a>
-				</c:otherwise>
-			</c:choose>
+						href="/signout">Sign-Out</a>
+        <%}%>
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
@@ -65,15 +63,15 @@
   <div class="w3-container">
     <h4>Settings:</h4>
     <br>
-    <form action="./edit_user" method="get">
+    <form action="/edit_user" method="get">
       <button class="w3-button w3-orange w3-hover-black">Edit User</button>
     </form>
     <br>
-    <form action="./my_order" method="get">
+    <form action="/user/my_orders" method="get">
       <button class="w3-button w3-orange w3-hover-black">My Orders</button>
     </form>
     <br>
-    <form action="./addresses" method="get">
+    <form action="/addresses" method="get">
       <button class="w3-button w3-orange w3-hover-black">My Addresses</button>
     </form>
   </div>

@@ -11,7 +11,7 @@
   	
     
     <div class="w3-bar w3-deep-orange w3-padding w3-card">
-      <a class="w3-bar-item w3-button w3-hover-white" href="/products">Beije - Shoes First</a>
+      <a class="w3-bar-item w3-button w3-hover-white" href="/product/all">Beije - Shoes First</a>
       <div class="w3-right">
       </div>
     </div>
@@ -31,13 +31,12 @@
     </form> 
     
       <br>
-    <!-- Show error message if there is one 
-    <c:choose>
-      <c:when test="${not empty signin_error}">
-        <br><span style="color: red; font-weight: bold">${signin_error}</span>
-        <br>
-      </c:when>
-    </c:choose>-->
+    <!-- Show error message if there is one -->
+    <% if (message) { %>
+      <br><span style="color: red; font-weight: bold"> <%= message %> </span>
+      <br>
+      <% } %>
+
   </div>
   </div>
 </body>

@@ -10,35 +10,30 @@
 </head>
 <body>
 
-
 	<!-- Header da mettere ovunque -->
-
-
 	<div class="w3-bar w3-deep-orange w3-padding w3-card">
 		<a class="w3-bar-item w3-button w3-hover-white"
-			href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+			href="/product/all">Beije - Shoes First</a>
 		<div class="w3-right">
-			<c:choose>
-				<c:when test="${empty logged_user}">
+				<%if (!user.id) {%>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signin">Sign-In</a>
+						href="/signin">Sign-In</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signup">Sign-Up</a>
-				</c:when>
-				<c:otherwise>
+						href="/signup">Sign-Up</a>
+						<%} else {%>
 					<a href="/VonNeumannSpring/db3/shopping_cart"
 						class="w3-button w3-deep-orange w3-hover-black"> <i
 						class="fa fa-shopping-cart"></i> Shopping Cart
 					</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/user_page">User page</a>
+						href="/user">User page</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/VonNeumannSpring/db3/signout">Sign-Out</a>
-				</c:otherwise>
-			</c:choose>
+						href="/signout">Sign-Out</a>
+						<%}%>
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
+
 	<div class="w3-container">
 		<h1 class="w3-margin-top">Product List</h1>
 		<div class="w3-row-padding">
@@ -48,7 +43,7 @@
 						<div class="w3-container">
 							<h5><%= product.name %></h2>
 								<p><%= product.description %></p>
-								<a href="db3/product/<%= product.id %>"
+								<a href="/product/<%= product.id %>"
 									class="w3-button w3-block w3-deep-orange">View Details</a> <br>
 						</div>
 					</div>
