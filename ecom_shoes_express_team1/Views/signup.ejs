@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Registrazione</title>
+</head>
+<body>
+
+    <div class="mx-auto mt-5" style="width:400px;">
+
+        <h1>Registrazione</h1>
+        
+
+        <form action="/signup" method="POST">
+            <div>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Inserisci nome" required>
+            </div>
+            <div>
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" name="surname" class="form-control" placeholder="Inserisci cognome" required>
+            </div>
+            <div>
+                <label for="birthDate">Data di nascita:</label>
+                <input type="date" id="birthDate" name="birthDate" class="form-control" placeholder="Inserisci data di nascita" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Inserisci email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control"  required>
+            </div>
+            <div>
+                <input class="btn btn-primary mt-3 mb-4" type="submit" value="Registrati">
+            </div>
+        </form>
+
+    </div>
+
+</body>
+</html>
