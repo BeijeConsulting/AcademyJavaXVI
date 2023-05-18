@@ -59,6 +59,22 @@ app.get('/details/:id', (req, res) => {
 })
 
 
+app.post('/details/addItem' , (req,res) =>{
+  console.log('addItem POST');
+  let user = req.cookies.user
+  const { productDetails, quantity } = req.body;
+
+  if (typeof user === 'undefined'){
+    res.redirect('/login')
+    return
+  }else{
+    connection.query('INSERT INTO shopping_cart_item (user_id, product_details_id, quantity) VALUES (?,?,?)',[user[0].id, parseInt(productDetails), parseInt(quantity)], (err, rows) => {
+      if(err) throw err
+      res.redirect('/shoppingcart')
+    })
+   } 
+})
+
 app.get('/shoppingcart', (req, res) => {
 
   let user = req.cookies.user
@@ -105,7 +121,7 @@ app.get('/orders', (req, res) => {
       if (err) throw err
       console.log('rows',rows);
       res.render('orders', {  orders: rows, user:user, filter:{}})
-  
+
     
   })
 
