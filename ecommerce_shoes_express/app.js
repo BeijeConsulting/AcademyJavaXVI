@@ -88,24 +88,37 @@ app.get('/shoppingcart', (req, res) => {
   
   connection.query('SELECT * FROM product_details as details JOIN shopping_cart_item as item ON details.id=item.product_details_id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, items) => {
       if (err) throw err
-      console.log('rows',items);
+      //console.log('rows',items);
       
       connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
         if (err) throw err
         console.log('row',row[0].somma);
         res.render('shopping_cart', {  total: row[0].somma, items:items,user:user, filter:{}})
-       
-    
-      
     });
-    
-  
-    
   });
-
- 
 })
 
+
+app.get('/delete/:id/:quantity',(req, res) =>{
+  let user = req.cookies.user
+  console.log("GET /delete/id/quantity");
+  const id = req.params.id
+  console.log('id', id);
+  let quantity = req.params.quantity
+  quantity -= 1
+  if (quantity >= 1) {
+    connection.query('UPDATE shopping_cart_item SET quantity = ? WHERE product_details_id = ? AND user_id = ?',[quantity,id, user[0].id], (err, row)=> {
+      if(err) throw err;
+      res.redirect('/shoppingcart')
+    })
+  }else{
+    connection.query('DELETE FROM shopping_cart_item WHERE product_details_id = ? AND user_id = ?',[id, user[0].id], (err, row)=> {
+      if(err) throw err;
+      res.redirect('/shoppingcart')
+    })
+  }
+
+})
 
 app.get('/orders', (req, res) => {
 
