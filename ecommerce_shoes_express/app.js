@@ -17,10 +17,9 @@ const connection = mysql.createConnection({
 })
 
 app.get('/', (req, res) => {
-
-  let user = req.cookies.user
   let type = req.query.type;
-  
+  let user = req.cookies.user
+
   if (typeof user === 'undefined') {
    user = {}
   }else{
@@ -43,17 +42,25 @@ app.get('/', (req, res) => {
 })
 
 
-
 app.get('/details/:id', (req, res) => {
+  let user = req.cookies.user
+
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
   const id = req.params.id
   connection.query('SELECT * FROM products as p join product_details as pd on p.id=pd.product_id  where p.id = ?',[id], (err, rows) => {
       if (err) throw err
-      res.render('product_details', {  details: rows, user:{}, filter:{}})    
+      res.render('product_details', {  details: rows, user:user, filter:{}})    
   })
 
 })
 
+
 app.get('/shoppingcart', (req, res) => {
+
   let user = req.cookies.user
 
   if (typeof user === 'undefined') {
@@ -72,7 +79,9 @@ app.get('/shoppingcart', (req, res) => {
 
 })
 
+
 app.get('/orders', (req, res) => {
+
   let user = req.cookies.user
 
   if (typeof user === 'undefined') {
@@ -101,7 +110,7 @@ app.post('/login', (req, res) => {
   const { email, password } = req.body;
   connection.query('SELECT * FROM users  where email = ? AND password = ?',[email, password], (err, user) => {
     if (user.length > 0) {
-      res.cookie('user', user, { maxAge: 900000, httpOnly: true });
+      res.cookie('user', user);
       res.redirect('/');
     }else{
       res.send('Credenziali errate');
@@ -109,6 +118,11 @@ app.post('/login', (req, res) => {
   })
 });
 
+app.get("/logout", (req,res) =>{
+  console.log("/logout GET");
+  res.clearCookie('user')
+  res.redirect('/');
+})
 
 
 app.listen(port, () => {
