@@ -20,29 +20,22 @@ app.get('/', (req, res) => {
 
   let user = req.cookies.user
   let type = req.query.type;
-
-  console.log(type);
+  
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
   if(typeof type === 'undefined'){
     type = "ogni genere"
     connection.query('SELECT * FROM products where is_listed = 1', (err, rows) => {
       if (err) throw err
-      if (typeof user === 'undefined') {
-        res.render('index', { products: rows , user:{}, filter:type})
-      }else{
-        res.render('index', { products: rows , user:user[0], filter:type})
-      }
+        res.render('index', { products: rows , user:user, filter:type})
   })
   }else{
-    console.log("Il tipo " , type);
     connection.query('SELECT * FROM products where is_listed = 1 and type = ? ' ,[type], (err, rows) => {
-      console.log("Ricerca con");
-      console.log('risultati ', rows);
       if (err) throw err
-      if (typeof user === 'undefined') {
-        res.render('index', { products: rows , user:{}, filter:type})
-      }else{
-        res.render('index', { products: rows , user:user[0], filter:type})
-      }
+        res.render('index', { products: rows , user:user, filter:type})
     })
   }
   
@@ -62,7 +55,6 @@ app.get('/details/:id', (req, res) => {
   const id = req.params.id
   connection.query('SELECT * FROM products as p join product_details as pd on p.id=pd.product_id  where p.id = ?',[id], (err, rows) => {
       if (err) throw err
-      console.log('rows',rows);
       res.render('product_details', {  details: rows, user:{}, filter:{}})    
   })
 
