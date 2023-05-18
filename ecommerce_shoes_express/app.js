@@ -213,26 +213,54 @@ app.get('/checkout', (req, res) => {
 
 })
 
-app.post('/checkouttotale', (req, res) => {
+app.post('/checkout', async(req, res) => {
 
   let user = req.cookies.user
 
+  const name=req.body.name;
+  const label=req.body.label;
+  const country=req.body.country;
+  const street=req.body.street;
+  
   if (typeof user === 'undefined') {
    user = {}
   }else{
     user = user[0]
   }
-  const id = user.id
-  connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
-      if (err) throw err
-      console.log('rows',rows);
-      res.render('checkout', {  addresses: rows, user:user, filter:{}})
+  const id = user.id;
+  const telephone=user.telephone;
+  const address_id=null;
   
-    
+
+  if(typeof req.body.name=='undefined') address_id=req.body.addresses.id;
+  else  address_id= await addAddress(name,label,country,street,telephone,id)
+  console.log("address",address_id);
+
+    connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[id], (err, sum) => {
+      if (err) throw err
+      console.log('sum',sum); 
+
+      
+      connection.query('INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)',[sum,id,address_id], (err, order) => {
+        if (err) throw err
+        console.log('order',order); 
+
+       
+    })
   })
 
+  res.send('Ordine effettuato con successo!');
 })
 
+function addAddress(name,label,country,street,telephone,id) {
+  return new Promise((resolve) => {
+    connection.query('INSERT INTO addresses(created_at,disabled_at,label,name_surname,country,street_address,telephone,zipcode,instructions,user_id) VALUES (localtime(),null,?,?,?,?,?,0000,null,?)',[name,label,country,street,telephone,id],(err, rows) => {
+      if (err)  throw err;
+      resolve(rows);
+      console.log("address",rows.insertId);
+    });
+  });
+}
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

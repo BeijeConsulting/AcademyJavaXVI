@@ -17,7 +17,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="./cart">Cart</a>
+          <a class="nav-link active" aria-current="page" href="./shoppingcart">Cart</a>
         </li>
         <li class="nav-item">
           <% if (user) { %>
@@ -66,6 +66,8 @@
         <div class="mt-2">
           <label for="street" class="form-label">Street address</label>
           <input name="street" id="street" type="text" class class="form-control" placeholder="Street address">
+
+       
           <h3>Payments</h3>
           <div class="mt-2">
             <label for="card" class="form-label">Card Number</label>
@@ -73,7 +75,7 @@
           </div>
       
           <div>
-            <button type="submit" class="btn btn-primary mt-3" href="./checkouttotale">Checkout</button>
+            <button type="submit" class="btn btn-primary mt-3">Checkout</button>
           </div>
       
         </form>
