@@ -6,4 +6,8 @@ router.get('/', profileController.profile);
 
 router.post('/logout', profileController.logout);
 
+router.get('/edit', profileController.editProfile);
+
+router.post('/update', profileController.updateProfile);
+
 module.exports = router;
