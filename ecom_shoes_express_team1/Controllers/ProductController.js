@@ -22,7 +22,7 @@ exports.getProductById = (req, res) => {
       console.error(err);
       res.status(500).send('Error retrieving product from database');
     } else {
-      res.send(result[0]);
+      res.render('productDetails', {product: result[0]});
     }
   });
 };

@@ -1,17 +1,41 @@
-<!-- users.ejs -->
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Products</title>
-</head>
+<%- include('components/header', { title: 'Product' }) %>
+
 <body>
-  <h1>List of Products</h1>
-  <ul>
-    <% products.forEach(function(product) { %>
-      <li>
-        <p><%= product.name %></p>
-      </li>
-    <% }); %>
-  </ul>
+    <div class="container">
+        <div class="row">
+            <% products.forEach(function(product) { %>
+                <div class="col py-3">
+                    <a href="/products/<%=product.id%>">
+                    <div class="card" style="width: 18rem;">
+                        <img src="<%= product.image_preview %>" class="card-img-top" alt="..."
+                            style="height: 300px; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= product.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= product.description_it %>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+                <% }); %>
+        </div>
+    </div>
 </body>
+
 </html>
+
+<style>
+    .card {
+        height: 500px;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    a{
+        color: black;
+        text-decoration: none;
+    }
+</style>
