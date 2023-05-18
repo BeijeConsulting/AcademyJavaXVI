@@ -1,5 +1,7 @@
 const express = require('express')
 const mysql = require('mysql')
+const cookieParser = require('cookie-parser')
+
 
 const app = express()
 const port = 3000
@@ -11,15 +13,30 @@ const connection = mysql.createConnection({
 })
 
 app.set('view engine', 'ejs')
+app.use(cookieParser())
 
 //Qui si mettono le costanti con i require (IMPORTANTE: nel path NON ci va .js)
+const homeRoute = require('./routes/home')
 const productsRoute = require('./routes/products')
 const loginRoute = require('./routes/login')
+const logoutRoute = require('./routes/logout')
+const registerRoute = require('./routes/register')
 
 //e poi qui si chiamano gli app.use con i relativi url base
+app.use('/', homeRoute)
 app.use('/products', productsRoute)
 app.use('/login', loginRoute)
+app.use('/logout', logoutRoute)
+app.use('/register', registerRoute)
 
+app.use((req, res, next) => {
+  res.status(404).render('404')
+ })
+
+app.use((error, req, res, next) => {
+  console.error(error.stack);
+  res.status(500).render('500');
+})
 
 app.listen(port, () => {
     console.log(`Ecommerce listening on port ${port}`)

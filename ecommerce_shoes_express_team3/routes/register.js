@@ -25,24 +25,25 @@ router.use(express.urlencoded({
 }))
 
 router.get('/', (req, res) => {
-  res.render('login', {error: 'no'})
+  res.render('register')
 })
 
 router.post('/', (req, res, next) => {
+  let name = req.body.name
+  let surname = req.body.surname
+  let telephone = req.body.telephone
+  let birthdate = req.body.birthdate
   let email = req.body.email
   let password = req.body.password
-  let query = 'SELECT * FROM users WHERE email = ? AND password = ?'
-  connection.query(query, [email, password], function(err, rows) {
+  let query = 'INSERT INTO users (name, surname, email, password, telephone, birth_date) VALUES (?, ?, ?, ?, ?, ?)'
+  connection.query(query, [name, surname, email, password, telephone, birthdate], function(err, rows) {
     if (err) {
       console.error(err)
       next(err)
     }
-    if (rows.length == 1) {
-      res.cookie('session', generateAccessToken(rows[0].id));
-      res.redirect('/')
-    }
     else {
-      res.render('login', {error: 'yes'})
+      res.cookie('session', generateAccessToken(rows.insertId));
+      res.redirect('/')
     }
   })
 })
