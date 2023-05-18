@@ -42,14 +42,7 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/', (req, res) => {
-  const user = req.cookies.user
-  connection.query('SELECT * FROM products where is_listed = 1', (err, rows) => {
-    if (err) throw err
-    res.render('index', { products: rows , user:user[0], filter:{}})
-  })
 
-})
 
 app.get('/details/:id', (req, res) => {
   const id = req.params.id
@@ -60,24 +53,38 @@ app.get('/details/:id', (req, res) => {
 
 })
 
-app.get('/shoppingcart/:id', (req, res) => {
-  const id = req.params.id
+app.get('/shoppingcart', (req, res) => {
+  let user = req.cookies.user
+
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
+  const id = user.id
   connection.query('SELECT * FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
-      res.render('shopping_cart', {  items: rows, user:{}, filter:{}})
+      res.render('shopping_cart', {  items: rows, user:user, filter:{}})
   
     
   })
 
 })
 
-app.get('/orders/:id', (req, res) => {
-  const id = req.params.id
+app.get('/orders', (req, res) => {
+  let user = req.cookies.user
+
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
+  const id = user.id
   connection.query('SELECT * FROM order_items as item JOIN orders as o ON item.order_id=o.id where o.user_id= ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
-      res.render('orders', {  orders: rows, user:{}, filter:{}})
+      res.render('orders', {  orders: rows, user:user, filter:{}})
   
     
   })
