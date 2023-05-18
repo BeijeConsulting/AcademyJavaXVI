@@ -70,14 +70,14 @@ app.get('/shoppingcart', (req, res) => {
   }
   const id = user.id
   
-  connection.query('SELECT * FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, rows) => {
+  connection.query('SELECT * FROM product_details as details JOIN shopping_cart_item as item ON details.id=item.product_details_id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, items) => {
       if (err) throw err
-      console.log('rows',rows);
-      res.render('shopping_cart', { items: rows, total:[],user:user, filter:{}})
-      connection.query('SELECT SUM(listed_price) FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
+      console.log('rows',items);
+      
+      connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
         if (err) throw err
-        console.log('rows',row);
-        res.render('shopping_cart', {  total: row, user:user, filter:{}})
+        console.log('row',row[0].somma);
+        res.render('shopping_cart', {  total: row[0].somma, items:items,user:user, filter:{}})
        
     
       
