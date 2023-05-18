@@ -69,14 +69,25 @@ app.get('/shoppingcart', (req, res) => {
     user = user[0]
   }
   const id = user.id
+  
   connection.query('SELECT * FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
-      res.render('shopping_cart', {  items: rows, user:user, filter:{}})
+      res.render('shopping_cart', { items: rows, total:[],user:user, filter:{}})
+      connection.query('SELECT SUM(listed_price) FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
+        if (err) throw err
+        console.log('rows',row);
+        res.render('shopping_cart', {  total: row, user:user, filter:{}})
+       
+    
+      
+    });
+    
   
     
-  })
+  });
 
+ 
 })
 
 
@@ -90,7 +101,7 @@ app.get('/orders', (req, res) => {
     user = user[0]
   }
   const id = user.id
-  connection.query('SELECT * FROM order_items as item JOIN orders as o ON item.order_id=o.id where o.user_id= ?',[id], (err, rows) => {
+  connection.query('SELECT * FROM orders as o where o.user_id= ?',[id], (err, rows) => {
       if (err) throw err
       console.log('rows',rows);
       res.render('orders', {  orders: rows, user:user, filter:{}})

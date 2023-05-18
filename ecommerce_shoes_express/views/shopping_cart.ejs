@@ -62,12 +62,24 @@
           <td><%= p.color %></td>
           <td><%= p.size%></td>
           <td><%= p.quantity %></td>
-          <td><%= p.listedPrice * p.quantity %></td>
+          <td><%= p.listed_price * p.quantity %></td>
           <td><a href="./delete?id=<%= p.id %>">Delete</a></td>
         </tr>
       <% }); %>
     </tbody>
   </table>
+ 
+  <div class="container">
+    <div class="d-flex py-3">
+     
+      <h3>Total Price: <%= total %>€</h3>
+      <% if (total !== 0) { %>
+        <a class="mx-3 btn-primary" href="./checkout">Checkout</a>
+      <% } %>
+   
+    </div>
+  </div>
+  
 
 </body>
 </html>
