@@ -22,3 +22,8 @@ exports.profile = (req, res) => {
     res.render('profile', { user });
   });
 };
+
+exports.logout = (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+};

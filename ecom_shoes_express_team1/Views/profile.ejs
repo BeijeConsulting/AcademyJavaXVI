@@ -17,7 +17,9 @@
             <p><strong>Email:</strong> <%= user.email %></p>
         </div>
 
-        <button><a href="/logout" class="btn btn-primary mt-3">Logout</a></button>
+        <form action="/profile/logout" method="POST">
+            <button type="submit" class="btn btn-primary mt-3">Logout</button>
+        </form>
     </div>
 </body>
 </html>

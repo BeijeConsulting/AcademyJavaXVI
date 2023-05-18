@@ -4,4 +4,6 @@ const profileController = require('../Controllers/ProfileController');
 
 router.get('/', profileController.profile);
 
+router.post('/logout', profileController.logout);
+
 module.exports = router;

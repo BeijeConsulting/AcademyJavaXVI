@@ -31,6 +31,7 @@ app.use('/products', productRoutes);
 app.use('/login', authRoutes);
 app.use('/signup', signupRoutes);
 app.use('/profile', profileRoutes);
+app.use('/profile', profileRoutes);
 
 // Home route
 app.get('/', (req, res) => {
