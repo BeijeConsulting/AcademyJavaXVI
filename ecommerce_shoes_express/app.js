@@ -164,6 +164,46 @@ app.get("/logout", (req,res) =>{
   res.redirect('/');
 })
 
+app.get('/checkout', (req, res) => {
+
+  let user = req.cookies.user
+
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
+  const id = user.id
+  connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
+      if (err) throw err
+      console.log('rows',rows);
+      res.render('checkout', {  addresses: rows, user:user, filter:{}})
+  
+    
+  })
+
+})
+
+app.post('/checkouttotale', (req, res) => {
+
+  let user = req.cookies.user
+
+  if (typeof user === 'undefined') {
+   user = {}
+  }else{
+    user = user[0]
+  }
+  const id = user.id
+  connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
+      if (err) throw err
+      console.log('rows',rows);
+      res.render('checkout', {  addresses: rows, user:user, filter:{}})
+  
+    
+  })
+
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
