@@ -20,16 +20,8 @@
 				class="w3-button w3-deep-orange w3-hover-black"> 
 				<i class="fa fa-shopping-cart"></i> Shopping Cart
 			</a>
-
-				<%if (!user) {%>
-					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/signin">Sign-In</a>
-					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/signup">Sign-Up</a>
-            <%} else {%>
 					<a class="w3-bar-item w3-button w3-hover-white"
 						href="/signout">Sign-Out</a>
-        <%}%>
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
@@ -71,7 +63,7 @@
       <button class="w3-button w3-orange w3-hover-black">My Orders</button>
     </form>
     <br>
-    <form action="/addresses" method="get">
+    <form action="/user/my_addresses" method="get">
       <button class="w3-button w3-orange w3-hover-black">My Addresses</button>
     </form>
   </div>

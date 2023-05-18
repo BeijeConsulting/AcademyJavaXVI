@@ -1,7 +1,7 @@
 const express = require('express')
 const mysql = require('mysql')
 const appRouter = express.Router()
-//const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 // DATABASE
 const connection = mysql.createConnection({
@@ -11,6 +11,7 @@ const connection = mysql.createConnection({
     database: 'ecommerce_shoes_2'
 })
 
+appRouter.use(cookieParser())
 appRouter.use(express.json())
 appRouter.use(express.urlencoded({ extended: true }))
 
@@ -25,11 +26,17 @@ appRouter.get('/all', (req, res) => {
 })
 
 appRouter.get('/:id', (req,res) => {
-    console.log("Parametro -> ", req.params)
-    connection.query('SELECT * FROM product_details WHERE product_id = ?', [req.params.id], (err, rows) =>{
+    let product = req.params.id
+    connection.query('SELECT * FROM product_details WHERE product_id = ?', [product], (err, rows) =>{
         if (err) throw err
         let details = rows;
-        res.render('db3/product', { details: details , user:req.cookies})
+
+        if (details.length > 0) {
+            res.render('db3/product', { details: details , user:req.cookies})
+        } else {
+            res.redirect('/product/all')
+        }
+        
     })
 
 })

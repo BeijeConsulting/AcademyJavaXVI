@@ -13,12 +13,7 @@
 		<a class="w3-bar-item w3-button w3-hover-white"
 			href="/product/all">Beije - Shoes First</a>
 		<div class="w3-right">
-				<%if (!user.id) {%>
-					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/signin">Sign-In</a>
-					<a class="w3-bar-item w3-button w3-hover-white"
-						href="/signup">Sign-Up</a>
-						<%} else {%>
+
 					<a href="/VonNeumannSpring/db3/shopping_cart"
 						class="w3-button w3-deep-orange w3-hover-black"> <i
 						class="fa fa-shopping-cart"></i> Shopping Cart
@@ -27,7 +22,6 @@
 						href="/user">User page</a>
 					<a class="w3-bar-item w3-button w3-hover-white"
 						href="/signout">Sign-Out</a>
-						<%}%>
 		</div>
 	</div>
 	<!-- Header da mettere ovunque -->
@@ -53,13 +47,13 @@
 			   <% orders.forEach(order => {%>
       			<tr>
 			        <td><%=order.transaction%></td>
-			        <td><%=order.transactionDate%></td>
-			        <td><%=order.paymentStatus%></td>
+			        <td><%=order.transaction_date%></td>
+			        <td><%=order.payment_status%></td>
 			        <td><%=order.label%></td>
-			        <td><%=order.streetAddress%></td>
+			        <td><%=order.street_address%></td>
 			        <td><%=order.status%></td>
-			        <td><%=order.totalPrice%></td>
-			        <td><%=order.createdAt%></td>
+			        <td><%=order.total_price%></td>
+			        <td><%=order.created_at%></td>
 			        <td><a href="/user/order_details/<%= order.id %>"
 					class="w3-button w3-block w3-deep-orange">Open Details</a></td>
       			</tr>

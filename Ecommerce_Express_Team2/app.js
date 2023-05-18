@@ -69,9 +69,11 @@ app.get('/signout', (req,res) =>{
 //ROUTER
 const userRouting = require('./routing/user')
 const productRouting = require('./routing/product')
+const shoppingCartRouting = require('./routing/shopping_cart')
 
 app.use('/user', userRouting)
 app.use('/product', productRouting)
+app.use('/shopping_cart', shoppingCartRouting)
 
 // LISTEN
 app.listen(port, () => {
