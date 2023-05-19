@@ -17,14 +17,14 @@ app.use(cookieParser())
 
 //Qui si mettono le costanti con i require (IMPORTANTE: nel path NON ci va .js)
 const homeRoute = require('./routes/home')
-const productsRoute = require('./routes/products')
 const loginRoute = require('./routes/login')
 const logoutRoute = require('./routes/logout')
 const registerRoute = require('./routes/register')
+const shoppingCartRoute = require('./routes/cart')
 
 //e poi qui si chiamano gli app.use con i relativi url base
 app.use('/', homeRoute)
-app.use('/products', productsRoute)
+app.use('/cart', shoppingCartRoute)
 app.use('/login', loginRoute)
 app.use('/logout', logoutRoute)
 app.use('/register', registerRoute)

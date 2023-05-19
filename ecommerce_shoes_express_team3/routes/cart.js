@@ -12,10 +12,10 @@ const connection = mysql.createConnection({
 router.get('/', (req, res) => {
   //connection.connect()
 
-  connection.query('SELECT * FROM products', (err, rows) => {
+  connection.query('SELECT DISTINCT * FROM shopping_cart_item,product_details,products WHERE shopping_cart_item.product_details_id = product_details.id AND product_details.product_id = products.id', (err, rows) => {
       if (err) throw err
       console.log('rows: ', rows)
-      res.render('products', { products: rows })
+      res.render('cart', { carts: rows })
   })
 
   console.log('end connection...')
