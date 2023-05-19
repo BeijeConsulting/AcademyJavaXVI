@@ -24,14 +24,14 @@ router.get('/', (req, res, next) => {
     })
   }
 
-  connection.query('SELECT * FROM shopping_cart_item,product_details,products WHERE shopping_cart_item.user_id = ? AND product_details_id = product_details.id AND product_details.product_id = products.id', [model.user], (err, rows) => {
+  connection.query('SELECT * FROM product_details,products WHERE products.id = ? AND product_details.product_id = products.id', [req.query.id], (err, rows) => {
     if (err) {
       console.error(err)
       next(err)
     }
     //console.log('rows: ', rows)
-    model.carts = rows
-    res.render('cart', model)
+    model.productDetails = rows[0]
+    res.render('productDetails', model)
   })
     
 })

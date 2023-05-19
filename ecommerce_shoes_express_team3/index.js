@@ -23,9 +23,11 @@ const loginRoute = require('./routes/login')
 const logoutRoute = require('./routes/logout')
 const registerRoute = require('./routes/register')
 const shoppingCartRoute = require('./routes/cart')
+const productDetailsRoute = require('./routes/productDetails')
 
 //e poi qui si chiamano gli app.use con i relativi url base
 app.use('/', homeRoute)
+app.use('/productDetails', productDetailsRoute)
 app.use('/cart', shoppingCartRoute)
 app.use('/login', loginRoute)
 app.use('/logout', logoutRoute)
