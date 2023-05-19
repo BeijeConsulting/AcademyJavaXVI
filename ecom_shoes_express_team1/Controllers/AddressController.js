@@ -63,3 +63,25 @@ exports.updateAddress = (req, res) => {
       }
   });
 };
+
+exports.createForm = (req, res) => {
+  res.render('createAddress');
+};
+
+exports.createAddress = (req, res) => {
+  const userId = req.session.userId;
+  const { label, name_surname, country, street_address, telephone, zipcode, instructions } = req.body;
+
+  db.query('INSERT INTO addresses (user_id, label, name_surname, country, street_address, telephone, zipcode, instructions) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [userId, label, name_surname, country, street_address, telephone, zipcode, instructions],
+      (err, result) => {
+          if (err) {
+              console.error(err);
+              console.log(userId);
+              res.status(500).send('Errore durante la creazione dell\'indirizzo.');
+          } else {
+              res.redirect('/address');
+          }
+      }
+  );
+};
