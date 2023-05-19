@@ -16,292 +16,32 @@ const connection = mysql.createConnection({
   database: 'ecommerce_shoes_4'
 })
 
-app.get('/', (req, res) => {
-  let type = req.query.type;
-  let user = req.cookies.user
 
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  if(typeof type === 'undefined'){
-    type = "ogni genere"
-    connection.query('SELECT * FROM products where is_listed = 1', (err, rows) => {
-      if (err) throw err
-        res.render('index', { products: rows , user:user, filter:type})
-  })
-  }else{
-    connection.query('SELECT * FROM products where is_listed = 1 and type = ? ' ,[type], (err, rows) => {
-      if (err) throw err
-        res.render('index', { products: rows , user:user, filter:type})
-    })
-  }
-  
-
-})
+const homeRoute = require('./routes/home')
+const productRoute = require('./routes/products')
+const shoppingCartRoute = require('./routes/shoppingCart')
+const orderRoute = require('./routes/order')
+const loginRoute = require('./routes/login')
+const checkoutRoute = require('./routes/checkout')
 
 
-app.get('/details/:id', (req, res) => {
-  let user = req.cookies.user
-
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  const id = req.params.id
-  connection.query('SELECT * FROM products as p join product_details as pd on p.id=pd.product_id  where p.id = ?',[id], (err, rows) => {
-      if (err) throw err
-      res.render('product_details', {  details: rows, user:user, filter:{}})    
-  })
-
-})
+ app.use('/', homeRoute)
+ app.use('/', productRoute)
+ app.use('/', shoppingCartRoute)
+ app.use('/', orderRoute)
+ app.use('/', loginRoute)
+ app.use('/', checkoutRoute)
 
 
-app.post('/details/addItem' , (req,res) =>{
-  console.log('addItem POST');
-  let user = req.cookies.user
-  const { productDetails, quantity } = req.body;
-
-  if (typeof user === 'undefined'){
-    res.redirect('/login')
-    return
-  }else{
-    connection.query('INSERT INTO shopping_cart_item (user_id, product_details_id, quantity) VALUES (?,?,?)',[user[0].id, parseInt(productDetails), parseInt(quantity)], (err, rows) => {
-      if(err) throw err
-      res.redirect('/shoppingcart')
-    })
-   } 
-})
-
-let users = null;
-
-app.get('/test', async (req, res) => {
-  let id = 7
-    users = await getUser(id);
-    console.log("pulito ", users);
-});
-
-function getUser(id) {
-  return new Promise((resolve) => {
-    connection.query('SELECT * FROM users where id = ?',[id] ,(err, rows) => {
-      if (err)  throw err
-      resolve(rows);
-    });
-  });
-}
-
-app.get('/shoppingcart', (req, res) => {
-
-  let user = req.cookies.user
-
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  const id = user.id
-  
-  connection.query('SELECT * FROM product_details as details JOIN shopping_cart_item as item ON details.id=item.product_details_id JOIN products as p ON details.product_id=p.id where item.user_id= ?',[id], (err, items) => {
-      if (err) throw err
-      //console.log('rows',items);
-      
-      connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
-        if (err) throw err
-        console.log('row',row[0].somma);
-        res.render('shopping_cart', {  total: row[0].somma, items:items,user:user, filter:{}})
-    });
-  });
-})
-
-
-app.get('/delete/:id/:quantity',(req, res) =>{
-  let user = req.cookies.user
-  console.log("GET /delete/id/quantity");
-  const id = req.params.id
-  console.log('id', id);
-  let quantity = req.params.quantity
-  quantity -= 1
-  if (quantity >= 1) {
-    connection.query('UPDATE shopping_cart_item SET quantity = ? WHERE product_details_id = ? AND user_id = ?',[quantity,id, user[0].id], (err, row)=> {
-      if(err) throw err;
-      res.redirect('/shoppingcart')
-    })
-  }else{
-    connection.query('DELETE FROM shopping_cart_item WHERE product_details_id = ? AND user_id = ?',[id, user[0].id], (err, row)=> {
-      if(err) throw err;
-      res.redirect('/shoppingcart')
-    })
-  }
-
-})
-
-app.get('/orders', (req, res) => {
-
-  let user = req.cookies.user
-
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  const id = user.id
-  connection.query('SELECT * FROM orders as o where o.user_id= ?',[id], (err, rows) => {
-      if (err) throw err
-      console.log('rows',rows);
-      res.render('orders', {  orders: rows, user:user, filter:{}})
-
-    
-  })
-
-})
-
-
-app.get('/login', (req, res) => {
-  res.render('login',{message:''})
-});
-
-
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  connection.query('SELECT * FROM users  where email = ? AND password = ?',[email, password], (err, user) => {
-    if (user.length > 0) {
-      res.cookie('user', user);
-      res.redirect('/');
-    }else{
-      res.send('Credenziali errate');
-    }
-  })
-});
-
-app.get('/register', (req, res) => {
-  res.render('register')
-})
-
-app.post('/register', (req,res)=>{
-  console.log("/register POST");
-
-  const { name,surname,telephone,birthdate,email, password } = req.body;
-  if (name === '' || surname === '' || telephone === '' || birthdate === '' || email === '' || password === '') {
-    
-    res.render('login', { message: 'Registrazione non avvenuta, campi obbligatori' });
-    return
-  } 
-  const values = [name, surname, telephone, birthdate, email, password];
-  connection.query(`INSERT INTO users (name, surname, telephone, birth_date, email, password)  VALUES (?, ?, ?, ?, ?, ?)`, values,(err, userInsert) =>{
-    if (err){
-      res.render('login', { message: 'Registrazione non avvenuta' });
-      throw err
-    } 
-console.log(userInsert.insertId);
-    connection.query(`INSERT INTO user_authority (user_id, authority_id) VALUES (?,1) `,[userInsert.insertId], (errSelect) =>{
-      if (errSelect) throw errSelect
-
-    })
-    res.render('login', { message: 'Registrazione avvenuta con successo' });
- });
-
-})
-
-app.get("/logout", (req,res) =>{
-  console.log("/logout GET");
-  res.clearCookie('user')
-  res.redirect('/');
-})
-
-app.get('/checkout', (req, res) => {
-
-  let user = req.cookies.user
-
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  const id = user.id
-  connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
-      if (err) throw err
-      res.render('checkout', {  addresses: rows, user:user, filter:{}})
-  
-    
-  })
-
-})
-
-app.post('/checkout', async(req, res) => {
-  //console.log(req.body);
-  let user = req.cookies.user
-  const name=req.body.name;
-  const label=req.body.label;
-  const country=req.body.country;
-  const street=req.body.street;
-  
-  if (typeof user === 'undefined') {
-   user = {}
-  }else{
-    user = user[0]
-  }
-  const userId = user.id;
-  const telephone=user.telephone;
-  let address_id;
-  
-
-  if( req.body.name ===  ''){
-    console.log("VUOTOs");
-    address_id=req.body.addresses;
-  } else{
-    address_id= await addAddress(name,label,country,street,telephone,userId)
-    address_id = address_id.insertId
-  }  
-  
-  let totalCheckout = await getTotalCheckout(userId);
-  totalCheckout = totalCheckout[0].somma
-
-// let addOrderV  =await addOrder(totalCheckout,userId,address_id);
-// console.log(addOrderV);
-    // connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[id], (err, sum) => {
-    //   if (err) throw err
-    //   console.log('sum',sum); 
-  connection.query('INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)',[totalCheckout,userId,address_id], (err, order) => {
-        if (err) throw err
-        console.log('order',order); 
-    connection.query(`delete from shopping_cart_item WHERE user_id=?`, [userId] ,(err) =>{
-      if (err) throw err
-    })
-     })
- // })
-
-  res.redirect('/checkout');
-})
-
-function addAddress(name,label,country,street,telephone,id) {
-  return new Promise((resolve) => {
-    connection.query('INSERT INTO addresses(created_at,disabled_at,label,name_surname,country,street_address,telephone,zipcode,instructions,user_id) VALUES (localtime(),null,?,?,?,?,?,0000,null,?)',[name,label,country,street,telephone,id],(err, rows) => {
-      if (err)  throw err;
-      resolve(rows);
-    });
-  });
-}
-
-function getTotalCheckout(userId) {
-  return new Promise((resolve) => {
-    connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?',[userId], (err, sum) => {
-      if (err)  throw err;
-      resolve(sum);
-    });
-  });
-}
-
-function addOrder(totalCheckout,userId,address_id) {
-  return new Promise((resolve) => {
-    console.log(totalCheckout,parseInt(userId),address_id);
-    connection.query(`INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)`,[(parseInt(totalCheckout), parseInt(userId),address_id)], (err, order) => {
-      if(err) throw err
-      resolve(order);
-    });
-  });
-}
+// function addOrder(totalCheckout,userId,address_id) {
+//   return new Promise((resolve) => {
+//     console.log(totalCheckout,parseInt(userId),address_id);
+//     connection.query(`INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)`,[(parseInt(totalCheckout), parseInt(userId),address_id)], (err, order) => {
+//       if(err) throw err
+//       resolve(order);
+//     });
+//   });
+// }
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

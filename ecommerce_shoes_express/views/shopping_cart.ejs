@@ -63,7 +63,7 @@
           <td><%= p.size%></td>
           <td><%= p.quantity %></td>
           <td><%= p.listed_price * p.quantity %></td>
-          <td><a href="./delete?id=<%= p.id %>">Delete</a></td>
+          <td><a href="./delete/<%= p.product_details_id %>/<%= p.quantity %>">Delete</a></td>
         </tr>
       <% }); %>
     </tbody>
