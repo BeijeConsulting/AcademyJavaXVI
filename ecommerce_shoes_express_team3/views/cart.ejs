@@ -58,13 +58,7 @@
        <tbody>
         
                <tr>
-                <!--
-                <% carts.forEach(cart => { %>
-                  - <%=  cart.selling_price %> <br/>
-                <% }); %>
-                -->
-
-            
+                            
              <% carts.forEach(cart => { %>
                  <tr>
                       <td><%=  cart.name %></td>
@@ -73,7 +67,7 @@
                       <td><%=  cart.color %> </td> 
                       <td><%=  cart.size %></td><br>
                      <td><%=  cart.quantity %> </td>
-                     <td><%=  cart.listedPrice*cart.quantity %> </td>
+                     <td><%=  cart.listed_price*cart.quantity %> </td>
                      <!-- <td> <a href="./delete?id=${p.id}">Delete</a></td> -->
                      <% }); %>
                   </tr>
