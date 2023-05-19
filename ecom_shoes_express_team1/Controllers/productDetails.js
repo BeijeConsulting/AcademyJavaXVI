@@ -19,7 +19,7 @@ exports.getProductDetailsById = (req, res) => {
         } else {
           product.productDetails = productDetailsResults;
           console.log(product);
-          res.render('productDetails', {product: product});
+          //res.render('productDetails', {product: product});
         }
       });
     }

@@ -7,6 +7,7 @@ const signupRoutes = require('./routes/signupRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const addressRoutes = require('./routes/addressRoutes');
+const checkoutRoutes = require('./routes/checkoutRoutes')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,6 +36,7 @@ app.use('/signup', signupRoutes);
 app.use('/cart', cartRoutes);
 app.use('/profile', profileRoutes);
 app.use('/address', addressRoutes);
+app.use('/checkout', checkoutRoutes)
 
 // Home route
 app.get('/', (req, res) => {

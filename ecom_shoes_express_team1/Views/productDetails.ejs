@@ -13,7 +13,7 @@
 				<h4>Price: <%= product.productDetails[0].listed_price %>€</h4>
 			
 				<div>
-					<form action="./addItem" method="post">
+					<form action="/cart/" method="post">
 						<label for="productDetails">Size: </label>
 						<select name="productDetails" id="productDetails" class="form-control">
 							<% product.productDetails.forEach((d) => { %>
