@@ -3,7 +3,6 @@ const router=express.Router()
 const mysql = require('mysql')
 const jwt = require('jsonwebtoken')
 
-
 //per accedere al token secret:
 // process.env.KEY;
 
