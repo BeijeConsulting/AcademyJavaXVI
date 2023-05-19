@@ -18,6 +18,8 @@ appRouter.use(express.urlencoded({ extended: true }))
 // PAGINA UTENTE
 appRouter.get('/', (req, res) => {
     let id = parseInt(req.cookies.id)
+    
+    res.cookie('id', id, { maxAge: 90000, httpOnly: true });
 
     if (isNaN(id)) {
         res.redirect('/signin')

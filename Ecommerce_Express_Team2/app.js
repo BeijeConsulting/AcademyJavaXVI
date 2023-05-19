@@ -55,7 +55,7 @@ app.post('/signup', (req, res) => {
 
     connection.query('INSERT INTO users (name, surname, email, password, telephone, birth_date) VALUES (?, ?, ?, ?, ?, ?)', [name, surname, email, password, telephone, birth_date], (err, rows) => {
         if (err) throw err
-        res.cookie('id', parseInt(rows.insertId), { maxAge: 900000, httpOnly: true });
+        res.cookie('id', parseInt(rows.insertId), { maxAge: 9000000, httpOnly: true });
         res.redirect('/user')
     })
 

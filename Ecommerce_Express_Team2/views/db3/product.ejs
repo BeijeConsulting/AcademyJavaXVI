@@ -51,13 +51,13 @@
 
 							<%if (user.id) {%>
 								<form class="w3-container"
-									action="../add_shopping_cart"
+									action="/shopping_cart/add_shopping_cart_item"
 									method="post">
 									<select name="quantity">
 										<% for (let i = 1; i <= detail.quantity; i++) { %>
 											<option value="<%= i %>"><%= i %></option>
 										  <% } %>
-									</select> <br> <input name="productItemId" type="hidden" value="<%= detail.id %>"> 
+									</select> <br> <input name="product_details_id" type="hidden" value="<%= detail.id %>"> 
 									<input
 										class="w3-button w3-deep-orange w3-hover-black" type="submit"
 										value="Add to
