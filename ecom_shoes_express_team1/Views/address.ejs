@@ -22,10 +22,10 @@
                     <p class="card-text"><strong>ZIPCODE: </strong> <%= item.zipcode %></p>
                     <p class="card-text"><strong>Istruzioni: </strong> <%= item.instructions %></p>
                 </div>
-                <button style="width: 100px;" class="btn btn-primary my-3"><a style="color:white; text-decoration: none;" href="/address/edit/<%= item.id %>">Modifica</a></button>
+                <button style="width: 100px;" class="btn btn-primary my-3 mx-3"><a style="color:white; text-decoration: none;" href="/address/edit/<%= item.id %>">Modifica</a></button>
                 
                 <form action="/address/delete/<%= item.id %>" method="POST" style="display: inline;">
-                    <button type="submit" class="btn btn-danger">Elimina</button>
+                    <button type="submit" class="btn btn-danger my-3 mx-3">Elimina</button>
                 </form>
             </div>
         <% }) %>
