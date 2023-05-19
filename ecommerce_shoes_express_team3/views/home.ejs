@@ -53,24 +53,27 @@
 </div>
 
 
-<% if (locals.products) { %>
-	<% products.forEach(p => { %>
 <!-- Card Container --> 
 <div class="py-5 container">
 	<div class="row">
+
+		<% if (locals.products) { %>
+		<% products.forEach(p => { %>
 				<div class="card m-3" style="width: 18rem;">
 					<img src="<%=p.imagePath %>" alt="img" class="card-img-top">
 					<div class="card-body">
 						<h4 class="card-title"><%=p.name %></h4>
 						<p class="card-text"><%=p.description_it %></p>
 						<a href="./details?id=<%=p.id %>" class="btn btn-primary">Dettaglio</a>
+					</div>
 				</div>
+		<% }) %>
+		<% } else { %>
+					 Nessun Prodotto
+		<% } %>
 	</div>
 </div>
-<% }) %>
-<% } else { %>
-	 Nessun Prodotto
-<% } %>
+
 
 </body>
 </html>
