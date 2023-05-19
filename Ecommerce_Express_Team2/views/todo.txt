@@ -1,0 +1,22 @@
+- signup
+- signin
+- get user page
+- get orders e order details
+- get products e product details
+- get indirizzi utente
+- get shopping cart 
+
+
+todo
+Y:
+- delete cartItem
+- add cartItem
+
+
+- delete address
+- edit address
+
+- edit user
+- checkout :(
+- signout
+- add address
