@@ -7,6 +7,13 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		.w3-container img {
+		   width: 100%;
+		   height: 100%;
+		   object-fit: contain;
+		}
+	  </style>
 </head>
 <body>
 
@@ -40,12 +47,15 @@
 			<% products.forEach(product => {%>
 				<div class="w3-third w3-margin-bottom">
 					<div class="w3-card">
-						<div class="w3-container">
-							<h5><%= product.name %></h2>
-								<p><%= product.description %></p>
-								<a href="/product/<%= product.id %>"
-									class="w3-button w3-block w3-deep-orange">View Details</a> <br>
-						</div>
+						
+						  
+						  <div class="w3-container">
+							<img src="https://cdnimg.vivaia.com/vivaia/products/1684208735-99580c6a-96c1-4a61-9b82-d9217bb2404f.jpg?imresize=600x600" alt="">
+							<h5><%= product.name %></h5>
+							<p><%= product.description %></p>
+							  <a href="/product/<%= product.id %>"
+								class="w3-button w3-block w3-deep-orange">View Details</a><br>
+						  </div>
 					</div>
 				</div>
 				
