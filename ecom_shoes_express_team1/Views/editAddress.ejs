@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Aggiorna Indirizzo</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Aggiorna Indirizzo</h1>
+        <form action="/address/update/<%= address.id %>" method="POST">
+            <div class="form-group">
+                <label for="label">Etichetta</label>
+                <input type="text" class="form-control" id="label" name="label" value="<%= address.label %>" required>
+            </div>
+            <div class="form-group">
+                <label for="name_surname">Nome e Cognome</label>
+                <input type="text" class="form-control" id="name_surname" name="name_surname" value="<%= address.name_surname %>" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Paese</label>
+                <input type="text" class="form-control" id="country" name="country" value="<%= address.country %>" required>
+            </div>
+            <div class="form-group">
+                <label for="street_address">Via</label>
+                <input type="text" class="form-control" id="street_address" name="street_address" value="<%= address.street_address %>" required>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Telefono</label>
+                <input type="text" class="form-control" id="telephone" name="telephone" value="<%= address.telephone %>" required>
+            </div>
+            <div class="form-group">
+                <label for="zipcode">CAP</label>
+                <input type="text" class="form-control" id="zipcode" name="zipcode" value="<%= address.zipcode %>" required>
+            </div>
+            <div class="form-group">
+                <label for="instructions">Istruzioni</label>
+                <textarea class="form-control" id="instructions" name="instructions"><%= address.instructions %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-4">Salva</button>
+        </form>
+    </div>
+</body>
+</html>

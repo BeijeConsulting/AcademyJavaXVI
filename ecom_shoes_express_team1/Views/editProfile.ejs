@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Edit Profile</title>
+</head>
+<body>
+
+    <div class="mx-auto mt-5" style="width:400px;">
+
+        <h1>Edit Profile</h1>
+
+        <form action="/profile/update" method="POST">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Inserisci email" value="<%= user.email %>" required>
+            </div>
+            <div>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Inserisci nome" value="<%= user.name %>" required>
+            </div>
+            <div>
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" name="surname" class="form-control" placeholder="Inserisci cognome" value="<%= user.surname %>" required>
+            </div>
+            <div>
+                <label for="birth_date">Data di nascita:</label>
+                <input type="text" id="birth_date" name="birth_date" class="form-control" placeholder="Inserisci la data di nascita" value="<%= birthDateFormatted %>" required>
+            </div>
+            <div>
+                <label for="phone">Telefono:</label>
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="Inserisci il numero di telefono" value="<%= user.telephone || '' %>">
+            </div>
+            
+            
+            <div>
+                <input class="btn btn-primary mt-3" type="submit" value="Salva">
+            </div>
+        </form>
+
+    </div>
+
+</body>
+</html>
