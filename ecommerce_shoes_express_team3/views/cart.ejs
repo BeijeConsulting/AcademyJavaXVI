@@ -57,6 +57,7 @@
        </thead>
        <tbody>
         
+        <% let totale = 0; %>
                <tr>
                             
              <% carts.forEach(cart => { %>
@@ -69,32 +70,25 @@
                      <td><%=  cart.quantity %> </td>
                      <td><%=  cart.listed_price*cart.quantity %> </td>
                      <!-- <td> <a href="./delete?id=${p.id}">Delete</a></td> -->
-                     <% }); %>
                   </tr>
+
+                  <% totale += cart.listed_price*cart.quantity; %>
+                  <% }); %>
               
         </tbody>
                
  </table>   
-<!--  
+
    <div class="container">
            <div class="d-flex  py-3">
                <h3> Total Price :
-                <c:out value="${totale}€">
-                </c:out>
-               
+                <%= totale %>€
                </h3>
-               <c:choose>  
-               	<c:when test="${totale != 0}"> <a class="mx-3 btn-primary" href="./checkout"> Checkout</a> </c:when>
-               </c:choose>
            </div>
        </div>
+       <% if (totale !== 0) { %>
+        <h4> <a class="mx-3 btn-primary" href="./checkout">Checkout</a> </h4>
+      <% } %>
 </div>
 </body>
 </html>
--->
-
-<!--
-        <% carts.forEach(cart => { %>
-          - <%=  cart.quantity %> <br/>
-        <% }); %>
--->
