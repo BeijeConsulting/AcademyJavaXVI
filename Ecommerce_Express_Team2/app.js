@@ -67,7 +67,7 @@ app.get('/signout', (req,res) =>{
 })
 
 app.get('/', (req,res) =>{
-    res.redirect('/product/allt')
+    res.redirect('/product/all')
 })
 
 //ROUTER
