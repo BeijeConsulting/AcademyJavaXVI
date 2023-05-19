@@ -67,19 +67,16 @@
             
              <% carts.forEach(cart => { %>
                  <tr>
-                      <td>- <%=  cart.name %></td>  <!-- Mi serve product name-->
-                      <% }); %>
-              <!--
-                      <td>${p.productDetails.product.description}</td>
-                      <td>${p.productDetails.product.type}</td>
-                      <td>${p.productDetails.product.color}</td> 
-                      <td>${p.productDetails.size.EU}</td><br>
-                     <td>${p.quantity}</td>
-                     <td>${p.productDetails.product.listedPrice*p.quantity}</td>
-                     <td> <a href="./delete?id=${p.id}">Delete</a></td>
-                    </tr>
-                   </c:forEach>
-             -->
+                      <td><%=  cart.name %></td>
+                      <td><%=  cart.description_it %></td>
+                      <td><%=  cart.type %> </td>
+                      <td><%=  cart.color %> </td> 
+                      <td><%=  cart.size %></td><br>
+                     <td><%=  cart.quantity %> </td>
+                     <td><%=  cart.listedPrice*cart.quantity %> </td>
+                     <!-- <td> <a href="./delete?id=${p.id}">Delete</a></td> -->
+                     <% }); %>
+                  </tr>
               
         </tbody>
                
