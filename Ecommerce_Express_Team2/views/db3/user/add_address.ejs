@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +13,9 @@
 
   <!-- Header da mettere ovunque -->
   <div class="w3-bar w3-deep-orange w3-padding w3-card">
-    <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+    <a class="w3-bar-item w3-button w3-hover-white" href="/product/all">Beije - Shoes First</a>
     <div class="w3-right">
-      <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/user_page">User page</a>
+      <a class="w3-bar-item w3-button w3-hover-white" href="/user">User page</a>
     </div>
   </div>
   <!-- Header da mettere ovunque -->
@@ -27,15 +25,15 @@
 		<div class="w3-container w3-card-4">
 				<h3>Add Address</h3>
 
-			<form class="w3-container" action="./add_address" method="post">
+			<form class="w3-container" action="/user/my_addresses/add_address" method="post">
 				<label class="w3-text-black" for="label"><b>Label:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="label"><br>
-				<label class="w3-text-black" for="fullName"><b>*Full Name:</b></label><br>
-				<input class="w3-input w3-border" type="text" name="fullName" required><br>
+				<label class="w3-text-black" for="name_surname"><b>*Full Name:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="name_surname" required><br>
 				<label class="w3-text-black" for="country"><b>*Country:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="country" required><br>
-				<label class="w3-text-black" for="streetAddress"><b>*Address:</b></label><br>
-				<input class="w3-input w3-border" type="text" name="streetAddress"required><br>
+				<label class="w3-text-black" for="street_address"><b>*Address:</b></label><br>
+				<input class="w3-input w3-border" type="text" name="street_address"required><br>
 				<label class="w3-text-black" for="telephone"><b>*Telephone:</b></label><br>
 				<input class="w3-input w3-border" type="text" name="telephone"required><br>
 				<label class="w3-text-black" for="zipcode"><b>*Zipcode (CAP):</b></label><br>
