@@ -51,10 +51,10 @@
 							<td><%=address.telephone%></td>
 							<td><%=address.instructions%></td>
 							<td><a 
-								href="/user/edit_address/<%= address.id %>"
+								href="/user/my_addresses/edit_address/<%= address.id %>"
 								class="w3-button w3-block w3-deep-orange">Edit</a></td>
 							<td><a
-								href="/user/delete_address/<%= address.id %>"
+								href="/user/my_addresses/delete_address/<%= address.id %>"
 								class="w3-button w3-block w3-deep-orange">Delete</a></td>
 						</tr>
 				<%})%>
@@ -62,10 +62,13 @@
 
 		<br>
 		<div class="w3-container">
-			<form action="/user/add_address" method="get">
+			<form action="/user/my_addresses/add_address" method="get">
 				<input class="w3-button w3-deep-orange w3-hover-black" type="submit"
 					value="Add Address">
 			</form>
+			<!--a
+			href="/user/my_addresses/add_address"
+			class="w3-button w3-block w3-deep-orange">Add Address</a-->
 			<br>
 		</div>
 	</div>

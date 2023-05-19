@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +9,9 @@
 <body>
   <!-- Header da mettere ovunque -->
   <div class="w3-bar w3-deep-orange w3-padding w3-card">
-    <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3">Beije - Shoes First</a>
+    <a class="w3-bar-item w3-button w3-hover-white" href="/product/all">Beije - Shoes First</a>
     <div class="w3-right">
-      <a class="w3-bar-item w3-button w3-hover-white" href="/VonNeumannSpring/db3/user_page">User page</a>
+      <a class="w3-bar-item w3-button w3-hover-white" href="/user">User page</a>
     </div>
   </div>
   <!-- Header da mettere ovunque -->
@@ -34,29 +32,28 @@
       </tr>
     </thead>
       <tr>
-        <td>${address.label}</td>
-        <td>${address.fullName}</td>
-        <td>${address.country}</td>
-        <td>${address.streetAddress}</td>
-        <td>${address.zipcode}</td>
-        <td>${address.telephone}</td>
-        <td>${address.instructions}</td>
+        <td><%=address.label%></td>
+        <td><%=address.name_surname%></td>
+        <td><%=address.country%></td>
+        <td><%=address.street_address%></td>
+        <td><%=address.zipcode%></td>
+        <td><%=address.telephone%></td>
+        <td><%=address.instructions%></td>
       </tr>
   </table>
   <br>
-  
+
     <div class="w3-container">
-	    <form action="../delete_address/${address.id}" method="post">
+	    <form action="/user/my_addresses/delete_address/<%= address.id %>" method="post">
 	      <input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Elimina">
 	    </form>
   	</div>
   
     <div class="w3-container">
-	    <form action="../addresses" method="post">
+	    <form action="/user/my_addresses" method="get">
 	      <input class="w3-button w3-deep-orange w3-hover-black" type="submit" value="Annulla">
 	    </form>
-    <br>
-  </div>
+    </div>
   </div>
 </body>
 </html>
