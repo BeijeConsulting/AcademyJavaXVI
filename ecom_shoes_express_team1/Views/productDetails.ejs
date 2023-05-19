@@ -7,11 +7,28 @@
                 <img src="<%= product.image_preview %>" alt="img" class="w-100">
             </div>
             <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h1><%= product.name %></h1>
-                    </div>
-                </div>
+                <h1><%= product.productDetails[0].brand %></h1>
+				<h2><%= product.productDetails[0].name %></h2>
+				<h4>Color: <%= product.productDetails[0].color %></h4>
+				<h4>Price: <%= product.productDetails[0].listed_price %>€</h4>
+			
+				<div>
+					<form action="./addItem" method="post">
+						<label for="productDetails">Size: </label>
+						<select name="productDetails" id="productDetails" class="form-control">
+							<% product.productDetails.forEach((d) => { %>
+								<option value="<%= d.id %>"><%= d.size %></option>
+							<% }) %>
+						</select>
+						<div class="mt-2">
+							<label for="quantity">Inserisci la quantità: </label>
+							<input name="quantity" type="number" class="form-control" min="1" >
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary mt-3">Add to cart</button>			
+						</div>
+					</form>
+				</div>
             </div>
            
         </div>

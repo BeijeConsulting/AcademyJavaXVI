@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
 const signupRoutes = require('./routes/signupRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,6 +23,7 @@ app.set('view engine', 'ejs');
 app.use('/products', productRoutes);
 app.use('/login', authRoutes);
 app.use('/signup', signupRoutes);
+app.use('/cart', cartRoutes);
 
 // Home route
 app.get('/', (req, res) => {
