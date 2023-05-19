@@ -72,4 +72,59 @@ appRouter.post('/add_shopping_cart_item', (req, res) => {
         })
 })
 
+appRouter.post('/order', (req, res) => {
+    let id = parseInt(req.cookies.id)
+    let order_date = new Date()
+    let order_status = 'completed'
+    let cartItems
+    if (isNaN(id)) {
+        res.redirect('/signin')
+    } else {
+        connection.query('SELECT p.brand, p.name, s.product_details_id, d.size, d.selling_price, s.quantity, s.id , p.color'+
+        'FROM shopping_cart_item AS s '+
+        'JOIN product_details AS d ON s.product_details_id = d.id '+
+        'JOIN products AS p ON d.product_id = p.id '+
+        'WHERE s.user_id = ?', 
+            [id], (err, rows) => {
+            if (err) throw err
+            cartItems = rows
+            //res.render('db3/user/shopping_cart', { cartItems: cartItems, user:req.cookies })
+        })
+    }
+
+    if (!isNaN(cartItems)) {
+        connection.query('INSERT INTO orders (transaction, transaction_date, status, payment_status, total_price, user_id, address_id) VALUES (?, ?, ?, ?, ?, ?, ?)' ,
+            ["mastercard", order_date, order_status, "completed", 100, id, 1], (err, rows) => {
+                if (err) throw err
+                order_id = rows.insertId
+            
+        })
+        
+        //aggiunta order items
+        for (let i = 0; i < cartItems.length; i++) {
+            connection.query('INSERT INTO order_items (quantity, price, order_id, product_details_id, size, name, color) VALUES (?, ?, ?,  ?, ?, ?, ?)',
+                [cartItems[i].quantity, cartItems[i].selling_price, order_id, cartItems[i].product_details_id, cartItems[i].size, cartItems[i].name, cartItems[i].color], (err, rows) => {
+                    if (err) throw err
+            })
+        }
+        //Non diminuisce la quantity per poter fare i test
+
+        //svuota carrello
+        connection.query('DELETE FROM shopping_cart_item WHERE user_id = ?', 
+            [id], (err, rows) => {
+            if (err) throw err
+        })
+    }
+
+
+
+    connection.query('INSERT INTO orders (user_id, order_date, order_status) VALUES (?, ?, ?)',
+        [id, order_date, order_status], (err, rows) => {
+            if (err) throw err
+        res.redirect('/shopping_cart')
+        })
+})
+
+
+
 module.exports = appRouter;
