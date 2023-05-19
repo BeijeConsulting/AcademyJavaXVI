@@ -5,7 +5,7 @@
         <div class="row">
             <% products.forEach(function(product) { %>
                 <div class="col py-3">
-                    <a href="/products/<%=product.id%>">
+                    <a href="/products/details/<%=product.id%>">
                     <div class="card" style="width: 18rem;">
                         <img src="<%= product.image_preview %>" class="card-img-top" alt="..."
                             style="height: 300px; border-radius: 20px;">

@@ -18,8 +18,7 @@ exports.getProductDetailsById = (req, res) => {
           res.status(500).send('Error retrieving product details from database');
         } else {
           product.productDetails = productDetailsResults;
-          console.log(product);
-          //res.render('productDetails', {product: product});
+          res.render('productDetails', {product: product});
         }
       });
     }

@@ -8,7 +8,7 @@ exports.getCheckout = (req, res) => {
     }else{
       user = user[0]
     }
-    connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
+    db.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
         if (err) throw err
         res.render('checkout', {  addresses: rows, user:user, filter:{}})
     
@@ -46,7 +46,7 @@ exports.postCheckout = async (req, res) => {
     db.query('INSERT INTO orders(transaction,transaction_date,payment_status,status,total_price,created_at,disabled_at,user_id,address_id,coupon_id) values("12345",null,"Pagato","completed",?,localtime(),null,?,?,null)', [totalCheckout, userId, address_id], (err, order) => {
         if (err) throw err
         console.log('order', order);
-        connection.query(`delete from shopping_cart_item WHERE user_id=?`, [userId], (err) => {
+        db.query(`delete from shopping_cart_item WHERE user_id=?`, [userId], (err) => {
             if (err) throw err
         })
     })

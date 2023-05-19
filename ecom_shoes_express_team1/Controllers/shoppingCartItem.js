@@ -19,7 +19,7 @@ exports.getCartItems = (req, res) => {
         db.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;', [userId], (err, row) => {
             if (err) throw err
             console.log('row', row[0].somma);
-            res.render('shopping_cart', { total: row[0].somma, items: items, filter: {} })
+            res.render('cart', { total: row[0].somma, items: items, filter: {} })
         });
     });
 };
