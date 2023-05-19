@@ -32,10 +32,8 @@
 		<%if (cartItems.length > 0) {%>
         <div class="w3-container">
 			<% cartItems.forEach(item => {%>
-            <c:forEach items="${shoppingCart.shoppingCartItem}" var="item" varStatus="loop">
                 <div class="w3-card-4 w3-margin">
                     <div class="w3-container">
-                    
                         <h3> <%=item.brand%> - <%=item.name%></h3>
                         <p> Id: <%=item.product_details_id%></p> 
                         <p> Size: <%=item.size%></p> 
