@@ -1,7 +1,9 @@
 const express = require('express')
 const mysql = require('mysql')
 const cookieParser = require('cookie-parser')
+const dotenv = require('dotenv')
 
+dotenv.config()
 
 const app = express()
 const port = 3000

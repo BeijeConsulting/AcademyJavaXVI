@@ -2,9 +2,6 @@ const express=require('express')
 const router=express.Router()
 const mysql = require('mysql')
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
-
-dotenv.config()
 
 //per accedere al token secret:
 // process.env.KEY;
