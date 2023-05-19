@@ -66,6 +66,10 @@ app.get('/signout', (req,res) =>{
     console.log("Signout")
 })
 
+app.get('/', (req,res) =>{
+    res.redirect('/product/allt')
+})
+
 //ROUTER
 const userRouting = require('./routing/user')
 const productRouting = require('./routing/product')
