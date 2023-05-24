@@ -17,6 +17,7 @@ const connection = mysql.createConnection({
 
 
 router.get('/login', (req, res) => {
+  
     res.render('login',{message:''})
   });
   

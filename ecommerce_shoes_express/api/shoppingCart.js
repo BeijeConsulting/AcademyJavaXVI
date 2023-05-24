@@ -30,9 +30,9 @@ const connection = mysql.createConnection({
         if (err) throw err
         connection.query('SELECT SUM(listed_price * item.quantity) as somma FROM shopping_cart_item as item JOIN product_details as details ON item.product_details_id=details.id JOIN products as p ON details.product_id=p.id where item.user_id=?;',[id], (err, row)=> {
           if (err) throw err
-         // let obj = {total: row[0].somma, items:items,user:user}
-          //res.json(obj)
-          res.render('shopping_cart', {  total: row[0].somma, items:items,user:user, filter:{}})
+          let obj = {total: row[0].somma, items:items,user:user}
+          res.json(obj)
+          // res.render('shopping_cart', {  total: row[0].somma, items:items,user:user, filter:{}})
       });
     });
   })
@@ -43,14 +43,14 @@ const connection = mysql.createConnection({
     const { productDetails, quantity } = req.body;
     console.log(req.body);
     if (typeof user === 'undefined'){
-    //  res.status(401).json({ errore: 'Non sei autenticato' });
-      res.redirect('/login')
+      res.status(401).json({ errore: 'Non sei autenticato' });
+     // res.redirect('/login')
       return
     }else{
-      connection.query('INSERT INTO shopping_cart_item (user_id, product_details_id, quantity) VALUES (?,?,?)',[user[0].id, parseInt(productDetails), parseInt(quantity)], (err) => {
+      connection.query('INSERT INTO shopping_cart_item (user_id, product_details_id, quantity) VALUES (?,?,?)',[user[0].id, parseInt(productDetails), parseInt(quantity)], (err, row) => {
         if(err) throw err
-     //   res.json(row)
-       res.redirect('/shoppingcart')
+        res.json(row)
+    //   res.redirect('/shoppingcart')
       })
      } 
   })
@@ -70,13 +70,15 @@ const connection = mysql.createConnection({
       connection.query('UPDATE shopping_cart_item SET quantity = ? WHERE product_details_id = ? AND user_id = ?',[quantity,id, user[0].id], (err, row)=> {
         if(err) throw err;
         console.log(row);
-        res.redirect('/shoppingcart')
+        res.json(row)
+     //   res.redirect('/shoppingcart')
       })
     }else{
       connection.query('DELETE FROM shopping_cart_item WHERE product_details_id = ? AND user_id = ?',[id, user[0].id], (err, row)=> {
         if(err) throw err;
         console.log(row);
-        res.redirect('/shoppingcart')
+        res.json(row)
+     //   res.redirect('/shoppingcart')
       })
     }
   

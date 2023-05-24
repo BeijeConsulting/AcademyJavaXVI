@@ -26,7 +26,8 @@ router.get('/checkout', (req, res) => {
     const id = user.id
     connection.query('SELECT * FROM addresses as a where a.user_id= ?',[id], (err, rows) => {
         if (err) throw err
-        res.render('checkout', {  addresses: rows, user:user, filter:{}})
+       res.json({  addresses: rows, user:user, filter:{}})
+      //  res.render('checkout', {  addresses: rows, user:user, filter:{}})
     
       
     })
@@ -70,7 +71,7 @@ router.get('/checkout', (req, res) => {
       })
        })
   
-  
+       
     res.redirect('/checkout');
   })
 
@@ -84,7 +85,8 @@ router.get('/profile', async (req, res) => {
     }
     let address = await getAddress(user.id);
     console.log(address);
-    res.render('user', {user:user, addresses:address})
+    res.json({user:user, addresses:address})
+   // res.render('user', {user:user, addresses:address})
   });
   
 

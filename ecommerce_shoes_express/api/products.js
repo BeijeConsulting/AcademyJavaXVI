@@ -14,9 +14,8 @@ const connection = mysql.createConnection({
   }))
 
 
-
-  router.get('/orders', (req, res) => {
-
+  
+router.get('/details/:id', (req, res) => {
     let user = req.cookies.user
   
     if (typeof user === 'undefined') {
@@ -24,12 +23,11 @@ const connection = mysql.createConnection({
     }else{
       user = user[0]
     }
-    const id = user.id
-    connection.query('SELECT * FROM orders as o where o.user_id= ?',[id], (err, rows) => {
+    const id = req.params.id
+    connection.query('SELECT * FROM products as p join product_details as pd on p.id=pd.product_id  where p.id = ?',[id], (err, rows) => {
         if (err) throw err
-        res.render('orders', {  orders: rows, user:user, filter:{}})
-  
-      
+        res.json({  details: rows, user:user})
+      //  res.render('product_details', {  details: rows, user:user, filter:{}})    
     })
   
   })

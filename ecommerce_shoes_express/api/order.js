@@ -27,7 +27,8 @@ const connection = mysql.createConnection({
     const id = user.id
     connection.query('SELECT * FROM orders as o where o.user_id= ?',[id], (err, rows) => {
         if (err) throw err
-        res.render('orders', {  orders: rows, user:user, filter:{}})
+        res.json({  orders: rows, user:user, filter:{}})
+        // res.render('orders', {  orders: rows, user:user, filter:{}})
   
       
     })

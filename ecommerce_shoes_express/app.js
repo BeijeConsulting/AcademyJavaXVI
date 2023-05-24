@@ -1,20 +1,17 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const mysql = require('mysql')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs')
-
-const connection = mysql.createConnection({
-  host: 'skychallenge.cvzu4xrxvkdz.eu-south-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'FJf7MWgOsW1M5AbKql9g',
-  database: 'ecommerce_shoes_4'
-})
 
 
 const homeRoute = require('./routes/home')
@@ -31,6 +28,41 @@ const checkoutRoute = require('./routes/checkout')
  app.use('/', orderRoute)
  app.use('/', loginRoute)
  app.use('/', checkoutRoute)
+
+ 
+ const homeRouteApi = require('./api/home')
+ const productRouteApi = require('./api/products')
+ const shoppingCartRouteApi = require('./api/shoppingCart')
+ const orderRouteApi = require('./api/order')
+const loginRouteApi = require('./api/login')
+const checkoutRouteApi = require('./api/checkout')
+
+/*
+Manca : Qualcosa login - POST Checkout
+*/
+ app.use('/api', homeRouteApi)
+ app.use('/api', productRouteApi)
+ app.use('/api', shoppingCartRouteApi)
+ app.use('/api', orderRouteApi)
+ app.use('/api', loginRouteApi)
+ app.use('/api', checkoutRouteApi)
+
+ const cb0 = function (req, res, next) {
+  console.log('CB0')
+  next()
+}
+
+const cb1 = function (req, res, next) {
+  console.log('CB1')
+  next()
+}
+
+app.get('/example/d', [cb0, cb1], (req, res, next) => {
+  console.log('the response will be sent by the next function ...')
+  next()
+}, (req, res) => {
+  res.send('Hello from D!')
+})
 
 
 // function addOrder(totalCheckout,userId,address_id) {
