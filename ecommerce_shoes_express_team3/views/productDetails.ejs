@@ -58,38 +58,17 @@
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" min="1" max="100" value="1">
       </div>
+      <% if (locals.user) { %>
       <div>
         <button type="submit">Acquista</button>
       </div>
+      <% } else { %>
+        <div>
+          <button type="submit">Accedi</button>
+        </div>
+      <% } %>
     <% } %>
-<!--			
-			<form action="./addItem" method="post">
-			    <label for="productDetails">Size: </label>
-				<select name="productDetails" id="productDetails"  class="form-control">
-				
-					<c:forEach var="d" items="${ details }">
-   					 <option value="${d.id }"><c:out value="${d.size.EU }"></c:out></option>
-   					</c:forEach>
-				</select>
-				<div class="mt-2">
-				<label for="quantity">Inserisci la quantità: </label>
-				<input name="quantity" type="number" class="form-control" min="1" max="${d.quantity }">
-				</div>
-				<div>
-					 <button type="submit" class="btn btn-primary mt-3">Add to cart</button>			
-		     	</div>
-			</form>
-			</div>
-		</div>
-		
-		 </c:when>
-		 <c:otherwise>
-	         Nessun Prodotto
-	       </c:otherwise>
-         </c:choose> 
-      
-	</div>
-</div>
--->   
+
+
 </body>
 </html>
